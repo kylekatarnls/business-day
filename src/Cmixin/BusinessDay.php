@@ -332,7 +332,7 @@ class BusinessDay
             /** @var Carbon|BusinessDay $self */
             $self = $self ?: $carbonClass::now();
 
-            return $mixin->subBusinessDays($days);
+            return $self->subBusinessDays($days);
         };
     }
 }
