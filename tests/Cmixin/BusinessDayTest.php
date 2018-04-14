@@ -205,4 +205,26 @@ class BusinessDayTest extends TestCase
         self::assertSame('16/04/2018', Carbon::parse('2018-04-16 12:00:00')->currentOrNextBusinessDay()->format('d/m/Y'));
         self::assertSame('12/11/2018', Carbon::parse('2018-11-11 12:00:00')->currentOrNextBusinessDay()->format('d/m/Y'));
     }
+
+    public function testPreviousBusinessDay()
+    {
+        Carbon::setHolidaysRegion('fr-national');
+        self::assertSame('30/04/2018', Carbon::parse('2018-05-01 12:00:00')->previousBusinessDay()->format('d/m/Y'));
+        self::assertSame('03/04/2018', Carbon::parse('2018-04-04 12:00:00')->previousBusinessDay()->format('d/m/Y'));
+        self::assertSame('13/04/2018', Carbon::parse('2018-04-14 12:00:00')->previousBusinessDay()->format('d/m/Y'));
+        self::assertSame('13/04/2018', Carbon::parse('2018-04-15 12:00:00')->previousBusinessDay()->format('d/m/Y'));
+        self::assertSame('13/04/2018', Carbon::parse('2018-04-16 12:00:00')->previousBusinessDay()->format('d/m/Y'));
+        self::assertSame('09/11/2018', Carbon::parse('2018-11-11 12:00:00')->previousBusinessDay()->format('d/m/Y'));
+    }
+
+    public function testCurrentOrPreviousBusinessDay()
+    {
+        Carbon::setHolidaysRegion('fr-national');
+        self::assertSame('30/04/2018', Carbon::parse('2018-05-01 12:00:00')->currentOrPreviousBusinessDay()->format('d/m/Y'));
+        self::assertSame('04/04/2018', Carbon::parse('2018-04-04 12:00:00')->currentOrPreviousBusinessDay()->format('d/m/Y'));
+        self::assertSame('13/04/2018', Carbon::parse('2018-04-14 12:00:00')->currentOrPreviousBusinessDay()->format('d/m/Y'));
+        self::assertSame('13/04/2018', Carbon::parse('2018-04-15 12:00:00')->currentOrPreviousBusinessDay()->format('d/m/Y'));
+        self::assertSame('16/04/2018', Carbon::parse('2018-04-16 12:00:00')->currentOrPreviousBusinessDay()->format('d/m/Y'));
+        self::assertSame('09/11/2018', Carbon::parse('2018-11-11 12:00:00')->currentOrPreviousBusinessDay()->format('d/m/Y'));
+    }
 }

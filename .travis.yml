@@ -25,7 +25,7 @@ before_script:
   - ./cc-test-reporter before-build
 
 script:
-  - vendor/bin/phpunit --verbose --coverage-text --coverage-clover=coverage.xml
+  - vendor/bin/phpunit --verbose --coverage-text --coverage-clover=clover.xml
 
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
