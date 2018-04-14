@@ -17,7 +17,7 @@
 
     <testsuites>
         <testsuite name="Carbon Mixin Test Suite">
-            <directory>tests</directory>
+            <directory suffix="Test.php">tests</directory>
         </testsuite>
     </testsuites>
 </phpunit>
