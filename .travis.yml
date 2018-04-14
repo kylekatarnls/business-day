@@ -1,0 +1,38 @@
+language: php
+
+dist: trusty
+
+sudo: required
+
+php:
+  - 5.4
+  - 5.5
+  - 5.6
+  - 7.0
+  - 7.1
+  - 7.2
+  - hhvm
+
+matrix:
+  include:
+    - php: 5.3
+      dist: precise
+
+before_script:
+  - travis_retry composer self-update
+  - travis_retry composer install --no-interaction --prefer-source --dev
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+
+script:
+  - vendor/bin/phpunit --verbose --coverage-text --coverage-clover=coverage.xml
+
+after_script:
+  - ./cc-test-reporter after-build --exit-code $EXIT_CODE
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+
+addons:
+  code_climate:
+    repo_token: 445bfa02f795c64b7cfe96c610d906b46a7b889acc965139c990184238742909
