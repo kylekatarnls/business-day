@@ -290,7 +290,7 @@ class BusinessDay
             /** @var Carbon|BusinessDay $self */
             $self = $self ?: $carbonClass::now();
 
-            return $self->addBusinessDays($days);
+            return $self->addBusinessDays($days, $self);
         };
     }
 
@@ -311,7 +311,7 @@ class BusinessDay
             /** @var Carbon|BusinessDay $self */
             $self = $self ?: $carbonClass::now();
 
-            return $self->addBusinessDays(-$days);
+            return $self->addBusinessDays(-$days, $self);
         };
     }
 
@@ -332,7 +332,7 @@ class BusinessDay
             /** @var Carbon|BusinessDay $self */
             $self = $self ?: $carbonClass::now();
 
-            return $self->subBusinessDays($days);
+            return $self->subBusinessDays($days, $self);
         };
     }
 }
