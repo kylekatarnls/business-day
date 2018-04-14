@@ -131,6 +131,10 @@ class BusinessDayTest extends TestCase
 
     public function testAddHolidaysTraversable()
     {
+        if (version_compare(phpversion(), '5.5.0-dev', '<')) {
+            self::markTestSkipped('Generators not available before PHP 5.5');
+        }
+
         Carbon::addHolidays('test', call_user_func(function () {
             for ($i = 1; $i < 4; $i++) {
                 $closure = function ($year) use ($i) {
