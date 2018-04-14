@@ -110,11 +110,11 @@ class BusinessDay
         $mixin = $this;
 
         return function ($region, $holidays) use ($mixin) {
-            if ($mixin->holidays[$region] instanceof \Traversable) {
-                $mixin->holidays[$region] = iterator_to_array($mixin->holidays[$region]);
-            }
             if (!isset($mixin->holidays[$region])) {
                 $mixin->holidays[$region] = array();
+            }
+            if ($mixin->holidays[$region] instanceof \Traversable) {
+                $mixin->holidays[$region] = iterator_to_array($mixin->holidays[$region]);
             }
 
             foreach ($holidays as $holiday) {

@@ -116,4 +116,42 @@ class BusinessDayTest extends TestCase
             self::assertSame($coruscantHolidays, Carbon::getHolidays());
         }
     }
+
+    public function testAddHolidaysTraversable()
+    {
+        Carbon::addHolidays('test', call_user_func(function () {
+            for ($i = 1; $i < 4; $i++) {
+                yield function ($year) use ($i) {
+                    $c = $year % 10;
+
+                    return "0$c/0$i";
+                };
+            }
+        }));
+        Carbon::setHolidays('test', call_user_func(function () {
+            for ($i = 2; $i < 4; $i++) {
+                yield function ($year) use ($i) {
+                    $c = $year % 10;
+
+                    return "0$c/0$i";
+                };
+            }
+        }));
+        Carbon::addHolidays('test', call_user_func(function () {
+            for ($i = 6; $i < 10; $i++) {
+                yield function ($year) use ($i) {
+                    $c = $year % 10;
+
+                    return "0$c/0$i";
+                };
+            }
+        }));
+        Carbon::setHolidaysRegion('test');
+        self::assertTrue(Carbon::parse("2018-02-08 03:30:40")->isHoliday());
+        self::assertFalse(Carbon::parse("2018-01-08 03:30:40")->isHoliday());
+        self::assertFalse(Carbon::parse("2016-02-08 03:30:40")->isHoliday());
+        self::assertTrue(Carbon::parse("2023-03-03 03:30:40")->isHoliday());
+        self::assertFalse(Carbon::parse("2023-05-03 03:30:40")->isHoliday());
+        self::assertTrue(Carbon::parse("2023-06-03 03:30:40")->isHoliday());
+    }
 }
