@@ -22,16 +22,17 @@ before_script:
   - travis_retry composer install --no-interaction --prefer-source --dev
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
 
 script:
   - vendor/bin/phpunit --verbose --coverage-text --coverage-clover=coverage.xml
 
 after_script:
-  - ./cc-test-reporter after-build --exit-code $EXIT_CODE
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 
-addons:
-  code_climate:
-    repo_token: 445bfa02f795c64b7cfe96c610d906b46a7b889acc965139c990184238742909
+env:
+  global:
+    - CC_TEST_REPORTER_ID=445bfa02f795c64b7cfe96c610d906b46a7b889acc965139c990184238742909

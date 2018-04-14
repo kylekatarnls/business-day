@@ -10,7 +10,7 @@ class BusinessDayTest extends TestCase
 {
     protected function setUp()
     {
-        BusinessDay::enable(Carbon::class);
+        BusinessDay::enable('Carbon\Carbon');
         Carbon::resetHolidays();
     }
 
