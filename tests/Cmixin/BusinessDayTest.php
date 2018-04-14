@@ -19,6 +19,18 @@ class BusinessDayTest extends TestCase
         self::assertTrue(Carbon::enable());
     }
 
+    public function testUsHolidays()
+    {
+        Carbon::setHolidaysRegion('us-national');
+        self::assertTrue(Carbon::parse('2018-01-01 00:00:00')->isHoliday());
+        self::assertTrue(Carbon::parse('2018-01-15 00:00:00')->isHoliday());
+        self::assertTrue(Carbon::parse('2018-05-28 00:00:00')->isHoliday());
+        self::assertTrue(Carbon::parse('2018-07-04 00:00:00')->isHoliday());
+        self::assertTrue(Carbon::parse('2018-09-03 00:00:00')->isHoliday());
+        self::assertTrue(Carbon::parse('2018-11-22 00:00:00')->isHoliday());
+        self::assertTrue(Carbon::parse('2018-12-25 00:00:00')->isHoliday());
+    }
+
     public function testIsHoliday()
     {
         $coruscantHolidays = [

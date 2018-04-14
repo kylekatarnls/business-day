@@ -179,7 +179,7 @@ class BusinessDay
 
         return function ($self = null) use ($carbonClass) {
             /** @var Carbon|BusinessDay $self */
-            $self = ($self ?: $carbonClass::now())->copy();
+            $self = $self ? $self->copy() : $carbonClass::now();
 
             do {
                 $self->addDay();
