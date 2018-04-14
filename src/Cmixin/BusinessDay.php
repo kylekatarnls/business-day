@@ -200,7 +200,7 @@ class BusinessDay
 
         return function ($self = null) use ($carbonClass) {
             /** @var Carbon|BusinessDay $self */
-            $self = ($self ?: $carbonClass::now())->copy();
+            $self = $self ? $self->copy() : $carbonClass::now();
 
             return $self->isBusinessDay() ? $self : $self->nextBusinessDay();
         };
@@ -217,7 +217,7 @@ class BusinessDay
 
         return function ($self = null) use ($carbonClass) {
             /** @var Carbon|BusinessDay $self */
-            $self = ($self ?: $carbonClass::now())->copy();
+            $self = $self ? $self->copy() : $carbonClass::now();
 
             do {
                 $self->subDay();
@@ -238,7 +238,7 @@ class BusinessDay
 
         return function ($self = null) use ($carbonClass) {
             /** @var Carbon|BusinessDay $self */
-            $self = ($self ?: $carbonClass::now())->copy();
+            $self = $self ? $self->copy() : $carbonClass::now();
 
             return $self->isBusinessDay() ? $self : $self->previousBusinessDay();
         };
