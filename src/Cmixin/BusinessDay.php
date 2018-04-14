@@ -8,7 +8,7 @@ class BusinessDay
 {
     protected static $carbonClass = null;
 
-    public $holidays = [];
+    public $holidays = array();
 
     public $holidaysRegion = null;
 
