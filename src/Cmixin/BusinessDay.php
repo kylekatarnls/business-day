@@ -278,6 +278,27 @@ class BusinessDay
      *
      * @return \Closure
      */
+    public static function addBusinessDay()
+    {
+        $carbonClass = static::getCarbonClass();
+
+        return function ($days = 1, $self = null) use ($carbonClass) {
+            if ($days instanceof \DateTime || $days instanceof \DateTimeInterface) {
+                $self = $days;
+                $days = 1;
+            }
+            /** @var Carbon|BusinessDay $self */
+            $self = $self ?: $carbonClass::now();
+
+            return $self->addBusinessDays($days);
+        };
+    }
+
+    /**
+     * Sets the date to that corresponds to the number of business days prior the starting date.
+     *
+     * @return \Closure
+     */
     public static function subBusinessDays()
     {
         $carbonClass = static::getCarbonClass();
@@ -291,6 +312,27 @@ class BusinessDay
             $self = $self ?: $carbonClass::now();
 
             return $self->addBusinessDays(-$days);
+        };
+    }
+
+    /**
+     * Sets the date to that corresponds to the number of business days prior the starting date.
+     *
+     * @return \Closure
+     */
+    public static function subBusinessDay()
+    {
+        $carbonClass = static::getCarbonClass();
+
+        return function ($days = 1, $self = null) use ($carbonClass) {
+            if ($days instanceof \DateTime || $days instanceof \DateTimeInterface) {
+                $self = $days;
+                $days = 1;
+            }
+            /** @var Carbon|BusinessDay $self */
+            $self = $self ?: $carbonClass::now();
+
+            return $self->subBusinessDays($days);
         };
     }
 }
