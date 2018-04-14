@@ -278,7 +278,7 @@ class BusinessDay
      *
      * @return \Closure
      */
-    public static function addBusinessDay()
+    public function addBusinessDay()
     {
         $carbonClass = static::getCarbonClass();
 
@@ -290,7 +290,7 @@ class BusinessDay
             /** @var Carbon|BusinessDay $self */
             $self = $self ?: $carbonClass::now();
 
-            return $self->addBusinessDays($days, $self);
+            return $self->addBusinessDays($days);
         };
     }
 
@@ -299,7 +299,7 @@ class BusinessDay
      *
      * @return \Closure
      */
-    public static function subBusinessDays()
+    public function subBusinessDays()
     {
         $carbonClass = static::getCarbonClass();
 
@@ -311,7 +311,7 @@ class BusinessDay
             /** @var Carbon|BusinessDay $self */
             $self = $self ?: $carbonClass::now();
 
-            return $self->addBusinessDays(-$days, $self);
+            return $self->addBusinessDays(-$days);
         };
     }
 
@@ -320,7 +320,7 @@ class BusinessDay
      *
      * @return \Closure
      */
-    public static function subBusinessDay()
+    public function subBusinessDay()
     {
         $carbonClass = static::getCarbonClass();
 
@@ -332,7 +332,7 @@ class BusinessDay
             /** @var Carbon|BusinessDay $self */
             $self = $self ?: $carbonClass::now();
 
-            return $self->subBusinessDays($days, $self);
+            return $mixin->subBusinessDays($days);
         };
     }
 }
