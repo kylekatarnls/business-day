@@ -79,8 +79,9 @@ class BusinessDayTest extends TestCase
         );
         for ($year = 1808; $year < 2500; $year += 20) {
             Carbon::resetHolidays();
-            self::assertSame(array(), Carbon::getHolidays());
             Carbon::setHolidays('coruscant', $coruscantHolidays);
+            self::assertSame($coruscantHolidays, Carbon::getHolidays('coruscant'));
+            self::assertSame(array(), Carbon::getHolidays());
             Carbon::setTestNow(Carbon::parse("$year-12-25 03:30:40"));
             self::assertFalse(Carbon::isHoliday());
             Carbon::setTestNow(Carbon::parse("$year-12-26 03:30:40"));
@@ -183,6 +184,12 @@ class BusinessDayTest extends TestCase
         self::assertSame('16/04/2018', Carbon::parse('2018-04-15 12:00:00')->nextBusinessDay()->format('d/m/Y'));
         self::assertSame('17/04/2018', Carbon::parse('2018-04-16 12:00:00')->nextBusinessDay()->format('d/m/Y'));
         self::assertSame('12/11/2018', Carbon::parse('2018-11-11 12:00:00')->nextBusinessDay()->format('d/m/Y'));
+        $date = Carbon::parse('2018-04-16 12:00:00');
+        self::assertSame($date, $date->nextBusinessDay());
+        self::assertSame('17/04/2018', $date->format('d/m/Y'));
+        $date = Carbon::parse('2018-11-11 12:00:00');
+        self::assertSame($date, $date->nextBusinessDay());
+        self::assertSame('12/11/2018', $date->format('d/m/Y'));
     }
 
     public function testNextBusinessDayStatic()
@@ -211,6 +218,11 @@ class BusinessDayTest extends TestCase
         self::assertSame('16/04/2018', Carbon::parse('2018-04-15 12:00:00')->currentOrNextBusinessDay()->format('d/m/Y'));
         self::assertSame('16/04/2018', Carbon::parse('2018-04-16 12:00:00')->currentOrNextBusinessDay()->format('d/m/Y'));
         self::assertSame('12/11/2018', Carbon::parse('2018-11-11 12:00:00')->currentOrNextBusinessDay()->format('d/m/Y'));
+        $date = Carbon::parse('2018-04-16 12:00:00');
+        self::assertSame($date, $date->currentOrNextBusinessDay());
+        $date = Carbon::parse('2018-11-11 12:00:00');
+        self::assertSame($date, $date->currentOrNextBusinessDay());
+        self::assertSame('12/11/2018', $date->format('d/m/Y'));
     }
 
     public function testCurrentOrNextBusinessDayStatic()
@@ -239,6 +251,12 @@ class BusinessDayTest extends TestCase
         self::assertSame('13/04/2018', Carbon::parse('2018-04-15 12:00:00')->previousBusinessDay()->format('d/m/Y'));
         self::assertSame('13/04/2018', Carbon::parse('2018-04-16 12:00:00')->previousBusinessDay()->format('d/m/Y'));
         self::assertSame('09/11/2018', Carbon::parse('2018-11-11 12:00:00')->previousBusinessDay()->format('d/m/Y'));
+        $date = Carbon::parse('2018-04-16 12:00:00');
+        self::assertSame($date, $date->previousBusinessDay());
+        self::assertSame('13/04/2018', $date->format('d/m/Y'));
+        $date = Carbon::parse('2018-11-11 12:00:00');
+        self::assertSame($date, $date->previousBusinessDay());
+        self::assertSame('09/11/2018', $date->format('d/m/Y'));
     }
 
     public function testPreviousBusinessDayStatic()
@@ -267,6 +285,12 @@ class BusinessDayTest extends TestCase
         self::assertSame('13/04/2018', Carbon::parse('2018-04-15 12:00:00')->currentOrPreviousBusinessDay()->format('d/m/Y'));
         self::assertSame('16/04/2018', Carbon::parse('2018-04-16 12:00:00')->currentOrPreviousBusinessDay()->format('d/m/Y'));
         self::assertSame('09/11/2018', Carbon::parse('2018-11-11 12:00:00')->currentOrPreviousBusinessDay()->format('d/m/Y'));
+        $date = Carbon::parse('2018-04-16 12:00:00');
+        self::assertSame($date, $date->currentOrPreviousBusinessDay());
+        self::assertSame('16/04/2018', $date->format('d/m/Y'));
+        $date = Carbon::parse('2018-11-11 12:00:00');
+        self::assertSame($date, $date->currentOrPreviousBusinessDay());
+        self::assertSame('09/11/2018', $date->format('d/m/Y'));
     }
 
     public function testCurrentOrPreviousBusinessDayStatic()
@@ -307,6 +331,9 @@ class BusinessDayTest extends TestCase
         self::assertSame('18/04/2018', Carbon::parse('2018-04-15 12:00:00')->addBusinessDays(3)->format('d/m/Y'));
         self::assertSame('18/04/2018', Carbon::parse('2018-04-16 12:00:00')->addBusinessDays(2)->format('d/m/Y'));
         self::assertSame('04/12/2018', Carbon::parse('2018-11-11 12:00:00')->addBusinessDays(17)->format('d/m/Y'));
+        $date = Carbon::parse('2018-11-11 12:00:00');
+        self::assertSame($date, $date->addBusinessDays(17));
+        self::assertSame('04/12/2018', $date->format('d/m/Y'));
     }
 
     public function testAddBusinessDayStatic()
@@ -359,6 +386,9 @@ class BusinessDayTest extends TestCase
         self::assertSame('11/04/2018', Carbon::parse('2018-04-15 12:00:00')->subBusinessDays(3)->format('d/m/Y'));
         self::assertSame('12/04/2018', Carbon::parse('2018-04-16 12:00:00')->subBusinessDays(2)->format('d/m/Y'));
         self::assertSame('17/10/2018', Carbon::parse('2018-11-11 12:00:00')->subBusinessDays(17)->format('d/m/Y'));
+        $date = Carbon::parse('2018-11-11 12:00:00');
+        self::assertSame($date, $date->subBusinessDays(17));
+        self::assertSame('17/10/2018', $date->format('d/m/Y'));
     }
 
     public function testSubBusinessDayStatic()

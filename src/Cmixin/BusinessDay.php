@@ -61,8 +61,8 @@ class BusinessDay
     {
         $mixin = $this;
 
-        return function () use ($mixin) {
-            $region = $mixin->holidaysRegion;
+        return function ($region = null) use ($mixin) {
+            $region = is_string($region) ? $region : $mixin->holidaysRegion;
             if (!$region || !isset($mixin->holidays[$region])) {
                 return array();
             }
@@ -134,7 +134,7 @@ class BusinessDay
 
         return function ($self = null) use ($carbonClass) {
             /** @var Carbon $self */
-            $self = $self ?: $carbonClass::now();
+            $self = $self ?: $carbonClass::today()();
             $holidays = $carbonClass::getHolidays();
             $date = $self->format('d/m');
             foreach ($holidays as $holiday) {
@@ -162,7 +162,7 @@ class BusinessDay
 
         return function ($self = null) use ($carbonClass) {
             /** @var Carbon|BusinessDay $self */
-            $self = $self ?: $carbonClass::now();
+            $self = $self ?: $carbonClass::today()();
 
             return $self->isWeekday() && !$self->isHoliday();
         };
@@ -179,7 +179,7 @@ class BusinessDay
 
         return function ($self = null) use ($carbonClass) {
             /** @var Carbon|BusinessDay $self */
-            $self = $self ? $self->copy() : $carbonClass::now();
+            $self = $self ?: $carbonClass::today()();
 
             do {
                 $self->addDay();
@@ -200,7 +200,7 @@ class BusinessDay
 
         return function ($self = null) use ($carbonClass) {
             /** @var Carbon|BusinessDay $self */
-            $self = $self ? $self->copy() : $carbonClass::now();
+            $self = $self ?: $carbonClass::today()();
 
             return $self->isBusinessDay() ? $self : $self->nextBusinessDay();
         };
@@ -217,7 +217,7 @@ class BusinessDay
 
         return function ($self = null) use ($carbonClass) {
             /** @var Carbon|BusinessDay $self */
-            $self = $self ? $self->copy() : $carbonClass::now();
+            $self = $self ?: $carbonClass::today()();
 
             do {
                 $self->subDay();
@@ -238,7 +238,7 @@ class BusinessDay
 
         return function ($self = null) use ($carbonClass) {
             /** @var Carbon|BusinessDay $self */
-            $self = $self ? $self->copy() : $carbonClass::now();
+            $self = $self ?: $carbonClass::today()();
 
             return $self->isBusinessDay() ? $self : $self->previousBusinessDay();
         };
@@ -259,7 +259,7 @@ class BusinessDay
                 $days = 1;
             }
             /** @var Carbon|BusinessDay $self */
-            $self = $self ?: $carbonClass::now();
+            $self = $self ?: $carbonClass::today()();
 
             for ($i = $days; $i > 0; $i--) {
                 $self = $self->nextBusinessDay();
@@ -288,7 +288,7 @@ class BusinessDay
                 $days = 1;
             }
             /** @var Carbon|BusinessDay $self */
-            $self = $self ?: $carbonClass::now();
+            $self = $self ?: $carbonClass::today()();
 
             return $self->addBusinessDays($days);
         };
@@ -309,7 +309,7 @@ class BusinessDay
                 $days = 1;
             }
             /** @var Carbon|BusinessDay $self */
-            $self = $self ?: $carbonClass::now();
+            $self = $self ?: $carbonClass::today()();
 
             return $self->addBusinessDays(-$days);
         };
@@ -330,7 +330,7 @@ class BusinessDay
                 $days = 1;
             }
             /** @var Carbon|BusinessDay $self */
-            $self = $self ?: $carbonClass::now();
+            $self = $self ?: $carbonClass::today()();
 
             return $self->subBusinessDays($days);
         };
