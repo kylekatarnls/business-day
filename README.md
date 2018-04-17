@@ -277,6 +277,14 @@ echo Carbon::subBusinessDays(5)->format('Y-m-d'); // returns the date 5 business
 
 Alias subBusinessDays.
 
+## Contribute
+
+The scope of this library is to date business date and time utilities to Carbon,
+if you think of a feature in this scope, feel free to submit a pull-request.
+
+We will also happily merge any holidays file matching an official country, state
+or region holidays list.
+
 ## Credits
 
 Based on the work of [Christopher "rmblstrp"](https://github.com/rmblstrp),
