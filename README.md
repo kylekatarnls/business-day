@@ -249,6 +249,34 @@ echo Carbon::parse('2018-01-13 12:30:00')->currentOrPreviousBusinessDay()->forma
 echo Carbon::currentOrPreviousBusinessDay() // equivalent to Carbon::today()->currentOrPreviousBusinessDay()
 ```
 
+#### addBusinessDays
+
+Add days to the date (Carbon instance) skipping holidays and week-ends.
+```php
+Carbon::setHolidaysRegion('us-national');
+echo Carbon::parse('2018-01-10')->addBusinessDays(4)->format('Y-m-d'); // 2018-01-17
+echo Carbon::parse('2018-01-13')->addBusinessDays()->format('Y-m-d'); // 2018-01-16 add 1 business day by default
+echo Carbon::addBusinessDays(6)->format('Y-m-d'); // returns the date 6 business days after today (midnight)
+```
+
+#### addBusinessDay
+
+Alias addBusinessDays.
+
+#### subBusinessDays
+
+Sub days to the date (Carbon instance) skipping holidays and week-ends.
+```php
+Carbon::setHolidaysRegion('us-national');
+echo Carbon::parse('2018-01-17')->subBusinessDays(4)->format('Y-m-d'); // 2018-01-12
+echo Carbon::parse('2018-01-15')->subBusinessDays()->format('Y-m-d'); // 2018-01-12 sub 1 business day by default
+echo Carbon::subBusinessDays(5)->format('Y-m-d'); // returns the date 5 business days date before today (midnight)
+```
+
+#### subBusinessDay
+
+Alias subBusinessDays.
+
 ## Credits
 
 Based on the work of [Christopher "rmblstrp"](https://github.com/rmblstrp),

@@ -133,6 +133,9 @@ class BusinessDay
         $carbonClass = static::getCarbonClass();
 
         return function ($self = null) use ($carbonClass) {
+            if (!isset($self) && isset($this)) {
+                $self = $this;
+            }
             /** @var Carbon $self */
             $self = $self ?: $carbonClass::today();
             $holidays = $carbonClass::getHolidays();
@@ -161,6 +164,9 @@ class BusinessDay
         $carbonClass = static::getCarbonClass();
 
         return function ($self = null) use ($carbonClass) {
+            if (!isset($self) && isset($this)) {
+                $self = $this;
+            }
             /** @var Carbon|BusinessDay $self */
             $self = $self ?: $carbonClass::today();
 
@@ -178,6 +184,9 @@ class BusinessDay
         $carbonClass = static::getCarbonClass();
 
         return function ($self = null) use ($carbonClass) {
+            if (!isset($self) && isset($this)) {
+                $self = $this;
+            }
             /** @var Carbon|BusinessDay $self */
             $self = $self ?: $carbonClass::today();
 
@@ -199,6 +208,9 @@ class BusinessDay
         $carbonClass = static::getCarbonClass();
 
         return function ($self = null) use ($carbonClass) {
+            if (!isset($self) && isset($this)) {
+                $self = $this;
+            }
             /** @var Carbon|BusinessDay $self */
             $self = $self ?: $carbonClass::today();
 
@@ -216,6 +228,9 @@ class BusinessDay
         $carbonClass = static::getCarbonClass();
 
         return function ($self = null) use ($carbonClass) {
+            if (!isset($self) && isset($this)) {
+                $self = $this;
+            }
             /** @var Carbon|BusinessDay $self */
             $self = $self ?: $carbonClass::today();
 
@@ -237,6 +252,9 @@ class BusinessDay
         $carbonClass = static::getCarbonClass();
 
         return function ($self = null) use ($carbonClass) {
+            if (!isset($self) && isset($this)) {
+                $self = $this;
+            }
             /** @var Carbon|BusinessDay $self */
             $self = $self ?: $carbonClass::today();
 
@@ -254,6 +272,9 @@ class BusinessDay
         $carbonClass = static::getCarbonClass();
 
         return function ($days = 1, $self = null) use ($carbonClass) {
+            if (!isset($self) && isset($this)) {
+                $self = $this;
+            }
             if ($days instanceof \DateTime || $days instanceof \DateTimeInterface) {
                 $self = $days;
                 $days = 1;
@@ -283,6 +304,9 @@ class BusinessDay
         $carbonClass = static::getCarbonClass();
 
         return function ($days = 1, $self = null) use ($carbonClass) {
+            if (!isset($self) && isset($this)) {
+                $self = $this;
+            }
             if ($days instanceof \DateTime || $days instanceof \DateTimeInterface) {
                 $self = $days;
                 $days = 1;
@@ -304,6 +328,9 @@ class BusinessDay
         $carbonClass = static::getCarbonClass();
 
         return function ($days = 1, $self = null) use ($carbonClass) {
+            if (!isset($self) && isset($this)) {
+                $self = $this;
+            }
             if ($days instanceof \DateTime || $days instanceof \DateTimeInterface) {
                 $self = $days;
                 $days = 1;
@@ -325,6 +352,9 @@ class BusinessDay
         $carbonClass = static::getCarbonClass();
 
         return function ($days = 1, $self = null) use ($carbonClass) {
+            if (!isset($self) && isset($this)) {
+                $self = $this;
+            }
             if ($days instanceof \DateTime || $days instanceof \DateTimeInterface) {
                 $self = $days;
                 $days = 1;
