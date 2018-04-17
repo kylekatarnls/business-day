@@ -14,12 +14,12 @@ trait Macroable
      *
      * @var array
      */
-    protected static $macros = [];
+    protected static $macros = array();
 
     /**
      * Register a custom macro.
      *
-     * @param string $name
+     * @param string          $name
      * @param object|callable $macro
      *
      * @return void
@@ -73,7 +73,7 @@ trait Macroable
      */
     public static function __callStatic($method, $parameters)
     {
-        if (! static::hasMacro($method)) {
+        if (!static::hasMacro($method)) {
             throw new BadMethodCallException("Method {$method} does not exist.");
         }
 
@@ -96,7 +96,7 @@ trait Macroable
      */
     public function __call($method, $parameters)
     {
-        if (! static::hasMacro($method)) {
+        if (!static::hasMacro($method)) {
             throw new BadMethodCallException("Method {$method} does not exist.");
         }
 
