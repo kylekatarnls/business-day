@@ -1,6 +1,11 @@
 <?php
 
-// http://www.vlada.si/o_sloveniji/politicni_sistem/prazniki/
+/**
+ * Slovenian holidays.
+ *
+ * Days that are commented are holidays, but not work-free-days.
+ * Source: http://www.vlada.si/o_sloveniji/politicni_sistem/prazniki/
+ */
 return array(
     '01/01', // novo leto
     '02/01', // novo leto
