@@ -2,7 +2,6 @@
 
 namespace Tests\Cmixin\Holidays;
 
-use Cmixin\BusinessDay;
 use PHPUnit\Framework\TestCase;
 
 class SiTest extends TestCase
