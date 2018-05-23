@@ -5,22 +5,16 @@ namespace Tests\Cmixin\Holidays;
 use Cmixin\BusinessDay;
 use PHPUnit\Framework\TestCase;
 
-class SlTest extends TestCase
+class SiTest extends TestCase
 {
     const CARBON_CLASS = 'Carbon\Carbon';
-
-    protected function setUp()
-    {
-        BusinessDay::enable(static::CARBON_CLASS);
-        $carbon = static::CARBON_CLASS;
-        $carbon::resetHolidays();
-    }
 
     public function testHolidays()
     {
         $carbon = static::CARBON_CLASS;
-        $carbon::setHolidaysRegion('sl-national');
-        $holidays = include __DIR__.'/../../../src/Cmixin/Holidays/sl-national.php';
+        $carbon::resetHolidays();
+        $carbon::setHolidaysRegion('si-national');
+        $holidays = include __DIR__.'/../../../src/Cmixin/Holidays/si-national.php';
 
         $randomYear = rand(1991, 2028);
         $randomHolidays = array();
