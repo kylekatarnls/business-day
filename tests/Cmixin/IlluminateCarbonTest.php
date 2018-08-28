@@ -12,6 +12,10 @@ class IlluminateCarbonTest extends BusinessDayTest
             self::markTestSkipped('IlluminateCarbon compatible only from PHP 5.5');
         }
 
+        if (class_exists('Carbon\CarbonImmutable')) {
+            include_once __DIR__ . '/IlluminateCarbon2.php';
+        }
+
         parent::setUp();
     }
 }
