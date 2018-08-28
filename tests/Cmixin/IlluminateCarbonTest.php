@@ -13,7 +13,7 @@ class IlluminateCarbonTest extends BusinessDayTest
         }
 
         if (class_exists('Carbon\CarbonImmutable')) {
-            include_once __DIR__ . '/IlluminateCarbon2.php';
+            include_once __DIR__.'/IlluminateCarbon2.php';
         }
 
         parent::setUp();
