@@ -4,9 +4,9 @@ dist: trusty
 
 sudo: required
 
-env:
-  global:
-    - setup=stable
+cache:
+  directories:
+    - $HOME/.composer/cache
 
 matrix:
   fast_finish: true
@@ -52,4 +52,5 @@ after_success:
 
 env:
   global:
+    - setup=stable
     - CC_TEST_REPORTER_ID=445bfa02f795c64b7cfe96c610d906b46a7b889acc965139c990184238742909
