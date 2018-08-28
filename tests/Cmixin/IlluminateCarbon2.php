@@ -4,6 +4,6 @@ namespace Tests\Cmixin;
 
 use Carbon\Carbon as BaseCarbon;
 
-class IlluminateCarbon extends BaseCarbon
+class IlluminateCarbon2 extends BaseCarbon
 {
 }
