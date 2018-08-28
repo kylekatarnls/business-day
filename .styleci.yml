@@ -3,3 +3,7 @@ enabled:
 
 disabled:
   - short_array_syntax
+
+finder:
+  not-path:
+    - "tests/Cmixin/IlluminateCarbon2.php"
