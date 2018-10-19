@@ -112,7 +112,5 @@ class NlTest extends TestCase
         self::assertTrue($carbon::parse('2020-12-26 00:00:00')->isHoliday());
 
         self::assertTrue($carbon::parse('2025-04-26')->isHoliday()); // Kingsday on Sunday :-> Saturday
-
     }
-    
 }
