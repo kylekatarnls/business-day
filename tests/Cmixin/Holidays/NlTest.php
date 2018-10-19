@@ -2,13 +2,12 @@
 /**
  * Author: Herman Slatman
  * Date: 20/10/2018
- * Time: 00:11
+ * Time: 00:11.
  */
 
 namespace Tests\Cmixin\Holidays;
 
 use Cmixin\BusinessDay;
-
 use PHPUnit\Framework\TestCase;
 
 class NlTest extends TestCase
@@ -29,7 +28,7 @@ class NlTest extends TestCase
         $holidays = include __DIR__.'/../../../src/Cmixin/Holidays/nl-national.php';
 
         $randomYear = rand(1991, 2028);
-        $randomHolidays = [];
+        $randomHolidays = array();
         foreach ($holidays as $holiday) {
             if (is_callable($holiday)) {
                 $randomHolidays[] = $holiday($randomYear);
@@ -68,7 +67,6 @@ class NlTest extends TestCase
         self::assertTrue($carbon::parse('2000-12-25 00:00:00')->isHoliday());
         self::assertTrue($carbon::parse('2000-12-26 00:00:00')->isHoliday());
 
-
         self::assertTrue($carbon::parse('2019-04-21')->isHoliday());
         self::assertTrue($carbon::parse('2019-04-22')->isHoliday());
         self::assertTrue($carbon::parse('2020-04-12')->isHoliday());
@@ -92,7 +90,6 @@ class NlTest extends TestCase
         self::assertTrue($carbon::parse('2029-04-01')->isHoliday());
         self::assertTrue($carbon::parse('2029-04-02')->isHoliday());
 
-
         self::assertTrue($carbon::parse('2019-01-01 00:00:00')->isHoliday());
         self::assertTrue($carbon::parse('2019-04-21')->isHoliday());
         self::assertTrue($carbon::parse('2019-04-22')->isHoliday());
@@ -102,7 +99,6 @@ class NlTest extends TestCase
         self::assertTrue($carbon::parse('2019-06-10')->isHoliday());
         self::assertTrue($carbon::parse('2019-12-25 00:00:00')->isHoliday());
         self::assertTrue($carbon::parse('2019-12-26 00:00:00')->isHoliday());
-
 
         self::assertTrue($carbon::parse('2020-01-01 00:00:00')->isHoliday());
         self::assertTrue($carbon::parse('2020-04-12')->isHoliday());
@@ -115,8 +111,8 @@ class NlTest extends TestCase
         self::assertTrue($carbon::parse('2020-12-25 00:00:00')->isHoliday());
         self::assertTrue($carbon::parse('2020-12-26 00:00:00')->isHoliday());
 
-
         self::assertTrue($carbon::parse('2025-04-26')->isHoliday()); // Kingsday on Sunday :-> Saturday
 
     }
+    
 }
