@@ -12,13 +12,13 @@ return array(
     '01/05', // Fête du travail
     '08/05', // Victoire 1945
     function ($year) { // Ascension
-        $days = easter_days($year) + 40;
+        $days = easter_days($year) + 39;
         $date = new DateTime("$year-03-21 +$days days");
 
         return $date->format('d/m');
     },
     function ($year) { // Lundi de Pentecôte
-        $days = easter_days($year) + 51;
+        $days = easter_days($year) + 50;
         $date = new DateTime("$year-03-21 +$days days");
 
         return $date->format('d/m');
