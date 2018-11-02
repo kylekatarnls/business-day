@@ -3,8 +3,9 @@
 namespace Cmixin;
 
 use Carbon\Carbon;
+use Cmixin\BusinessDay\HolidayObserver;
 
-class BusinessDay extends Holiday
+class BusinessDay extends HolidayObserver
 {
     /**
      * Checks the date to see if it is a business day.
@@ -107,15 +108,16 @@ class BusinessDay extends Holiday
     public function addBusinessDays($factor = 1)
     {
         $getThisOrToday = static::getThisOrToday();
+        $carbonClass = static::getCarbonClass();
 
-        return function ($days = 1, $self = null) use ($factor, $getThisOrToday) {
-            /** @var Carbon|BusinessDay $self */
-            $self = $getThisOrToday($self, isset($this) ? $this : null);
-
+        return function ($days = 1, $self = null) use ($factor, $getThisOrToday, $carbonClass) {
             if ($days instanceof \DateTime || $days instanceof \DateTimeInterface) {
-                $self = $days;
+                $self = $carbonClass::instance($days);
                 $days = 1;
             }
+
+            /** @var Carbon|BusinessDay $self */
+            $self = $getThisOrToday($self, isset($this) ? $this : null);
 
             $days *= $factor;
 

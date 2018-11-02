@@ -1,8 +1,8 @@
 <?php
 
-namespace Cmixin;
+namespace Cmixin\BusinessDay;
 
-class EnableFacadeMixinBase
+abstract class MixinBase
 {
     protected static $carbonClass = null;
 

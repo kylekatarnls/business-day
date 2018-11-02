@@ -1,13 +1,14 @@
 <?php
 
-namespace Cmixin;
+namespace Cmixin\BusinessDay;
 
 use Carbon\Carbon;
+use Cmixin\BusinessDay;
 
 class Holiday extends HolidaysList
 {
     /**
-     * Get the identifier of the current holiday or false if it's not an holiday.
+     * Get the identifier of the current holiday or false if it's not a holiday.
      *
      * @return \Closure
      */
@@ -37,7 +38,7 @@ class Holiday extends HolidaysList
     }
 
     /**
-     * Checks the date to see if it is an holiday.
+     * Checks the date to see if it is a holiday.
      *
      * @return \Closure
      */
