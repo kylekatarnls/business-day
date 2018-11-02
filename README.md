@@ -172,6 +172,23 @@ Carbon::parse('2019-01-21')->isHoliday() // true for 2019
 Carbon::isHoliday() // true if today is a holiday
 ```
 
+#### getHolidayId
+
+Same as `isHoliday` but returns a string id for the given holiday, so you can target specific holidays.
+
+```php
+Carbon::setHolidaysRegion('us-national');
+Carbon::parse('2018-12-25')->getHolidayId() // "christmas"
+Carbon::parse('2018-01-15')->getHolidayId() // "mlk-day"
+// Returns false if the day is not a holiday
+Carbon::parse('2018-01-21')->getHolidayId() // false
+
+$nextWeekHoliday = Carbon::today()->addWeek()->getHolidayId();
+if ($nextWeekHoliday === 'easter' or $nextWeekHoliday === 'christmas') {
+  echo 'Time to get chocolates.';
+}
+```
+
 #### isBusinessDay
 
 Returns `true` if the date (Carbon instance) is nor a week-end day neither

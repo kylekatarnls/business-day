@@ -124,6 +124,37 @@ class BusinessDay
     }
 
     /**
+     * Get the identifier of the current holiday or false if it's not an holiday.
+     *
+     * @return \Closure
+     */
+    public function getHolidayId()
+    {
+        $carbonClass = static::getCarbonClass();
+
+        return function ($self = null) use ($carbonClass) {
+            if (!isset($self) && isset($this)) {
+                $self = $this;
+            }
+            /** @var Carbon $self */
+            $self = $self ?: $carbonClass::today();
+            $holidays = $carbonClass::getHolidays();
+            $date = $self->format('d/m');
+            foreach ($holidays as $key => $holiday) {
+                if (is_callable($holiday)) {
+                    $holiday = call_user_func($holiday, $self->year);
+                }
+
+                if ($date === $holiday) {
+                    return $key;
+                }
+            }
+
+            return false;
+        };
+    }
+
+    /**
      * Checks the date to see if it is an holiday.
      *
      * @return \Closure
@@ -138,19 +169,8 @@ class BusinessDay
             }
             /** @var Carbon $self */
             $self = $self ?: $carbonClass::today();
-            $holidays = $carbonClass::getHolidays();
-            $date = $self->format('d/m');
-            foreach ($holidays as $holiday) {
-                if (is_callable($holiday)) {
-                    $holiday = call_user_func($holiday, $self->year);
-                }
 
-                if ($date === $holiday) {
-                    return true;
-                }
-            }
-
-            return false;
+            return $self->getHolidayId() !== false;
         };
     }
 

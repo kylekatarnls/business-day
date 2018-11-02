@@ -441,4 +441,16 @@ class BusinessDayTest extends TestCase
         $carbon::setTestNow($carbon::parse('2018-11-11 12:00:00'));
         self::assertSame('09/11/2018', $carbon::subBusinessDays()->format('d/m/Y'));
     }
+
+    public function testGetHolidayId()
+    {
+        $carbon = static::CARBON_CLASS;
+        $carbon::setHolidaysRegion('fr-national');
+        $date = $carbon::parse('2018-12-26 12:00:00');
+        self::assertFalse($date->getHolidayId());
+        $carbon::setHolidaysRegion('fr-east');
+        self::assertSame('christmas-next-day', $date->getHolidayId());
+        $carbon::setHolidaysRegion('si-national');
+        self::assertSame('independence-day', $date->getHolidayId());
+    }
 }
