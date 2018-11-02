@@ -73,6 +73,8 @@ class BusinessDayTest extends TestCase
             self::assertFalse($carbon::parse("$year-12-26 03:30:40")->isHoliday());
             self::assertTrue($carbon::parse("$year-12-27 03:30:40")->isHoliday());
             self::assertSame($coruscantHolidays, $carbon::getHolidays());
+
+            self::assertTrue($carbon::initializeHolidaysRegion());
         }
     }
 
@@ -452,5 +454,75 @@ class BusinessDayTest extends TestCase
         self::assertSame('christmas-next-day', $date->getHolidayId());
         $carbon::setHolidaysRegion('si-national');
         self::assertSame('independence-day', $date->getHolidayId());
+    }
+
+    public function testObservedHolidaysZone()
+    {
+        $carbon = static::CARBON_CLASS;
+        self::assertSame('default', $carbon::getObservedHolidaysZone());
+        self::assertSame('default', $carbon::now()->getObservedHolidaysZone());
+        $carbon::setObservedHolidaysZone('my-company');
+        self::assertSame('my-company', $carbon::getObservedHolidaysZone());
+        self::assertSame('my-company', $carbon::now()->getObservedHolidaysZone());
+        $carbon::now()->setObservedHolidaysZone('foobar');
+        self::assertSame('foobar', $carbon::getObservedHolidaysZone());
+        self::assertSame('foobar', $carbon::now()->getObservedHolidaysZone());
+    }
+
+    public function testObserveHolidays()
+    {
+        $carbon = static::CARBON_CLASS;
+        $carbon::setHolidaysRegion('fr-national');
+        self::assertFalse($carbon::isObservedHoliday('new-year'));
+        self::assertFalse($carbon::isObservedHoliday('christmas'));
+        self::assertFalse($carbon::parse('2018-01-01')->isObservedHoliday());
+        self::assertFalse($carbon::parse('2018-12-25')->isObservedHoliday());
+        self::assertFalse($carbon::parse('2018-12-26')->isObservedHoliday());
+        $carbon::observeHoliday('christmas');
+        self::assertFalse($carbon::isObservedHoliday('new-year'));
+        self::assertTrue($carbon::isObservedHoliday('christmas'));
+        self::assertFalse($carbon::parse('2018-01-01')->isObservedHoliday());
+        self::assertTrue($carbon::parse('2018-12-25')->isObservedHoliday());
+        self::assertFalse($carbon::parse('2018-12-26')->isObservedHoliday());
+        $carbon::unobserveHoliday('christmas');
+        self::assertFalse($carbon::isObservedHoliday('new-year'));
+        self::assertFalse($carbon::isObservedHoliday('christmas'));
+        self::assertFalse($carbon::parse('2018-01-01')->isObservedHoliday());
+        self::assertFalse($carbon::parse('2018-12-25')->isObservedHoliday());
+        self::assertFalse($carbon::parse('2018-12-26')->isObservedHoliday());
+        $carbon::observeAllHolidays();
+        self::assertTrue($carbon::isObservedHoliday('new-year'));
+        self::assertTrue($carbon::isObservedHoliday('christmas'));
+        self::assertTrue($carbon::parse('2018-01-01')->isObservedHoliday());
+        self::assertTrue($carbon::parse('2018-12-25')->isObservedHoliday());
+        self::assertFalse($carbon::parse('2018-12-26')->isObservedHoliday());
+        $carbon::unobserveHoliday('christmas');
+        self::assertTrue($carbon::isObservedHoliday('new-year'));
+        self::assertFalse($carbon::isObservedHoliday('christmas'));
+        self::assertTrue($carbon::parse('2018-01-01')->isObservedHoliday());
+        self::assertFalse($carbon::parse('2018-12-25')->isObservedHoliday());
+        self::assertFalse($carbon::parse('2018-12-26')->isObservedHoliday());
+        $carbon::unobserveAllHolidays();
+        self::assertFalse($carbon::isObservedHoliday('new-year'));
+        self::assertFalse($carbon::isObservedHoliday('christmas'));
+        self::assertFalse($carbon::parse('2018-01-01')->isObservedHoliday());
+        self::assertFalse($carbon::parse('2018-12-25')->isObservedHoliday());
+        self::assertFalse($carbon::parse('2018-12-26')->isObservedHoliday());
+        $carbon::observeHolidays(['christmas', 'new-year']);
+        self::assertTrue($carbon::isObservedHoliday('new-year'));
+        self::assertTrue($carbon::isObservedHoliday('christmas'));
+        self::assertTrue($carbon::parse('2018-01-01')->isObservedHoliday());
+        self::assertTrue($carbon::parse('2018-12-25')->isObservedHoliday());
+        self::assertFalse($carbon::parse('2018-12-26')->isObservedHoliday());
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage You must pass holiday names as a string or "all".
+     */
+    public function testObserveHolidaysInvalidArgument()
+    {
+        $carbon = static::CARBON_CLASS;
+        $carbon::observeHoliday(42);
     }
 }

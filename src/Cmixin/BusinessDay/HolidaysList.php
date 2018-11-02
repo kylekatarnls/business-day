@@ -1,8 +1,8 @@
 <?php
 
-namespace Cmixin;
+namespace Cmixin\BusinessDay;
 
-class HolidaysList extends EnableFacadeMixinBase
+class HolidaysList extends MixinBase
 {
     /**
      * @var array
@@ -26,7 +26,7 @@ class HolidaysList extends EnableFacadeMixinBase
         return function ($region) use ($mixin) {
             $region = preg_replace('/[^a-zA-Z0-9_-]/', '', $region);
             $mixin->holidaysRegion = $region;
-            if (!isset($mixin->holidays[$region]) && file_exists($file = __DIR__."/Holidays/$region.php")) {
+            if (!isset($mixin->holidays[$region]) && file_exists($file = __DIR__."/../Holidays/$region.php")) {
                 $mixin->holidays[$region] = include $file;
             }
         };
@@ -82,6 +82,8 @@ class HolidaysList extends EnableFacadeMixinBase
 
     /**
      * Initialize holidays region storage.
+     *
+     * @param string|null $region
      *
      * @return \Closure|$this
      */
