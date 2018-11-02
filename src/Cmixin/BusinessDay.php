@@ -3,9 +3,9 @@
 namespace Cmixin;
 
 use Carbon\Carbon;
-use Cmixin\BusinessDay\ObserveHoliday;
+use Cmixin\BusinessDay\HolidayObserver;
 
-class BusinessDay extends ObserveHoliday
+class BusinessDay extends HolidayObserver
 {
     /**
      * Checks the date to see if it is a business day.

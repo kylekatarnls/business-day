@@ -5,7 +5,7 @@ namespace Cmixin\BusinessDay;
 use Carbon\Carbon;
 use Cmixin\BusinessDay;
 
-class ObserveHoliday extends Holiday
+class HolidayObserver extends Holiday
 {
     const OBSERVE_ALL_HOLIDAYS = 'all';
 
@@ -85,9 +85,8 @@ class ObserveHoliday extends Holiday
     public function getObserveHolidayMethod($defaultValue = null, $defaultDay = null)
     {
         $mixin = $this;
-        $allHolidays = static::OBSERVE_ALL_HOLIDAYS;
 
-        return function ($day = null, $value = null, $self = null) use ($mixin, $defaultValue, $defaultDay, $allHolidays) {
+        return function ($day = null, $value = null, $self = null) use ($mixin, $defaultValue, $defaultDay) {
             if (!$day && $defaultDay) {
                 $day = $defaultDay;
             }
@@ -95,9 +94,9 @@ class ObserveHoliday extends Holiday
                 $value = $defaultValue;
             }
             $days = (array) $day;
-            $setHolidayObserveStatus = $mixin->setHolidayObserveStatus();
+            $setter = $mixin->setHolidayObserveStatus();
             foreach ($days as $day) {
-                $setHolidayObserveStatus($day, $value);
+                $setter($day, $value);
             }
 
             return isset($this) ? $this : (isset($self) ? $self : null);
