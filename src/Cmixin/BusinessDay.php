@@ -4,176 +4,8 @@ namespace Cmixin;
 
 use Carbon\Carbon;
 
-class BusinessDay
+class BusinessDay extends Holiday
 {
-    protected static $carbonClass = null;
-
-    public $holidays = array();
-
-    public $holidaysRegion = null;
-
-    protected static function getCarbonClass()
-    {
-        return static::$carbonClass ?: 'Carbon\Carbon';
-    }
-
-    public static function enable($carbonClass = null)
-    {
-        if ($carbonClass === null) {
-            return function () {
-                return true;
-            };
-        }
-
-        static::$carbonClass = $carbonClass;
-        $carbonClass = static::getCarbonClass();
-        $mixin = new static();
-
-        $carbonClass::mixin($mixin);
-
-        return $mixin;
-    }
-
-    /**
-     * Set the holidays region (see src/Cmixin/Holidays for examples).
-     *
-     * @return \Closure
-     */
-    public function setHolidaysRegion()
-    {
-        $mixin = $this;
-
-        return function ($region) use ($mixin) {
-            $region = preg_replace('/[^a-zA-Z0-9_-]/', '', $region);
-            $mixin->holidaysRegion = $region;
-            if (!isset($mixin->holidays[$region]) && file_exists($file = __DIR__."/Holidays/$region.php")) {
-                $mixin->holidays[$region] = include $file;
-            }
-        };
-    }
-
-    /**
-     * Get the holidays for the current region selected.
-     *
-     * @return \Closure
-     */
-    public function getHolidays()
-    {
-        $mixin = $this;
-
-        return function ($region = null) use ($mixin) {
-            $region = is_string($region) ? $region : $mixin->holidaysRegion;
-            if (!$region || !isset($mixin->holidays[$region])) {
-                return array();
-            }
-
-            return $mixin->holidays[$region];
-        };
-    }
-
-    /**
-     * Set the holidays list.
-     *
-     * @return \Closure
-     */
-    public function setHolidays()
-    {
-        $mixin = $this;
-
-        return function ($region, $holidays) use ($mixin) {
-            $mixin->holidays[$region] = $holidays;
-        };
-    }
-
-    /**
-     * Set the holidays list.
-     *
-     * @return \Closure
-     */
-    public function resetHolidays()
-    {
-        $mixin = $this;
-
-        return function () use ($mixin) {
-            $mixin->holidaysRegion = null;
-            $mixin->holidays = array();
-        };
-    }
-
-    /**
-     * Add holidays to the holidays list.
-     *
-     * @return \Closure
-     */
-    public function addHolidays()
-    {
-        $mixin = $this;
-
-        return function ($region, $holidays) use ($mixin) {
-            if (!isset($mixin->holidays[$region])) {
-                $mixin->holidays[$region] = array();
-            }
-            if ($mixin->holidays[$region] instanceof \Traversable) {
-                $mixin->holidays[$region] = iterator_to_array($mixin->holidays[$region]);
-            }
-
-            foreach ($holidays as $holiday) {
-                $mixin->holidays[$region][] = $holiday;
-            }
-        };
-    }
-
-    /**
-     * Get the identifier of the current holiday or false if it's not an holiday.
-     *
-     * @return \Closure
-     */
-    public function getHolidayId()
-    {
-        $carbonClass = static::getCarbonClass();
-
-        return function ($self = null) use ($carbonClass) {
-            if (!isset($self) && isset($this)) {
-                $self = $this;
-            }
-            /** @var Carbon $self */
-            $self = $self ?: $carbonClass::today();
-            $holidays = $carbonClass::getHolidays();
-            $date = $self->format('d/m');
-            foreach ($holidays as $key => $holiday) {
-                if (is_callable($holiday)) {
-                    $holiday = call_user_func($holiday, $self->year);
-                }
-
-                if ($date === $holiday) {
-                    return $key;
-                }
-            }
-
-            return false;
-        };
-    }
-
-    /**
-     * Checks the date to see if it is an holiday.
-     *
-     * @return \Closure
-     */
-    public function isHoliday()
-    {
-        $carbonClass = static::getCarbonClass();
-
-        return function ($self = null) use ($carbonClass) {
-            if (!isset($self) && isset($this)) {
-                $self = $this;
-            }
-            /** @var Carbon $self */
-            $self = $self ?: $carbonClass::today();
-
-            return $self->getHolidayId() !== false;
-        };
-    }
-
     /**
      * Checks the date to see if it is a business day.
      *
@@ -181,14 +13,11 @@ class BusinessDay
      */
     public function isBusinessDay()
     {
-        $carbonClass = static::getCarbonClass();
+        $getThisOrToday = static::getThisOrToday();
 
-        return function ($self = null) use ($carbonClass) {
-            if (!isset($self) && isset($this)) {
-                $self = $this;
-            }
+        return function ($self = null) use ($getThisOrToday) {
             /** @var Carbon|BusinessDay $self */
-            $self = $self ?: $carbonClass::today();
+            $self = $getThisOrToday($self, isset($this) ? $this : null);
 
             return $self->isWeekday() && !$self->isHoliday();
         };
@@ -201,14 +30,11 @@ class BusinessDay
      */
     public function nextBusinessDay()
     {
-        $carbonClass = static::getCarbonClass();
+        $getThisOrToday = static::getThisOrToday();
 
-        return function ($self = null) use ($carbonClass) {
-            if (!isset($self) && isset($this)) {
-                $self = $this;
-            }
+        return function ($self = null) use ($getThisOrToday) {
             /** @var Carbon|BusinessDay $self */
-            $self = $self ?: $carbonClass::today();
+            $self = $getThisOrToday($self, isset($this) ? $this : null);
 
             do {
                 $self->addDay();
@@ -225,14 +51,11 @@ class BusinessDay
      */
     public function currentOrNextBusinessDay()
     {
-        $carbonClass = static::getCarbonClass();
+        $getThisOrToday = static::getThisOrToday();
 
-        return function ($self = null) use ($carbonClass) {
-            if (!isset($self) && isset($this)) {
-                $self = $this;
-            }
+        return function ($self = null) use ($getThisOrToday) {
             /** @var Carbon|BusinessDay $self */
-            $self = $self ?: $carbonClass::today();
+            $self = $getThisOrToday($self, isset($this) ? $this : null);
 
             return $self->isBusinessDay() ? $self : $self->nextBusinessDay();
         };
@@ -245,14 +68,11 @@ class BusinessDay
      */
     public function previousBusinessDay()
     {
-        $carbonClass = static::getCarbonClass();
+        $getThisOrToday = static::getThisOrToday();
 
-        return function ($self = null) use ($carbonClass) {
-            if (!isset($self) && isset($this)) {
-                $self = $this;
-            }
+        return function ($self = null) use ($getThisOrToday) {
             /** @var Carbon|BusinessDay $self */
-            $self = $self ?: $carbonClass::today();
+            $self = $getThisOrToday($self, isset($this) ? $this : null);
 
             do {
                 $self->subDay();
@@ -269,14 +89,11 @@ class BusinessDay
      */
     public function currentOrPreviousBusinessDay()
     {
-        $carbonClass = static::getCarbonClass();
+        $getThisOrToday = static::getThisOrToday();
 
-        return function ($self = null) use ($carbonClass) {
-            if (!isset($self) && isset($this)) {
-                $self = $this;
-            }
+        return function ($self = null) use ($getThisOrToday) {
             /** @var Carbon|BusinessDay $self */
-            $self = $self ?: $carbonClass::today();
+            $self = $getThisOrToday($self, isset($this) ? $this : null);
 
             return $self->isBusinessDay() ? $self : $self->previousBusinessDay();
         };
@@ -287,20 +104,20 @@ class BusinessDay
      *
      * @return \Closure
      */
-    public function addBusinessDays()
+    public function addBusinessDays($factor = 1)
     {
-        $carbonClass = static::getCarbonClass();
+        $getThisOrToday = static::getThisOrToday();
 
-        return function ($days = 1, $self = null) use ($carbonClass) {
-            if (!isset($self) && isset($this)) {
-                $self = $this;
-            }
+        return function ($days = 1, $self = null) use ($factor, $getThisOrToday) {
+            /** @var Carbon|BusinessDay $self */
+            $self = $getThisOrToday($self, isset($this) ? $this : null);
+
             if ($days instanceof \DateTime || $days instanceof \DateTimeInterface) {
                 $self = $days;
                 $days = 1;
             }
-            /** @var Carbon|BusinessDay $self */
-            $self = $self ?: $carbonClass::today();
+
+            $days *= $factor;
 
             for ($i = $days; $i > 0; $i--) {
                 $self = $self->nextBusinessDay();
@@ -321,21 +138,7 @@ class BusinessDay
      */
     public function addBusinessDay()
     {
-        $carbonClass = static::getCarbonClass();
-
-        return function ($days = 1, $self = null) use ($carbonClass) {
-            if (!isset($self) && isset($this)) {
-                $self = $this;
-            }
-            if ($days instanceof \DateTime || $days instanceof \DateTimeInterface) {
-                $self = $days;
-                $days = 1;
-            }
-            /** @var Carbon|BusinessDay $self */
-            $self = $self ?: $carbonClass::today();
-
-            return $self->addBusinessDays($days);
-        };
+        return $this->addBusinessDays();
     }
 
     /**
@@ -345,21 +148,7 @@ class BusinessDay
      */
     public function subBusinessDays()
     {
-        $carbonClass = static::getCarbonClass();
-
-        return function ($days = 1, $self = null) use ($carbonClass) {
-            if (!isset($self) && isset($this)) {
-                $self = $this;
-            }
-            if ($days instanceof \DateTime || $days instanceof \DateTimeInterface) {
-                $self = $days;
-                $days = 1;
-            }
-            /** @var Carbon|BusinessDay $self */
-            $self = $self ?: $carbonClass::today();
-
-            return $self->addBusinessDays(-$days);
-        };
+        return $this->addBusinessDays(-1);
     }
 
     /**
@@ -369,20 +158,6 @@ class BusinessDay
      */
     public function subBusinessDay()
     {
-        $carbonClass = static::getCarbonClass();
-
-        return function ($days = 1, $self = null) use ($carbonClass) {
-            if (!isset($self) && isset($this)) {
-                $self = $this;
-            }
-            if ($days instanceof \DateTime || $days instanceof \DateTimeInterface) {
-                $self = $days;
-                $days = 1;
-            }
-            /** @var Carbon|BusinessDay $self */
-            $self = $self ?: $carbonClass::today();
-
-            return $self->subBusinessDays($days);
-        };
+        return $this->subBusinessDays();
     }
 }

@@ -25,19 +25,22 @@ return array(
     'christmas'        => '25/12', // božič
     'independence-day' => '26/12', // dan samostojnosti in enotnosti
 
-    'easter' => function ($year) { // velika noč
+    // velika noč
+    'easter' => function ($year) {
         $days = easter_days($year);
         $date = new DateTime("$year-03-21 +$days days");
 
         return $date->format('d/m');
     },
-    'easter-monday' => function ($year) { // velikonočni ponedeljek
+    // velikonočni ponedeljek
+    'easter-monday' => function ($year) {
         $days = easter_days($year) + 1;
         $date = new DateTime("$year-03-21 +$days days");
 
         return $date->format('d/m');
     },
-    'pentecost' => function ($year) { // binkoštna nedelja - binkošti
+    // binkoštna nedelja - binkošti
+    'pentecost' => function ($year) {
         $days = easter_days($year) + 49;
         $date = new DateTime("$year-03-21 +$days days");
 
