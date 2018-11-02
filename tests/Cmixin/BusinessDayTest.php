@@ -385,6 +385,7 @@ class BusinessDayTest extends TestCase
         self::assertSame('17/04/2018', $carbon::addBusinessDays()->format('d/m/Y'));
         $carbon::setTestNow($carbon::parse('2018-11-11 12:00:00'));
         self::assertSame('12/11/2018', $carbon::addBusinessDays()->format('d/m/Y'));
+        self::assertSame('12/11/2018', $carbon::addBusinessDays(new \DateTime('2018-11-11 12:00:00'))->format('d/m/Y'));
     }
 
     public function testSubBusinessDay()
@@ -478,12 +479,22 @@ class BusinessDayTest extends TestCase
         self::assertFalse($carbon::parse('2018-01-01')->isObservedHoliday());
         self::assertFalse($carbon::parse('2018-12-25')->isObservedHoliday());
         self::assertFalse($carbon::parse('2018-12-26')->isObservedHoliday());
+        $carbon::setTestNow('2018-12-26');
+        self::assertFalse($carbon::isObservedHoliday());
+        $carbon::setTestNow('2018-12-25');
+        self::assertFalse($carbon::isObservedHoliday());
+        self::assertFalse($carbon::isObservedHoliday(new \DateTime('2018-12-25')));
         $carbon::observeHoliday('christmas');
         self::assertFalse($carbon::isObservedHoliday('new-year'));
         self::assertTrue($carbon::isObservedHoliday('christmas'));
         self::assertFalse($carbon::parse('2018-01-01')->isObservedHoliday());
         self::assertTrue($carbon::parse('2018-12-25')->isObservedHoliday());
         self::assertFalse($carbon::parse('2018-12-26')->isObservedHoliday());
+        $carbon::setTestNow('2018-12-26');
+        self::assertFalse($carbon::isObservedHoliday());
+        $carbon::setTestNow('2018-12-25');
+        self::assertTrue($carbon::isObservedHoliday());
+        self::assertTrue($carbon::isObservedHoliday(new \DateTime('2018-12-25')));
         $carbon::unobserveHoliday('christmas');
         self::assertFalse($carbon::isObservedHoliday('new-year'));
         self::assertFalse($carbon::isObservedHoliday('christmas'));

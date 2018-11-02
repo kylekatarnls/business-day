@@ -8,6 +8,7 @@ use Cmixin\BusinessDay;
 class ObserveHoliday extends Holiday
 {
     const OBSERVE_ALL_HOLIDAYS = 'all';
+
     /**
      * @var array
      */
@@ -27,10 +28,10 @@ class ObserveHoliday extends Holiday
     {
         $mixin = $this;
 
-        return function ($zone) use ($mixin) {
+        return function ($zone, $self = null) use ($mixin) {
             $mixin->observedHolidaysZone = $zone;
 
-            return isset($this) ? $this : null;
+            return isset($this) ? $this : (isset($self) ? $self : null);
         };
     }
 
@@ -53,32 +54,64 @@ class ObserveHoliday extends Holiday
      *
      * @return \Closure
      */
-    public function observeHoliday($defaultValue = true, $defaultDay = null)
+    public function setHolidayObserveStatus()
     {
         $mixin = $this;
         $allHolidays = static::OBSERVE_ALL_HOLIDAYS;
 
-        return function ($day = null, $value = null) use ($mixin, $defaultValue, $defaultDay, $allHolidays) {
+        return function ($day, $value, $self = null) use ($mixin, $allHolidays) {
+            if (!is_string($day)) {
+                throw new \InvalidArgumentException(
+                    'You must pass holiday names as a string or "'.$allHolidays.'".'
+                );
+            }
+
+            $zone = $mixin->observedHolidaysZone;
+            if ($day === $allHolidays || !isset($mixin->observedHolidays[$zone])) {
+                $mixin->observedHolidays[$zone] = array();
+            }
+
+            $mixin->observedHolidays[$zone][$day] = $value;
+
+            return isset($this) ? $this : (isset($self) ? $self : null);
+        };
+    }
+
+    /**
+     * Set a holiday as observed in the selected zone.
+     *
+     * @return \Closure
+     */
+    public function getObserveHolidayMethod($defaultValue = null, $defaultDay = null)
+    {
+        $mixin = $this;
+        $allHolidays = static::OBSERVE_ALL_HOLIDAYS;
+
+        return function ($day = null, $value = null, $self = null) use ($mixin, $defaultValue, $defaultDay, $allHolidays) {
             if (!$day && $defaultDay) {
                 $day = $defaultDay;
             }
+            if ($value === null) {
+                $value = $defaultValue;
+            }
             $days = (array) $day;
+            $setHolidayObserveStatus = $mixin->setHolidayObserveStatus();
             foreach ($days as $day) {
-                if (!is_string($day)) {
-                    throw new \InvalidArgumentException(
-                        'You must pass holiday names as a string or "'.$allHolidays.'".'
-                    );
-                }
-                $zone = $mixin->observedHolidaysZone;
-                if ($day === $allHolidays || !isset($mixin->observedHolidays[$zone])) {
-                    $mixin->observedHolidays[$zone] = array();
-                }
-
-                $mixin->observedHolidays[$zone][$day] = $value === null ? $defaultValue : $value;
+                $setHolidayObserveStatus($day, $value);
             }
 
-            return isset($this) ? $this : null;
+            return isset($this) ? $this : (isset($self) ? $self : null);
         };
+    }
+
+    /**
+     * Set a holiday as observed in the selected zone.
+     *
+     * @return \Closure
+     */
+    public function observeHoliday()
+    {
+        return $this->getObserveHolidayMethod(true);
     }
 
     /**
@@ -88,7 +121,7 @@ class ObserveHoliday extends Holiday
      */
     public function unobserveHoliday()
     {
-        return $this->observeHoliday(false);
+        return $this->getObserveHolidayMethod(false);
     }
 
     /**
@@ -98,7 +131,7 @@ class ObserveHoliday extends Holiday
      */
     public function observeHolidays()
     {
-        return $this->observeHoliday(true);
+        return $this->getObserveHolidayMethod(true);
     }
 
     /**
@@ -108,7 +141,7 @@ class ObserveHoliday extends Holiday
      */
     public function unobserveHolidays()
     {
-        return $this->observeHoliday(false);
+        return $this->getObserveHolidayMethod(false);
     }
 
     /**
@@ -118,7 +151,7 @@ class ObserveHoliday extends Holiday
      */
     public function observeAllHolidays()
     {
-        return $this->observeHoliday(true, static::OBSERVE_ALL_HOLIDAYS);
+        return $this->getObserveHolidayMethod(true, static::OBSERVE_ALL_HOLIDAYS);
     }
 
     /**
@@ -128,7 +161,7 @@ class ObserveHoliday extends Holiday
      */
     public function unobserveAllHolidays()
     {
-        return $this->observeHoliday(false, static::OBSERVE_ALL_HOLIDAYS);
+        return $this->getObserveHolidayMethod(false, static::OBSERVE_ALL_HOLIDAYS);
     }
 
     /**
@@ -140,11 +173,12 @@ class ObserveHoliday extends Holiday
     {
         $mixin = $this;
         $getThisOrToday = static::getThisOrToday();
+        $carbonClass = static::getCarbonClass();
         $allHolidays = static::OBSERVE_ALL_HOLIDAYS;
 
-        return function ($name = null, $self = null) use ($mixin, $getThisOrToday, $allHolidays) {
+        return function ($name = null, $self = null) use ($mixin, $getThisOrToday, $allHolidays, $carbonClass) {
             if ($name instanceof \DateTime || $name instanceof \DateTimeInterface) {
-                $self = $name;
+                $self = $carbonClass::instance($name);
                 $name = null;
             }
 
