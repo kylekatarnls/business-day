@@ -508,7 +508,7 @@ class BusinessDayTest extends TestCase
         self::assertFalse($carbon::parse('2018-01-01')->isObservedHoliday());
         self::assertFalse($carbon::parse('2018-12-25')->isObservedHoliday());
         self::assertFalse($carbon::parse('2018-12-26')->isObservedHoliday());
-        $carbon::observeHolidays(['christmas', 'new-year']);
+        $carbon::observeHolidays(array('christmas', 'new-year'));
         self::assertTrue($carbon::isObservedHoliday('new-year'));
         self::assertTrue($carbon::isObservedHoliday('christmas'));
         self::assertTrue($carbon::parse('2018-01-01')->isObservedHoliday());
