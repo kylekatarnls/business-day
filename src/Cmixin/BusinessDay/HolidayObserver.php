@@ -163,32 +163,14 @@ class HolidayObserver extends Holiday
         return $this->getObserveHolidayMethod(false, static::OBSERVE_ALL_HOLIDAYS);
     }
 
-    /**
-     * Checks the date to see if it is a holiday.
-     *
-     * @return \Closure
-     */
-    public function isObservedHoliday()
+    public function checkObservedHoliday()
     {
         $mixin = $this;
-        $getThisOrToday = static::getThisOrToday();
-        $carbonClass = static::getCarbonClass();
         $allHolidays = static::OBSERVE_ALL_HOLIDAYS;
 
-        return function ($name = null, $self = null) use ($mixin, $getThisOrToday, $allHolidays, $carbonClass) {
-            if ($name instanceof \DateTime || $name instanceof \DateTimeInterface) {
-                $self = $carbonClass::instance($name);
-                $name = null;
-            }
-
+        return function ($name = null) use ($mixin, $allHolidays) {
             $zone = $mixin->observedHolidaysZone;
             $days = isset($mixin->observedHolidays[$zone]) ? $mixin->observedHolidays[$zone] : array();
-
-            if (!$name) {
-                /** @var Carbon|BusinessDay $self */
-                $self = $getThisOrToday($self, isset($this) ? $this : null);
-                $name = $self->getHolidayId();
-            }
 
             if ($name) {
                 if (isset($days[$name])) {
@@ -200,6 +182,35 @@ class HolidayObserver extends Holiday
             }
 
             return false;
+        };
+    }
+
+    /**
+     * Checks the date to see if it is a holiday.
+     *
+     * @return \Closure
+     */
+    public function isObservedHoliday()
+    {
+        $mixin = $this;
+        $getThisOrToday = static::getThisOrToday();
+        $carbonClass = static::getCarbonClass();
+
+        return function ($name = null, $self = null) use ($mixin, $getThisOrToday, $carbonClass) {
+            if ($name instanceof \DateTime || $name instanceof \DateTimeInterface) {
+                $self = $carbonClass::instance($name);
+                $name = null;
+            }
+
+            if (!$name) {
+                /** @var Carbon|BusinessDay $self */
+                $self = $getThisOrToday($self, isset($this) ? $this : null);
+                $name = $self->getHolidayId();
+            }
+
+            $check = $mixin->checkObservedHoliday();
+
+            return $check($name);
         };
     }
 }
