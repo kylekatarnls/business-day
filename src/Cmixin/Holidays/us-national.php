@@ -2,7 +2,7 @@
 
 return array(
     'new-year' => '01/01', // New Year's Day
-    'mlk-day' => function ($year) { // Martin Luther King Jr. Day
+    'mlk-day'  => function ($year) { // Martin Luther King Jr. Day
         $date = new DateTime("third monday of january $year");
 
         return $date->format('d/m');
@@ -13,7 +13,7 @@ return array(
         return $date->format('d/m');
     },
     'independence-day' => '04/07', // Independence Day
-    'labor-day' => function ($year) { // Labor Day
+    'labor-day'        => function ($year) { // Labor Day
         $date = new DateTime("first monday of september $year");
 
         return $date->format('d/m');
