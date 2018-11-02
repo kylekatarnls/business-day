@@ -66,12 +66,12 @@ class ObserveHoliday extends Holiday
             foreach ($days as $day) {
                 if (!is_string($day)) {
                     throw new \InvalidArgumentException(
-                        'You must pass holiday names as a string or "' . $allHolidays . '".'
+                        'You must pass holiday names as a string or "'.$allHolidays.'".'
                     );
                 }
                 $zone = $mixin->observedHolidaysZone;
                 if ($day === $allHolidays || !isset($mixin->observedHolidays[$zone])) {
-                    $mixin->observedHolidays[$zone] = [];
+                    $mixin->observedHolidays[$zone] = array();
                 }
 
                 $mixin->observedHolidays[$zone][$day] = $value === null ? $defaultValue : $value;
@@ -149,7 +149,7 @@ class ObserveHoliday extends Holiday
             }
 
             $zone = $mixin->observedHolidaysZone;
-            $days = isset($mixin->observedHolidays[$zone]) ? $mixin->observedHolidays[$zone] : [];
+            $days = isset($mixin->observedHolidays[$zone]) ? $mixin->observedHolidays[$zone] : array();
 
             if (!$name) {
                 /** @var Carbon|BusinessDay $self */
@@ -159,10 +159,10 @@ class ObserveHoliday extends Holiday
 
             if ($name) {
                 if (isset($days[$name])) {
-                    return !!$days[$name];
+                    return (bool) $days[$name];
                 }
                 if (isset($days[$allHolidays])) {
-                    return !!$days[$allHolidays];
+                    return (bool) $days[$allHolidays];
                 }
             }
 
