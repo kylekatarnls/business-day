@@ -1,8 +1,8 @@
 <?php
 
-namespace Cmixin\Traits;
+namespace Cmixin;
 
-trait HolidaysList
+class HolidaysList extends EnableFacadeMixinBase
 {
     public $holidays = array();
 
@@ -20,7 +20,7 @@ trait HolidaysList
         return function ($region) use ($mixin) {
             $region = preg_replace('/[^a-zA-Z0-9_-]/', '', $region);
             $mixin->holidaysRegion = $region;
-            if (!isset($mixin->holidays[$region]) && file_exists($file = __DIR__."/../Holidays/$region.php")) {
+            if (!isset($mixin->holidays[$region]) && file_exists($file = __DIR__."/Holidays/$region.php")) {
                 $mixin->holidays[$region] = include $file;
             }
         };

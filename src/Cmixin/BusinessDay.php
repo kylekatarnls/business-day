@@ -3,13 +3,9 @@
 namespace Cmixin;
 
 use Carbon\Carbon;
-use Cmixin\Traits\Holiday;
-use Cmixin\Traits\HolidaysList;
 
-class BusinessDay extends EnableFacadeMixinBase
+class BusinessDay extends Holiday
 {
-    use HolidaysList, Holiday;
-
     /**
      * Checks the date to see if it is a business day.
      *
@@ -108,11 +104,11 @@ class BusinessDay extends EnableFacadeMixinBase
      *
      * @return \Closure
      */
-    public function addBusinessDays()
+    public function addBusinessDays($factor = 1)
     {
         $getThisOrToday = static::getThisOrToday();
 
-        return function ($days = 1, $self = null) use ($getThisOrToday) {
+        return function ($days = 1, $self = null) use ($factor, $getThisOrToday) {
             /** @var Carbon|BusinessDay $self */
             $self = $getThisOrToday($self, isset($this) ? $this : null);
 
@@ -120,6 +116,8 @@ class BusinessDay extends EnableFacadeMixinBase
                 $self = $days;
                 $days = 1;
             }
+
+            $days *= $factor;
 
             for ($i = $days; $i > 0; $i--) {
                 $self = $self->nextBusinessDay();
@@ -140,19 +138,7 @@ class BusinessDay extends EnableFacadeMixinBase
      */
     public function addBusinessDay()
     {
-        $getThisOrToday = static::getThisOrToday();
-
-        return function ($days = 1, $self = null) use ($getThisOrToday) {
-            /** @var Carbon|BusinessDay $self */
-            $self = $getThisOrToday($self, isset($this) ? $this : null);
-
-            if ($days instanceof \DateTime || $days instanceof \DateTimeInterface) {
-                $self = $days;
-                $days = 1;
-            }
-
-            return $self->addBusinessDays($days);
-        };
+        return $this->addBusinessDays();
     }
 
     /**
@@ -162,19 +148,7 @@ class BusinessDay extends EnableFacadeMixinBase
      */
     public function subBusinessDays()
     {
-        $getThisOrToday = static::getThisOrToday();
-
-        return function ($days = 1, $self = null) use ($getThisOrToday) {
-            /** @var Carbon|BusinessDay $self */
-            $self = $getThisOrToday($self, isset($this) ? $this : null);
-
-            if ($days instanceof \DateTime || $days instanceof \DateTimeInterface) {
-                $self = $days;
-                $days = 1;
-            }
-
-            return $self->addBusinessDays(-$days);
-        };
+        return $this->addBusinessDays(-1);
     }
 
     /**
@@ -184,18 +158,6 @@ class BusinessDay extends EnableFacadeMixinBase
      */
     public function subBusinessDay()
     {
-        $getThisOrToday = static::getThisOrToday();
-
-        return function ($days = 1, $self = null) use ($getThisOrToday) {
-            /** @var Carbon|BusinessDay $self */
-            $self = $getThisOrToday($self, isset($this) ? $this : null);
-
-            if ($days instanceof \DateTime || $days instanceof \DateTimeInterface) {
-                $self = $days;
-                $days = 1;
-            }
-
-            return $self->subBusinessDays($days);
-        };
+        return $this->subBusinessDays();
     }
 }

@@ -1,11 +1,10 @@
 <?php
 
-namespace Cmixin\Traits;
+namespace Cmixin;
 
 use Carbon\Carbon;
-use Cmixin\BusinessDay;
 
-trait Holiday
+class Holiday extends HolidaysList
 {
     /**
      * Get the identifier of the current holiday or false if it's not an holiday.
