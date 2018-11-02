@@ -4,8 +4,14 @@ namespace Cmixin;
 
 class HolidaysList extends EnableFacadeMixinBase
 {
+    /**
+     * @var array
+     */
     public $holidays = array();
 
+    /**
+     * @var string|null
+     */
     public $holidaysRegion = null;
 
     /**
@@ -93,6 +99,7 @@ class HolidaysList extends EnableFacadeMixinBase
         }
 
         return function () {
+            return true;
         };
     }
 

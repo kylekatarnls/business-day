@@ -30,14 +30,14 @@ class EnableFacadeMixinBase
 
     public function getThisOrToday()
     {
-        $carbonClass = static::getCarbonClass();
+        $staticClass = static::getCarbonClass();
 
-        return function ($self, $context) use ($carbonClass) {
+        return function ($self, $context) use ($staticClass) {
             if (!isset($self) && isset($context)) {
                 $self = $context;
             }
 
-            return $self ?: $carbonClass::today();
+            return $self ?: $staticClass::today();
         };
     }
 }
