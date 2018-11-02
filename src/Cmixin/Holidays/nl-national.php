@@ -2,7 +2,7 @@
 
 return array(
     'new-year' => '01/01', // Nieuwjaarsdag
-    'easter' => function ($year) { // Paaszondag
+    'easter'   => function ($year) { // Paaszondag
         $days = easter_days($year);
         $date = new DateTime("$year-03-21 +$days days");
 
@@ -47,6 +47,6 @@ return array(
 
         return $date->format('d/m');
     },
-    'christmas' => '25/12', // Eerste Kerstdag
+    'christmas'          => '25/12', // Eerste Kerstdag
     'christmas-next-day' => '26/12', // Tweede Kerstdag
 );
