@@ -41,14 +41,14 @@ return array(
         return $date->format('d/m');
     },
     // Pinksterzondag
-    'pentcost' => function ($year) {
+    'pentecost' => function ($year) {
         $days = easter_days($year) + 49;
         $date = new DateTime("$year-03-21 +$days days");
 
         return $date->format('d/m');
     },
     // Pinkstermaandag
-    'pentcost-monday' => function ($year) {
+    'pentecost-monday' => function ($year) {
         $days = easter_days($year) + 50;
         $date = new DateTime("$year-03-21 +$days days");
 
