@@ -10,7 +10,7 @@ return array(
 
         return $date->format('d/m');
     },
-    'labor-day'   => '01/05', // Fête du travail
+    'labor-day'    => '01/05', // Fête du travail
     'victory-1945' => '08/05', // Victoire 1945
     // Ascension
     'ascension'   => function ($year) {

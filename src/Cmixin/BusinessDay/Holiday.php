@@ -73,14 +73,14 @@ class Holiday extends HolidaysList
                 return $mixin->holidayNames[$locale] ?: $mixin->holidayNames[$defaultLocale];
             }
 
-            $file = __DIR__ . "/../HolidayNames/$locale.php";
+            $file = __DIR__."/../HolidayNames/$locale.php";
             if (!file_exists($file)) {
                 $mixin->holidayNames[$locale] = false;
                 $locale = $defaultLocale;
-                $file = __DIR__ . "/../HolidayNames/$defaultLocale.php";
+                $file = __DIR__."/../HolidayNames/$defaultLocale.php";
             }
 
-            return ($mixin->holidayNames[$locale] = include $file);
+            return $mixin->holidayNames[$locale] = include $file;
         };
     }
 
@@ -110,7 +110,7 @@ class Holiday extends HolidaysList
             }
 
             /* @var string $id */
-            $holidayNames = $dictionary(preg_replace('/^([^_-]+)([_-].*)$/', '$1',$locale));
+            $holidayNames = $dictionary(preg_replace('/^([^_-]+)([_-].*)$/', '$1', $locale));
 
             return isset($holidayNames[$id]) ? $holidayNames[$id] : 'Unknown';
         };
