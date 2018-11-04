@@ -99,9 +99,9 @@ class Holiday extends HolidaysList
         return function ($locale = null, $self = null) use ($carbonClass, $getThisOrToday, $dictionary) {
             /** @var Carbon|BusinessDay $self */
             $self = $getThisOrToday($self, isset($this) ? $this : null);
-            $id = $self->getHolidayId();
+            $key = $self->getHolidayId();
 
-            if ($id === false) {
+            if ($key === false) {
                 return false;
             }
 
@@ -109,10 +109,10 @@ class Holiday extends HolidaysList
                 $locale = (isset($self->locale) ? $self->locale : $carbonClass::getLocale()) ?: 'en';
             }
 
-            /* @var string $id */
-            $holidayNames = $dictionary(preg_replace('/^([^_-]+)([_-].*)$/', '$1', $locale));
+            /* @var string $key */
+            $names = $dictionary(preg_replace('/^([^_-]+)([_-].*)$/', '$1', $locale));
 
-            return isset($holidayNames[$id]) ? $holidayNames[$id] : 'Unknown';
+            return isset($names[$key]) ? $names[$key] : 'Unknown';
         };
     }
 }
