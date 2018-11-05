@@ -105,7 +105,7 @@ class HolidaysList extends MixinBase
     }
 
     /**
-     * Add holidays to the holidays list.
+     * Push a holiday to the holidays list of a region.
      *
      * @return \Closure
      */
@@ -129,30 +129,49 @@ class HolidaysList extends MixinBase
     }
 
     /**
-     * Add holidays to the holidays list.
+     * Set the name(s) of a holiday.
+     *
+     * @return \Closure
+     */
+    public function setHolidayName()
+    {
+        $mixin = $this;
+
+        return function ($holidayKey = null, $name = null, $value = null) use ($mixin) {
+            static $dictionary;
+
+            if (($name = is_string($name) ? array($name => $value) : $name) && $mixin instanceof Holiday) {
+                if (!isset($dictionary)) {
+                    $dictionary = $mixin->getHolidayNamesDictionary();
+                }
+                foreach ($name as $language => $text) {
+                    $dictionary($language);
+                    $mixin->holidayNames[$language][$holidayKey] = $text;
+                }
+            }
+
+            return isset($this) ? $this : null;
+        };
+    }
+
+    /**
+     * Add a holiday to the holidays list of a region then init name and observed state.
      *
      * @return \Closure
      */
     public function addHoliday()
     {
         $mixin = $this;
+        $dictionary = $this->setHolidayName();
 
-        return function ($region, $holiday, $key = null, $name = null, $observed = null) use ($mixin) {
-            static $dictionary, $observer;
+        return function ($region, $holiday, $key = null, $name = null, $observed = null) use ($mixin, $dictionary) {
+            static $observer;
 
             $mixin->initializeHolidaysRegion($region);
             $push = $mixin->pushHoliday();
             $push($region, $holiday, $key);
 
-            if (isset($name) && $mixin instanceof Holiday) {
-                if (!isset($dictionary)) {
-                    $dictionary = $mixin->getHolidayNamesDictionary();
-                }
-                foreach ($name as $language => $text) {
-                    $dictionary($language);
-                    $mixin->holidayNames[$language][$key] = $text;
-                }
-            }
+            $dictionary($key, $name);
 
             if (isset($observed) && $mixin instanceof HolidayObserver) {
                 if (!isset($observer)) {
@@ -166,15 +185,13 @@ class HolidaysList extends MixinBase
     }
 
     /**
-     * Add holidays to the holidays list.
+     * Unpack a holiday array definition.
      *
      * @return \Closure
      */
     public function unpackHoliday()
     {
-        $mixin = $this;
-
-        return function (&$holiday, &$name = null, &$observed = null) use ($mixin) {
+        return function (&$holiday, &$name = null, &$observed = null) {
             if (!isset($holiday['date'])) {
                 throw new \InvalidArgumentException(
                     'Holiday array definition should at least contains a "date" entry.'
@@ -196,6 +213,32 @@ class HolidaysList extends MixinBase
     }
 
     /**
+     * Check a holiday definition and unpack it if it's an array.
+     *
+     * @return \Closure
+     */
+    public function checkHoliday()
+    {
+        $mixin = $this;
+
+        return function (&$holiday, $key, &$name = null, &$observed = null) use ($mixin) {
+            $unpack = $mixin->unpackHoliday();
+
+            if (is_array($holiday)) {
+                if (is_int($key)) {
+                    throw new \InvalidArgumentException(
+                        'Holiday array definition need a string identifier as main array key.'
+                    );
+                }
+
+                $unpack($holiday, $name, $observed);
+            }
+
+            return $holiday;
+        };
+    }
+
+    /**
      * Add holidays to the holidays list.
      *
      * @return \Closure
@@ -207,21 +250,12 @@ class HolidaysList extends MixinBase
         return function ($region, $holidays) use ($mixin) {
             $mixin->initializeHolidaysRegion($region);
             $add = $mixin->addHoliday();
-            $unpack = $mixin->unpackHoliday();
+            $check = $mixin->checkHoliday();
 
             foreach ($holidays as $key => $holiday) {
                 $name = null;
                 $observed = null;
-                if (is_array($holiday)) {
-                    if (is_int($key)) {
-                        throw new \InvalidArgumentException(
-                            'Holiday array definition need a string identifier as main array key.'
-                        );
-                    }
-
-                    $unpack($holiday, $name, $observed);
-                }
-
+                $check($holiday, $key, $name, $observed);
                 $add($region, $holiday, $key, $name, $observed);
             }
         };

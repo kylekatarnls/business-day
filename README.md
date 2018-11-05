@@ -230,6 +230,16 @@ Carbon::parse('2018-01-15')->getHolidayName() // "Christmas"
 Carbon::parse('2018-01-15')->locale('sl')->getHolidayName() // "Božič"
 ```
 
+#### setHolidayName
+
+Wanna rename a holiday name in a particular language? No problem:
+
+```php
+Carbon::parse('2018-12-25')->getHolidayName() // "Christmas"
+Carbon::setHolidayName('christmas', 'en', 'Christmas Day');
+Carbon::parse('2018-12-25')->getHolidayName() // "Christmas Day"
+```
+
 #### isBusinessDay
 
 Returns `true` if the date (Carbon instance) is nor a week-end day neither

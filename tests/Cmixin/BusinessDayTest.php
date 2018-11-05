@@ -131,6 +131,16 @@ class BusinessDayTest extends TestCase
         self::assertSame('Unknown', $carbon::parse('2010-11-15 03:30:40')->getHolidayName('nl'));
     }
 
+    public function testSetHolidayName()
+    {
+        $carbon = static::CARBON_CLASS;
+        $carbon::setHolidaysRegion('fr-national');
+        self::assertSame('Christmas', $carbon::parse('2018-12-25')->getHolidayName());
+        $carbon::setHolidayName('christmas', 'en', 'Christmas Day');
+        self::assertSame('Christmas Day', $carbon::parse('2018-12-25')->getHolidayName());
+        self::assertSame('Noël', $carbon::parse('2018-12-25')->getHolidayName('fr'));
+    }
+
     public function testIsHolidayStatic()
     {
         $carbon = static::CARBON_CLASS;
