@@ -541,8 +541,10 @@ class BusinessDayTest extends TestCase
         self::assertSame('New Year', $carbon::parse('2018-01-01')->getHolidayName());
         self::assertSame('Novo leto', $carbon::parse('2018-01-01')->getHolidayName('sl_SI'));
         $carbon::setLocale('nl');
+        self::assertSame('nl', $carbon::getLocale());
         self::assertSame('Nieuwjaarsdag', $carbon::parse('2018-01-01')->getHolidayName());
         $carbon::setLocale('de'); // Language not translated
+        self::assertSame('de', $carbon::getLocale());
         self::assertSame('New Year', $carbon::parse('2018-01-01')->getHolidayName());
     }
 
