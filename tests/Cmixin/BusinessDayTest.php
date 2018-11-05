@@ -78,6 +78,59 @@ class BusinessDayTest extends TestCase
         }
     }
 
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Holiday array definition should at least contains a "date" entry.
+     */
+    public function testAddHolidaysArrayNotDate()
+    {
+        $carbon = static::CARBON_CLASS;
+        $carbon::addHolidays('fr-national', array(
+            'foo-bar' => array(
+                'observe' => true,
+            ),
+        ));
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Holiday array definition need a string identifier as main array key.
+     */
+    public function testAddHolidaysArrayIntKey()
+    {
+        $carbon = static::CARBON_CLASS;
+        $carbon::addHolidays('fr-national', array(
+            array(
+                'date'    => '15/11',
+                'observe' => true,
+            ),
+        ));
+    }
+
+    public function testAddHolidaysArray()
+    {
+        $carbon = static::CARBON_CLASS;
+        $carbon::addHolidays('fr-national', array(
+            'foo-bar' => array(
+                'date'     => '15/11',
+                'observed' => true,
+                'name'     => array(
+                    'en' => 'Foo bar',
+                    'fr' => 'Machin chose',
+                ),
+            ),
+        ));
+        self::assertFalse($carbon::parse('2010-11-15 03:30:40')->isHoliday());
+        self::assertFalse($carbon::parse('2010-11-15 03:30:40')->isObservedHoliday());
+        self::assertFalse($carbon::parse('2010-11-15 03:30:40')->getHolidayName());
+        $carbon::setHolidaysRegion('fr-national');
+        self::assertTrue($carbon::parse('2010-11-15 03:30:40')->isHoliday());
+        self::assertTrue($carbon::parse('2010-11-15 03:30:40')->isObservedHoliday());
+        self::assertSame('Foo bar', $carbon::parse('2010-11-15 03:30:40')->getHolidayName());
+        self::assertSame('Machin chose', $carbon::parse('2010-11-15 03:30:40')->getHolidayName('fr'));
+        self::assertSame('Unknown', $carbon::parse('2010-11-15 03:30:40')->getHolidayName('nl'));
+    }
+
     public function testIsHolidayStatic()
     {
         $carbon = static::CARBON_CLASS;

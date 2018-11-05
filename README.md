@@ -109,17 +109,20 @@ It's how you can set your own holidays lists:
 Carbon::setHolidays('us-il', array_merge(
     Carbon::getHolidays('us-national'),
     array(
-        function ($year) { // Presidents' Day
+        // Presidents' Day
+        'presidents-day' => function ($year) {
             $date = new DateTime("third monday of february $year");
     
             return $date->format('d/m');
         },
-        function ($year) { // Columbus Day
+        // Columbus Day
+        'columbus-day' => function ($year) {
             $date = new DateTime("second monday of october $year");
     
             return $date->format('d/m');
         },
-        function ($year) { // Day after Thanksgiving
+        // Day after Thanksgiving
+        'thanksgiving-next-day' => function ($year) {
             $date = new DateTime("fourth thursday of november $year +1 day");
     
             return $date->format('d/m');
@@ -129,12 +132,28 @@ Carbon::setHolidays('us-il', array_merge(
 Carbon::setHolidays('my-enterprise', array_merge(
     Carbon::getHolidays('us-is'),
     array(
-        '12/02', // Lincoln's Birthday
+        // Lincoln's Birthday
+        'lincolns-birthday' => '12/02',
     )
 ));
 // Then when you select my-enterprise, all us-national,
 // us-il and my-enterprise days are enabled
 Carbon::setHolidaysRegion('my-enterprise');
+```
+
+You can also pass deep array to `setHolidays` to set in the same call holidays dates and either observed flags, names
+(in different languages) or both:
+```php
+Carbon::setHolidays('my-enterprise', array(
+    'lincolns-birthday' => array(
+        'date'     => '12/02',
+        'observed' => true,
+        'name'     => array(
+            'en' => "Lincoln's Birthday",
+            'fr' => 'Anniversaire du Président Lincoln',
+        ),
+    ),
+));
 ```
 
 #### addHolidays
@@ -144,15 +163,17 @@ append holidays to the current list.
 
 ```php
 Carbon::addHolidays('my-list', array(
-    '20/01',
-    '21/01',
+    'poney'        => '20/01',
+    'swimmingpool' => '21/01',
 )));
 Carbon::addHolidays('my-list', array(
-    '10/02',
-    '11/02',
+    'boss-birthday'          => '10/02',
+    'boss-birthday-next-day' => '11/02',
 )));
 Carbon::getHolidays('my-list') // contains 20/01, 21/01, 10/02 and 11/02
 ```
+
+As for `setHolidays`, `addHolidays` handle deep arrays using date, observed and name keys.
 
 #### resetHolidays
 
@@ -187,6 +208,26 @@ $nextWeekHoliday = Carbon::today()->addWeek()->getHolidayId();
 if ($nextWeekHoliday === 'easter' or $nextWeekHoliday === 'christmas') {
   echo 'Time to get chocolates.';
 }
+```
+
+#### getHolidayName
+
+Returns the name of the holiday in the current locale (or English by default) or false if the day is not a holiday.
+
+```php
+Carbon::setHolidaysRegion('fr-national');
+Carbon::parse('2018-12-25')->getHolidayName() // "Christmas"
+Carbon::parse('2018-12-25')->getHolidayName('fr') // "Noël"
+
+Carbon::setLocale('nl');
+Carbon::parse('2018-01-15')->getHolidayName() // "Eerste Kerstdag"
+
+// If the name is not translated in business-day
+Carbon::setLocale('de');
+Carbon::parse('2018-01-15')->getHolidayName() // "Christmas"
+
+// With Carbon 2, you can use local locale:
+Carbon::parse('2018-01-15')->locale('sl')->getHolidayName() // "Božič"
 ```
 
 #### isBusinessDay
