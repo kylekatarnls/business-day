@@ -10,8 +10,8 @@ return array(
 
         return $date->format('d/m');
     },
-    'labor-day'   => '01/05', // Fête du travail
-    'victory-day' => '08/05', // Victoire 1945
+    'labor-day'    => '01/05', // Fête du travail
+    'victory-1945' => '08/05', // Victoire 1945
     // Ascension
     'ascension'   => function ($year) {
         $days = easter_days($year) + 39;
@@ -26,9 +26,9 @@ return array(
 
         return $date->format('d/m');
     },
-    'national-day' => '14/07', // Fête nationale
-    'assumption'   => '15/08', // Assomption
-    'toussaint'    => '01/11', // Toussaint
-    'armistice'    => '11/11', // Armistice 1918
-    'christmas'    => '25/12', // Noël
+    'national-day'   => '14/07', // Fête nationale
+    'assumption'     => '15/08', // Assomption
+    'toussaint'      => '01/11', // Toussaint
+    'armistice-1918' => '11/11', // Armistice 1918
+    'christmas'      => '25/12', // Noël
 );

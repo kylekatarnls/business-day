@@ -527,6 +527,43 @@ class BusinessDayTest extends TestCase
         self::assertFalse($carbon::parse('2018-12-26')->isObservedHoliday());
     }
 
+    public function testGetHolidayName()
+    {
+        $carbon = static::CARBON_CLASS;
+        $carbon::setLocale('en');
+        $carbon::setHolidaysRegion('fr-national');
+        $carbon::setTestNow('2018-12-25');
+        self::assertSame('en', $carbon::getLocale());
+        self::assertSame('Christmas', $carbon::getHolidayName());
+        self::assertSame('National Day', $carbon::getHolidayName(new \DateTime('2018-07-14')));
+        self::assertSame('Noël', $carbon::getHolidayName('fr'));
+        $carbon::setTestNow('2018-12-26');
+        self::assertFalse($carbon::getHolidayName());
+        self::assertSame('New Year', $carbon::parse('2018-01-01')->getHolidayName());
+        self::assertSame('Novo leto', $carbon::parse('2018-01-01')->getHolidayName('sl_SI'));
+        $carbon::setLocale('nl');
+        self::assertSame('nl', $carbon::getLocale());
+        self::assertSame('Nieuwjaarsdag', $carbon::parse('2018-01-01')->getHolidayName());
+        $carbon::setLocale('de'); // Language not translated
+        self::assertSame('de', $carbon::getLocale());
+        self::assertSame('New Year', $carbon::parse('2018-01-01')->getHolidayName());
+    }
+
+    public function testGetHolidayNameLocalLocale()
+    {
+        $carbon = static::CARBON_CLASS;
+        $carbon::setLocale('en');
+        $carbon::setHolidaysRegion('fr-national');
+        $date = $carbon::parse('2018-01-01');
+
+        if (!method_exists($date, 'locale')) {
+            self::markTestSkipped('Test for Carbon 2 only.');
+        }
+
+        self::assertSame('New Year', $date->getHolidayName());
+        self::assertSame('Nouvel an', $date->locale('fr')->getHolidayName());
+    }
+
     /**
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage You must pass holiday names as a string or "all".

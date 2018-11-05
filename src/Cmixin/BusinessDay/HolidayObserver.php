@@ -194,13 +194,10 @@ class HolidayObserver extends Holiday
     {
         $mixin = $this;
         $getThisOrToday = static::getThisOrToday();
-        $carbonClass = static::getCarbonClass();
+        $swap = static::swapDateTimeParam();
 
-        return function ($name = null, $self = null) use ($mixin, $getThisOrToday, $carbonClass) {
-            if ($name instanceof \DateTime || $name instanceof \DateTimeInterface) {
-                $self = $carbonClass::instance($name);
-                $name = null;
-            }
+        return function ($name = null, $self = null) use ($mixin, $getThisOrToday, $swap) {
+            $swap($name, $self);
 
             if (!$name) {
                 /** @var Carbon|BusinessDay $self */

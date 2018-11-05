@@ -40,4 +40,24 @@ abstract class MixinBase
             return $self ?: $staticClass::today();
         };
     }
+
+    public function isDateTimeInstance()
+    {
+        return function ($value) {
+            return $value instanceof \DateTime || $value instanceof \DateTimeInterface;
+        };
+    }
+
+    public function swapDateTimeParam()
+    {
+        $check = static::isDateTimeInstance();
+        $staticClass = static::getCarbonClass();
+
+        return function (&$date, &$target, $defaultValue = null) use ($check, $staticClass) {
+            if ($check($date)) {
+                $target = $staticClass::instance($date);
+                $date = $defaultValue;
+            }
+        };
+    }
 }
