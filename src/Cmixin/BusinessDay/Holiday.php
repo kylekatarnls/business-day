@@ -85,6 +85,26 @@ class Holiday extends HolidaysList
     }
 
     /**
+     * Get the locale from parameter, then current instance, then default setting, then DEFAULT_HOLIDAY_LOCALE.
+     *
+     * @return \Closure
+     */
+    public function getHolidayLocale()
+    {
+        $carbonClass = static::getCarbonClass();
+        $defaultLocale = static::DEFAULT_HOLIDAY_LOCALE;
+
+        return function ($locale, &$self = null) use ($carbonClass, $defaultLocale) {
+            if ($locale instanceof \DateTime || $locale instanceof \DateTimeInterface) {
+                $self = $carbonClass::instance($locale);
+                $locale = null;
+            }
+
+            return $locale ?: (isset($self->locale) ? $self->locale : $carbonClass::getLocale()) ?: $defaultLocale;
+        };
+    }
+
+    /**
      * Get the name of the current holiday (using the locale given in parameter or the current date locale)
      * or false if it's not a holiday.
      *
@@ -92,15 +112,12 @@ class Holiday extends HolidaysList
      */
     public function getHolidayName()
     {
-        $carbonClass = static::getCarbonClass();
         $getThisOrToday = static::getThisOrToday();
+        $getLocale = static::getHolidayLocale();
         $dictionary = $this->getHolidayNamesDictionary();
 
-        return function ($locale = null, $self = null) use ($carbonClass, $getThisOrToday, $dictionary) {
-            if ($locale instanceof \DateTime || $locale instanceof \DateTimeInterface) {
-                $self = $carbonClass::instance($locale);
-                $locale = null;
-            }
+        return function ($locale = null, $self = null) use ($getThisOrToday, $dictionary, $getLocale) {
+            $locale = $getLocale($locale, $self);
 
             /** @var Carbon|BusinessDay $self */
             $self = $getThisOrToday($self, isset($this) ? $this : null);
@@ -108,10 +125,6 @@ class Holiday extends HolidaysList
 
             if ($key === false) {
                 return false;
-            }
-
-            if (!$locale) {
-                $locale = (isset($self->locale) ? $self->locale : $carbonClass::getLocale()) ?: 'en';
             }
 
             /* @var string $key */
