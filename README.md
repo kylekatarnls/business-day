@@ -230,6 +230,10 @@ Carbon::parse('2018-01-15')->getHolidayName() // "Christmas"
 Carbon::parse('2018-01-15')->locale('sl')->getHolidayName() // "Božič"
 ```
 
+Note: be aware, region has no effect to the holiday language name since some regions have multiple languages.
+So to get french names of the french holidays, you need both `Carbon::setHolidaysRegion('fr-national')` and
+`Carbon::setLocale('fr_FR')`, the first for the holiday calendar, the second for the language.
+
 #### setHolidayName
 
 Wanna rename a holiday name in a particular language? No problem:
@@ -344,6 +348,115 @@ echo Carbon::subBusinessDays(5)->format('Y-m-d'); // returns the date 5 business
 #### subBusinessDay
 
 Alias subBusinessDays.
+
+#### setObservedHolidaysZone
+
+You can define isolated zones that can observe different holidays lists. By default the zone is `"default"`.
+
+```php
+Carbon::setHolidaysRegion('us-national');
+
+Carbon::setObservedHolidaysZone('Nevada-subsidiary-company');
+Carbon::observeAllHolidays();
+Carbon::unobserveHoliday('independence-day');
+
+Carbon::setObservedHolidaysZone('Illinois-subsidiary-company');
+Carbon::observeAllHolidays();
+Carbon::unobserveHolidays(array('labor-day', 'mlk-day'));
+
+Carbon::setObservedHolidaysZone('Nevada-subsidiary-company');
+Carbon::parse('2018-01-15')->isObservedHoliday(); // true
+Carbon::parse('2018-07-04')->isObservedHoliday(); // false
+Carbon::parse('2018-09-03')->isObservedHoliday(); // true
+
+Carbon::setObservedHolidaysZone('Illinois-subsidiary-company');
+Carbon::parse('2018-01-15')->isObservedHoliday(); // false
+Carbon::parse('2018-07-04')->isObservedHoliday(); // true
+Carbon::parse('2018-09-03')->isObservedHoliday(); // false
+```
+
+#### getObservedHolidaysZone
+
+Get the current zone used for observed holidays.
+
+```php
+Carbon::getObservedHolidaysZone(); // "Illinois-subsidiary-company"
+```
+
+#### isObservedHoliday
+
+Return true if the current day is an observed holiday (holiday as per the holidays list in use and if it's
+observed as per the current zone).
+
+```php
+Carbon::setHolidaysRegion('fr-national');
+Carbon::parse('2018-01-15')->isHoliday(); // true
+// By default no holiday is observed
+Carbon::parse('2018-01-15')->isObservedHoliday(); // false
+// Then you can observe a list of holidays
+Carbon::unobserveHolidays(array('christmas', 'new-year'));
+Carbon::parse('2018-01-15')->isObservedHoliday(); // true
+// Observed holidays are kept if you change the holidays region:
+Carbon::setHolidaysRegion('us-national');
+Carbon::parse('2018-01-15')->isObservedHoliday(); // true
+// So you can observe holidays that are not in the current region with no restriction
+```
+
+#### observeHoliday
+
+Observe holidays. You can have multiple set of observed days using `setObservedHolidaysZone`.
+
+```php
+Carbon::observeHoliday(array('christmas', 'new-year'));
+Carbon::observeHoliday('easter');
+```
+
+#### observeHolidays
+
+Alias of `observeHoliday`.
+
+```php
+Carbon::observeHolidays(array('christmas', 'new-year'));
+Carbon::observeHolidays('easter');
+```
+
+#### unobserveHoliday
+
+Set holidays as not observed. You can have multiple set of observed days using `setObservedHolidaysZone`.
+
+```php
+Carbon::unobserveHoliday(array('christmas', 'new-year'));
+Carbon::unobserveHoliday('easter');
+```
+
+#### unobserveHolidays
+
+Alias of `unobserveHoliday`.
+
+```php
+Carbon::unobserveHolidays(array('christmas', 'new-year'));
+Carbon::unobserveHolidays('easter');
+```
+
+#### observeAllHolidays
+
+Remove any previous settings for observed days in the current zone, then make every holidays as observed by default.
+
+```php
+// Observe every holidays except Easter
+Carbon::observeAllHolidays();
+Carbon::unobserveHoliday('easter');
+```
+
+#### unobserveAllHolidays
+
+Remove any previous settings for observed days in the current zone, then make every holidays as not observed by default.
+
+```php
+// Observe only Easter
+Carbon::unobserveAllHolidays();
+Carbon::observeHoliday('easter');
+```
 
 ## Contribute
 

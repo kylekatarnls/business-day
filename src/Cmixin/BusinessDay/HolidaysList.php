@@ -140,7 +140,7 @@ class HolidaysList extends MixinBase
         return function ($holidayKey = null, $name = null, $value = null) use ($mixin) {
             static $dictionary;
 
-            if (($name = is_string($name) ? array($name => $value) : $name) && $mixin instanceof Holiday) {
+            if ($mixin instanceof Holiday && ($name = is_string($name) ? array($name => $value) : $name)) {
                 if (!isset($dictionary)) {
                     $dictionary = $mixin->getHolidayNamesDictionary();
                 }
