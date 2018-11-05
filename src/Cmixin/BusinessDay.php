@@ -108,13 +108,10 @@ class BusinessDay extends HolidayObserver
     public function addBusinessDays($factor = 1)
     {
         $getThisOrToday = static::getThisOrToday();
-        $carbonClass = static::getCarbonClass();
+        $swap = static::swapDateTimeParam();
 
-        return function ($days = 1, $self = null) use ($factor, $getThisOrToday, $carbonClass) {
-            if ($days instanceof \DateTime || $days instanceof \DateTimeInterface) {
-                $self = $carbonClass::instance($days);
-                $days = 1;
-            }
+        return function ($days = 1, $self = null) use ($factor, $getThisOrToday, $swap) {
+            $swap($days, $self, 1);
 
             /** @var Carbon|BusinessDay $self */
             $self = $getThisOrToday($self, isset($this) ? $this : null);
