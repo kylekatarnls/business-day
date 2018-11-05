@@ -97,6 +97,11 @@ class Holiday extends HolidaysList
         $dictionary = $this->getHolidayNamesDictionary();
 
         return function ($locale = null, $self = null) use ($carbonClass, $getThisOrToday, $dictionary) {
+            if ($locale instanceof \DateTime || $locale instanceof \DateTimeInterface) {
+                $self = $carbonClass::instance($locale);
+                $locale = null;
+            }
+
             /** @var Carbon|BusinessDay $self */
             $self = $getThisOrToday($self, isset($this) ? $this : null);
             $key = $self->getHolidayId();

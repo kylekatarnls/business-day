@@ -535,6 +535,7 @@ class BusinessDayTest extends TestCase
         $carbon::setTestNow('2018-12-25');
         self::assertSame('en', $carbon::getLocale());
         self::assertSame('Christmas', $carbon::getHolidayName());
+        self::assertSame('National Day', $carbon::getHolidayName(new \DateTime('2018-07-14')));
         self::assertSame('Noël', $carbon::getHolidayName('fr'));
         $carbon::setTestNow('2018-12-26');
         self::assertFalse($carbon::getHolidayName());
