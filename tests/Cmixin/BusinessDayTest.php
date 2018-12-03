@@ -201,6 +201,30 @@ class BusinessDayTest extends TestCase
         }
     }
 
+    public function testYearSpecificHoliday()
+    {
+        $carbon = static::CARBON_CLASS;
+        $specialHolidays = array(
+            '2003-01-03',
+            '04/01/2004'
+        );
+        $carbon::resetHolidays();
+        $carbon::setHolidays('special', $specialHolidays);
+        $carbon::setHolidaysRegion('special');
+        $carbon::setTestNow($carbon::parse("2002-01-03 03:30:40"));
+        self::assertFalse($carbon::isHoliday());
+        $carbon::setTestNow($carbon::parse("2003-01-03 03:30:40"));
+        self::assertTrue($carbon::isHoliday());
+        $carbon::setTestNow($carbon::parse("2004-01-03 03:30:40"));
+        self::assertFalse($carbon::isHoliday());
+        $carbon::setTestNow($carbon::parse("2002-01-04 03:30:40"));
+        self::assertFalse($carbon::isHoliday());
+        $carbon::setTestNow($carbon::parse("2003-01-04 03:30:40"));
+        self::assertFalse($carbon::isHoliday());
+        $carbon::setTestNow($carbon::parse("2004-01-04 03:30:40"));
+        self::assertTrue($carbon::isHoliday());
+    }
+
     public function testAddHolidaysTraversable()
     {
         if (version_compare(phpversion(), '5.5.0-dev', '<')) {

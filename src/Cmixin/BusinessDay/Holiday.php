@@ -27,12 +27,18 @@ class Holiday extends HolidaysList
 
             $holidays = $carbonClass::getHolidays();
             $date = $self->format('d/m');
+            $year = $self->year;
             foreach ($holidays as $key => $holiday) {
                 if (is_callable($holiday)) {
-                    $holiday = call_user_func($holiday, $self->year);
+                    $holiday = call_user_func($holiday, $year);
                 }
 
-                if ($date === preg_replace('/^(\d+)-(\d+)$/', '$2/$1', $holiday)) {
+                if (strpos($holiday, '-') !== false) {
+                    $holiday = preg_replace('/^(\d+)-(\d+)$/', '$2/$1', $holiday);
+                    $holiday = preg_replace('/^(\d+)-(\d+)-(\d+)$/', '$3/$2/$1', $holiday);
+                }
+
+                if ($date.(strlen($holiday) > 5 ? "/$year" : '') === $holiday) {
                     return $key;
                 }
             }
