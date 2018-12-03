@@ -32,7 +32,7 @@ class Holiday extends HolidaysList
                     $holiday = call_user_func($holiday, $self->year);
                 }
 
-                if ($date === $holiday) {
+                if ($date === preg_replace('/^(\d+)-(\d+)$/', '$2/$1', $holiday)) {
                     return $key;
                 }
             }

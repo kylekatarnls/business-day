@@ -145,7 +145,7 @@ class BusinessDayTest extends TestCase
     {
         $carbon = static::CARBON_CLASS;
         $coruscantHolidays = array(
-            '27/12',
+            '12-27',
             '28/12',
         );
         for ($year = 1808; $year < 2500; $year += 20) {
