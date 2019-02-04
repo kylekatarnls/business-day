@@ -2,10 +2,13 @@
 
 return array(
     'new-year'      => function ($year) {
-        $date = DateTime::createFromFormat('U', strtotime($year . "/01/01"));
+        $date = DateTime::createFromFormat('U', strtotime($year."/01/01"));
 
-        if (date('N', strtotime($year . "/01/01")) == 6) { $date->add(new DateInterval('P2D')); }
-        else if (date('N', strtotime($year . "/01/01")) == 7) { $date->add(new DateInterval('P1D')); }
+        if (date('N', strtotime($year."/01/01")) == 6) {
+            $date->add(new DateInterval('P2D'));
+        } elseif (date('N', strtotime($year."/01/01")) == 7) {
+            $date->add(new DateInterval('P1D'));
+        }
 
         return $date->format('d/m');
     },
@@ -16,7 +19,7 @@ return array(
         return $date->format('d/m');
     },
     'summer'   => function ($year) {
-        $date = DateTime::createFromFormat('U', strtotime("last Monday of August " . $year));
+        $date = DateTime::createFromFormat('U', strtotime("last Monday of August ".$year));
 
         return $date->format('d/m');
     },

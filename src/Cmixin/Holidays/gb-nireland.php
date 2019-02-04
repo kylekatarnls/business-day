@@ -2,18 +2,24 @@
 
 return array(
     'new-year'      => function ($year) {
-        $date = DateTime::createFromFormat('U', strtotime($year . "/01/01"));
+        $date = DateTime::createFromFormat('U', strtotime($year."/01/01"));
 
-        if (date('N', strtotime($year . "/01/01")) == 6) { $date->add(new DateInterval('P2D')); }
-        else if (date('N', strtotime($year . "/01/01")) == 7) { $date->add(new DateInterval('P1D')); }
+        if (date('N', strtotime($year."/01/01")) == 6) {
+            $date->add(new DateInterval('P2D'));
+        } elseif (date('N', strtotime($year."/01/01")) == 7) {
+            $date->add(new DateInterval('P1D'));
+        }
 
         return $date->format('d/m');
     },
     'st-patricks' => function ($year) {
-        $date = DateTime::createFromFormat('U', strtotime($year . "/03/17"));
+        $date = DateTime::createFromFormat('U', strtotime($year."/03/17"));
 
-        if (date('N', strtotime($year . "/03/17")) == 6) { $date->add(new DateInterval('P2D')); }
-        else if (date('N', strtotime($year . "/03/17")) == 7) { $date->add(new DateInterval('P1D')); }
+        if (date('N', strtotime($year."/03/17")) == 6) {
+            $date->add(new DateInterval('P2D'));
+        } elseif (date('N', strtotime($year."/03/17")) == 7) {
+            $date->add(new DateInterval('P1D'));
+        }
 
         return $date->format('d/m');
     },
@@ -24,10 +30,13 @@ return array(
         return $date->format('d/m');
     },
     'boyne' => function ($year) {
-        $date = DateTime::createFromFormat('U', strtotime($year . "/07/12"));
+        $date = DateTime::createFromFormat('U', strtotime($year."/07/12"));
 
-        if (date('N', strtotime($year . "/07/12")) == 6) { $date->add(new DateInterval('P2D')); }
-        else if (date('N', strtotime($year . "/07/12")) == 7) { $date->add(new DateInterval('P1D')); }
+        if (date('N', strtotime($year."/07/12")) == 6) {
+            $date->add(new DateInterval('P2D'));
+        } elseif (date('N', strtotime($year."/07/12")) == 7) {
+            $date->add(new DateInterval('P1D'));
+        }
 
         return $date->format('d/m');
     },
