@@ -3,10 +3,11 @@
 return array_merge(include __DIR__.'/gb-national.php', array(
     'second-jan' => function ($year) {
         $date = new DateTime("$year-01-02");
+        $day = (int) $date->format('N');
 
-        if ($date->format('N') > 5) {
-            $date->modify('+2 days');
-        } elseif ($date->format('N') == 1) {
+        if ($day === 6) {
+            $date->modify('next monday');
+        } elseif ($day === 7 || $day === 1) { // shifted by New Year
             $date->modify('next tuesday');
         }
 
