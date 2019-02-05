@@ -1,20 +1,13 @@
 <?php
 
 return array(
-    'new-year' => function ($year) {
-        $date = new DateTime("$year-01-01");
-
-        if ($date->format('N') > 5) {
-            $date->modify('+2 days');
-        }
-
-        return $date->format('d/m');
-    },
     'second-jan' => function ($year) {
         $date = new DateTime("$year-01-02");
 
         if ($date->format('N') > 5) {
             $date->modify('+2 days');
+        } elseif ($date->format('N') == 1) {
+            $date->modify('next tuesday');
         }
 
         return $date->format('d/m');

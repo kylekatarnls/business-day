@@ -22,6 +22,7 @@ class GbTest extends TestCase
         $carbon::setHolidaysRegion('gb-national');
 
         // 2019 year
+        self::assertTrue($carbon::parse('2019-01-01')->isHoliday()); // New Year
         self::assertTrue($carbon::parse('2019-04-19')->isHoliday()); // Good Friday
         self::assertTrue($carbon::parse('2019-05-06')->isHoliday()); // Early May
         self::assertTrue($carbon::parse('2019-05-27')->isHoliday()); // Spring
@@ -29,6 +30,7 @@ class GbTest extends TestCase
         self::assertTrue($carbon::parse('2019-12-26')->isHoliday()); // Boxing Day
 
         // 2020 year
+        self::assertTrue($carbon::parse('2020-01-01')->isHoliday()); // New Year
         self::assertTrue($carbon::parse('2020-04-10')->isHoliday()); // Good Friday
         self::assertTrue($carbon::parse('2020-05-04')->isHoliday()); // Early May
         self::assertTrue($carbon::parse('2020-05-25')->isHoliday()); // Spring
@@ -38,26 +40,22 @@ class GbTest extends TestCase
         $carbon::setHolidaysRegion('gb-engwales');
 
         // 2019 year
-        self::assertTrue($carbon::parse('2019-01-01')->isHoliday()); // New Year
         self::assertTrue($carbon::parse('2019-04-22')->isHoliday()); // Easter Monday
         self::assertTrue($carbon::parse('2019-08-26')->isHoliday()); // Summer
 
         // 2020 year
-        self::assertTrue($carbon::parse('2020-01-01')->isHoliday()); // New Year
         self::assertTrue($carbon::parse('2020-04-13')->isHoliday()); // Easter Monday
         self::assertTrue($carbon::parse('2020-08-31')->isHoliday()); // Summer
 
         $carbon::setHolidaysRegion('gb-nireland');
 
         // 2019 year
-        self::assertTrue($carbon::parse('2019-01-01')->isHoliday()); // New Year
         self::assertTrue($carbon::parse('2019-03-18')->isHoliday()); // St Patrick's (Substitute)
         self::assertTrue($carbon::parse('2019-04-22')->isHoliday()); // Easter Monday
         self::assertTrue($carbon::parse('2019-07-12')->isHoliday()); // Boyne
         self::assertTrue($carbon::parse('2019-08-26')->isHoliday()); // Summer
 
         // 2020 year
-        self::assertTrue($carbon::parse('2020-01-01')->isHoliday()); // New Year
         self::assertTrue($carbon::parse('2020-03-17')->isHoliday()); // St Patrick's
         self::assertTrue($carbon::parse('2020-04-13')->isHoliday()); // Easter Monday
         self::assertTrue($carbon::parse('2020-07-13')->isHoliday()); // Boyne (Substitute)
@@ -66,27 +64,36 @@ class GbTest extends TestCase
         $carbon::setHolidaysRegion('gb-scotland');
 
         // 2019 year
-        self::assertTrue($carbon::parse('2020-01-01')->isHoliday()); // New Year
         self::assertTrue($carbon::parse('2019-01-02')->isHoliday()); // 2nd January
+        self::assertSame('2nd January', $carbon::parse('2019-01-02')->getHolidayName());
+        self::assertFalse($carbon::parse('2019-01-03')->isHoliday());
+        self::assertFalse($carbon::parse('2019-01-04')->isHoliday());
         self::assertTrue($carbon::parse('2019-08-05')->isHoliday()); // Summer
         self::assertTrue($carbon::parse('2019-12-02')->isHoliday()); // St Andrew's (Substitute)
 
         // 2020 year
-        self::assertTrue($carbon::parse('2020-01-01')->isHoliday()); // New Year
         self::assertTrue($carbon::parse('2020-01-02')->isHoliday()); // 2nd January
+        self::assertSame('2nd January', $carbon::parse('2019-01-02')->getHolidayName());
+        self::assertFalse($carbon::parse('2020-01-03')->isHoliday()); 
+        self::assertFalse($carbon::parse('2020-01-04')->isHoliday());
         self::assertTrue($carbon::parse('2020-08-03')->isHoliday()); // Summer
         self::assertTrue($carbon::parse('2020-11-30')->isHoliday()); // St Andrew's
 
+        // 2021 year, when new year is a Friday
+        self::assertFalse($carbon::parse('2021-01-02')->isHoliday()); // 2nd January week-end
+        self::assertFalse($carbon::parse('2021-01-03')->isHoliday()); // Simple Sunday
+        self::assertTrue($carbon::parse('2021-01-04')->isHoliday()); // 2nd January (Substitute)
+        self::assertSame('2nd January', $carbon::parse('2021-01-04')->getHolidayName());
+
         // 2022 year, when new year is a Saturday
-        self::assertFalse($carbon::parse('2022-01-01')->isHoliday()); // New Year week-end
         self::assertFalse($carbon::parse('2022-01-02')->isHoliday()); // 2nd January week-end
-        self::assertTrue($carbon::parse('2022-01-03')->isHoliday()); // New Year (Substitute)
         self::assertTrue($carbon::parse('2022-01-04')->isHoliday()); // 2nd January (Substitute)
+        self::assertSame('2nd January', $carbon::parse('2022-01-04')->getHolidayName());
 
         // 2023 year, when new year is a Sunday
-        self::assertFalse($carbon::parse('2023-01-01')->isHoliday()); // New Year week-end
-        self::assertTrue($carbon::parse('2023-01-02')->isHoliday()); // 2nd January
-        self::assertTrue($carbon::parse('2023-01-03')->isHoliday()); // New Year (Substitute)
+        self::assertFalse($carbon::parse('2023-01-02')->isHoliday()); // 2nd January week-end
+        self::assertTrue($carbon::parse('2023-01-03')->isHoliday()); // 2nd January (Substitute)
+        self::assertSame('2nd January', $carbon::parse('2023-01-03')->getHolidayName());
         self::assertFalse($carbon::parse('2023-01-04')->isHoliday()); // Simple Wednesday
     }
 }
