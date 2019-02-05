@@ -23,7 +23,7 @@ class GbTest extends TestCase
         $carbon::setHolidaysRegion('gb-national');
 
         // 2021 year, when new year is a Friday
-        self::assertTrue($carbon::parse('2021-01-01')->isHoliday()); // New Year 
+        self::assertTrue($carbon::parse('2021-01-01')->isHoliday()); // New Year
         self::assertSame('New Year', $carbon::parse('2021-01-01')->getHolidayName());
 
         // 2022 year, when new year is a Saturday
@@ -128,7 +128,7 @@ class GbTest extends TestCase
         $carbon::setHolidaysRegion('gb-scotland');
 
         // 2019 year
-        self::assertTrue($carbon::parse('2019-01-01')->isHoliday()); // New Year 
+        self::assertTrue($carbon::parse('2019-01-01')->isHoliday()); // New Year
         self::assertSame('New Year', $carbon::parse('2019-01-01')->getHolidayName());
         self::assertTrue($carbon::parse('2019-01-02')->isHoliday()); // 2nd January
         self::assertSame('2nd January', $carbon::parse('2019-01-02')->getHolidayName());
@@ -149,7 +149,7 @@ class GbTest extends TestCase
         self::assertSame('Boxing Day', $carbon::parse('2019-12-26')->getHolidayName());
 
         // 2020 year
-        self::assertTrue($carbon::parse('2020-01-01')->isHoliday()); // New Year 
+        self::assertTrue($carbon::parse('2020-01-01')->isHoliday()); // New Year
         self::assertSame('New Year', $carbon::parse('2020-01-01')->getHolidayName());
         self::assertTrue($carbon::parse('2020-01-02')->isHoliday()); // 2nd January
         self::assertSame('2nd January', $carbon::parse('2020-01-02')->getHolidayName());
@@ -170,7 +170,7 @@ class GbTest extends TestCase
         self::assertSame('Boxing Day', $carbon::parse('2020-12-28')->getHolidayName());
 
         // 2021 year, when new year is a Friday
-        self::assertTrue($carbon::parse('2021-01-01')->isHoliday()); // New Year 
+        self::assertTrue($carbon::parse('2021-01-01')->isHoliday()); // New Year
         self::assertSame('New Year', $carbon::parse('2021-01-01')->getHolidayName());
         self::assertFalse($carbon::parse('2021-01-02')->isHoliday()); // 2nd January
         self::assertFalse($carbon::parse('2021-01-03')->isHoliday()); // Simple Sunday
@@ -181,7 +181,7 @@ class GbTest extends TestCase
         self::assertFalse($carbon::parse('2022-01-01')->isHoliday()); // New Year
         self::assertFalse($carbon::parse('2022-01-02')->isHoliday()); // 2nd January
         self::assertTrue($carbon::parse('2022-01-03')->isHoliday()); // New Year (Substitute)
-        self::assertSame('New Year', $carbon::parse('2022-01-03')->getHolidayName()); 
+        self::assertSame('New Year', $carbon::parse('2022-01-03')->getHolidayName());
         self::assertTrue($carbon::parse('2022-01-04')->isHoliday()); // 2nd January (Substitute)
         self::assertSame('2nd January', $carbon::parse('2022-01-04')->getHolidayName());
 
