@@ -8,29 +8,29 @@ return array(
         return $date->format('d/m');
     },
     'early-may'    => function ($year) {
-        $date = DateTime::createFromFormat('U', (string) strtotime("first Monday of May $year"));
+        $date = new DateTime("first Monday of May $year");
 
         return $date->format('d/m');
     },
     'spring' => function ($year) {
-        $date = DateTime::createFromFormat('U', (string) strtotime("last Monday of May $year"));
+        $date = new DateTime("last Monday of May $year");
 
         return $date->format('d/m');
     },
     'christmas'      => function ($year) {
-        $date = DateTime::createFromFormat('U', (string) strtotime("$year/12/25"));
+        $date = new DateTime("$year-12-25");
 
-        if (date('N', strtotime("$year/12/25")) >= 6) {
-            $date->add(new DateInterval('P2D'));
+        if ($date->format('N') > 5) {
+            $date->modify('+2 days');
         }
 
         return $date->format('d/m');
     },
     'boxing-day'     => function ($year) {
-        $date = DateTime::createFromFormat('U', (string) strtotime("$year/12/26"));
+        $date = new DateTime("$year-12-26");
 
-        if (date('N', strtotime("$year/12/26")) >= 6) {
-            $date->add(new DateInterval('P2D'));
+        if ($date->format('N') > 5) {
+            $date->modify('+2 days');
         }
 
         return $date->format('d/m');

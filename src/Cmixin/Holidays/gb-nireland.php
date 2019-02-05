@@ -1,24 +1,20 @@
 <?php
 
 return array(
-    'new-year'      => function ($year) {
-        $date = DateTime::createFromFormat('U', (string) strtotime("$year/01/01"));
+    'new-year' => function ($year) {
+        $date = new DateTime("$year-01-01");
 
-        if (date('N', strtotime("$year/01/01")) == 6) {
-            $date->add(new DateInterval('P2D'));
-        } elseif (date('N', strtotime("$year/01/01")) == 7) {
-            $date->add(new DateInterval('P1D'));
+        if ($date->format('N') > 5) {
+            $date->modify('next monday');
         }
 
         return $date->format('d/m');
     },
     'st-patricks' => function ($year) {
-        $date = DateTime::createFromFormat('U', (string) strtotime("$year/03/17"));
+        $date = new DateTime("$year-03-17");
 
-        if (date('N', strtotime("$year/03/17")) == 6) {
-            $date->add(new DateInterval('P2D'));
-        } elseif (date('N', strtotime("$year/03/17")) == 7) {
-            $date->add(new DateInterval('P1D'));
+        if ($date->format('N') > 5) {
+            $date->modify('next monday');
         }
 
         return $date->format('d/m');
@@ -30,18 +26,16 @@ return array(
         return $date->format('d/m');
     },
     'boyne' => function ($year) {
-        $date = DateTime::createFromFormat('U', (string) strtotime("$year/07/12"));
+        $date = new DateTime("$year-07-12");
 
-        if (date('N', strtotime("$year/07/12")) == 6) {
-            $date->add(new DateInterval('P2D'));
-        } elseif (date('N', strtotime("$year/07/12")) == 7) {
-            $date->add(new DateInterval('P1D'));
+        if ($date->format('N') > 5) {
+            $date->modify('next monday');
         }
 
         return $date->format('d/m');
     },
-    'summer'   => function ($year) {
-        $date = DateTime::createFromFormat('U', (string) strtotime("last Monday of August $year"));
+    'summer' => function ($year) {
+        $date = new DateTime("last Monday of August $year");
 
         return $date->format('d/m');
     },

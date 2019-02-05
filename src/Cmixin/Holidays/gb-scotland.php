@@ -1,36 +1,34 @@
 <?php
 
 return array(
-    'new-year'      => function ($year) {
-        $date = DateTime::createFromFormat('U', (string) strtotime("$year/01/01"));
+    'new-year' => function ($year) {
+        $date = new DateTime("$year-01-01");
 
-        if (date('N', strtotime("$year/01/01")) >= 6) {
-            $date->add(new DateInterval('P2D'));
+        if ($date->format('N') > 5) {
+            $date->modify('+2 days');
         }
 
         return $date->format('d/m');
     },
     'second-jan' => function ($year) {
-        $date = DateTime::createFromFormat('U', (string) strtotime("$year/01/02"));
+        $date = new DateTime("$year-01-02");
 
-        if (date('N', strtotime("$year/01/02")) >= 6) {
-            $date->add(new DateInterval('P2D'));
+        if ($date->format('N') > 5) {
+            $date->modify('+2 days');
         }
 
         return $date->format('d/m');
     },
-    'summer'   => function ($year) {
-        $date = DateTime::createFromFormat('U', (string) strtotime("first Monday of August $year"));
+    'summer' => function ($year) {
+        $date = new DateTime("first Monday of August $year");
 
         return $date->format('d/m');
     },
     'st-andrews' => function ($year) {
-        $date = DateTime::createFromFormat('U', (string) strtotime("$year/11/30"));
+        $date = new DateTime("$year-11-30");
 
-        if (date('N', strtotime("$year/11/30")) == 6) {
-            $date->add(new DateInterval('P2D'));
-        } elseif (date('N', strtotime("$year/11/30")) == 7) {
-            $date->add(new DateInterval('P1D'));
+        if ($date->format('N') > 5) {
+            $date->modify('next monday');
         }
 
         return $date->format('d/m');
