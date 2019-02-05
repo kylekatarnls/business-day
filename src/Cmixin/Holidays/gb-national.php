@@ -16,7 +16,7 @@ return array(
 
         return $date->format('d/m');
     },
-    'early-may'    => function ($year) {
+    'early-may' => function ($year) {
         $date = new DateTime("first Monday of May $year");
 
         return $date->format('d/m');
@@ -26,7 +26,7 @@ return array(
 
         return $date->format('d/m');
     },
-    'christmas'      => function ($year) {
+    'christmas' => function ($year) {
         $date = new DateTime("$year-12-25");
 
         if ($date->format('N') > 5) {
@@ -35,7 +35,7 @@ return array(
 
         return $date->format('d/m');
     },
-    'boxing-day'     => function ($year) {
+    'boxing' => function ($year) {
         $date = new DateTime("$year-12-26");
 
         if ($date->format('N') > 5) {

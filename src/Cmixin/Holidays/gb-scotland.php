@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return array_merge(include __DIR__.'/gb-national.php', array(
     'second-jan' => function ($year) {
         $date = new DateTime("$year-01-02");
 
@@ -26,4 +26,4 @@ return array(
 
         return $date->format('d/m');
     },
-);
+));
