@@ -14,36 +14,21 @@ return array(
     'vacation-day'      => '01/05', // praznik dela
     'vacation-next-day' => '02/05', // praznik dela
 //  '08/06', // dan Primoža Trubarja
-    'national-day' => '25/06', // dan državnosti
-    'assumption'   => '15/08', // Marijino vnebovzetje
+    'national-day'      => '25/06', // dan državnosti
+    'assumption'        => '15/08', // Marijino vnebovzetje
 //  '17/08', // združitev prekmurskih Slovencev z matičnim narodom
 //  '15/09', // vrnitev Primorske k matični domovini
 //  '25/10', // dan suverenosti
-    'reformation-day' => '31/10', // dan reformacije
-    'memorial-day'    => '01/11', // dan spomina na mrtve
+    'reformation-day'   => '31/10', // dan reformacije
+    'memorial-day'      => '01/11', // dan spomina na mrtve
 //  '23/11', // dan Rudolfa Maistra
-    'christmas'        => '25/12', // božič
-    'independence-day' => '26/12', // dan samostojnosti in enotnosti
+    'christmas'         => '25/12', // božič
+    'independence-day'  => '26/12', // dan samostojnosti in enotnosti
 
     // velika noč
-    'easter' => function ($year) {
-        $days = easter_days($year);
-        $date = new DateTime("$year-03-21 +$days days");
-
-        return $date->format('d/m');
-    },
+    'easter'            => '= easter',
     // velikonočni ponedeljek
-    'easter-monday' => function ($year) {
-        $days = easter_days($year) + 1;
-        $date = new DateTime("$year-03-21 +$days days");
-
-        return $date->format('d/m');
-    },
+    'easter-monday'     => '= easter + 1',
     // binkoštna nedelja - binkošti
-    'pentecost' => function ($year) {
-        $days = easter_days($year) + 49;
-        $date = new DateTime("$year-03-21 +$days days");
-
-        return $date->format('d/m');
-    },
+    'pentecost'         => '= easter + 49',
 );

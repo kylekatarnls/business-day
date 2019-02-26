@@ -57,6 +57,8 @@ class NlTest extends TestCase
         self::assertTrue($carbon::parse('2000-01-01 00:00:00')->isHoliday());
         self::assertTrue($carbon::parse('2018-04-27')->isHoliday());
         self::assertFalse($carbon::parse('2018-04-26')->isHoliday());
+        self::assertFalse($carbon::parse('2014-04-27')->isHoliday());
+        self::assertTrue($carbon::parse('2014-04-26')->isHoliday());
         self::assertTrue($carbon::parse('2018-04-01')->isHoliday());
         self::assertTrue($carbon::parse('2018-04-02')->isHoliday());
         self::assertFalse($carbon::parse('2018-05-05')->isHoliday()); // Liberation Day; only once every 5 years

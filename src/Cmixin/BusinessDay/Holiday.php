@@ -4,6 +4,7 @@ namespace Cmixin\BusinessDay;
 
 use Carbon\Carbon;
 use Cmixin\BusinessDay;
+use DateTime;
 
 class Holiday extends HolidaysList
 {
@@ -35,6 +36,44 @@ class Holiday extends HolidaysList
 
                 if (!is_string($holiday)) {
                     continue;
+                }
+
+                if (substr($holiday, 0, 1) === '=') {
+                    $holiday = preg_replace_callback('/(easter)/i', function ($match) use ($year) {
+                        switch ($match[0]) {
+                            case 'easter':
+                                static $easterDays = array();
+
+                                if (!isset($easterDays[$year])) {
+                                    $easterDays[$year] = easter_days($year);
+                                }
+
+                                return "$year-03-21 $easterDays[$year] days ";
+                        }
+                    }, trim(substr($holiday, 1)));
+                    $holiday = str_replace('$year', $year, $holiday);
+                    $holiday = preg_replace('/(\s\d+)\s*$/', '$1 days', $holiday);
+                    list($holiday, $condition) = array_pad(explode(' if ', $holiday, 2), 2, null);
+
+                    if (strpos($holiday, "$year") === false) {
+                        $holiday .= " $year";
+                    }
+
+                    $dateTime = new DateTime($holiday);
+
+                    if ($condition) {
+                        list($condition, $action) = array_pad(explode(' then ', $holiday, 2), 2, null);
+                        $condition = strtolower($condition);
+                        $condition = $condition === 'weekend'
+                            ? ($dateTime->format('N') > 5)
+                            : (strtolower($dateTime->format('l')) === $condition);
+
+                        if ($condition) {
+                            $dateTime->modify($action);
+                        }
+                    }
+
+                    $holiday = $dateTime->format('d/m');
                 }
 
                 if (strpos($holiday, '-') !== false) {

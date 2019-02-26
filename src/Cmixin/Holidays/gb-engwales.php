@@ -9,15 +9,6 @@ return array_merge(include __DIR__.'/gb-national.php', array(
         'scotland' => 'scotland',
         'sct'      => 'scotland',
     ),
-    'easter-monday' => function ($year) {
-        $days = easter_days($year) + 1;
-        $date = new DateTime("$year-03-21 +$days days");
-
-        return $date->format('d/m');
-    },
-    'summer' => function ($year) {
-        $date = new DateTime("last Monday of August $year");
-
-        return $date->format('d/m');
-    },
+    'easter-monday' => '= easter + 1',
+    'summer'        => '= last Monday of August',
 ));
