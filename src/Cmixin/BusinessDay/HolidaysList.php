@@ -19,14 +19,54 @@ class HolidaysList extends MixinBase
      *
      * @return \Closure
      */
+    public function standardizeHolidaysRegion()
+    {
+        return function ($region) {
+            $region = preg_replace('/[^a-z0-9_-]/', '', str_replace('_', '-', strtolower($region)));
+
+            return strpos($region, '-') === false ? "$region-national" : $region;
+        };
+    }
+
+    /**
+     * Set the holidays region (see src/Cmixin/Holidays for examples).
+     *
+     * @return \Closure
+     */
     public function setHolidaysRegion()
     {
         $mixin = $this;
 
         return function ($region) use ($mixin) {
-            $region = preg_replace('/[^a-zA-Z0-9_-]/', '', $region);
+            $region = call_user_func($mixin->standardizeHolidaysRegion(), $region);
             $mixin->holidaysRegion = $region;
-            if (!isset($mixin->holidays[$region]) && file_exists($file = __DIR__."/../Holidays/$region.php")) {
+
+            if (!isset($mixin->holidays[$region])) {
+                if (!file_exists($file = __DIR__."/../Holidays/$region.php")) {
+                    list($country, $subRegion) = array_pad(explode('-', $region, 2), 2, '');
+                    $nation = "$country-national";
+
+                    if (!isset($mixin->holidays[$nation])) {
+                        if (!file_exists($file = __DIR__."/../Holidays/$nation.php")) {
+                            return;
+                        }
+
+                        $mixin->holidays[$nation] = include $file;
+                    }
+
+                    if (isset($mixin->holidays[$nation]['regions'], $mixin->holidays[$nation]['regions'][$subRegion])) {
+                        $newRegion = $mixin->holidays[$nation]['regions'][$subRegion];
+                        $region = "$country-$newRegion";
+                        $mixin->holidaysRegion = $region;
+                        $mixin->holidays[$region] = include __DIR__."/../Holidays/$region.php";
+
+                        return;
+                    }
+
+                    $mixin->holidaysRegion = $nation;
+                    $file = __DIR__."/../Holidays/$nation.php";
+                }
+
                 $mixin->holidays[$region] = include $file;
             }
         };
@@ -42,7 +82,10 @@ class HolidaysList extends MixinBase
         $mixin = $this;
 
         return function ($region = null) use ($mixin) {
-            $region = is_string($region) ? $region : $mixin->holidaysRegion;
+            $region = is_string($region)
+                ? call_user_func($mixin->standardizeHolidaysRegion(), $region)
+                : $mixin->holidaysRegion;
+
             if (!$region || !isset($mixin->holidays[$region])) {
                 return array();
             }
@@ -61,6 +104,7 @@ class HolidaysList extends MixinBase
         $mixin = $this;
 
         return function ($region, $holidays) use ($mixin) {
+            $region = call_user_func($mixin->standardizeHolidaysRegion(), $region);
             $addHolidays = $mixin->addHolidays();
             $mixin->holidays[$region] = array();
             $addHolidays($region, $holidays);
@@ -92,6 +136,8 @@ class HolidaysList extends MixinBase
     public function initializeHolidaysRegion($region = null)
     {
         if ($region) {
+            $region = call_user_func($this->standardizeHolidaysRegion(), $region);
+
             if (!isset($this->holidays[$region])) {
                 $this->holidays[$region] = array();
             }
@@ -114,6 +160,7 @@ class HolidaysList extends MixinBase
         $mixin = $this;
 
         return function ($region, $holiday, $key = null) use ($mixin) {
+            $region = call_user_func($mixin->standardizeHolidaysRegion(), $region);
             $mixin->initializeHolidaysRegion($region);
 
             if (is_string($key)) {
@@ -167,6 +214,7 @@ class HolidaysList extends MixinBase
         return function ($region, $holiday, $key = null, $name = null, $observed = null) use ($mixin, $dictionary) {
             static $observer;
 
+            $region = call_user_func($mixin->standardizeHolidaysRegion(), $region);
             $mixin->initializeHolidaysRegion($region);
             $push = $mixin->pushHoliday();
             $push($region, $holiday, $key);
@@ -248,6 +296,7 @@ class HolidaysList extends MixinBase
         $mixin = $this;
 
         return function ($region, $holidays) use ($mixin) {
+            $region = call_user_func($mixin->standardizeHolidaysRegion(), $region);
             $mixin->initializeHolidaysRegion($region);
             $add = $mixin->addHoliday();
             $check = $mixin->checkHoliday();

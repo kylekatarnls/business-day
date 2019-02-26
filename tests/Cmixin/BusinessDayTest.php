@@ -78,6 +78,31 @@ class BusinessDayTest extends TestCase
         }
     }
 
+    public function testCaseInsensitivity()
+    {
+        $carbon = static::CARBON_CLASS;
+        $carbon::setHolidaysRegion('FR');
+        self::assertTrue($carbon::parse("2015-01-01 03:30:40")->isHoliday());
+        self::assertTrue($carbon::parse("2015-07-14 03:30:40")->isHoliday());
+        self::assertTrue($carbon::parse("2015-12-25 03:30:40")->isHoliday());
+        self::assertFalse($carbon::parse("2015-12-26 03:30:40")->isHoliday());
+    }
+
+    public function testRegionsAlias()
+    {
+        $carbon = static::CARBON_CLASS;
+        $carbon::setHolidaysRegion('fr_68');
+        self::assertTrue($carbon::parse("2015-01-01 03:30:40")->isHoliday());
+        self::assertTrue($carbon::parse("2015-07-14 03:30:40")->isHoliday());
+        self::assertTrue($carbon::parse("2015-12-25 03:30:40")->isHoliday());
+        self::assertTrue($carbon::parse("2015-12-26 03:30:40")->isHoliday());
+        $carbon::setHolidaysRegion('fr_75');
+        self::assertTrue($carbon::parse("2015-01-01 03:30:40")->isHoliday());
+        self::assertTrue($carbon::parse("2015-07-14 03:30:40")->isHoliday());
+        self::assertTrue($carbon::parse("2015-12-25 03:30:40")->isHoliday());
+        self::assertFalse($carbon::parse("2015-12-26 03:30:40")->isHoliday());
+    }
+
     /**
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage Holiday array definition should at least contains a "date" entry.

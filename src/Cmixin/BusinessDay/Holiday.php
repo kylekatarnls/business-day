@@ -33,6 +33,10 @@ class Holiday extends HolidaysList
                     $holiday = call_user_func($holiday, $year);
                 }
 
+                if (!is_string($holiday)) {
+                    continue;
+                }
+
                 if (strpos($holiday, '-') !== false) {
                     $holiday = preg_replace('/^(\d+)-(\d+)$/', '$2/$1', $holiday);
                     $holiday = preg_replace('/^(\d+)-(\d+)-(\d+)$/', '$3/$2/$1', $holiday);

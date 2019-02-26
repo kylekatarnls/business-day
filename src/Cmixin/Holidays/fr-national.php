@@ -1,6 +1,12 @@
 <?php
 
 return array(
+    'regions'       => array(
+        'east' => 'east',
+        '57'   => 'east',
+        '67'   => 'east',
+        '68'   => 'east',
+    ),
     'new-year'      => '01/01', // Jour de l'an
     'epiphany'      => '06/01', // Épiphanie
     // Lundi de Pâques
