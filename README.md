@@ -81,7 +81,7 @@ function ($year) {
 To select the set of holidays of a region, use:
 ```php
 Carbon::parse('2000-12-25 00:00:00')->isHoliday(); // false
-Carbon::setHolidaysRegion('us-national');
+Carbon::setHolidaysRegion('us');
 Carbon::parse('2000-12-25 00:00:00')->isHoliday(); // true
 ```
 
@@ -98,8 +98,8 @@ given region passed in argument, if no argument given
 the list for the current selected region is returned.
 
 ```php
-Carbon::getHolidays('us-national'); // raw us-national holidays list
-Carbon::setHolidaysRegion('fr-national');
+Carbon::getHolidays('us'); // raw us-national holidays list
+Carbon::setHolidaysRegion('fr');
 Carbon::getHolidays(); // raw fr-national holidays list
 ```
 
@@ -112,30 +112,23 @@ Carbon::setHolidays('us-il', array_merge(
     Carbon::getHolidays('us-national'),
     array(
         // Presidents' Day
-        'presidents-day' => function ($year) {
-            $date = new DateTime("third monday of february $year");
-    
-            return $date->format('d/m');
-        },
+        'presidents-day' => '= third monday of february', // can be a datetime expression
         // Columbus Day
-        'columbus-day' => function ($year) {
+        'columbus-day' => function ($year) { // can be a closure
             $date = new DateTime("second monday of october $year");
     
             return $date->format('d/m');
         },
         // Day after Thanksgiving
-        'thanksgiving-next-day' => function ($year) {
-            $date = new DateTime("fourth thursday of november $year +1 day");
-    
-            return $date->format('d/m');
-        },
+        'thanksgiving-next-day' => '= fourth thursday of november $year +1 day', // '$year' will be replaced by current year
     )
 ));
 Carbon::setHolidays('my-enterprise', array_merge(
     Carbon::getHolidays('us-is'),
     array(
         // Lincoln's Birthday
-        'lincolns-birthday' => '12/02',
+        'lincolns-birthday' => '= 02-12 substitute', // substitute will shift the holiday until it does not fall on Saturday, Sunday or an other holiday
+        'company-closed-day' => '= 04-05 if friday then previous wednesday', // custom rules can be applied with if/then (if can be followed by a day name or "weekend")
     )
 ));
 // Then when you select my-enterprise, all us-national,
