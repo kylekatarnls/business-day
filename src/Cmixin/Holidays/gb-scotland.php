@@ -13,7 +13,7 @@ return array_merge(include __DIR__.'/gb-national.php', array(
 
         return $date->format('d/m');
     },
-    'summer'     => 'first Monday of August',
+    'summer'     => '= first Monday of August',
     'st-andrews' => function ($year) {
         $date = new DateTime("$year-11-30");
 

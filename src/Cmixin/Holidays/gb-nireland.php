@@ -20,5 +20,5 @@ return array_merge(include __DIR__.'/gb-national.php', array(
 
         return $date->format('d/m');
     },
-    'summer'        => 'last Monday of August',
+    'summer'        => '= last Monday of August',
 ));

@@ -51,6 +51,7 @@ class Holiday extends HolidaysList
                                 return "$year-03-21 $easterDays[$year] days ";
                         }
                     }, trim(substr($holiday, 1)));
+                    $holiday = preg_replace('/^\d{2}-\d{2}\s/', "$year-$0", $holiday);
                     $holiday = str_replace('$year', $year, $holiday);
                     $holiday = preg_replace('/(\s\d+)\s*$/', '$1 days', $holiday);
                     list($holiday, $condition) = array_pad(explode(' if ', $holiday, 2), 2, null);
@@ -62,7 +63,7 @@ class Holiday extends HolidaysList
                     $dateTime = new DateTime($holiday);
 
                     if ($condition) {
-                        list($condition, $action) = array_pad(explode(' then ', $holiday, 2), 2, null);
+                        list($condition, $action) = array_pad(explode(' then ', $condition, 2), 2, null);
                         $condition = strtolower($condition);
                         $condition = $condition === 'weekend'
                             ? ($dateTime->format('N') > 5)

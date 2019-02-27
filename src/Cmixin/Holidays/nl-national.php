@@ -7,7 +7,7 @@ return array(
     // Paasmaandag
     'easter-monday'      => '= easter + 1',
     // Koningsdag
-    'royal-day'          => '$year-01-02 if sunday then -1 day',
+    'royal-day'          => '= 04-27 if sunday then -1 day',
     // Bevrijdingsdag
     'liberation-day'     => function ($year) {
         if ($year % 5 === 0) {
