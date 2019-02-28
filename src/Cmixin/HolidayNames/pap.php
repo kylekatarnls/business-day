@@ -16,4 +16,13 @@ return array(
     '09-06'                                                                 => 'Dia di Boneiru',
     '07-02'                                                                 => 'Dia di Himno i Bandera',
     '10-10'                                                                 => 'Pais Kòrsou',
+    'new-year'                                                              => 'Aña Nobo',
+    '05-01'                                                                 => 'Dia di Obrero',
+    'christmas'                                                             => 'Dia Pasco di Nascimento',
+    'christmas-next-day'                                                    => 'Di dos Dia Pasco di Nascimento',
+    'easter-48'                                                             => 'Dialuna di Carnaval',
+    'easter-2'                                                              => 'Diabierna Santo',
+    'easter'                                                                => 'Dia Pasco di Resureccion',
+    'easter-1'                                                              => 'Di dos Dia Pasco di Resureccion',
+    'easter-39'                                                             => 'Dia di Asuncion',
 );

@@ -38,4 +38,9 @@ return array(
     '11-15'                                                  => '七五三',
     '11-23-and-if-sunday-then-next-monday'                   => '勤労感謝の日',
     '12-23-and-if-sunday-then-next-monday'                   => '天皇誕生日',
+    'new-year'                                               => '元日',
+    'christmas'                                              => 'ノエル',
+    '12-31'                                                  => '大晦日',
+    'constitution-day'                                       => '憲法記念日',
+    'substitutes'                                            => '代替日',
 );

@@ -19,4 +19,7 @@ return array(
     'korean-8-0-15-p3d'         => '추석',
     '10-03'                     => '개천절',
     '10-09'                     => '한글날',
+    'new-year'                  => '신정',
+    'christmas'                 => '기독탄신일',
+    'constitution-day'          => '제헌절',
 );

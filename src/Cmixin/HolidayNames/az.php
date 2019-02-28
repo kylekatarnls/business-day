@@ -23,4 +23,9 @@ return array(
     '11-12'                                         => 'Konstitusiya günü',
     '11-17'                                         => 'Milli Dirçəliş günü',
     '12-31-and-if-saturday,sunday-then-next-monday' => 'Dünya azərbaycanlıların həmrəyliyi günü',
+    'new-year'                                      => 'Yeni il',
+    '03-08'                                         => 'Qadınlar günü',
+    '1-shawwal'                                     => 'Ramazan Bayramı',
+    '10-dhu-al-hijjah'                              => 'Qurban Bayramı',
+    'substitutes'                                   => 'əvəz gün',
 );

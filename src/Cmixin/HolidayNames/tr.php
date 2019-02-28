@@ -12,4 +12,8 @@ return array(
     '07-15'                                           => 'Demokrasi ve Millî Birlik Günü',
     '08-30'                                           => 'Zafer Bayramı',
     '10-29'                                           => 'Cumhuriyet Bayramı',
+    'new-year'                                        => 'Yılbaşı',
+    '27-rajab'                                        => 'Miraç Gecesi',
+    '1-shawwal'                                       => 'Ramazan Bayramı',
+    '10-dhu-al-hijjah'                                => 'Kurban Bayramı',
 );

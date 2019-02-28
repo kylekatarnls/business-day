@@ -49,4 +49,7 @@ return array(
     'vietnamese-7-0-15'                                      => 'Rằm tháng bảy, Vu Lan',
     'vietnamese-8-0-15'                                      => 'Tết Trung thu',
     'vietnamese-12-0-23'                                     => 'Ông Táo chầu trời',
+    'new-year'                                               => 'Tết dương lịch',
+    '03-08'                                                  => 'Quốc tế Phụ nữ',
+    '05-01'                                                  => 'Ngày Quốc tế Lao động',
 );

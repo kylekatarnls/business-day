@@ -11,4 +11,13 @@ return array(
     '06-07'                                    => 'Sette Giugno',
     '09-08'                                    => 'Jum il-Vitorja',
     '12-13'                                    => 'Jum ir-Repubblika',
+    'new-year'                                 => 'L-Ewwel tas-Sena',
+    '03-19'                                    => 'San Ġużepp',
+    '05-01'                                    => 'Jum il-Ħaddiem',
+    '06-29'                                    => 'L-Imnarja',
+    '08-15'                                    => 'Santa Marija',
+    '12-08'                                    => 'Il-Kunċizzjoni',
+    'christmas'                                => 'Il-Milied',
+    'easter-2'                                 => 'Il-Ġimgħa l-Kbira',
+    'independence-day'                         => 'Jum l-Indipendenza',
 );

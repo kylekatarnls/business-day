@@ -16,4 +16,13 @@ return array(
     '09-28'                                  => 'Den české státnosti',
     '10-28'                                  => 'Den vzniku samostatného československého státu',
     '11-17'                                  => 'Den boje za svobodu a demokracii',
+    '05-01'                                  => 'Svátek práce',
+    '12-24'                                  => 'Štědrý den',
+    'christmas'                              => '1. svátek vánoční',
+    'christmas-next-day'                     => '2. svátek vánoční',
+    'easter-3'                               => 'Zelený čtvrtek',
+    'easter-2'                               => 'Velikonoční pátek',
+    'easter-1'                               => 'Bílá sobota',
+    'easter'                                 => 'Neděle velikonoční',
+    'mothers-day'                            => 'Den matek',
 );

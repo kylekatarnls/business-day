@@ -14,4 +14,9 @@ return array(
     '07-15'             => 'Hari Keputeraan KDYMM Sultan Brunei',
     '17-ramadan'        => 'Hari Nuzul Al-Quran',
     'chinese-01-0-01'   => 'Tahun Baru Cina',
+    'christmas'         => 'Hari Natal',
+    '1-muharram'        => 'Awal Tahun Hijrah',
+    '12-rabi-al-awwal'  => 'Maulidur Rasul',
+    '27-rajab'          => 'Israk dan Mikraj',
+    '1-ramadan'         => 'Hari Pertama Berpuasa',
 );

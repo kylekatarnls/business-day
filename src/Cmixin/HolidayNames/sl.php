@@ -67,4 +67,8 @@ return array(
     '11-11'                                                       => 'martinovanje',
     '11-23'                                                       => 'dan Rudolfa Maistra',
     '12-06'                                                       => 'miklavž',
+    '03-08'                                                       => 'Mednarodni dan žena',
+    '05-01'                                                       => 'praznik dela',
+    '08-15'                                                       => 'Marijino vnebovzetje',
+    'easter-1'                                                    => 'Velikonočni ponedeljek',
 );
