@@ -1,0 +1,25 @@
+<?php
+
+return array(
+    '01-06'                                               => 'Epifania',
+    'feast-of-saint-agatha'                               => 'Festa di Sant’Agata',
+    'anniversary-of-the-arengo'                           => 'Anniversario dell\'Arengo',
+    'inauguration-ceremony'                               => 'Cerimonia di investitura dei Capitani Reggenti',
+    'liberation-from-fascism'                             => 'Anniversario della caduta del Fascismo e Festa della Libertà',
+    'the-feast-of-san-marino-and-the-republic'            => 'Festa di San Marino e di Fondazione della Repubblica',
+    '10-01'                                               => 'Cerimonia di investitura dei Capitani Reggenti',
+    '11-01'                                               => 'Tutti i Santi',
+    'commemoration-of-the-deceased'                       => 'Commemorazione dei defunti',
+    'solemnity-of-mary,-mother-of-god'                    => 'Maria Santissima Madre di Dio',
+    'epiphany'                                            => 'Epifania del Signore',
+    'anniversary-of-the-foundation-of-vatican-city'       => 'Anniversario della istituzione dello Stato della Città del Vaticano',
+    '05-01'                                               => 'San Giuseppe lavoratore',
+    '08-15'                                               => 'Assunzione di Maria in Cielo',
+    'nativity-of-mary'                                    => 'Festa della natività della madonna',
+    'anniversary-of-the-election-of-pope-john-paul-ii'    => 'Anniversario dell\'Elezione del Santo Padre',
+    'saint-charles-borromeo--name-day-of-the-holy-father' => 'San Carlo Borromeo - Onomastico del Santo Padre',
+    'anniversary-of-the-election-of-pope-benedict-xvi'    => 'Anniversario dell\'Elezione del Santo Padre',
+    'saint-joseph--name-day-of-the-holy-father'           => 'San Giuseppe - Onomastico del Santo Padre',
+    'anniversary-of-the-election-of-pope-francis'         => 'Anniversario dell\'Elezione del Santo Padre',
+    'saint-george--name-day-of-the-holy-father'           => 'San Giorgio - Onomastico del Santo Padre',
+);

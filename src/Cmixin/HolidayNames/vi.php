@@ -1,0 +1,28 @@
+<?php
+
+return array(
+    'vietnamese-new-year'                                    => 'Tết',
+    'vietnamese-new-year-holidays'                           => 'Tết ngày lễ',
+    'hung-kings-commemorations'                              => 'Giỗ tổ Hùng Vương',
+    'day-of-liberating-the-south-for-national-reunification' => 'Ngày Giải phóng miền Nam',
+    'national-day'                                           => 'Quốc khánh',
+    'communist-party-of-viet-nam-foundation-anniversary'     => 'Ngày thành lập Đảng',
+    'vietnam-book-day'                                       => 'Ngày sách Việt Nam',
+    'dien-bien-phu-victory-day'                              => 'Ngày Chiến thắng Điện Biện Phủ',
+    'president-ho-chi-minh-s-birthday'                       => 'Ngày sinh Chủ tịch Hồ Chí Minh',
+    'international-children-s-day'                           => 'Ngày quốc tế thiếu nhi',
+    'vietnamese-family-day'                                  => 'Ngày gia đình Việt Nam',
+    'remembrance-day'                                        => 'Ngày thương binh liệt sĩ',
+    'august-revolution-commemoration-day'                    => 'Ngày cách mạng tháng 8',
+    'capital-liberation-day'                                 => 'Ngày giải phóng thủ đô',
+    'vietnamese-women-s-day'                                 => 'Ngày phụ nữ Việt Nam',
+    'vietnamese-teacher-s-day'                               => 'Ngày Nhà giáo Việt Nam',
+    'national-defence-day'                                   => 'Ngày hội quốc phòng toàn dân',
+    'victory-of-ngọc-hồi-đống-đa'                            => 'Chiến thắng Ngọc Hồi - Đống Đa',
+    'lantern-festival'                                       => 'Tết Nguyên Tiêu',
+    'buddha-s-birthday'                                      => 'Lễ Phật đản',
+    'mid-year-festival'                                      => 'Tết Đoan ngọ',
+    'ghost-festival'                                         => 'Rằm tháng bảy, Vu Lan',
+    'mid-autumn-festival'                                    => 'Tết Trung thu',
+    'kitchen-guardians'                                      => 'Ông Táo chầu trời',
+);
