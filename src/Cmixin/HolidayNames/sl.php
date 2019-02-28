@@ -49,7 +49,7 @@ return array(
     'sovereignty-day'                                             => 'dan suverenosti',
     'day-of-the-dead'                                             => 'dan spomina na mrtve or dan mrtvih',
     'st.-martin-s-day'                                            => 'martinovanje',
-    'rudolf-maister-day-	dan-rudolfa-maistra'                  => 'dan Rudolfa Maistra',
+    'rudolf-maister-day-dan-rudolfa-maistra'                      => 'dan Rudolfa Maistra',
     'saint-nicholas-day'                                          => 'miklavž',
     'independence-and-unity-day'                                  => 'dan samostojnosti in enotnosti',
     '02-08'                                                       => 'Prešernov dan',

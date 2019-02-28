@@ -385,7 +385,7 @@ return array(
     'sovereignty-day'                                                                                     => 'Sovereignty Day',
     'day-of-the-dead'                                                                                     => 'Day (of Remembrance) of the Dead',
     'st.-martin-s-day'                                                                                    => 'St. Martin\'s Day',
-    'rudolf-maister-day-	dan-rudolfa-maistra'                                                          => 'Rudolf Maister Day 	dan Rudolfa Maistra',
+    'rudolf-maister-day-dan-rudolfa-maistra'                                                              => 'Rudolf Maister Day 	dan Rudolfa Maistra',
     'independence-and-unity-day'                                                                          => 'Independence and Unity Day',
     'slovak-national-uprising-anniversary'                                                                => 'Slovak National Uprising anniversary',
     'day-of-our-lady-of-the-seven-sorrows'                                                                => 'Day of Our Lady of the Seven Sorrows',
