@@ -7,8 +7,7 @@
         "ext-calendar": "*"
     },
     "require-dev": {
-        "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.0 || ^7.0",
-        "symfony/yaml": "^4.3@dev"
+        "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.0 || ^7.0"
     },
     "autoload": {
         "psr-4": {
