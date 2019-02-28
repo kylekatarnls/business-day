@@ -7,4 +7,9 @@ return array(
     'democracy-and-national-unity-day'                => 'Demokrasi ve Millî Birlik Günü',
     'victory-day'                                     => 'Zafer Bayramı',
     'republic-day'                                    => 'Cumhuriyet Bayramı',
+    '04-23'                                           => 'Ulusal Egemenlik ve Çocuk Bayramı',
+    '05-19'                                           => 'Atatürk\'ü Anma Gençlik ve Spor Bayramı',
+    '07-15'                                           => 'Demokrasi ve Millî Birlik Günü',
+    '08-30'                                           => 'Zafer Bayramı',
+    '10-29'                                           => 'Cumhuriyet Bayramı',
 );
