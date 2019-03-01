@@ -74,4 +74,5 @@ return array(
     'national-holiday'                             => 'Nationalfeiertag',
     'reformation-day'                              => 'Reformationstag',
     'substitutes'                                  => 'Ersatztag',
+    'buy�-und-bettag'                              => 'Buß- und Bettag',
 );

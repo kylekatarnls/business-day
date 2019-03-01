@@ -1,34 +1,29 @@
 <?php
 
-/**
- * Slovenian holidays.
- *
- * Days that are commented are holidays, but not work-free-days.
- * Source: http://www.vlada.si/o_sloveniji/politicni_sistem/prazniki/
- */
 return array(
-    'new-year'          => '01/01', // novo leto
-    'new-year-next-day' => '02/01', // novo leto
-    'preseren-day'      => '08/02', // Prešernov dan, slovenski kulturni praznik
-    'rebellion-day'     => '27/04', // dan upora proti okupatorju
-    'vacation-day'      => '01/05', // praznik dela
-    'vacation-next-day' => '02/05', // praznik dela
-//  '08/06', // dan Primoža Trubarja
-    'national-day'      => '25/06', // dan državnosti
-    'assumption'        => '15/08', // Marijino vnebovzetje
-//  '17/08', // združitev prekmurskih Slovencev z matičnim narodom
-//  '15/09', // vrnitev Primorske k matični domovini
-//  '25/10', // dan suverenosti
-    'reformation-day'   => '31/10', // dan reformacije
-    'memorial-day'      => '01/11', // dan spomina na mrtve
-//  '23/11', // dan Rudolfa Maistra
-    'christmas'         => '25/12', // božič
-    'independence-day'  => '26/12', // dan samostojnosti in enotnosti
-
-    // velika noč
-    'easter'            => '= easter',
-    // velikonočni ponedeljek
-    'easter-monday'     => '= easter + 1',
-    // binkoštna nedelja - binkošti
-    'pentecost'         => '= easter + 49',
+    'new-year'           => '01-01',
+    'new-year-next-day'  => '01-02',
+    '02-08'              => '02-08',
+    '03-08'              => '03-08',
+    '04-23'              => '04-23',
+    'easter-49'          => '= easter 49',
+    'easter'             => '= easter',
+    'easter-1'           => '= easter 1',
+    '04-27'              => '04-27',
+    '05-01'              => '05-01',
+    '05-02'              => '05-02',
+    '06-08'              => '06-08',
+    '06-25'              => '06-25',
+    '07-22'              => '07-22',
+    '08-15'              => '08-15',
+    '08-17'              => '08-17',
+    '09-15'              => '09-15',
+    '10-25'              => '10-25',
+    '10-31'              => '10-31',
+    '11-01'              => '11-01',
+    '11-11'              => '11-11',
+    '11-23'              => '11-23',
+    '12-06'              => '12-06',
+    'christmas'          => '12-25',
+    'christmas-next-day' => '12-26',
 );

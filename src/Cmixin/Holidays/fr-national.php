@@ -1,25 +1,17 @@
 <?php
 
 return array(
-    'regions'          => array(
-        'east' => 'east',
-        '57'   => 'east',
-        '67'   => 'east',
-        '68'   => 'east',
-    ),
-    'new-year'         => '01/01', // Jour de l'an
-    'epiphany'         => '06/01', // Épiphanie
-    // Lundi de Pâques
-    'easter-monday'    => '= easter + 1',
-    'labor-day'        => '01/05', // Fête du travail
-    'victory-1945'     => '08/05', // Victoire 1945
-    // Ascension
-    'ascension'        => '= easter + 39',
-    // Lundi de Pentecôte
-    'pentecost-monday' => '= easter + 50',
-    'national-day'     => '14/07', // Fête nationale
-    'assumption'       => '15/08', // Assomption
-    'toussaint'        => '01/11', // Toussaint
-    'armistice-1918'   => '11/11', // Armistice 1918
-    'christmas'        => '25/12', // Noël
+    'new-year'            => '01-01',
+    'easter-1'            => '= easter 1',
+    '05-01'               => '05-01',
+    '05-08'               => '05-08',
+    'easter-39'           => '= easter 39',
+    'easter-49'           => '= easter 49',
+    'easter-50'           => '= easter 50',
+    'sunday-before-06-01' => '= sunday before 06-01',
+    '07-14'               => '07-14',
+    '08-15'               => '08-15',
+    '11-01'               => '11-01',
+    '11-11'               => '11-11',
+    'christmas'           => '12-25',
 );

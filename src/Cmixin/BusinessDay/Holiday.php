@@ -72,7 +72,7 @@ class Holiday extends HolidaysList
                         $condition = strtolower($condition);
                         $condition = $condition === 'weekend'
                             ? ($dateTime->format('N') > 5)
-                            : (strtolower($dateTime->format('l')) === $condition);
+                            : in_array(strtolower($dateTime->format('l')), array_map('trim', explode(',', $condition)));
 
                         if ($condition) {
                             $dateTime->modify($action);
