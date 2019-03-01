@@ -70,7 +70,7 @@ return array(
     '06-20'                                                                                               => 'Día de la Bandera',
     'substitutes-06-20-if-tuesday-then-previous-monday-if-thursday-then-next-friday'                      => 'Feriado Puente Turístico',
     '3rd-monday-in-august'                                                                                => 'Día del Libertador José de San Martín',
-    'cultural-diversity-day' => 'Día del Respeto a la Diversidad Cultural',
+    'cultural-diversity-day'                                                                              => 'Día del Respeto a la Diversidad Cultural',
     '4th-monday-in-november'                                                                              => 'Día de la Soberanía nacional',
     'substitutes-12-08-if-tuesday-then-previous-monday-if-thursday-then-next-friday'                      => 'Feriado Puente Turístico',
     'substitutes-12-24-if-tuesday-then-previous-monday'                                                   => 'Feriado Puente Turístico',
