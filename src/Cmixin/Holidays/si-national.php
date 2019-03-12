@@ -21,6 +21,8 @@ return array(
 
     // velika noč
     'easter'            => '= easter',
-    'easter-monday'     => '= easter 1',
+    // velikonočni ponedeljek
+    'easter-monday'     => '= easter + 1',
+    // binkoštna nedelja - binkošti
     'pentecost'         => '= easter + 49',
 );
