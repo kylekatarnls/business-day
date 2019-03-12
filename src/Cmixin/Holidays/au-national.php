@@ -7,7 +7,7 @@ return array(
     'easter-1'                                      => '= easter 1',
     'easter'                                        => '= easter',
     '04-25'                                         => '= 04-25 substitute',
-    '2nd-monday-in-june'                            => '= second monday in June',
+    '2nd-monday-in-june'                            => '= second monday of June',
     '12-24'                                         => '12-24',
     '12-25-and-if-saturday-then-next-monday'        => '= 12-25 substitute',
     'substitutes-12-25-if-sunday-then-next-tuesday' => '= substitutes 12-25 if sunday then next tuesday',

@@ -1,29 +1,5 @@
 <?php
 
-return array(
-    'new-year'           => '01-01',
-    'new-year-next-day'  => '01-02',
-    '01-06'              => '01-06',
-    '02-02'              => '02-02',
-    '03-19'              => '03-19',
-    'easter-47'          => '= easter -47',
-    'easter-2'           => '= easter -2',
-    'easter'             => '= easter',
-    'easter-1'           => '= easter 1',
-    '05-01'              => '05-01',
-    '2nd-sunday-in-may'  => '= second sunday in May',
-    'easter-39'          => '= easter 39',
-    'easter-40'          => '= easter 40',
-    'easter-49'          => '= easter 49',
-    'easter-50'          => '= easter 50',
-    'easter-60'          => '= easter 60',
-    'easter-61'          => '= easter 61',
-    '08-15'              => '08-15',
-    '09-08'              => '09-08',
-    '11-01'              => '11-01',
-    '12-08'              => '12-08',
-    '12-24'              => '12-24',
-    'christmas'          => '12-25',
-    'christmas-next-day' => '12-26',
-    '12-31'              => '12-31',
+return array (
+  'easter-50' => '= easter 50',
 );

@@ -12,7 +12,7 @@ return array(
     'easter'                                       => '= easter',
     '05-01'                                        => '05-01',
     'substitutes-05-01-if-sunday-then-next-monday' => '= substitutes 05-01 if sunday then next monday',
-    '1st-sunday-in-may'                            => '= first sunday in May',
+    '1st-sunday-in-may'                            => '= first sunday of May',
     'easter-49'                                    => '= easter 49',
     '07-25'                                        => '07-25',
     '08-15'                                        => '08-15',

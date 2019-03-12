@@ -8,7 +8,7 @@ return array(
     'easter-2'                                        => '= easter -2',
     'easter'                                          => '= easter',
     'easter-1'                                        => '= easter 1',
-    '1st-monday-in-may'                               => '= first monday in May',
+    '1st-monday-in-may'                               => '= first monday of May',
     '1st-monday-before-06-01'                         => '= first monday before 06-01',
     'christmas'                                       => '12-25',
     'substitutes-12-25-if-saturday-then-next-tuesday' => '= substitutes 12-25 if saturday then next tuesday',

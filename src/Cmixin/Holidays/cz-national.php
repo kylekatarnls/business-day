@@ -9,7 +9,7 @@ return array(
     'easter'             => '= easter',
     '05-01'              => '05-01',
     '05-08'              => '05-08',
-    '2nd-sunday-in-may'  => '= second sunday in May',
+    '2nd-sunday-in-may'  => '= second sunday of May',
     '07-05'              => '07-05',
     '07-06'              => '07-06',
     '09-28'              => '09-28',

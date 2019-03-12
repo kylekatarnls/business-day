@@ -1,5 +1,5 @@
 <?php
 
-return array(
-    '06-10' => '06-10',
+return array (
+  '1st-monday-before-09-01' => '= first monday before 09-01',
 );

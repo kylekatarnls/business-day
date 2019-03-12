@@ -1,9 +1,5 @@
 <?php
 
-return array(
-    '03-05'    => '03-05',
-    'easter-2' => '= easter -2',
-    '07-21'    => '07-21',
-    '11-02'    => '11-02',
-    '12-08'    => '12-08',
+return array (
+  '1st-monday-before-09-01' => '= first monday before 09-01',
 );

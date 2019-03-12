@@ -1,27 +1,5 @@
 <?php
 
-return array(
-    'new-year'                         => '01-01',
-    '2nd-sunday-in-february'           => '= second sunday in February',
-    'easter-49'                        => '= easter 49',
-    'easter-7'                         => '= easter -7',
-    'easter-3'                         => '= easter -3',
-    'easter-2'                         => '= easter -2',
-    'easter-1'                         => '= easter 1',
-    'easter'                           => '= easter',
-    '05-01'                            => '05-01',
-    '05-08'                            => '05-08',
-    '05-17'                            => '05-17',
-    'easter-39'                        => '= easter 39',
-    'easter-50'                        => '= easter 50',
-    '06-23'                            => '06-23',
-    '2nd-sunday-in-november'           => '= second sunday in November',
-    '4th-sunday-before-12-24'          => '= fourth sunday before 12-24',
-    '3rd-sunday-before-12-24'          => '= third sunday before 12-24',
-    '2nd-sunday-before-12-24'          => '= second sunday before 12-24',
-    '1st-sunday-before-12-24'          => '= first sunday before 12-24',
-    '12-24'                            => '12-24',
-    'christmas'                        => '12-25',
-    'christmas-next-day'               => '12-26',
-    '12-31-14:00-if-sunday-then-00:00' => '= 12-31 14:00 if sunday then 00:00',
+return array (
+  '10-14' => '10-14',
 );

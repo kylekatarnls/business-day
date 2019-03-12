@@ -12,7 +12,7 @@ return array(
     'orthodox-1'         => '= orthodox 1',
     '05-01'              => '05-01',
     'orthodox-49'        => '= orthodox 49',
-    '2nd-sunday-in-may'  => '= second sunday in May',
+    '2nd-sunday-in-may'  => '= second sunday of May',
     '08-15'              => '08-15',
     '10-01'              => '10-01',
     '10-28'              => '10-28',

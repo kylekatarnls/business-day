@@ -7,7 +7,7 @@ return array(
     'easter-2'                                        => '= easter -2',
     'easter'                                          => '= easter',
     'easter-1'                                        => '= easter 1',
-    '3rd-monday-in-april'                             => '= third monday in April',
+    '3rd-monday-in-april'                             => '= third monday of April',
     '05-21'                                           => '05-21',
     'easter-50'                                       => '= easter 50',
     'monday-before-09-01'                             => '= monday before 09-01',

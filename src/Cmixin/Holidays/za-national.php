@@ -1,29 +1,6 @@
 <?php
 
-return array(
-    'new-year'                                     => '01-01',
-    'substitutes-01-01-if-sunday-then-next-monday' => '= substitutes 01-01 if sunday then next monday',
-    '03-21'                                        => '03-21',
-    'substitutes-03-21-if-sunday-then-next-monday' => '= substitutes 03-21 if sunday then next monday',
-    'easter-2'                                     => '= easter -2',
-    'easter'                                       => '= easter',
-    'easter-1'                                     => '= easter 1',
-    '04-27'                                        => '04-27',
-    'substitutes-04-27-if-sunday-then-next-monday' => '= substitutes 04-27 if sunday then next monday',
-    '05-01'                                        => '05-01',
-    'substitutes-05-01-if-sunday-then-next-monday' => '= substitutes 05-01 if sunday then next monday',
-    '2nd-sunday-in-may'                            => '= second sunday in May',
-    '06-16'                                        => '06-16',
-    'substitutes-06-16-if-sunday-then-next-monday' => '= substitutes 06-16 if sunday then next monday',
-    '3rd-sunday-in-june'                           => '= third sunday in June',
-    '08-09'                                        => '08-09',
-    'substitutes-08-09-if-sunday-then-next-monday' => '= substitutes 08-09 if sunday then next monday',
-    '07-18'                                        => '07-18',
-    '09-24'                                        => '09-24',
-    'substitutes-09-24-if-sunday-then-next-monday' => '= substitutes 09-24 if sunday then next monday',
-    '12-16'                                        => '12-16',
-    'substitutes-12-16-if-sunday-then-next-monday' => '= substitutes 12-16 if sunday then next monday',
-    'christmas'                                    => '12-25',
-    'christmas-next-day'                           => '12-26',
-    'substitutes-12-26-if-sunday-then-next-monday' => '= substitutes 12-26 if sunday then next monday',
+return array (
+  '10-24' => '10-24',
+  '11-18' => '11-18',
 );
