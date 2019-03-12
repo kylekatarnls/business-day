@@ -1,6 +1,6 @@
 <?php
 
-return array_replace(require __DIR__ . '/us-national.php', array (
+return array_replace(require __DIR__.'/us-national.php', array(
   '01-19' => '01-19',
   '03-02' => '03-02',
   '03-31' => '03-31',

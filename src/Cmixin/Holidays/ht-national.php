@@ -1,5 +1,5 @@
 <?php
 
-return array (
+return array(
   '02-03' => '02-03',
 );

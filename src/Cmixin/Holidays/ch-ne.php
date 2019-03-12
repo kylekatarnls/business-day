@@ -1,6 +1,6 @@
 <?php
 
-return array_replace(require __DIR__ . '/ch-national.php', array (
+return array_replace(require __DIR__.'/ch-national.php', array(
   '01-02-on-monday' => '= 01-02 on monday',
   'new-year-next-day' => '01-02',
   '03-01' => '03-01',

@@ -1,6 +1,6 @@
 <?php
 
-return array_replace(require __DIR__ . '/us-national.php', array (
+return array_replace(require __DIR__.'/us-national.php', array(
   '3rd-monday-in-february' => '= third monday of February',
   '2nd-monday-in-october' => '= second monday of October',
   'easter-2' => '= easter -2',

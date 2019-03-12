@@ -50,9 +50,15 @@ class BusinessDayTest extends TestCase
             self::assertFalse($carbon::parse("$year-12-26 03:30:40")->isHoliday());
             self::assertFalse($carbon::parse("$year-12-27 03:30:40")->isHoliday());
             $carbon::setHolidaysRegion('us-national');
-            self::assertTrue($carbon::parse("$year-12-25 03:30:40")->isHoliday());
-            self::assertFalse($carbon::parse("$year-12-26 03:30:40")->isHoliday());
-            self::assertFalse($carbon::parse("$year-12-27 03:30:40")->isHoliday());
+            $christmas = $carbon::parse("$year-12-25 03:30:40");
+            while ((int) $christmas->format('N') > 5) {
+                $christmas = $christmas->addDay();
+            }
+            self::assertTrue($christmas->isHoliday());
+            $christmas = $christmas->addDay();
+            self::assertFalse($christmas->isHoliday());
+            $christmas = $christmas->addDay();
+            self::assertFalse($christmas->isHoliday());
             $carbon::setHolidaysRegion('fr-east');
             self::assertTrue($carbon::parse("$year-12-25 03:30:40")->isHoliday());
             self::assertTrue($carbon::parse("$year-12-26 03:30:40")->isHoliday());
@@ -185,12 +191,15 @@ class BusinessDayTest extends TestCase
             $carbon::setTestNow($carbon::parse("$year-12-27 03:30:40"));
             self::assertFalse($carbon::isHoliday());
             $carbon::setHolidaysRegion('us-national');
-            $carbon::setTestNow($carbon::parse("$year-12-25 03:30:40"));
-            self::assertTrue($carbon::isHoliday());
-            $carbon::setTestNow($carbon::parse("$year-12-26 03:30:40"));
-            self::assertFalse($carbon::isHoliday());
-            $carbon::setTestNow($carbon::parse("$year-12-27 03:30:40"));
-            self::assertFalse($carbon::isHoliday());
+            $christmas = $carbon::parse("$year-12-25 03:30:40");
+            while ((int) $christmas->format('N') > 5) {
+                $christmas = $christmas->addDay();
+            }
+            self::assertTrue($christmas->isHoliday());
+            $christmas = $christmas->addDay();
+            self::assertFalse($christmas->isHoliday());
+            $christmas = $christmas->addDay();
+            self::assertFalse($christmas->isHoliday());
             $carbon::setHolidaysRegion('fr-east');
             $carbon::setTestNow($carbon::parse("$year-12-25 03:30:40"));
             self::assertTrue($carbon::isHoliday());

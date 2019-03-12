@@ -1,6 +1,6 @@
 <?php
 
-return array_replace(require __DIR__ . '/au-national.php', array (
+return array_replace(require __DIR__.'/au-national.php', array(
   '1st-monday-in-march' => '= first monday of March',
   'easter-1' => '= easter -1',
   '1st-monday-in-june' => '= first monday of June',

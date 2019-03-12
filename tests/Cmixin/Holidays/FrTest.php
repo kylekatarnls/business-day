@@ -23,7 +23,6 @@ class FrTest extends TestCase
 
         // 2018 year
         self::assertTrue($carbon::parse('2018-01-01')->isHoliday()); // New Year
-        self::assertTrue($carbon::parse('2018-01-06')->isHoliday()); // Epiphany
         self::assertTrue($carbon::parse('2018-04-02')->isHoliday()); // Eastern Monday
         self::assertTrue($carbon::parse('2018-05-01')->isHoliday()); // Labor Day
         self::assertTrue($carbon::parse('2018-05-08')->isHoliday()); // Victory 1945
@@ -37,7 +36,6 @@ class FrTest extends TestCase
 
         // 2019 year
         self::assertTrue($carbon::parse('2019-01-01')->isHoliday()); // New Year
-        self::assertTrue($carbon::parse('2019-01-06')->isHoliday()); // Epiphany
         self::assertTrue($carbon::parse('2019-04-22')->isHoliday()); // Eastern Monday
         self::assertTrue($carbon::parse('2019-05-01')->isHoliday()); // Labor Day
         self::assertTrue($carbon::parse('2019-05-08')->isHoliday()); // Victory 1945

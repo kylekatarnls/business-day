@@ -10,7 +10,7 @@ return array(
     '3rd-monday-in-april'                             => '= third monday of April',
     '05-21'                                           => '05-21',
     'easter-50'                                       => '= easter 50',
-    'monday-before-09-01'                             => '= monday before 09-01',
+    'monday-before-09-01'                             => '= last monday of August',
     'christmas'                                       => '12-25',
     'substitutes-12-25-if-saturday-then-next-tuesday' => '= substitutes 12-25 if saturday then next tuesday',
     'substitutes-12-25-if-sunday-then-next-tuesday'   => '= substitutes 12-25 if sunday then next tuesday',

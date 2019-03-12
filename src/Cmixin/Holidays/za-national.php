@@ -1,6 +1,6 @@
 <?php
 
-return array (
+return array(
   '10-24' => '10-24',
   '11-18' => '11-18',
 );

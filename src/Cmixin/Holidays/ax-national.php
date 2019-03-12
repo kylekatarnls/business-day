@@ -1,6 +1,6 @@
 <?php
 
-return array (
+return array(
   '1st-monday-in-march' => '= first monday of March',
   'easter-1' => '= easter -1',
   '1st-monday-in-june' => '= first monday of June',

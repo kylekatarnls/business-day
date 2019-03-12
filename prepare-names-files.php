@@ -17,7 +17,7 @@ foreach (glob('src/Cmixin/HolidayNames/*.php') as $file) {
     }
 
     if (true || $newData !== $data) {
-        $data = str_replace('array (', 'array(', var_export($newData, true));
+        $data = str_replace('array(', 'array(', var_export($newData, true));
         $data = preg_replace_callback('/^\s*\'([^\']+)\'\s*=>/m', function ($match) use ($length) {
             $key = $match[1];
             $spaces = str_repeat(' ', $length - strlen($key));
