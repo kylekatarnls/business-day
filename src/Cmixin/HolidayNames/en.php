@@ -1009,10 +1009,8 @@ return array(
     '10-tishrei'                                                                                          => 'Yom Kippur',
     'vesak'                                                                                               => 'Vesak Day',
     'abolition-of-slavery'                                                                                => 'Abolition of Slavery',
-    'buy�-und-bettag'                                                                                     => 'Day of Prayer and Repentance',
+    'buss-und-bettag'                                                                                     => 'Day of Prayer and Repentance',
     'fathers-day'                                                                                         => 'Father\'s Day',
     'mothers-day'                                                                                         => 'Mother\'s Day',
     'substitutes'                                                                                         => 'substitute day',
-    'bus�-und-bettag'                                                                                     => 'Day of Prayer and Repentance',
-    'buss-und-bettag'                                                                                     => 'Day of Prayer and Repentance',
 );

@@ -67,7 +67,6 @@ return array(
     '15-nisan'                                     => 'Pessach',
     '1-tishrei'                                    => 'Rosch Haschana',
     '10-tishrei'                                   => 'Jom Kippur',
-    'buy�-und-bettag'                              => 'Buß- und Bettag',
     'constitution-day'                             => 'Tag der Verfassung',
     'independence-day'                             => 'Unabhängigkeitstag',
     'mothers-day'                                  => 'Muttertag',
