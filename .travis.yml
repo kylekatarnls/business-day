@@ -31,7 +31,9 @@ matrix:
     - php: 7.3
       env: setup=lowest
     - php: 7.3
-      env: coverage=true
+      env: coverage=on
+    - php: 7.3
+      env: multitest=on
 
 before_install:
   - travis_retry composer self-update
@@ -46,16 +48,18 @@ install:
   - if [[ $setup = 'lowest' ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-lowest --dev; fi
 
 script:
-  - vendor/bin/phpunit --verbose --coverage-text --coverage-clover=clover.xml
+  - if [[ $multitest = 'off' ]]; then vendor/bin/phpunit --verbose --coverage-text --coverage-clover=clover.xml; fi
+  - if [[ $multitest = 'on' ]]; then vendor/bin/multi-tester --verbose; fi
 
 after_script:
-  - if [[ $setup = 'coverage' ]]; then ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT; fi
+  - if [[ $coverage = 'on' ]]; then ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT; fi
 
 after_success:
-  - if [[ $setup = 'coverage' ]]; then bash <(curl -s https://codecov.io/bash); fi
+  - if [[ $coverage = 'on' ]]; then bash <(curl -s https://codecov.io/bash); fi
 
 env:
   global:
     - setup=stable
-    - coverage=false
+    - coverage=off
+    - multitest=off
     - CC_TEST_REPORTER_ID=445bfa02f795c64b7cfe96c610d906b46a7b889acc965139c990184238742909
