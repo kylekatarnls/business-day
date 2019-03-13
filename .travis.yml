@@ -44,11 +44,13 @@ before_script:
   - ./cc-test-reporter before-build
 
 install:
+  - if [[ $multitest = 'on' ]]; then travis_retry composer require kylekatarnls/multi-tester:^1.1 --dev --no-update; fi
   - if [[ $setup = 'stable' ]]; then travis_retry composer update --prefer-dist --no-interaction --dev; fi
   - if [[ $setup = 'lowest' ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-lowest --dev; fi
 
 script:
-  - if [[ $multitest = 'off' ]]; then vendor/bin/phpunit --verbose --coverage-text --coverage-clover=clover.xml; fi
+  - if [[ $multitest = 'off' && $coverage = 'off' ]]; then vendor/bin/phpunit --verbose --no-coverage; fi
+  - if [[ $multitest = 'off' && $coverage = 'on' ]]; then vendor/bin/phpunit --verbose --coverage-text --coverage-clover=clover.xml; fi
   - if [[ $multitest = 'on' ]]; then vendor/bin/multi-tester --verbose; fi
 
 after_script:
