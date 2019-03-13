@@ -4,7 +4,6 @@ namespace Cmixin\BusinessDay;
 
 use Carbon\Carbon;
 use Cmixin\BusinessDay;
-use DateTime;
 
 class Holiday extends HolidaysList
 {
@@ -19,19 +18,22 @@ class Holiday extends HolidaysList
      */
     public function getHolidayId()
     {
-        $carbonClass = static::getCarbonClass();
         $getThisOrToday = static::getThisOrToday();
-        $getYearHolidays = static::getYearHolidays();
+        $getYearHolidaysNextFunction = static::getYearHolidaysNextFunction();
 
-        return function ($self = null) use ($carbonClass, $getThisOrToday, $getYearHolidays) {
+        return function ($self = null) use ($getThisOrToday, $getYearHolidaysNextFunction) {
             /** @var Carbon|BusinessDay $self */
             $self = $getThisOrToday($self, isset($this) ? $this : null);
 
             $date = $self->format('d/m');
             $year = $self->year;
 
-            foreach ($getYearHolidays($year) as $key => $holiday) {
-                if ($date.(strlen($holiday) > 5 ? "/$year" : '') === $holiday) {
+            $next = $getYearHolidaysNextFunction($year, 'string', $self);
+
+            while ($data = $next()) {
+                list($key, $holiday) = $data;
+
+                if ($holiday && $date.(strlen($holiday) > 5 ? "/$year" : '') === $holiday) {
                     return $key;
                 }
             }
