@@ -277,6 +277,8 @@ class HolidaysList extends MixinBase
                                 $conditions = explode(' and ', $condition);
 
                                 foreach ($conditions as $condition) {
+                                    $condition = trim($condition);
+
                                     if (substr($condition, 0, 4) === 'not ') {
                                         $expected = false;
                                         $condition = substr($condition, 4);
