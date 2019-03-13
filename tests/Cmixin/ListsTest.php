@@ -43,7 +43,7 @@ class ListsTest extends TestCase
     {
         $lists = array();
 
-        foreach (glob(__DIR__ . '/../../src/Cmixin/Holidays/*.php') as $file) {
+        foreach (glob(__DIR__.'/../../src/Cmixin/Holidays/*.php') as $file) {
             $lists[] = array(substr(basename($file), 0, -4));
         }
 
