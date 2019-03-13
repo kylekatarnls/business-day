@@ -2,8 +2,6 @@
 
 namespace Cmixin\BusinessDay;
 
-use Carbon\Carbon;
-use Cmixin\BusinessDay;
 use DateTime;
 
 class HolidaysList extends MixinBase
@@ -217,8 +215,12 @@ class HolidaysList extends MixinBase
                                 $holiday .= " $year";
                             }
 
-                            /** @var DateTime $dateTime */
-                            $dateTime = new $outputClass($holiday);
+                            try {
+                                /** @var DateTime $dateTime */
+                                $dateTime = new $outputClass($holiday);
+                            } catch (\Exception $exception) {
+                                continue;
+                            }
 
                             if ($notOn) {
                                 $notOn = strtolower($notOn);
@@ -264,7 +266,11 @@ class HolidaysList extends MixinBase
                         $holidaysList[$holiday] = true;
                     }
 
-                    return array($key, $holiday ? ($type === 'string' ? $holiday : (isset($dateTime) ? $dateTime : $outputClass::createFromFormat('d/m/Y', "$holiday/$year"))) : $holiday);
+                    try {
+                        return array($key, $holiday ? ($type === 'string' ? $holiday : (isset($dateTime) ? $dateTime : $outputClass::createFromFormat('d/m/Y', "$holiday/$year"))) : $holiday);
+                    } catch (\InvalidArgumentException $exception) {
+                        continue;
+                    }
                 }
             };
         };

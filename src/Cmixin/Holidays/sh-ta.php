@@ -10,5 +10,5 @@ return array_replace(require __DIR__.'/sh-national.php', array(
     '2017-05-26'          => '= 2017-05-26',
     '2018-06-02'          => '= 2018-06-02',
     '08-14'               => '08-14',
-    'monday-before-09-01' => '= last Monday of August',
+    'monday-before-09-01' => '= Monday before 09-01',
 ));

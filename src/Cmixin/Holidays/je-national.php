@@ -1,5 +1,5 @@
 <?php
 
 return array(
-    'easter-50' => '= easter 50',
+    '05-09' => '05-09',
 );

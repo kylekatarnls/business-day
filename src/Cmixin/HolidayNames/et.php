@@ -20,7 +20,7 @@ return array(
     '06-24'                                                           => 'jaanipäev',
     '08-20'                                                           => 'taasiseseisvumispäev',
     '08-23'                                                           => 'kommunismi ja natsismi ohvrite mälestuspäev',
-    '2nd-sunday-in-september'                                         => 'vanavanemate päev',
+    'second-sunday-of-september'                                      => 'vanavanemate päev',
     '09-22'                                                           => 'vastupanuvõitluse päev',
     '11-16'                                                           => 'taassünni päev',
     'new-year'                                                        => 'uusaasta',

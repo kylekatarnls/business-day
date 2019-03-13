@@ -8,7 +8,7 @@ return array_replace(require __DIR__.'/us-national.php', array(
     '04-21'                                 => '04-21',
     '06-19'                                 => '06-19',
     '08-27'                                 => '08-27',
-    'friday-after-4th-thursday-in-november' => '= Friday after fourth Thursday of November',
+    'friday-after-4th-thursday-of-november' => '= Friday after fourth Thursday of November',
     '12-24'                                 => '12-24',
     'christmas-next-day'                    => '12-26',
 ));

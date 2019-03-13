@@ -26,7 +26,7 @@ return array(
     '2011-06-19'                    => 'Araw ng Kapanganakan ni José Rizal',
     '07-27'                         => 'Araw ng Iglesia ni Cristo',
     '08-21'                         => 'Araw ng Kabayanihan ni Ninoy Aquino',
-    '1st-monday-before-september'   => 'Araw ng mga Bayani',
+    'first-monday-before-september' => 'Araw ng mga Bayani',
     'chinese-08-0-15'               => 'Piyestang Zhōngqiū Jié',
     '11-30'                         => 'Araw ng Kapanganakan ni Bonifacio',
     '12-30'                         => 'Paggunita sa Kamatayan ni Dr. Jose Rizal',

@@ -1,6 +1,6 @@
 <?php
 
 return array_replace(require __DIR__.'/au-national.php', array(
-    '1st-monday-in-may'    => '= first Monday of May',
-    '1st-monday-in-august' => '= first Monday of August',
+    '1st-monday-of-may'    => '= first Monday of May',
+    '1st-monday-of-august' => '= first Monday of August',
 ));

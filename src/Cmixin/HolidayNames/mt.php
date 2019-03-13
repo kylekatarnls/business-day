@@ -1,7 +1,7 @@
 <?php
 
 return array(
-    'feast-of-saint-paul-s-shipwreck-in-malta' => 'Nawfraġju ta\' San Pawl',
+    'feast-of-saint-paul-s-shipwreck-of-malta' => 'Nawfraġju ta\' San Pawl',
     'freedom-day'                              => 'Jum il-Ħelsien',
     'june-7th'                                 => 'Sette Giugno',
     'victory-day'                              => 'Jum il-Vitorja',

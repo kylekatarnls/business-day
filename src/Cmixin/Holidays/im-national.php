@@ -1,5 +1,6 @@
 <?php
 
 return array(
-    '02-03' => '02-03',
+    '2nd-friday-of-june' => '= second Friday of June',
+    '07-05'              => '07-05',
 );

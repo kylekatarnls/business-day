@@ -1,5 +1,7 @@
 <?php
 
 return array(
-    'easter-47-p4d' => '= easter 47 P4D',
+    '04-15-if-friday-then-next-monday-if-saturday,sunday-then-next-tuesday' => '= 04-15 if Friday then next Monday if Saturday,Sunday then next Tuesday',
+    '04-17'                                                                 => '= 04-17 substitute',
+    '2nd-sunday-of-october'                                                 => '= second Sunday of October',
 );

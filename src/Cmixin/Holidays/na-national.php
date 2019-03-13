@@ -1,5 +1,25 @@
 <?php
 
 return array(
-    '10-14' => '10-14',
+    'new-year'                                     => '01-01',
+    'substitutes-01-01-if-sunday-then-next-monday' => '= substitutes 01-01 if Sunday then next Monday',
+    '03-21'                                        => '03-21',
+    'substitutes-03-21-if-sunday-then-next-monday' => '= substitutes 03-21 if Sunday then next Monday',
+    'easter-2'                                     => '= easter -2',
+    'easter'                                       => '= easter',
+    'easter-1'                                     => '= easter 1',
+    '05-01'                                        => '05-01',
+    'substitutes-05-01-if-sunday-then-next-monday' => '= substitutes 05-01 if Sunday then next Monday',
+    '05-04'                                        => '05-04',
+    'substitutes-05-04-if-sunday-then-next-monday' => '= substitutes 05-04 if Sunday then next Monday',
+    'easter-39'                                    => '= easter 39',
+    '05-25'                                        => '05-25',
+    'substitutes-05-25-if-sunday-then-next-monday' => '= substitutes 05-25 if Sunday then next Monday',
+    '08-26'                                        => '08-26',
+    'substitutes-08-26-if-sunday-then-next-monday' => '= substitutes 08-26 if Sunday then next Monday',
+    '12-10'                                        => '12-10',
+    'substitutes-12-10-if-sunday-then-next-monday' => '= substitutes 12-10 if Sunday then next Monday',
+    'christmas'                                    => '12-25',
+    'christmas-next-day'                           => '12-26',
+    'substitutes-12-26-if-sunday-then-next-monday' => '= substitutes 12-26 if Sunday then next Monday',
 );

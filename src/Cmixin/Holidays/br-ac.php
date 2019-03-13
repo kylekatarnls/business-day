@@ -5,5 +5,4 @@ return array_replace(require __DIR__.'/br-national.php', array(
     '03-08' => '03-08',
     '06-15' => '06-15',
     '09-05' => '09-05',
-    '11-17' => '11-17',
 ));

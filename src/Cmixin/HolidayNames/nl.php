@@ -48,7 +48,7 @@ return array(
     '04-27-if-sunday-then-previous-saturday'                                => 'Koningsdag',
     '05-04'                                                                 => 'Nationale Dodenherdenking',
     '05-05'                                                                 => 'Bevrijdingsdag',
-    '3rd-tuesday-in-september'                                              => 'Prinsjesdag',
+    'third-tuesday-of-september'                                            => 'Prinsjesdag',
     '10-04'                                                                 => 'Dierendag',
     'st-nicholas-eve'                                                       => 'Sinterklaasavond',
     'kingdom-day'                                                           => 'Koninkrijksdag',

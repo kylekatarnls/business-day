@@ -1,5 +1,5 @@
 <?php
 
 return array(
-    '1st-monday-before-09-01' => '= last Monday of August',
+    '06-10' => '06-10',
 );
