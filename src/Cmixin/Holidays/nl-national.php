@@ -9,13 +9,7 @@ return array(
     // Koningsdag
     'royal-day'          => '= 04-27 if Sunday then -1 day',
     // Bevrijdingsdag
-    'liberation-day'     => function ($year) {
-        if ($year % 5 === 0) {
-            $date = new DateTime("$year-05-05");
-
-            return $date->format('d/m');
-        }
-    },
+    'liberation-day'     => '= 05-05 every 5 years since 1945',
     // Hemelvaart
     'ascension'          => '= easter + 39',
     // Pinksterzondag

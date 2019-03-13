@@ -12,7 +12,7 @@ return array(
     '09-07'                                 => '09-07',
     '10-12'                                 => '10-12',
     '1st-sunday-of-october-of-even-years'   => '= first Sunday of October of even years',
-    '1st-sunday-before-11-01-of-even-years' => '= first Sunday before 11-01 of even years',
+    '1st-sunday-before-11-01-of-even-years' => '= Sunday before 11-01 of even years',
     '11-02'                                 => '11-02',
     '11-15'                                 => '11-15',
     'christmas'                             => '12-25',
