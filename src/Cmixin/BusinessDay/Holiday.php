@@ -21,78 +21,16 @@ class Holiday extends HolidaysList
     {
         $carbonClass = static::getCarbonClass();
         $getThisOrToday = static::getThisOrToday();
+        $getYearHolidays = static::getYearHolidays();
 
-        return function ($self = null) use ($carbonClass, $getThisOrToday) {
+        return function ($self = null) use ($carbonClass, $getThisOrToday, $getYearHolidays) {
             /** @var Carbon|BusinessDay $self */
             $self = $getThisOrToday($self, isset($this) ? $this : null);
 
-            $holidays = $carbonClass::getHolidays();
-            $holidaysList = array();
             $date = $self->format('d/m');
             $year = $self->year;
-            foreach ($holidays as $key => $holiday) {
-                if (is_callable($holiday)) {
-                    $holiday = call_user_func($holiday, $year);
-                }
 
-                if (!is_string($holiday)) {
-                    continue;
-                }
-
-                if (substr($holiday, 0, 1) === '=') {
-                    if ($substitute = preg_match('/\ssubstitute$/i', $holiday)) {
-                        $holiday = trim(substr($holiday, 0, -11));
-                    }
-
-                    $holiday = preg_replace_callback('/(easter)/i', function ($match) use ($year) {
-                        switch ($match[0]) {
-                            case 'easter':
-                                static $easterDays = array();
-
-                                if (!isset($easterDays[$year])) {
-                                    $easterDays[$year] = easter_days($year);
-                                }
-
-                                return "$year-03-21 $easterDays[$year] days ";
-                        }
-                    }, trim(substr($holiday, 1)));
-                    $holiday = preg_replace('/^\d{2}-\d{2}(\s[\s\S]*)?$/', "$year-$0", $holiday);
-                    $holiday = str_replace('$year', $year, $holiday);
-                    $holiday = preg_replace('/(\s\d+)\s*$/', '$1 days', $holiday);
-                    list($holiday, $condition) = array_pad(explode(' if ', $holiday, 2), 2, null);
-
-                    if (strpos($holiday, "$year") === false) {
-                        $holiday .= " $year";
-                    }
-
-                    $dateTime = new DateTime($holiday);
-
-                    if ($condition) {
-                        list($condition, $action) = array_pad(explode(' then ', $condition, 2), 2, null);
-                        $condition = strtolower($condition);
-                        $condition = $condition === 'weekend'
-                            ? ($dateTime->format('N') > 5)
-                            : in_array(strtolower($dateTime->format('l')), array_map('trim', explode(',', $condition)));
-
-                        if ($condition) {
-                            $dateTime->modify($action);
-                        }
-                    }
-
-                    while ($substitute && ($dateTime->format('N') > 5 || isset($holidaysList[$dateTime->format('d/m')]))) {
-                        $dateTime->modify('+1 day');
-                    }
-
-                    $holiday = $dateTime->format('d/m');
-                }
-
-                if (strpos($holiday, '-') !== false) {
-                    $holiday = preg_replace('/^(\d+)-(\d+)$/', '$2/$1', $holiday);
-                    $holiday = preg_replace('/^(\d+)-(\d+)-(\d+)$/', '$3/$2/$1', $holiday);
-                }
-
-                $holidaysList[$holiday] = true;
-
+            foreach ($getYearHolidays($year) as $key => $holiday) {
                 if ($date.(strlen($holiday) > 5 ? "/$year" : '') === $holiday) {
                     return $key;
                 }
