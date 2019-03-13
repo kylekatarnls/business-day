@@ -43,5 +43,15 @@ class ChTest extends TestCase
         self::assertTrue($carbon::parse('2018-09-17')->isHoliday());
         self::assertTrue($carbon::parse('2018-12-26')->isHoliday());
         self::assertFalse($carbon::parse('2018-12-31')->isHoliday());
+
+        $carbon::setHolidaysRegion('ch-AI');
+
+        self::assertTrue($carbon::parse('2018-12-26')->isHoliday());
+        self::assertTrue($carbon::parse('2019-12-26')->isHoliday());
+        self::assertFalse($carbon::parse('2020-12-26')->isHoliday());
+        self::assertTrue($carbon::parse('2021-12-26')->isHoliday());
+        self::assertTrue($carbon::parse('2022-12-26')->isHoliday());
+        self::assertFalse($carbon::parse('2023-12-26')->isHoliday());
+        self::assertTrue($carbon::parse('2024-12-26')->isHoliday());
     }
 }

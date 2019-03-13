@@ -8,8 +8,8 @@ return array(
     'easter'                                                             => '= easter',
     'easter-1'                                                           => '= easter 1',
     '04-25-if-saturday,sunday-then-next-monday'                          => '= 04-25 substitute',
-    '1st-monday-in-june'                                                 => '= first monday of June',
-    '4th-monday-in-october'                                              => '= fourth monday of October',
+    '1st-monday-in-june'                                                 => '= first Monday of June',
+    '4th-monday-in-october'                                              => '= fourth Monday of October',
     'christmas'                                                          => '= 12-25 substitute',
     '12-26'                                                              => '= 12-26 substitute',
 );

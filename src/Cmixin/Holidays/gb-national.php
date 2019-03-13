@@ -1,7 +1,7 @@
 <?php
 
 return array(
-    'regions'       => array(
+    'regions'     => array(
         'engwales' => 'engwales',
         'eng'      => 'engwales',
         'nireland' => 'nireland',
