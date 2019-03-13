@@ -16,7 +16,7 @@ return array(
     'thanksgiving'           => '= fourth Thursday of november',
     'christmas'              => '= 12-25 substitute', // Christmas Day
     //    '02-14'                                                                 => '02-14',
-    //    '04-15-if-friday-then-next-monday-if-saturday,sunday-then-next-tuesday' => '= 04-15 if Friday then next Monday if Saturday,sunday then next Tuesday',
+    //    '04-15' => '= 04-15 if Friday then next Monday if Saturday,sunday then next Tuesday',
     //    'wednesday-before-04-28'                                                => '= Wednesday before 04-28',
     //    '2nd-sunday-in-may'                                                     => '= second Sunday of May',
     //    '3rd-sunday-in-june'                                                    => '= third Sunday of June',

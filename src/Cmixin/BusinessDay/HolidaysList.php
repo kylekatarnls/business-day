@@ -188,8 +188,40 @@ class HolidaysList extends MixinBase
 
                     if (is_string($holiday)) {
                         if (substr($holiday, 0, 1) === '=') {
+                            $holiday = str_replace(' in ', ' of ', trim(substr($holiday, 1)));
+
                             if ($substitute = preg_match('/\ssubstitute$/i', $holiday)) {
                                 $holiday = trim(substr($holiday, 0, -11));
+                            }
+
+                            if (preg_match('/ of even years?$/i', $holiday)) {
+                                $holiday = trim(substr($holiday, 0, -14));
+
+                                if ($year & 1) {
+                                    continue;
+                                }
+                            }
+
+                            if (preg_match('/every (\d+) years since (\d{4})$/', $holiday, $match)) {
+                                $holiday = trim(substr($holiday, 0, -strlen($match[0])));
+
+                                if (($year - $match[2]) % $match[1]) {
+                                    continue;
+                                }
+                            }
+
+                            $before = null;
+                            $after = null;
+
+                            foreach (array('before', 'after') as $variable) {
+                                $holiday = explode(" $variable ", $holiday, 2);
+
+                                if (count($holiday) === 2) {
+                                    $$variable = $holiday[0];
+                                    $holiday[0] = $holiday[1];
+                                }
+
+                                $holiday = $holiday[0];
                             }
 
                             $holiday = preg_replace_callback('/(easter)/i', function ($match) use ($year) {
@@ -203,56 +235,78 @@ class HolidaysList extends MixinBase
 
                                         return "$year-03-21 $easterDays[$year] days ";
                                 }
-                            }, trim(substr($holiday, 1)));
-                            $holiday = preg_replace('/^\d{2}-\d{2}(\s[\s\S]*)?$/', "$year-$0", $holiday);
+                            }, trim($holiday));
+                            $holiday = preg_replace_callback('/^(\d{1,2})-(\d{1,2})((\s[\s\S]*)?)$/', function ($match) use ($year) {
+                                return "$year-".
+                                    str_pad($match[1], 2, '0', STR_PAD_LEFT).'-'.
+                                    str_pad($match[2], 2, '0', STR_PAD_LEFT).
+                                    $match[3];
+                            }, $holiday);
                             $holiday = str_replace('$year', $year, $holiday);
                             $holiday = preg_replace('/(\s\d+)\s*$/', '$1 days', $holiday);
                             list($holiday, $notOn) = array_pad(explode(' not on ', $holiday, 2), 2, null);
-
+                            list($holiday, $on) = array_pad(explode(' on ', $holiday, 2), 2, null);
                             list($holiday, $condition) = array_pad(explode(' if ', $holiday, 2), 2, null);
 
                             if (strpos($holiday, "$year") === false) {
                                 $holiday .= " $year";
                             }
 
-                            try {
-                                /** @var DateTime $dateTime */
-                                $dateTime = new $outputClass($holiday);
-                            } catch (\Exception $exception) {
-                                continue;
-                            }
+                            /** @var DateTime $dateTime */
+                            $dateTime = new $outputClass($holiday);
 
-                            if ($notOn) {
-                                $notOn = strtolower($notOn);
-                                $notOn = $notOn === 'weekend' ? 'Saturday, Sunday' : $notOn;
+                            $checks = array(
+                                'on' => false,
+                                'notOn' => true,
+                            );
 
-                                if (in_array(strtolower($dateTime->format('l')), array_map('trim', explode(',', $notOn)))) {
-                                    continue;
+                            foreach ($checks as $check => $expected) {
+                                if ($$check) {
+                                    $days = strtolower($$check);
+                                    $days = $days === 'weekend' ? 'Saturday, Sunday' : $days;
+
+                                    if (in_array(strtolower($dateTime->format('l')), array_map('trim', explode(',', $days))) === $expected) {
+                                        continue 2;
+                                    }
                                 }
                             }
 
                             if ($condition) {
                                 $expected = true;
 
-                                if (substr($condition, 0, 4) === 'not ') {
-                                    $expected = false;
-                                    $condition = substr($condition, 4);
-                                }
+                                $conditions = explode(' and ', $condition);
 
-                                list($condition, $action) = array_pad(explode(' then ', $condition, 2), 2, null);
-                                $condition = strtolower($condition);
-                                $condition = (bool) ($condition === 'weekend'
-                                    ? ($dateTime->format('N') > 5)
-                                    : in_array(strtolower($dateTime->format('l')), array_map('trim', explode(',', $condition)))
-                                );
+                                foreach ($conditions as $condition) {
+                                    if (substr($condition, 0, 4) === 'not ') {
+                                        $expected = false;
+                                        $condition = substr($condition, 4);
+                                    }
 
-                                if ($condition === $expected) {
-                                    $dateTime->modify($action);
+                                    list($condition, $action) = array_pad(explode(' then ', $condition, 2), 2, null);
+                                    $condition = strtolower($condition);
+                                    $condition = (bool)($condition === 'weekend'
+                                        ? ($dateTime->format('N') > 5)
+                                        : in_array(strtolower($dateTime->format('l')), array_map('trim', explode(',', $condition)))
+                                    );
+
+                                    if ($condition === $expected) {
+                                        $dateTime = $dateTime->modify($action);
+
+                                        break;
+                                    }
                                 }
                             }
 
                             while ($substitute && ($dateTime->format('N') > 5 || isset($holidaysList[$dateTime->format('d/m')]))) {
-                                $dateTime->modify('+1 day');
+                                $dateTime = $dateTime->modify('+1 day');
+                            }
+
+                            if ($after) {
+                                $dateTime = $dateTime->modify($after);
+                            }
+
+                            if ($before) {
+                                $dateTime = $dateTime->modify("previous $before");
                             }
 
                             $holiday = $dateTime->format('d/m');
@@ -266,11 +320,11 @@ class HolidaysList extends MixinBase
                         $holidaysList[$holiday] = true;
                     }
 
-                    try {
-                        return array($key, $holiday ? ($type === 'string' ? $holiday : (isset($dateTime) ? $dateTime : $outputClass::createFromFormat('d/m/Y', "$holiday/$year"))) : $holiday);
-                    } catch (\InvalidArgumentException $exception) {
+                    if ($holiday === null) {
                         continue;
                     }
+
+                    return array($key, $holiday ? ($type === 'string' ? $holiday : (isset($dateTime) ? $dateTime : $outputClass::createFromFormat('d/m/Y', "$holiday/$year"))) : $holiday);
                 }
             };
         };

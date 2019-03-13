@@ -24,7 +24,7 @@ class ListsTest extends TestCase
 
         $holidays = Carbon::getYearHolidays();
 
-        self::assertFalse(empty($holidays), 'getYearHolidays should returns non-empty array');
+        self::assertFalse(empty($holidays), $list.': getYearHolidays should returns non-empty array');
 
         $allCarbon = true;
 
@@ -36,7 +36,7 @@ class ListsTest extends TestCase
             }
         }
 
-        self::assertTrue($allCarbon, 'getYearHolidays should returns only Carbon objects');
+        self::assertTrue($allCarbon, $list.': getYearHolidays should returns only Carbon objects');
     }
 
     public function getHolidaysLists()

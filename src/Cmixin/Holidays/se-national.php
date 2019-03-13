@@ -14,7 +14,7 @@ return array(
     'christmas'            => '12-25',
     'christmas-next-day'   => '12-26',
     '01-13'                => '01-13',
-    'sunday-of-march'      => '= Sunday of March',
+    'sunday-of-march'      => '= first Sunday of March',
     '03-25'                => '03-25',
     '04-30'                => '04-30',
     'easter'               => '= easter',
