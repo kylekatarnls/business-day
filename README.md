@@ -12,7 +12,7 @@ Carbon mixin to handle business days
 
 ## Install
 
-```
+```shell
 composer require cmixin/business-day
 ```
 
@@ -39,8 +39,7 @@ You can set different holidays lists for different regions
 (to handle different countries, enterprises, etc.)
 
 We provide a some holidays lists as example that work
-out of the box:
-https://github.com/kylekatarnls/business-day/tree/master/src/Cmixin/Holidays
+out of the box in [src/Cmixin/Holidays](https://github.com/kylekatarnls/business-day/tree/master/src/Cmixin/Holidays)
 
 A holidays list file is a PHP file that return an array,
 each item of the array represent a holiday of the year.
@@ -243,7 +242,7 @@ Carbon::parse('2018-12-25')->getHolidayName() // "Christmas Day"
 
 Returns `true` if the date (Carbon instance) is nor a week-end day neither
 a holiday, `false` else. Week-end days can be configured (see
-https://carbon.nesbot.com/docs/#weekend).
+[Carbon documentation weekend section](https://carbon.nesbot.com/docs/#weekend)).
 
 ```php
 Carbon::setHolidaysRegion('us-national');
