@@ -38,8 +38,10 @@ used anywhere later.
 You can set different holidays lists for different regions
 (to handle different countries, enterprises, etc.)
 
-We provide a some holidays lists as example that work
-out of the box in [src/Cmixin/Holidays](https://github.com/kylekatarnls/business-day/tree/master/src/Cmixin/Holidays)
+We provide 330 regional holidays lists of 138 countries that work
+out of the box in [src/Cmixin/Holidays](https://github.com/kylekatarnls/business-day/tree/master/src/Cmixin/Holidays).
+
+And you can easily customize them and add your own lists.
 
 A holidays list file is a PHP file that return an array,
 each item of the array represent a holiday of the year.
