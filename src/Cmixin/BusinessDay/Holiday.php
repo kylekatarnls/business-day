@@ -77,10 +77,15 @@ class Holiday extends HolidaysList
             }
 
             $file = __DIR__."/../HolidayNames/$locale.php";
+
             if (!file_exists($file)) {
                 $mixin->holidayNames[$locale] = false;
                 $locale = $defaultLocale;
                 $file = __DIR__."/../HolidayNames/$locale.php";
+
+                if (isset($mixin->holidayNames[$locale])) {
+                    return $mixin->holidayNames[$locale];
+                }
             }
 
             return $mixin->holidayNames[$locale] = include $file;

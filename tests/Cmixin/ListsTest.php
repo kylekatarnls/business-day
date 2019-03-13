@@ -49,4 +49,48 @@ class ListsTest extends TestCase
 
         return $lists;
     }
+
+    /**
+     * @dataProvider getHolidaysNames
+     */
+    public function testNamesValidity($name)
+    {
+        $translations = Carbon::getHolidayNamesDictionary($name);
+
+        self::assertFalse(empty($translations), $name.' names translations should returns non-empty array');
+
+        $allStrings = true;
+
+        foreach ($translations as $translation) {
+            if (!is_string($translation)) {
+                $allStrings = false;
+
+                break;
+            }
+        }
+
+        self::assertTrue($allStrings, $name.' names translations should returns only string entries');
+    }
+
+    public function getHolidaysNames()
+    {
+        $names = array();
+
+        foreach (glob(__DIR__.'/../../src/Cmixin/HolidayNames/*.php') as $file) {
+            $names[] = array(substr(basename($file), 0, -4));
+        }
+
+        return $names;
+    }
+
+    public function testNamesInvalidity()
+    {
+        $translations = Carbon::getHolidayNamesDictionary('does-not-exists');
+
+        self::assertSame('Christmas', $translations['christmas']);
+
+        $translations = Carbon::getHolidayNamesDictionary('does-not-exists-either');
+
+        self::assertSame('Christmas', $translations['christmas']);
+    }
 }
