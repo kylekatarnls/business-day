@@ -160,11 +160,12 @@ class HolidaysList extends MixinBase
      */
     public function getYearHolidaysNextFunction()
     {
+        $mixin = $this;
         $carbonClass = static::getCarbonClass();
         $getThisOrToday = static::getThisOrToday();
 
-        return function ($year = null, $type = null, $self = null) use ($carbonClass, $getThisOrToday) {
-            $year = $year ?: $getThisOrToday($self, isset($this) ? $this : null)->year;
+        return function ($year = null, $type = null, $self = null) use ($mixin, $carbonClass, $getThisOrToday) {
+            $year = $year ?: $getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null)->year;
             $holidays = $carbonClass::getHolidays();
             $outputClass = $type ? (is_string($type) && $type !== 'string' ? $type : 'DateTime') : $carbonClass;
             $holidaysList = array();
@@ -309,12 +310,12 @@ class HolidaysList extends MixinBase
             if (is_string($key)) {
                 $mixin->holidays[$region][$key] = $holiday;
 
-                return isset($this) ? $this : null;
+                return isset($this) && $this !== $mixin ? $this : null;
             }
 
             $mixin->holidays[$region][] = $holiday;
 
-            return isset($this) ? $this : null;
+            return isset($this) && $this !== $mixin ? $this : null;
         };
     }
 
@@ -340,7 +341,7 @@ class HolidaysList extends MixinBase
                 }
             }
 
-            return isset($this) ? $this : null;
+            return isset($this) && $this !== $mixin ? $this : null;
         };
     }
 
@@ -371,7 +372,7 @@ class HolidaysList extends MixinBase
                 $observer($key, $observed);
             }
 
-            return isset($this) ? $this : null;
+            return isset($this) && $this !== $mixin ? $this : null;
         };
     }
 

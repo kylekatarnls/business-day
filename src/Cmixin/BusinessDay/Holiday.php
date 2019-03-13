@@ -18,12 +18,13 @@ class Holiday extends HolidaysList
      */
     public function getHolidayId()
     {
+        $mixin = $this;
         $getThisOrToday = static::getThisOrToday();
         $getYearHolidaysNextFunction = static::getYearHolidaysNextFunction();
 
-        return function ($self = null) use ($getThisOrToday, $getYearHolidaysNextFunction) {
+        return function ($self = null) use ($mixin, $getThisOrToday, $getYearHolidaysNextFunction) {
             /** @var Carbon|BusinessDay $self */
-            $self = $getThisOrToday($self, isset($this) ? $this : null);
+            $self = $getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
 
             $date = $self->format('d/m');
             $year = $self->year;
@@ -49,11 +50,12 @@ class Holiday extends HolidaysList
      */
     public function isHoliday()
     {
+        $mixin = $this;
         $getThisOrToday = static::getThisOrToday();
 
-        return function ($self = null) use ($getThisOrToday) {
+        return function ($self = null) use ($mixin, $getThisOrToday) {
             /** @var Carbon|BusinessDay $self */
-            $self = $getThisOrToday($self, isset($this) ? $this : null);
+            $self = $getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
 
             return $self->getHolidayId() !== false;
         };
@@ -93,16 +95,17 @@ class Holiday extends HolidaysList
      */
     public function getHolidayName()
     {
+        $mixin = $this;
         $carbonClass = static::getCarbonClass();
         $getThisOrToday = static::getThisOrToday();
         $swap = static::swapDateTimeParam();
         $dictionary = $this->getHolidayNamesDictionary();
 
-        return function ($locale = null, $self = null) use ($carbonClass, $getThisOrToday, $swap, $dictionary) {
+        return function ($locale = null, $self = null) use ($mixin, $carbonClass, $getThisOrToday, $swap, $dictionary) {
             $swap($locale, $self);
 
             /** @var Carbon|BusinessDay $self */
-            $self = $getThisOrToday($self, isset($this) ? $this : null);
+            $self = $getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
             $key = $self->getHolidayId();
 
             if ($key === false) {
