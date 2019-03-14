@@ -18,31 +18,23 @@ class Holiday extends HolidaysList
      */
     public function getHolidayId()
     {
-        $carbonClass = static::getCarbonClass();
+        $mixin = $this;
         $getThisOrToday = static::getThisOrToday();
+        $getNextFunction = static::getYearHolidaysNextFunction();
 
-        return function ($self = null) use ($carbonClass, $getThisOrToday) {
+        return function ($self = null) use ($mixin, $getThisOrToday, $getNextFunction) {
             /** @var Carbon|BusinessDay $self */
-            $self = $getThisOrToday($self, isset($this) ? $this : null);
+            $self = $getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
 
-            $holidays = $carbonClass::getHolidays();
             $date = $self->format('d/m');
             $year = $self->year;
-            foreach ($holidays as $key => $holiday) {
-                if (is_callable($holiday)) {
-                    $holiday = call_user_func($holiday, $year);
-                }
 
-                if (!is_string($holiday)) {
-                    continue;
-                }
+            $next = $getNextFunction($year, 'string', $self);
 
-                if (strpos($holiday, '-') !== false) {
-                    $holiday = preg_replace('/^(\d+)-(\d+)$/', '$2/$1', $holiday);
-                    $holiday = preg_replace('/^(\d+)-(\d+)-(\d+)$/', '$3/$2/$1', $holiday);
-                }
+            while ($data = $next()) {
+                list($key, $holiday) = $data;
 
-                if ($date.(strlen($holiday) > 5 ? "/$year" : '') === $holiday) {
+                if ($holiday && $date.(strlen($holiday) > 5 ? "/$year" : '') === $holiday) {
                     return $key;
                 }
             }
@@ -58,11 +50,12 @@ class Holiday extends HolidaysList
      */
     public function isHoliday()
     {
+        $mixin = $this;
         $getThisOrToday = static::getThisOrToday();
 
-        return function ($self = null) use ($getThisOrToday) {
+        return function ($self = null) use ($mixin, $getThisOrToday) {
             /** @var Carbon|BusinessDay $self */
-            $self = $getThisOrToday($self, isset($this) ? $this : null);
+            $self = $getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
 
             return $self->getHolidayId() !== false;
         };
@@ -84,10 +77,15 @@ class Holiday extends HolidaysList
             }
 
             $file = __DIR__."/../HolidayNames/$locale.php";
+
             if (!file_exists($file)) {
                 $mixin->holidayNames[$locale] = false;
                 $locale = $defaultLocale;
                 $file = __DIR__."/../HolidayNames/$locale.php";
+
+                if (isset($mixin->holidayNames[$locale])) {
+                    return $mixin->holidayNames[$locale];
+                }
             }
 
             return $mixin->holidayNames[$locale] = include $file;
@@ -102,16 +100,17 @@ class Holiday extends HolidaysList
      */
     public function getHolidayName()
     {
+        $mixin = $this;
         $carbonClass = static::getCarbonClass();
         $getThisOrToday = static::getThisOrToday();
         $swap = static::swapDateTimeParam();
         $dictionary = $this->getHolidayNamesDictionary();
 
-        return function ($locale = null, $self = null) use ($carbonClass, $getThisOrToday, $swap, $dictionary) {
+        return function ($locale = null, $self = null) use ($mixin, $carbonClass, $getThisOrToday, $swap, $dictionary) {
             $swap($locale, $self);
 
             /** @var Carbon|BusinessDay $self */
-            $self = $getThisOrToday($self, isset($this) ? $this : null);
+            $self = $getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
             $key = $self->getHolidayId();
 
             if ($key === false) {

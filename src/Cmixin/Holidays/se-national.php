@@ -1,0 +1,28 @@
+<?php
+
+return array(
+    'new-year'             => '01-01',
+    '01-06'                => '01-06',
+    'easter-2'             => '= easter -2',
+    'easter-1'             => '= easter 1',
+    '05-01'                => '05-01',
+    'easter-39'            => '= easter 39',
+    'sunday-before-06-01'  => '= Sunday before 06-01',
+    '06-06'                => '06-06',
+    'saturday-after-06-20' => '= Saturday after 06-20',
+    'saturday-after-10-31' => '= Saturday after 10-31',
+    'christmas'            => '12-25',
+    'christmas-next-day'   => '12-26',
+    '01-13'                => '01-13',
+    'sunday-of-march'      => '= first Sunday of March',
+    '03-25'                => '03-25',
+    '04-30'                => '04-30',
+    'easter'               => '= easter',
+    'easter-49'            => '= easter 49',
+    '11-06'                => '11-06',
+    '11-11'                => '11-11',
+    '12-10'                => '12-10',
+    '12-13'                => '12-13',
+    '12-24'                => '12-24',
+    '12-31'                => '12-31',
+);

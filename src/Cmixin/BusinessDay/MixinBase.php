@@ -25,6 +25,16 @@ abstract class MixinBase
 
         $carbonClass::mixin($mixin);
 
+        $arguments = func_get_args();
+
+        if (isset($arguments[1]) && is_string($region = $arguments[1])) {
+            $carbonClass::setHolidaysRegion($region);
+
+            if (isset($arguments[2])) {
+                $carbonClass::addHolidays($region, $arguments[2]);
+            }
+        }
+
         return $mixin;
     }
 

@@ -21,34 +21,6 @@ class NlTest extends TestCase
         $carbon::resetHolidays();
     }
 
-    public function testHolidaysForRandomYear()
-    {
-        $carbon = static::CARBON_CLASS;
-        $carbon::setHolidaysRegion('nl-national');
-        $holidays = include __DIR__.'/../../../src/Cmixin/Holidays/nl-national.php';
-
-        $randomYear = rand(1991, 2028);
-        $randomHolidays = array();
-        foreach ($holidays as $holiday) {
-            if (is_callable($holiday)) {
-                $randomHolidays[] = $holiday($randomYear);
-            } elseif (is_string($holiday)) {
-                $randomHolidays[] = $holiday;
-            }
-        }
-
-        $date = $carbon::parse("$randomYear-01-01");
-        while ($date->format('Y') == $randomYear) {
-            if (in_array($date->format('d/m'), $randomHolidays)) {
-                self::assertTrue($date->isHoliday(), sprintf('Date %s should be holiday!', $date->format('Y-m-d')));
-            } else {
-                self::assertFalse($date->isHoliday(), sprintf('Date %s should not be holiday!', $date->format('Y-m-d')));
-            }
-
-            $date->modify('+1 day');
-        }
-    }
-
     public function testHolidaysSpecificDates()
     {
         $carbon = static::CARBON_CLASS;
@@ -57,6 +29,8 @@ class NlTest extends TestCase
         self::assertTrue($carbon::parse('2000-01-01 00:00:00')->isHoliday());
         self::assertTrue($carbon::parse('2018-04-27')->isHoliday());
         self::assertFalse($carbon::parse('2018-04-26')->isHoliday());
+        self::assertFalse($carbon::parse('2014-04-27')->isHoliday());
+        self::assertTrue($carbon::parse('2014-04-26')->isHoliday());
         self::assertTrue($carbon::parse('2018-04-01')->isHoliday());
         self::assertTrue($carbon::parse('2018-04-02')->isHoliday());
         self::assertFalse($carbon::parse('2018-05-05')->isHoliday()); // Liberation Day; only once every 5 years

@@ -1,0 +1,28 @@
+<?php
+
+return array(
+    'new-year'          => '01-01',
+    'substitutes-01-01' => '= 01-01 if Sunday then next Monday',
+    '01-06'             => '01-06',
+    'substitutes-01-06' => '= 01-06 if Sunday then next Monday',
+    '03-19'             => '03-19',
+    'substitutes-03-19' => '= 03-19 if Sunday then next Monday',
+    'easter-3'          => '= easter -3',
+    'easter-2'          => '= easter -2',
+    'easter'            => '= easter',
+    '05-01'             => '05-01',
+    'substitutes-05-01' => '= 05-01 if Sunday then next Monday',
+    '1st-sunday-of-may' => '= first Sunday of May',
+    'easter-49'         => '= easter 49',
+    '07-25'             => '07-25',
+    '08-15'             => '08-15',
+    'substitutes-08-15' => '= 08-15 if Sunday then next Monday',
+    '10-12'             => '= 10-12 if Sunday then next Monday',
+    '11-01'             => '11-01',
+    'substitutes-11-01' => '= 11-01 if Sunday then next Monday',
+    '12-06'             => '= 12-06 if Sunday then next Monday',
+    '12-08'             => '12-08',
+    'substitutes-12-08' => '= 12-08 if Sunday then next Monday',
+    'christmas'         => '12-25',
+    'substitutes-12-25' => '= 12-25 if Sunday then next Monday',
+);

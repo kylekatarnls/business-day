@@ -1,0 +1,25 @@
+<?php
+
+return array(
+    'new-year'                               => 'Deň vzniku Slovenskej republiky',
+    'day-of-victory-over-fascism'            => 'Deň víťazstva nad fašizmom',
+    'saints-cyril-and-methodius-day'         => 'Sviatok svätého Cyrila a Metoda',
+    'slovak-national-uprising-anniversary'   => 'Výročie Slovenského národného povstania',
+    'day-of-our-lady-of-the-seven-sorrows'   => 'Sviatok Panny Márie Sedembolestnej',
+    'struggle-for-freedom-and-democracy-day' => 'Deň boja za slobodu a demokraciu',
+    '05-08'                                  => 'Deň víťazstva nad fašizmom',
+    '07-05'                                  => 'Sviatok svätého Cyrila a Metoda',
+    '08-29'                                  => 'Výročie Slovenského národného povstania',
+    '09-15'                                  => 'Sviatok Panny Márie Sedembolestnej',
+    '11-17'                                  => 'Deň boja za slobodu a demokraciu',
+    '01-06'                                  => 'Zjavenie Pána',
+    '05-01'                                  => 'Sviatok práce',
+    '11-01'                                  => 'Sviatok všetkých svätých',
+    '12-24'                                  => 'Štedrý deň',
+    'christmas'                              => 'Prvý sviatok vianočný',
+    'christmas-next-day'                     => 'Druhý sviatok vianočný',
+    'easter-2'                               => 'Veľkonočný piatok',
+    'easter'                                 => 'Veľká noc',
+    'easter-1'                               => 'Veľkonočný pondelok',
+    'constitution-day'                       => 'Deň Ústavy',
+);

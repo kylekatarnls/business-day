@@ -31,7 +31,7 @@ class HolidayObserver extends Holiday
         return function ($zone, $self = null) use ($mixin) {
             $mixin->observedHolidaysZone = $zone;
 
-            return isset($this) ? $this : (isset($self) ? $self : null);
+            return isset($this) && $this !== $mixin ? $this : (isset($self) ? $self : null);
         };
     }
 
@@ -73,7 +73,7 @@ class HolidayObserver extends Holiday
 
             $mixin->observedHolidays[$zone][$day] = $value;
 
-            return isset($this) ? $this : (isset($self) ? $self : null);
+            return isset($this) && $this !== $mixin ? $this : (isset($self) ? $self : null);
         };
     }
 
@@ -99,7 +99,7 @@ class HolidayObserver extends Holiday
                 $setter($day, $value);
             }
 
-            return isset($this) ? $this : (isset($self) ? $self : null);
+            return isset($this) && $this !== $mixin ? $this : (isset($self) ? $self : null);
         };
     }
 
@@ -201,7 +201,7 @@ class HolidayObserver extends Holiday
 
             if (!$name) {
                 /** @var Carbon|BusinessDay $self */
-                $self = $getThisOrToday($self, isset($this) ? $this : null);
+                $self = $getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
                 $name = $self->getHolidayId();
             }
 
