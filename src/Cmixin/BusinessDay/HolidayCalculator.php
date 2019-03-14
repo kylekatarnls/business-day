@@ -5,8 +5,6 @@ namespace Cmixin\BusinessDay;
 use DateTime;
 
 /**
- * Class HolidayCalculator
- *
  * @internal
  */
 class HolidayCalculator
@@ -43,6 +41,75 @@ class HolidayCalculator
         $this->type = $type;
         $this->holidays = &$holidays;
         $this->holidaysList = &$holidaysList;
+    }
+
+    public function next()
+    {
+        $holiday = false;
+
+        while ($holiday === false) {
+            while (($key = key($this->holidays)) === 'regions') {
+                next($this->holidays);
+            }
+
+            $holiday = $this->getHolidayDate($key, current($this->holidays));
+        }
+
+        return $holiday;
+    }
+
+    public function interpolateFixedDate($match)
+    {
+        $year = $this->year;
+
+        switch ($match[0]) {
+            case 'easter':
+                static $easterDays = array();
+
+                if (!isset($easterDays[$year])) {
+                    $easterDays[$year] = easter_days($year);
+                }
+
+                $days = $easterDays[$year];
+
+                return "$year-03-21 $days days ";
+        }
+    }
+
+    public function padDate($match)
+    {
+        return $this->year.'-'.
+            str_pad($match[1], 2, '0', STR_PAD_LEFT).'-'.
+            str_pad($match[2], 2, '0', STR_PAD_LEFT).
+            $match[3];
+    }
+
+    /**
+     * @param array    $conditions
+     * @param DateTime $dateTime
+     */
+    protected function getConditionalModifier($conditions, $dateTime)
+    {
+        foreach ($conditions as $condition) {
+            $expected = true;
+            $condition = trim($condition);
+
+            if (substr($condition, 0, 4) === 'not ') {
+                $expected = false;
+                $condition = substr($condition, 4);
+            }
+
+            list($condition, $action) = array_pad(explode(' then ', $condition, 2), 2, null);
+            $condition = strtolower($condition);
+            $condition = (bool) ($condition === 'weekend'
+                ? ($dateTime->format('N') > 5)
+                : in_array(strtolower($dateTime->format('l')), array_map('trim', explode(',', $condition)))
+            );
+
+            if ($condition === $expected) {
+                return $action;
+            }
+        }
     }
 
     protected function calculateDynamicHoliday($holiday)
@@ -86,30 +153,13 @@ class HolidayCalculator
             $holiday = $holiday[0];
         }
 
-        $holiday = preg_replace_callback('/(easter)/i', function ($match) use ($year) {
-            switch ($match[0]) {
-                case 'easter':
-                    static $easterDays = array();
-
-                    if (!isset($easterDays[$year])) {
-                        $easterDays[$year] = easter_days($year);
-                    }
-
-                    $days = $easterDays[$year];
-
-                    return "$year-03-21 $days days ";
-            }
-        }, trim($holiday));
-        $holiday = preg_replace_callback('/^(\d{1,2})-(\d{1,2})((\s[\s\S]*)?)$/', function ($match) use ($year) {
-            return "$year-".
-                str_pad($match[1], 2, '0', STR_PAD_LEFT).'-'.
-                str_pad($match[2], 2, '0', STR_PAD_LEFT).
-                $match[3];
-        }, $holiday);
+        $holiday = preg_replace_callback('/(easter)/i', array($this, 'interpolateFixedDate'), trim($holiday));
+        $holiday = preg_replace_callback('/^(\d{1,2})-(\d{1,2})((\s[\s\S]*)?)$/', array($this, 'padDate'), $holiday);
         $holiday = str_replace('$year', $year, $holiday);
         $holiday = preg_replace('/(\s\d+)\s*$/', '$1 days', $holiday);
-        list($holiday, $notOn) = array_pad(explode(' not on ', $holiday, 2), 2, null);
-        list($holiday, $on) = array_pad(explode(' on ', $holiday, 2), 2, null);
+        $onConditions = array();
+        list($holiday, $onConditions['notOn']) = array_pad(explode(' not on ', $holiday, 2), 2, null);
+        list($holiday, $onConditions['on']) = array_pad(explode(' on ', $holiday, 2), 2, null);
         list($holiday, $condition) = array_pad(explode(' if ', $holiday, 2), 2, null);
 
         if (strpos($holiday, "$year") === false) {
@@ -125,8 +175,8 @@ class HolidayCalculator
         );
 
         foreach ($checks as $check => $expected) {
-            if ($$check) {
-                $days = strtolower($$check);
+            if ($onConditions[$check]) {
+                $days = strtolower($onConditions[$check]);
                 $days = $days === 'weekend' ? 'Saturday, Sunday' : $days;
 
                 if (in_array(strtolower($dateTime->format('l')), array_map('trim', explode(',', $days))) === $expected) {
@@ -135,32 +185,8 @@ class HolidayCalculator
             }
         }
 
-        if ($condition) {
-            $expected = true;
-
-            $conditions = explode(' and ', $condition);
-
-            foreach ($conditions as $condition) {
-                $condition = trim($condition);
-
-                if (substr($condition, 0, 4) === 'not ') {
-                    $expected = false;
-                    $condition = substr($condition, 4);
-                }
-
-                list($condition, $action) = array_pad(explode(' then ', $condition, 2), 2, null);
-                $condition = strtolower($condition);
-                $condition = (bool) ($condition === 'weekend'
-                    ? ($dateTime->format('N') > 5)
-                    : in_array(strtolower($dateTime->format('l')), array_map('trim', explode(',', $condition)))
-                );
-
-                if ($condition === $expected) {
-                    $dateTime = $dateTime->modify($action);
-
-                    break;
-                }
-            }
+        if ($condition && ($action = $this->getConditionalModifier(explode(' and ', $condition), $dateTime))) {
+            $dateTime = $dateTime->modify($action);
         }
 
         while ($substitute && ($dateTime->format('N') > 5 || isset($this->holidaysList[$dateTime->format('d/m')]))) {
@@ -218,20 +244,5 @@ class HolidayCalculator
         return $holiday
             ? array($key, $holiday ? ($this->type === 'string' ? $holiday : (isset($dateTime) ? $dateTime : $outputClass::createFromFormat('d/m/Y', "$holiday/$year"))) : $holiday)
             : false;
-    }
-
-    public function next()
-    {
-        $holiday = false;
-
-        while ($holiday === false) {
-            while (($key = key($this->holidays)) === 'regions') {
-                next($this->holidays);
-            }
-
-            $holiday = $this->getHolidayDate($key, current($this->holidays));
-        }
-
-        return $holiday;
     }
 }
