@@ -11,7 +11,7 @@ abstract class MixinBase
         return static::$carbonClass ?: 'Carbon\Carbon';
     }
 
-    public static function enable($carbonClass = null, $region = null, $holidays = null)
+    public static function enable($carbonClass = null)
     {
         if ($carbonClass === null) {
             return function () {
@@ -25,11 +25,13 @@ abstract class MixinBase
 
         $carbonClass::mixin($mixin);
 
-        if ($region) {
+        $arguments = func_get_args();
+
+        if (isset($arguments[1]) && is_string($region = $arguments[1])) {
             $carbonClass::setHolidaysRegion($region);
 
-            if ($holidays) {
-                $carbonClass::addHolidays($region, $holidays);
+            if (isset($arguments[2])) {
+                $carbonClass::addHolidays($region, $arguments[2]);
             }
         }
 
