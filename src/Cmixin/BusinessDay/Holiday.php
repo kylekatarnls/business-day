@@ -20,16 +20,16 @@ class Holiday extends HolidaysList
     {
         $mixin = $this;
         $getThisOrToday = static::getThisOrToday();
-        $getYearHolidaysNextFunction = static::getYearHolidaysNextFunction();
+        $getNextFunction = static::getYearHolidaysNextFunction();
 
-        return function ($self = null) use ($mixin, $getThisOrToday, $getYearHolidaysNextFunction) {
+        return function ($self = null) use ($mixin, $getThisOrToday, $getNextFunction) {
             /** @var Carbon|BusinessDay $self */
             $self = $getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
 
             $date = $self->format('d/m');
             $year = $self->year;
 
-            $next = $getYearHolidaysNextFunction($year, 'string', $self);
+            $next = $getNextFunction($year, 'string', $self);
 
             while ($data = $next()) {
                 list($key, $holiday) = $data;
