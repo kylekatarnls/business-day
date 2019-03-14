@@ -89,4 +89,5 @@ return array(
     'national-holiday'                                                      => 'Nationale feestdag',
     'revolution-day'                                                        => 'Dag van de revolutie',
     'substitutes'                                                           => 'substituut',
+    '3rd-tuesday-in-september'                                              => 'Prinsjesdag',
 );

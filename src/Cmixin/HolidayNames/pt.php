@@ -90,4 +90,8 @@ return array(
     'fathers-day'                                                                 => 'Dia dos Pais',
     'mothers-day'                                                                 => 'Dia das Mães',
     'public-holiday'                                                              => 'Feriado Obrigatório',
+    '1st-sunday-in-october-in-even-years'                                         => 'Dia de Eleição',
+    '1st-sunday-before-11-01-in-even-years'                                       => 'Dia de Eleição',
+    '1st-sunday-in-march'                                                         => 'Revolução Pernambucana de 1817',
+    '3rd-tuesday-in-october'                                                      => 'Dia do Comércio',
 );

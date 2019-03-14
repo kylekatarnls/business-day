@@ -31,4 +31,8 @@ return array(
     'fathers-day'                => 'Farsdag',
     'liberation-day'             => 'Frigjøringsdagen',
     'mothers-day'                => 'Morsdag',
+    '4th-sunday-before-12-24'    => 'Første søndag i advent',
+    '3rd-sunday-before-12-24'    => 'Andre søndag i advent',
+    '2nd-sunday-before-12-24'    => 'Tredje søndag i advent',
+    '1st-sunday-before-12-24'    => 'Fjerde søndag i advent',
 );

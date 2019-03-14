@@ -33,4 +33,5 @@ return array(
     'constitution-day'                           => 'Սահմանադրության օր',
     'independence-day'                           => 'Անկախության օր',
     'mothers-day'                                => 'Ցեղասպանության զոհերի հիշատակի օր',
+    '2nd-saturday-in-october'                    => 'Թարգմանչաց տոն',
 );

@@ -19,4 +19,6 @@ return array(
     '1-ramadan'                 => 'ረመዳን',
     '1-shawwal'                 => 'ዒድ አል ፈጥር',
     '10-dhu-al-hijjah'          => 'ዒድ አል አድሐ',
+    '09-27-in-non-leap-years'   => 'ብርሐነ-መስቀል',
+    '09-28-in-leap-years'       => 'ብርሐነ-መስቀል',
 );

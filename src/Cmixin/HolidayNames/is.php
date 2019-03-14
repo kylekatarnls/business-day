@@ -37,4 +37,6 @@ return array(
     'easter-49'              => 'Hvítasunnudagur',
     'easter-50'              => 'Annar í hvítasunnu',
     'mothers-day'            => 'Mæðradagurinn',
+    '1st-sunday-in-june'     => 'Sjómannadagurinn',
+    'monday-in-august'       => 'Frídagur verslunarmanna',
 );

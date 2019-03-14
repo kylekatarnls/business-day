@@ -43,4 +43,10 @@ return array(
     '12-31'                                                  => '大晦日',
     'constitution-day'                                       => '憲法記念日',
     'substitutes'                                            => '代替日',
+    '2nd-monday-in-january'                                  => '成人の日',
+    'march-equinox-in-+09:00-and-if-sunday-then-next-monday' => '春分の日',
+    '3rd-monday-in-july'                                     => '海の日',
+    '3rd-monday-in-september'                                => '敬老の日',
+    'september-equinox-in-+09:00'                            => '秋分の日',
+    '2nd-monday-in-october'                                  => '体育の日',
 );

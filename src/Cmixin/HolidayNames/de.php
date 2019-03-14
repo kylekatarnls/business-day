@@ -74,4 +74,11 @@ return array(
     'reformation-day'                                 => 'Reformationstag',
     'substitutes'                                     => 'Ersatztag',
     'buss-und-bettag'                                 => 'Buß- und Bettag',
+    '1st-sunday-in-june'                              => 'Vätertag',
+    'monday-after-2nd-saturday-in-september-13:00'    => 'Knabenschiessen',
+    'monday-after-3-sunday-in-september'              => 'Bettagsmontag',
+    '5th-sunday-before-12-25'                         => 'Totensonntag',
+    '4th-sunday-before-12-25'                         => '1. Advent',
+    '2nd-sunday-before-12-25'                         => '3. Advent',
+    '1st-sunday-before-12-25'                         => '4. Advent',
 );
