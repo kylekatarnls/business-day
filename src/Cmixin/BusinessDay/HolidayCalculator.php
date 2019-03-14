@@ -112,6 +112,48 @@ class HolidayCalculator
         }
     }
 
+    protected function extractModifiers($holiday)
+    {
+        $modifiers = array(
+            'before' => null,
+            'after'  => null,
+        );
+
+        foreach ($modifiers as $variable => &$modifier) {
+            $holiday = explode(" $variable ", $holiday, 2);
+
+            if (count($holiday) === 2) {
+                $modifier = $holiday[0];
+                $holiday[0] = $holiday[1];
+            }
+
+            $holiday = $holiday[0];
+        }
+
+        return array($modifiers['before'], $modifiers['after'], $holiday);
+    }
+
+    protected function isIgnoredYear(&$holiday)
+    {
+        if (preg_match('/ of even years?$/i', $holiday)) {
+            $holiday = trim(substr($holiday, 0, -14));
+
+            if ($this->year & 1) {
+                return true;
+            }
+        }
+
+        if (preg_match('/every (\d+) years since (\d{4})$/', $holiday, $match)) {
+            $holiday = trim(substr($holiday, 0, -strlen($match[0])));
+
+            if (($this->year - $match[2]) % $match[1]) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     protected function calculateDynamicHoliday($holiday)
     {
         $outputClass = $this->outputClass;
@@ -123,35 +165,11 @@ class HolidayCalculator
             $holiday = trim(substr($holiday, 0, -11));
         }
 
-        if (preg_match('/ of even years?$/i', $holiday)) {
-            $holiday = trim(substr($holiday, 0, -14));
-
-            if ($year & 1) {
-                return false;
-            }
+        if ($this->isIgnoredYear($holiday)) {
+            return false;
         }
 
-        if (preg_match('/every (\d+) years since (\d{4})$/', $holiday, $match)) {
-            $holiday = trim(substr($holiday, 0, -strlen($match[0])));
-
-            if (($year - $match[2]) % $match[1]) {
-                return false;
-            }
-        }
-
-        $before = null;
-        $after = null;
-
-        foreach (array('before', 'after') as $variable) {
-            $holiday = explode(" $variable ", $holiday, 2);
-
-            if (count($holiday) === 2) {
-                $$variable = $holiday[0];
-                $holiday[0] = $holiday[1];
-            }
-
-            $holiday = $holiday[0];
-        }
+        list($before, $after, $holiday) = $this->extractModifiers($holiday);
 
         $holiday = preg_replace_callback('/(easter)/i', array($this, 'interpolateFixedDate'), trim($holiday));
         $holiday = preg_replace_callback('/^(\d{1,2})-(\d{1,2})((\s[\s\S]*)?)$/', array($this, 'padDate'), $holiday);
