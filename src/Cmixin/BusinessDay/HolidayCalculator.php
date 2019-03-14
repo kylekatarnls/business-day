@@ -268,7 +268,7 @@ class HolidayCalculator
                         : $outputClass::createFromFormat('d/m/Y', "$holiday/$year")
                     )
                 )
-                : $holiday
+                : $holiday,
             )
             : false;
     }
