@@ -8,7 +8,7 @@ return array(
     'orthodox-2'         => '= orthodox -2',
     'orthodox-1'         => '= orthodox -1',
     'orthodox'           => '= orthodox',
-    'orthodox-p1'         => '= orthodox 1',
+    'orthodox-p1'        => '= orthodox 1',
     '05-01'              => '05-01',
     'orthodox-49'        => '= orthodox 49',
     '2nd-sunday-of-may'  => '= second Sunday of May',

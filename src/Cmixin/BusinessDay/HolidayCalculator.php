@@ -89,18 +89,15 @@ class HolidayCalculator
 
     protected function getOrthodoxEasterTimestamp($julian = false)
     {
-        $J = date('Y', mktime(0, 0, 0, 1, 1, $this->year));
-        $K = floor($J / 100);
-        $M = 15 + ($julian ? 0 : floor((3 * $K + 3) / 4) - floor((8 * $K + 13) / 25));
-        $S = 2 - ($julian ? 0 : floor((3 * $K + 3) / 4));
-        $A = $J % 19;
-        $D = (19 * $A + $M) % 30;
-        $R = floor($D / 29) + (floor($D / 28) - floor($D / 29)) * floor($A / 11);
-        $OG = 21 + $D - $R;
-        $SZ = 7 - (($J + floor($J / 4) + $S) % 7);
-        $OE = 7 - (($OG - $SZ) % 7);
-        $OS = $OG + $OE;
-        $easter = mktime(0, 0, 0, 3, $OS, $J);
+        $year = date('Y', mktime(0, 0, 0, 1, 1, $this->year));
+        $century = floor($year / 100);
+        $nineteenth = $year % 19;
+        $centuryOffset = $julian ? 0 : floor((3 * $century + 3) / 4);
+        $shift = $julian ? 0 : $centuryOffset - floor((8 * $century + 13) / 25);
+        $day = (19 * $nineteenth + 15 + $shift) % 30;
+        $offset = 21 + $day - floor($day / 29) + (floor($day / 28) - floor($day / 29)) * floor($nineteenth / 11);
+        $day = $offset + 7 - (($offset + (($year + floor($year / 4) + 2 - $centuryOffset) % 7) - 7) % 7);
+        $easter = mktime(0, 0, 0, 3, $day, $year);
 
         if ($julian) {
             return strtotime(jdtogregorian(juliantojd(
@@ -188,7 +185,6 @@ class HolidayCalculator
         $outputClass = $this->outputClass;
         $year = $this->year;
 
-        $ort = (strpos($holiday, 'orthodox') !== false);
         $holiday = str_replace(' in ', ' of ', trim(substr($holiday, 1)));
 
         if ($substitute = preg_match('/\ssubstitute$/i', $holiday)) {
