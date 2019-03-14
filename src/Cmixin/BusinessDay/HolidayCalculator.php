@@ -73,6 +73,9 @@ class HolidayCalculator
                 $days = $easterDays[$year];
 
                 return "$year-03-21 $days days ";
+
+            case 'orthodox':
+                return date('Y-m-d ', $this->getOrthodoxEasterTimestamp());
         }
     }
 
@@ -82,6 +85,32 @@ class HolidayCalculator
             str_pad($match[1], 2, '0', STR_PAD_LEFT).'-'.
             str_pad($match[2], 2, '0', STR_PAD_LEFT).
             $match[3];
+    }
+
+    protected function getOrthodoxEasterTimestamp($julian = false)
+    {
+        $J = date('Y', mktime(0, 0, 0, 1, 1, $this->year));
+        $K = floor($J / 100);
+        $M = 15 + ($julian ? 0 : floor((3 * $K + 3) / 4) - floor((8 * $K + 13) / 25));
+        $S = 2 - ($julian ? 0 : floor((3 * $K + 3) / 4));
+        $A = $J % 19;
+        $D = (19 * $A + $M) % 30;
+        $R = floor($D / 29) + (floor($D / 28) - floor($D / 29)) * floor($A / 11);
+        $OG = 21 + $D - $R;
+        $SZ = 7 - (($J + floor($J / 4) + $S) % 7);
+        $OE = 7 - (($OG - $SZ) % 7);
+        $OS = $OG + $OE;
+        $easter = mktime(0, 0, 0, 3, $OS, $J);
+
+        if ($julian) {
+            return strtotime(jdtogregorian(juliantojd(
+                date('m', $easter),
+                date('d', $easter),
+                date('Y', $easter)
+            )));
+        }
+
+        return $easter;
     }
 
     /**
@@ -159,6 +188,7 @@ class HolidayCalculator
         $outputClass = $this->outputClass;
         $year = $this->year;
 
+        $ort = (strpos($holiday, 'orthodox') !== false);
         $holiday = str_replace(' in ', ' of ', trim(substr($holiday, 1)));
 
         if ($substitute = preg_match('/\ssubstitute$/i', $holiday)) {
@@ -171,7 +201,8 @@ class HolidayCalculator
 
         list($before, $after, $holiday) = $this->extractModifiers($holiday);
 
-        $holiday = preg_replace_callback('/(easter)/i', array($this, 'interpolateFixedDate'), trim($holiday));
+        $holiday = preg_replace_callback('/(easter|orthodox)/i', array($this, 'interpolateFixedDate'), trim($holiday));
+        $holiday = preg_replace('/\D-\d+\s*$/', '$0 days', $holiday);
         $holiday = preg_replace_callback('/^(\d{1,2})-(\d{1,2})((\s[\s\S]*)?)$/', array($this, 'padDate'), $holiday);
         $holiday = str_replace('$year', $year, $holiday);
         $holiday = preg_replace('/(\s\d+)\s*$/', '$1 days', $holiday);
@@ -265,7 +296,7 @@ class HolidayCalculator
                     ? $holiday
                     : (isset($dateTime)
                         ? $dateTime
-                        : $outputClass::createFromFormat('d/m/Y', "$holiday/$year")
+                        : $outputClass::createFromFormat('!d/m/Y', "$holiday/$year")
                     )
                 )
                 : $holiday,
