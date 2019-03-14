@@ -143,6 +143,18 @@ class BusinessDayTest extends TestCase
         ));
     }
 
+    public function testAddHolidaysInEnable()
+    {
+        $carbon = static::CARBON_CLASS;
+        BusinessDay::enable($carbon, 'fr-national', array(
+            'custom-holiday' => '05/12',
+            'christmas'      => null,
+        ));
+        self::assertTrue($carbon::parse('2010-01-01')->isHoliday());
+        self::assertTrue($carbon::parse('2010-12-05')->isHoliday());
+        self::assertFalse($carbon::parse('2010-12-25')->isHoliday());
+    }
+
     /**
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage Holiday array definition need a string identifier as main array key.
