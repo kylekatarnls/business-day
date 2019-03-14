@@ -195,9 +195,9 @@ class HolidayCalculator
         foreach ($checks as $check => $expected) {
             if ($onConditions[$check]) {
                 $days = strtolower($onConditions[$check]);
-                $days = $days === 'weekend' ? 'Saturday, Sunday' : $days;
+                $days = explode(',', $days === 'weekend' ? 'Saturday, Sunday' : $days);
 
-                if (in_array(strtolower($dateTime->format('l')), array_map('trim', explode(',', $days))) === $expected) {
+                if (in_array(strtolower($dateTime->format('l')), array_map('trim', $days)) === $expected) {
                     return null;
                 }
             }
@@ -260,7 +260,16 @@ class HolidayCalculator
         }
 
         return $holiday
-            ? array($key, $holiday ? ($this->type === 'string' ? $holiday : (isset($dateTime) ? $dateTime : $outputClass::createFromFormat('d/m/Y', "$holiday/$year"))) : $holiday)
+            ? array($key, $holiday
+                ? ($this->type === 'string'
+                    ? $holiday
+                    : (isset($dateTime)
+                        ? $dateTime
+                        : $outputClass::createFromFormat('d/m/Y', "$holiday/$year")
+                    )
+                )
+                : $holiday
+            )
             : false;
     }
 }
