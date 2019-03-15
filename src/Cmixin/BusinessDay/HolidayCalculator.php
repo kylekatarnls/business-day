@@ -87,6 +87,24 @@ class HolidayCalculator
             $match[3];
     }
 
+    public function convertJulianDate($match)
+    {
+        $year = $this->year;
+
+        do {
+            $time = $this->getJulianTimestamp($year, $match[1], $match[2]);
+            $delta = date('Y', $time) - $this->year;
+            $year += $delta > 0 ? -1 : 1;
+        } while ($delta);
+
+        return date('m-d', $time);
+    }
+
+    protected function getJulianTimestamp($year, $month, $day)
+    {
+        return strtotime(jdtogregorian(juliantojd($month, $day, $year)));
+    }
+
     protected function getOrthodoxEasterTimestamp($julian = false)
     {
         $year = date('Y', mktime(0, 0, 0, 1, 1, $this->year));
@@ -99,15 +117,9 @@ class HolidayCalculator
         $day = $offset + 7 - (($offset + (($year + floor($year / 4) + 2 - $centuryOffset) % 7) - 7) % 7);
         $easter = mktime(0, 0, 0, 3, $day, $year);
 
-        if ($julian) {
-            return strtotime(jdtogregorian(juliantojd(
-                date('m', $easter),
-                date('d', $easter),
-                date('Y', $easter)
-            )));
-        }
-
-        return $easter;
+        return $julian
+            ? $this->getJulianTimestamp(date('m', $easter), date('d', $easter), date('Y', $easter))
+            : $easter;
     }
 
     /**
@@ -197,7 +209,8 @@ class HolidayCalculator
 
         list($before, $after, $holiday) = $this->extractModifiers($holiday);
 
-        $holiday = preg_replace_callback('/(easter|orthodox)/i', array($this, 'interpolateFixedDate'), trim($holiday));
+        $holiday = preg_replace_callback('/julian\s+(\d+)-(\d+)/i', array($this, 'convertJulianDate'), trim($holiday));
+        $holiday = preg_replace_callback('/(easter|orthodox)/i', array($this, 'interpolateFixedDate'), $holiday);
         $holiday = preg_replace('/\D-\d+\s*$/', '$0 days', $holiday);
         $holiday = preg_replace_callback('/^(\d{1,2})-(\d{1,2})((\s[\s\S]*)?)$/', array($this, 'padDate'), $holiday);
         $holiday = str_replace('$year', $year, $holiday);
