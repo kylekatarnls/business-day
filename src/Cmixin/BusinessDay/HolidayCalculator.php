@@ -75,7 +75,7 @@ class HolidayCalculator
                 return "$year-03-21 $days days ";
 
             case 'orthodox':
-                return date('Y-m-d ', $this->getOrthodoxEasterTimestamp());
+                return $this->getOrthodoxEasterDate('Y-m-d ');
         }
     }
 
@@ -105,21 +105,17 @@ class HolidayCalculator
         return strtotime(jdtogregorian(juliantojd($month, $day, $year)));
     }
 
-    protected function getOrthodoxEasterTimestamp($julian = false)
+    protected function getOrthodoxEasterDate($format)
     {
-        $year = date('Y', mktime(0, 0, 0, 1, 1, $this->year));
-        $century = floor($year / 100);
-        $nineteenth = $year % 19;
-        $centuryOffset = $julian ? 0 : floor((3 * $century + 3) / 4);
-        $shift = $julian ? 0 : $centuryOffset - floor((8 * $century + 13) / 25);
-        $day = (19 * $nineteenth + 15 + $shift) % 30;
-        $offset = 21 + $day - floor($day / 29) + (floor($day / 28) - floor($day / 29)) * floor($nineteenth / 11);
-        $day = $offset + 7 - (($offset + (($year + floor($year / 4) + 2 - $centuryOffset) % 7) - 7) % 7);
-        $easter = mktime(0, 0, 0, 3, $day, $year);
+        $year = $this->year;
+        $offset = (19 * ($year % 19) + 15) % 30;
+        $weekDay = (2 * ($year % 4) + 4 * ($year % 7) - $offset + 34) % 7;
+        $month = floor(($offset + $weekDay + 114) / 31);
+        $day = (($offset + $weekDay + 114) % 31) + 1;
 
-        return $julian
-            ? $this->getJulianTimestamp(date('m', $easter), date('d', $easter), date('Y', $easter))
-            : $easter;
+        $easter = mktime(0, 0, 0, $month, $day + 13, $year);
+
+        return date($format, $easter);
     }
 
     /**
@@ -192,7 +188,7 @@ class HolidayCalculator
         return false;
     }
 
-    protected function calculateDynamicHoliday($holiday)
+    protected function calculateDynamicHoliday($holiday, &$dateTime = null)
     {
         $outputClass = $this->outputClass;
         $year = $this->year;
@@ -262,10 +258,10 @@ class HolidayCalculator
         return $dateTime->format('d/m');
     }
 
-    protected function parseHoliday($holiday)
+    protected function parseHoliday($holiday, &$dateTime = null)
     {
         if (substr($holiday, 0, 1) === '=') {
-            $holiday = $this->calculateDynamicHoliday($holiday);
+            $holiday = $this->calculateDynamicHoliday($holiday, $dateTime);
         }
 
         if ($holiday) {
@@ -296,14 +292,14 @@ class HolidayCalculator
         }
 
         if (is_string($holiday)) {
-            $holiday = $this->parseHoliday($holiday);
+            $holiday = $this->parseHoliday($holiday, $dateTime);
         }
 
         return $holiday
             ? array($key, $holiday
                 ? ($this->type === 'string'
                     ? $holiday
-                    : (isset($dateTime)
+                    : (isset($dateTime) // @codeCoverageIgnore
                         ? $dateTime
                         : $outputClass::createFromFormat('!d/m/Y', "$holiday/$year")
                     )

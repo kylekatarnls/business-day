@@ -165,7 +165,7 @@ class HolidaysList extends MixinBase
             $holidays = $carbonClass::getHolidays();
             $outputClass = $type ? (is_string($type) && $type !== 'string' ? $type : 'DateTime') : $carbonClass;
             $holidaysList = array();
-            $calculator = new HolidayCalculator($year, $outputClass, $type, $holidays, $holidaysList);
+            $calculator = new HolidayCalculator((int) $year, $outputClass, $type, $holidays, $holidaysList);
 
             return function () use ($calculator) {
                 return $calculator->next();
