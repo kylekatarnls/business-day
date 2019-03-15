@@ -102,6 +102,8 @@ weekend in the right order no matter the days it falls)
 - `= julian 12-25` (Julian calendar)
 - `= 02-05 on Monday` holiday only if this is a Monday.
 - `= 02-05 not on Monday` not an holiday if this is a Monday.
+- `= 02-05 on even years` even years only.
+- `= 02-05 on every 5 years since 1999` if year is 1999, 2004, 2009, 2014, etc.
 
 #### setHolidaysRegion
 

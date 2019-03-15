@@ -179,8 +179,9 @@ class HolidayCalculator
 
         if (preg_match('/every (\d+) years since (\d{4})$/', $holiday, $match)) {
             $holiday = trim(substr($holiday, 0, -strlen($match[0])));
+            $delta = $this->year - $match[2];
 
-            if (($this->year - $match[2]) % $match[1]) {
+            if ($delta >= 0 && $delta % $match[1]) {
                 return true;
             }
         }
