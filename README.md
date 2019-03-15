@@ -517,6 +517,20 @@ print_r(Carbon::getMonthBusinessDays('2019-06')); // Open days in June 2019
 print_r(Carbon::parse('2019-06-10')->getMonthBusinessDays()); // Can be called from an instance
 ```
 
+### Note about timezones
+
+When you set an holidays region, it does not change the timezone, so if January 1st is an holiday,
+`->isHoliday()` returns `true` from `Carbon::parse('2010-01-01 00:00:00.000000)` to
+`Carbon::parse('2010-01-01 23:59:59.999999)` no matter the timezone you set for those `Carbon`
+instance.
+
+If you want to know if it's holiday or business day in somewhere else in the world, you have
+to convert it:
+```php
+Carbon::parse('2010-01-01 02:30', 'Europe/Paris')->setTimezone('America/Toronto')->isHoliday() // false
+Carbon::parse('2010-01-01 12:30', 'Europe/Paris')->setTimezone('America/Toronto')->isHoliday() // true
+```
+
 ## Contribute
 
 The scope of this library is to date business date and time utilities to Carbon,
