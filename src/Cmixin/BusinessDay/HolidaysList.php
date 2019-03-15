@@ -73,6 +73,20 @@ class HolidaysList extends MixinBase
     }
 
     /**
+     * Get the current holidays region.
+     *
+     * @return \Closure
+     */
+    public function getHolidaysRegion()
+    {
+        $mixin = $this;
+
+        return function () use ($mixin) {
+            return $mixin->holidaysRegion;
+        };
+    }
+
+    /**
      * Get the holidays for the current region selected.
      *
      * @return \Closure

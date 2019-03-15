@@ -38,6 +38,7 @@ class BusinessDayTest extends TestCase
     {
         $carbon = static::CARBON_CLASS;
         $carbon::setHolidaysRegion('us-national');
+        self::assertSame('us-national', $carbon::getHolidaysRegion());
         self::assertTrue($carbon::parse('2018-01-01 00:00:00')->isHoliday());
         self::assertTrue($carbon::parse('2018-01-15 00:00:00')->isHoliday());
         self::assertTrue($carbon::parse('2018-05-28 00:00:00')->isHoliday());

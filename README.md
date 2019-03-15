@@ -105,13 +105,14 @@ weekend in the right order no matter the days it falls)
 - `= 02-05 on even years` even years only.
 - `= 02-05 on every 5 years since 1999` if year is 1999, 2004, 2009, 2014, etc.
 
-#### setHolidaysRegion
+#### setHolidaysRegion / getHolidaysRegion
 
 To select the set of holidays of a region, use:
 ```php
 Carbon::parse('2000-12-25 00:00:00')->isHoliday(); // false
 Carbon::setHolidaysRegion('us');
 Carbon::parse('2000-12-25 00:00:00')->isHoliday(); // true
+Carbon::getHolidaysRegion(); // 'us-national' (national is the default region of a country code)
 ```
 
 This will select our national preset for USA (only
