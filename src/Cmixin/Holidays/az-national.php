@@ -3,7 +3,6 @@
 return array(
     '01-01-and-if-saturday-then-next-monday-if-sunday-then-next-tuesday'            => '= 01-01 substitute',
     '01-02-and-if-saturday-then-next-monday-if-sunday-then-next-tuesday'            => '= 01-02 substitute',
-    '01-20'                                                                         => '01-20',
     '03-08-and-if-saturday,sunday-then-next-monday'                                 => '= 03-08 substitute',
     '03-20'                                                                         => '03-20',
     '05-09-and-if-saturday,sunday-then-next-monday'                                 => '= 05-09 substitute',

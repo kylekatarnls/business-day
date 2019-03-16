@@ -16,7 +16,6 @@ return array(
     'substitutes-09-23-if-sunday-then-next-monday'           => '= substitutes 09-23 if sunday then next monday',
     '2nd-monday-in-october'                                  => '= second monday of October',
     '11-03-and-if-sunday-then-next-monday'                   => '= 11-03 substitute',
-    '11-15'                                                  => '11-15',
     '11-23-and-if-sunday-then-next-monday'                   => '= 11-23 substitute',
     '12-23-and-if-sunday-then-next-monday'                   => '= 12-23 substitute',
     'christmas'                                              => '12-25',

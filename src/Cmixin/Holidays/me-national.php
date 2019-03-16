@@ -17,7 +17,6 @@ return array(
     'easter-2'                              => '= easter -2',
     'easter'                                => '= easter',
     'easter-1'                              => '= easter 1',
-    '08-15'                                 => '08-15',
     '11-01'                                 => '11-01',
     'julian-12-24'                          => '= julian 12-24',
     'julian-12-25'                          => '= julian 12-25',
