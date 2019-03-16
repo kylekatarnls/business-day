@@ -4,7 +4,6 @@ return array(
     'new-year'           => '01-01',
     'new-year-next-day'  => '01-02',
     'easter-2'           => '= easter -2',
-    'easter'             => '= easter',
     'easter-1'           => '= easter 1',
     '04-07'              => '04-07',
     '04-26'              => '04-26',

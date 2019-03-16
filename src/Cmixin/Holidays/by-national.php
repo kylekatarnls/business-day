@@ -2,8 +2,6 @@
 
 return array(
     'new-year'     => '01-01',
-    'easter'       => '= easter',
-    'orthodox'     => '= orthodox',
     'orthodox-+9'  => '= orthodox +9',
     '03-08'        => '03-08',
     '05-01'        => '05-01',

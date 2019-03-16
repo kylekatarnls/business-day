@@ -12,5 +12,4 @@ return array(
     'vietnamese-1-0-1-p3'     => '= vietnamese 1-1 + 3 days',
     'vietnamese-1-0-1-p4'     => '= vietnamese 1-1 + 4 days',
     'vietnamese-3-0-10'       => '= vietnamese 3-10',
-    'vietnamese-5-0-5'        => '= vietnamese 5-5',
 );

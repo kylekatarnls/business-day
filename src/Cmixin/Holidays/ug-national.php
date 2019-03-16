@@ -5,7 +5,6 @@ return array(
     '01-26'              => '01-26',
     '02-16'              => '02-16',
     '03-08'              => '03-08',
-    'easter-46'          => '= easter -46',
     'easter-2'           => '= easter -2',
     'easter'             => '= easter',
     'easter-1'           => '= easter 1',

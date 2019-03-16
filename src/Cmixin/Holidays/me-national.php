@@ -21,7 +21,6 @@ return array(
     'julian-12-24'                          => '= julian 12-24',
     'julian-12-25'                          => '= julian 12-25',
     'julian-12-26'                          => '= julian 12-26',
-    'julian-01-01'                          => '= julian 01-01',
     //    '1-shawwal-p3d'                         => '= 1 Shawwal P3D',
     //    '10-dhu-al-hijjah-p3d'                  => '= 10 Dhu al-Hijjah P3D',
     //    '1-muharram'                            => '= 1 Muharram',

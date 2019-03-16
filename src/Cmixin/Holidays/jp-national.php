@@ -18,7 +18,6 @@ return array(
     '11-03-and-if-sunday-then-next-monday'                   => '= 11-03 substitute',
     '11-23-and-if-sunday-then-next-monday'                   => '= 11-23 substitute',
     '12-23-and-if-sunday-then-next-monday'                   => '= 12-23 substitute',
-    'christmas'                                              => '12-25',
     'march-equinox-in-+09:00-and-if-sunday-then-next-monday' => '= march equinox of +09:00 substitute',
     'september-equinox-in-+09:00'                            => '= september equinox of +09:00',
 );
