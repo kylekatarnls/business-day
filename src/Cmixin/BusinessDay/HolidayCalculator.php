@@ -114,10 +114,7 @@ class HolidayCalculator
 
     public function padDate($match)
     {
-        return $this->year.'-'.
-            str_pad($match[1], 2, '0', STR_PAD_LEFT).'-'.
-            str_pad($match[2], 2, '0', STR_PAD_LEFT).
-            $match[3];
+        return $this->year.'-'.$this->twoDigits($match[1]).'-'.$this->twoDigits($match[2]).$match[3];
     }
 
     public function getHijriDate($year, $month, $day)
@@ -141,6 +138,19 @@ class HolidayCalculator
         } while ($delta);
 
         return date('m-d', $time);
+    }
+
+    public function convertChineseDate($match)
+    {
+        $date = new \Cmixin\BusinessDay\LunarCalendar($this->year.'-'.$match[2]);
+        $date = $date->toGregorian();
+
+        return $this->twoDigits($date[1]).'-'.$this->twoDigits($date[2]);
+    }
+
+    protected function twoDigits($number)
+    {
+        return str_pad($number, 2, '0', STR_PAD_LEFT);
     }
 
     protected function getHijriHolidays($hijriDay, $hijriMonthString, $key = null)
@@ -343,6 +353,9 @@ class HolidayCalculator
         }
 
         $holiday = preg_replace_callback('/julian\s+(\d+)-(\d+)/i', array($this, 'convertJulianDate'), trim($holiday));
+        // Algorithm for Vietnamese not found, but Chinese calendar is the same 97% of the time.
+        // If you can implement it, feel free to open a pull-request
+        $holiday = preg_replace_callback('/(vietnamese|chinese)\s+(\d+-L?\d+)/i', array($this, 'convertChineseDate'), trim($holiday));
         $holiday = preg_replace_callback('/(easter|orthodox)/i', array($this, 'interpolateFixedDate'), $holiday);
         $holiday = preg_replace('/\D-\d+\s*$/', '$0 days', $holiday);
         $holiday = preg_replace_callback('/^(\d{1,2})-(\d{1,2})((\s[\s\S]*)?)$/', array($this, 'padDate'), $holiday);

@@ -573,6 +573,7 @@ return array(
     '03-31'                                                                                               => 'Armed Forces Day',
     '07-15'                                                                                               => 'Sultan\'s Birthday',
     '17-ramadan'                                                                                          => 'Nuzul Al-Quran',
+    'spring-festival'                                                                                     => 'Spring Festival',
     'chinese-01-0-01'                                                                                     => 'Chinese New Year',
     '02-02'                                                                                               => 'Feast of the Virgin of Candelaria',
     '06-21'                                                                                               => 'Andean New Year',

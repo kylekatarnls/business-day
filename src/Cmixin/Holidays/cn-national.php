@@ -8,8 +8,9 @@ return array(
     '06-01'                  => '06-01',
     '08-01-12:00'            => '= 08-01 12:00',
     '10-01'                  => '10-01',
-    'chinese-01-0-01'        => '= chinese 01-0-01',
-    'chinese-5-01-solarterm' => '= chinese 5-01 solarterm',
-    'chinese-05-0-05'        => '= chinese 05-0-05',
-    'chinese-08-0-15'        => '= chinese 08-0-15',
+    'spring-festival'        => '= chinese 01-01 - 1 day',
+    'chinese-01-0-01'        => '= chinese 01-01',
+    //'chinese-5-01-solarterm' => '= chinese 05-01 solarterm',
+    'chinese-05-0-05'        => '= chinese 05-05',
+    'chinese-08-0-15'        => '= chinese 08-15',
 );

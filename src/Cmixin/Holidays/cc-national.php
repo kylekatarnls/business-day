@@ -1,8 +1,8 @@
 <?php
 
 return array(
-    'chinese-01-0-01-and-if-sunday-then-next-tuesday-if-saturday-then-next-monday' => '= chinese 01-0-01 substitute',
-    'chinese-01-0-02-and-if-sunday-then-next-tuesday-if-saturday-then-next-monday' => '= chinese 01-0-02 substitute',
+    'chinese-01-0-01-and-if-sunday-then-next-tuesday-if-saturday-then-next-monday' => '= chinese 01-01 substitute',
+    'chinese-01-0-02-and-if-sunday-then-next-tuesday-if-saturday-then-next-monday' => '= chinese 01-02 substitute',
     'new-year'                                                                     => '01-01',
     '01-26'                                                                        => '01-26',
     '03-20'                                                                        => '03-20',
