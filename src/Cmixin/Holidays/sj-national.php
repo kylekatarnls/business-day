@@ -1,3 +1,3 @@
 <?php
 
-return array();
+return array_replace(require __DIR__.'/no-national.php', array());
