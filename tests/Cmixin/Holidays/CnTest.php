@@ -5,7 +5,7 @@ namespace Tests\Cmixin\Holidays;
 use Cmixin\BusinessDay;
 use PHPUnit\Framework\TestCase;
 
-class BgTest extends TestCase
+class CnTest extends TestCase
 {
     const CARBON_CLASS = 'Carbon\Carbon';
 
