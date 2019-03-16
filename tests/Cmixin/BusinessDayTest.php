@@ -945,4 +945,19 @@ class BusinessDayTest extends TestCase
         self::assertTrue($carbon::parse('2019-01-05')->isHoliday());
         self::assertTrue($carbon::parse('2019-12-25')->isHoliday());
     }
+
+    public function testWhenJewishHolidayMissInAGregorianYear()
+    {
+        $carbon = static::CARBON_CLASS;
+        BusinessDay::enable($carbon, 'custom-jewish', array(
+            '4-tevet' => '= 4 Tevet',
+        ));
+
+        self::assertSame(1, count($carbon::getYearHolidays(2018)));
+        self::assertTrue($carbon::parse('2018-12-12')->isHoliday());
+        self::assertSame(0, count($carbon::getYearHolidays(2019)));
+        self::assertTrue($carbon::parse('2020-01-01')->isHoliday());
+        self::assertSame(2, count($carbon::getYearHolidays(2020)));
+        self::assertTrue($carbon::parse('2020-12-19')->isHoliday());
+    }
 }
