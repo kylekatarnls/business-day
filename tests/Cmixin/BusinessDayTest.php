@@ -934,4 +934,15 @@ class BusinessDayTest extends TestCase
 
         self::assertNull($calculator->interpolateFixedDate(array('ko')));
     }
+
+    public function testWhenHijriHolidayHappensTwiceAGregorianYear()
+    {
+        $carbon = static::CARBON_CLASS;
+        BusinessDay::enable($carbon, 'custom-hijri', array(
+            '27-rabi-al-thani' => '= 27 Rabi al-thani',
+        ));
+
+        self::assertTrue($carbon::parse('2019-01-05')->isHoliday());
+        self::assertTrue($carbon::parse('2019-12-25')->isHoliday());
+    }
 }

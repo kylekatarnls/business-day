@@ -17,7 +17,7 @@ return array(
     '2011-06-19'                  => '= 2011-06-19',
     '07-27'                       => '07-27',
     '08-21'                       => '08-21',
-    '1st-monday-before-september' => '= first monday before September',
+    '1st-monday-before-september' => '= last Monday of August',
     '11-01'                       => '11-01',
     '11-02'                       => '11-02',
     '11-30'                       => '11-30',
