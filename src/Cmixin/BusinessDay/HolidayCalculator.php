@@ -167,26 +167,67 @@ class HolidayCalculator
         return array($modifiers['before'], $modifiers['after'], $holiday);
     }
 
-    protected function isIgnoredYear(&$holiday)
+    protected function consumeHolidayString($pattern, &$holiday, &$match = null)
     {
-        if (preg_match('/ of even years?$/i', $holiday)) {
-            $holiday = trim(substr($holiday, 0, -14));
-
-            if ($this->year & 1) {
-                return true;
-            }
-        }
-
-        if (preg_match('/every (\d+) years since (\d{4})$/', $holiday, $match)) {
+        if (preg_match($pattern, $holiday, $match)) {
             $holiday = trim(substr($holiday, 0, -strlen($match[0])));
-            $delta = $this->year - $match[2];
 
-            if ($delta >= 0 && $delta % $match[1]) {
-                return true;
-            }
+            return true;
         }
 
         return false;
+    }
+
+    protected function isIgnoredYear(&$holiday)
+    {
+        $since = 0;
+        $every = 0;
+
+        if ($this->consumeHolidayString('/ of (even|odd|leap|non-leap) years?$/i', $holiday, $match)) {
+            if (substr($match[1], -4) === 'leap') {
+                return (!($this->year % 4) && ($this->year % 100 || !($this->year % 400))) !== ($match[1] === 'leap');
+            }
+
+            $since = $match[1] === 'even' ? 0 : 1;
+            $every = 2;
+        }
+
+        if ($this->consumeHolidayString('/ every (\d+) years since (\d{4})$/', $holiday, $match)) {
+            $since = $match[2];
+            $every = $match[1];
+        }
+
+        return $every && ($delta = $this->year - $since) >= 0 && $delta % $every;
+    }
+
+    /**
+     * @param DateTime $dateTime
+     * @param string   $condition
+     * @param bool     $substitute
+     * @param string   $after
+     * @param string   $before
+     *
+     * @return DateTime
+     */
+    protected function handleModifiers($dateTime, $condition, $substitute, $after, $before)
+    {
+        if ($condition && ($action = $this->getConditionalModifier(explode(' and ', $condition), $dateTime))) {
+            $dateTime = $dateTime->modify($action);
+        }
+
+        if ($after) {
+            $dateTime = $dateTime->modify($after);
+        }
+
+        if ($before) {
+            $dateTime = $dateTime->modify("previous $before");
+        }
+
+        while ($substitute && ($dateTime->format('N') > 5 || isset($this->holidaysList[$dateTime->format('d/m')]))) {
+            $dateTime = $dateTime->modify('+1 day');
+        }
+
+        return $dateTime;
     }
 
     protected function calculateDynamicHoliday($holiday, &$dateTime = null)
@@ -196,9 +237,7 @@ class HolidayCalculator
 
         $holiday = str_replace(' in ', ' of ', trim(substr($holiday, 1)));
 
-        if ($substitute = preg_match('/\ssubstitute$/i', $holiday)) {
-            $holiday = trim(substr($holiday, 0, -11));
-        }
+        $substitute = $this->consumeHolidayString('/\ssubstitute$/i', $holiday);
 
         if ($this->isIgnoredYear($holiday)) {
             return false;
@@ -240,21 +279,7 @@ class HolidayCalculator
             }
         }
 
-        if ($condition && ($action = $this->getConditionalModifier(explode(' and ', $condition), $dateTime))) {
-            $dateTime = $dateTime->modify($action);
-        }
-
-        while ($substitute && ($dateTime->format('N') > 5 || isset($this->holidaysList[$dateTime->format('d/m')]))) {
-            $dateTime = $dateTime->modify('+1 day');
-        }
-
-        if ($after) {
-            $dateTime = $dateTime->modify($after);
-        }
-
-        if ($before) {
-            $dateTime = $dateTime->modify("previous $before");
-        }
+        $dateTime = $this->handleModifiers($dateTime, $condition, $substitute, $after, $before);
 
         return $dateTime->format('d/m');
     }
