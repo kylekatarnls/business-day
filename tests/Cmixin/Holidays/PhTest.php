@@ -22,8 +22,11 @@ class PhTest extends TestCase
         $carbon::resetHolidays();
         $carbon::setHolidaysRegion('ph-national');
 
-        self::assertFalse($carbon::parse('2019-08-31')->isHoliday());
-        self::assertTrue($carbon::parse('2019-09-01')->isHoliday());
-        self::assertFalse($carbon::parse('2019-09-02')->isHoliday());
+        self::assertFalse($carbon::parse('2019-06-05')->isHoliday());
+        self::assertTrue($carbon::parse('2019-06-06')->isHoliday());
+        self::assertFalse($carbon::parse('2019-06-07')->isHoliday());
+        self::assertFalse($carbon::parse('2019-08-11')->isHoliday());
+        self::assertTrue($carbon::parse('2019-08-12')->isHoliday());
+        self::assertFalse($carbon::parse('2019-08-13')->isHoliday());
     }
 }
