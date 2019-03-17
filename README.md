@@ -86,24 +86,24 @@ or a closure that will calculate the date for the given year.
 Expressions support any format the [PHP `DateTime` constructor
 supports](http://php.net/manual/en/datetime.formats.php) such as:
 
-- `second Wednesday of July`
-- `03-01 - 3 days`
+  - `second Wednesday of July`
+  - `03-01 - 3 days`
 
 And we add a lot of syntaxical sugar:
 
-- `= easter 3` (Easter + 3 days)
-- `= Friday before 01-01` (before/after)
-- `= 01-01 if Saturday then next Monday and if Sunday,Monday then next Tuesday` (multiple conditions)
-- `= 01-01 if weekend then next Monday` (weekend = Saturday or Sunday)
-- `= 01-01 substitute` (substitute = shift the day to the next day that is not Saturday, Sunday or an other holiday,
-it means if you have both `01-01 substitute` and `01-02 substitute`, you're sure to get the 2 holidays not during the
-weekend in the right order no matter the days it falls)
-- `= orthodox -2` (2 days before Orthodox Easter)
-- `= julian 12-25` (Julian calendar)
-- `= 02-05 on Monday` holiday only if this is a Monday.
-- `= 02-05 not on Monday` not an holiday if this is a Monday.
-- `= 02-05 on even years` even years only.
-- `= 02-05 on every 5 years since 1999` if year is 1999, 2004, 2009, 2014, etc.
+  - `= easter 3` (Easter + 3 days)
+  - `= Friday before 01-01` (before/after)
+  - `= 01-01 if Saturday then next Monday and if Sunday,Monday then next Tuesday` (multiple conditions)
+  - `= 01-01 if weekend then next Monday` (weekend = Saturday or Sunday)
+  - `= 01-01 substitute` (substitute = shift the day to the next day that is not Saturday, Sunday or an other holiday,
+  it means if you have both `01-01 substitute` and `01-02 substitute`, you're sure to get the 2 holidays not during the
+  weekend in the right order no matter the days it falls)
+  - `= orthodox -2` (2 days before Orthodox Easter)
+  - `= julian 12-25` (Julian calendar)
+  - `= 02-05 on Monday` holiday only if this is a Monday.
+  - `= 02-05 not on Monday` not an holiday if this is a Monday.
+  - `= 02-05 on even years` even years only.
+  - `= 02-05 on every 5 years since 1999` if year is 1999, 2004, 2009, 2014, etc.
 
 #### setHolidaysRegion / getHolidaysRegion
 
