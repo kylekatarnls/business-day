@@ -1,7 +1,7 @@
 <?php
 
 return array(
-    '01-01-and-if-sunday-then-next-tuesday' => '= 01-01 and if sunday then next tuesday',
+    '01-01-and-if-sunday-then-next-tuesday' => '= 01-01 if Sunday then next Tuesday',
     '01-02-and-if-sunday-then-next-monday'  => '= 01-02 substitute',
     '03-14-and-if-sunday-then-next-monday'  => '= 03-14 substitute',
     '03-22-and-if-sunday-then-next-monday'  => '= 03-22 substitute',

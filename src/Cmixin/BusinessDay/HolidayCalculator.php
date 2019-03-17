@@ -43,18 +43,18 @@ class HolidayCalculator
      * @var array
      */
     protected $hijriMonths = array(
-        'Muharram',
-        'Safar',
-        'Rabi al-awwal',
-        'Rabi al-thani',
-        'Jumada al-awwal',
-        'Jumada al-thani',
-        'Rajab',
-        'Shaban',
-        'Ramadan',
-        'Shawwal',
-        'Dhu al-Qidah',
-        'Dhu al-Hijjah',
+        'muharram',
+        'safar',
+        'rabi al-awwal',
+        'rabi al-thani',
+        'jumada al-awwal',
+        'jumada al-thani',
+        'rajab',
+        'shaban',
+        'ramadan',
+        'shawwal',
+        'dhu al-qidah',
+        'dhu al-hijjah',
     );
 
     /**
@@ -63,19 +63,19 @@ class HolidayCalculator
     protected $hijriRegex;
 
     protected $jewishMonths = array(
-        'Tishrei',
-        'Cheshvan',
-        'Kislev',
-        'Tevet',
-        'Shvat',
-        'Adar',
-        'Adar II',
-        'Nisan',
-        'Iyyar',
-        'Sivan',
-        'Tamuz',
-        'Av',
-        'Elul',
+        'tishrei',
+        'cheshvan',
+        'kislev',
+        'tevet',
+        'shvat',
+        'adar',
+        'adar ii',
+        'nisan',
+        'iyyar',
+        'sivan',
+        'tamuz',
+        'av',
+        'elul',
     );
 
     /**
@@ -189,16 +189,8 @@ class HolidayCalculator
 
     protected function getHijriHolidays($hijriDay, $hijriMonthString, $key = null)
     {
-        $hijriMonth = 1;
+        $hijriMonth = array_search(strtolower($hijriMonthString), $this->hijriMonths) + 1;
         $hijriDay = (int) $hijriDay;
-
-        foreach ($this->hijriMonths as $index => $name) {
-            if (strtolower($hijriMonthString) === strtolower($name)) {
-                $hijriMonth = $index + 1;
-
-                break;
-            }
-        }
 
         $list = array();
         $year = -99999;
@@ -241,16 +233,8 @@ class HolidayCalculator
 
     protected function getJewishHolidays($jewishDay, $jewishMonthString, $key = null)
     {
-        $jewishMonth = 1;
+        $jewishMonth = array_search(strtolower($jewishMonthString), $this->jewishMonths) + 1;
         $jewishDay = (int) $jewishDay;
-
-        foreach ($this->jewishMonths as $index => $name) {
-            if (strtolower($jewishMonthString) === strtolower($name)) {
-                $jewishMonth = $index + 1;
-
-                break;
-            }
-        }
 
         $list = array();
         $year = -99999;
@@ -414,6 +398,34 @@ class HolidayCalculator
         return $dateTime;
     }
 
+    protected function interpolateEquinox($match)
+    {
+        $month = strtolower($match[1]);
+        $deltas = array(
+            'march'     => 0,
+            'spring'    => 0,
+            'june'      => 8012898,
+            'summer'    => 8012898,
+            'september' => 16105476,
+            'autumn'    => 16105476,
+            'december'  => 23868894,
+            'winter'    => 23868894,
+        );
+        $delta = isset($deltas[$month]) ? $deltas[$month] : 0;
+        $sign = isset($match[2]) && $match[2] === '-' ? -1 : 1;
+        $hours = isset($match[3]) ? $match[3] * 1 : 0;
+        $minutes = isset($match[4]) ? $match[4] * 1 : 0;
+
+        return date(
+            'm-d',
+            round(
+                gmmktime(0, 0, 0, 1, 1, 2000) +
+                (79.3125 + ($this->year - 2000) * 365.2425) * 86400 + $delta +
+                ($hours * 60 + $minutes) * 60 * $sign
+            )
+        );
+    }
+
     protected function calculateDynamicHoliday($holiday, &$dateTime = null, $key = null)
     {
         $outputClass = $this->outputClass;
@@ -438,10 +450,12 @@ class HolidayCalculator
         }
 
         $holiday = preg_replace_callback('/julian\s+(\d+)-(\d+)/i', array($this, 'convertJulianDate'), trim($holiday));
-        // Algorithm for Vietnamese not found, but Chinese calendar is the same 97% of the time.
+        // Algorithm for Vietnamese and Korean not found, but Chinese calendar is the same 97% of the time.
         // If you can implement it, feel free to open a pull-request
-        $holiday = preg_replace_callback('/(vietnamese|chinese)\s+(\d+-L?\d+)/i', array($this, 'convertChineseDate'), trim($holiday));
+        $holiday = preg_replace_callback('/(chinese|vietnamese|korean)\s+(\d+-L?\d+)/i', array($this, 'convertChineseDate'), trim($holiday));
+        $holiday = preg_replace_callback('/(March|June|September|December)\s+(?:equinox|solstice)(?:\s+of\s+([+-]?)(\d+)(?::(\d+))?)?/i', array($this, 'interpolateEquinox'), trim($holiday));
         $holiday = preg_replace_callback('/(easter|orthodox)/i', array($this, 'interpolateFixedDate'), $holiday);
+
         $holiday = preg_replace('/\D-\d+\s*$/', '$0 days', $holiday);
         $holiday = preg_replace_callback('/^(\d{1,2})-(\d{1,2})((\s[\s\S]*)?)$/', array($this, 'padDate'), $holiday);
         $holiday = str_replace('$year', $year, $holiday);

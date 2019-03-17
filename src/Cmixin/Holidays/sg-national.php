@@ -2,14 +2,14 @@
 
 return array(
     'new-year'                                     => '01-01',
-    'substitutes-01-01-if-sunday-then-next-monday' => '= substitutes 01-01 if sunday then next monday',
+    'substitutes-01-01-if-sunday-then-next-monday' => '= 01-01 if sunday then next monday',
     'easter-2'                                     => '= easter -2',
     '05-01'                                        => '05-01',
-    'substitutes-05-01-if-sunday-then-next-monday' => '= substitutes 05-01 if sunday then next monday',
+    'substitutes-05-01-if-sunday-then-next-monday' => '= 05-01 if sunday then next monday',
     '08-09'                                        => '08-09',
-    'substitutes-08-09-if-sunday-then-next-monday' => '= substitutes 08-09 if sunday then next monday',
+    'substitutes-08-09-if-sunday-then-next-monday' => '= 08-09 if sunday then next monday',
     'christmas'                                    => '12-25',
-    'substitutes-12-25-if-sunday-then-next-monday' => '= substitutes 12-25 if sunday then next monday',
+    'substitutes-12-25-if-sunday-then-next-monday' => '= 12-25 if sunday then next monday',
     '2001-05-07'                                   => '= 2001-05-07',
     '2002-05-27'                                   => '= 2002-05-27',
     '2003-05-15'                                   => '= 2003-05-15',

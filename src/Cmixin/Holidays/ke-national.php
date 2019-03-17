@@ -10,7 +10,7 @@ return array(
     '10-10-and-if-sunday-then-next-monday'  => '= 10-10 substitute',
     '10-20-and-if-sunday-then-next-monday'  => '= 10-20 substitute',
     '12-12-and-if-sunday-then-next-monday'  => '= 12-12 substitute',
-    '12-25-and-if-sunday-then-next-tuesday' => '= 12-25 and if sunday then next tuesday',
+    '12-25-and-if-sunday-then-next-tuesday' => '= 12-25 if sunday then next tuesday',
     '12-26-and-if-sunday-then-next-monday'  => '= 12-26 substitute',
     '1-shawwal'                             => '= 1 Shawwal',
     '10-dhu-al-hijjah'                      => '= 10 Dhu al-Hijjah',

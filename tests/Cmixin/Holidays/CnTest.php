@@ -26,8 +26,15 @@ class CnTest extends TestCase
         self::assertTrue($carbon::parse('2019-02-04')->isHoliday());
         self::assertTrue($carbon::parse('2019-02-05')->isHoliday());
         self::assertFalse($carbon::parse('2019-02-06')->isHoliday());
+
         self::assertFalse($carbon::parse('2019-06-06')->isHoliday());
         self::assertTrue($carbon::parse('2019-06-07')->isHoliday());
         self::assertFalse($carbon::parse('2019-06-08')->isHoliday());
+
+        self::assertFalse($carbon::parse('2020-01-23')->isHoliday());
+        self::assertTrue($carbon::parse('2020-01-24')->isHoliday());
+        self::assertTrue($carbon::parse('2020-01-25')->isHoliday());
+        self::assertTrue($carbon::parse('2020-01-25')->isHoliday());
+        self::assertFalse($carbon::parse('2020-01-26')->isHoliday());
     }
 }

@@ -7,7 +7,7 @@ return array(
     '07-14-and-if-sunday-then-next-monday'  => '= 07-14 substitute',
     '01-01-and-if-sunday-then-next-tuesday' => '= 01-01 if sunday then next tuesday',
     '01-02-and-if-sunday-then-next-monday'  => '= 01-02 substitute',
-    '05-01-and-if-sunday-then-next-tuesday' => '= 05-01 and if sunday then next tuesday',
+    '05-01-and-if-sunday-then-next-tuesday' => '= 05-01 if sunday then next tuesday',
     '05-02-and-if-sunday-then-next-monday'  => '= 05-02 substitute',
     'orthodox-2'                            => '= orthodox -2',
     'orthodox'                              => '= orthodox',

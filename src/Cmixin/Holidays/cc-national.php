@@ -9,7 +9,7 @@ return array(
     'easter-1'                                                                     => '= easter 1',
     '04-06'                                                                        => '04-06',
     '04-25'                                                                        => '04-25',
-    '12-25-and-if-sunday-then-next-tuesday'                                        => '= 12-25 and if sunday then next tuesday',
+    '12-25-and-if-sunday-then-next-tuesday'                                        => '= 12-25 if sunday then next tuesday',
     '12-26-and-if-sunday-then-next-monday'                                         => '= 12-26 substitute',
     '1-muharram-and-if-sunday-then-next-monday'                                    => '= 1 Muharram substitute',
     '1-shawwal-and-if-sunday-then-next-monday'                                     => '= 1 Shawwal substitute',
