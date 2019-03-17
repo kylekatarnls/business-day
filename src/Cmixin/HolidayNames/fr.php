@@ -167,4 +167,12 @@ return array(
     'mothers-day'                                         => 'Fête des Mères',
     'national-holiday'                                    => 'Fête nationale',
     'substitutes'                                         => 'jour substitut',
+    '2nd-monday-after-10-01'                              => 'Action de grâce',
+    '3rd-monday-after-02-01'                              => 'Fête de la famille',
+    '2nd-monday-after-02-01'                              => 'Fête de la famille',
+    '3rd-friday-after-08-01'                              => 'Défilé de la Coupe d\'or',
+    '3rd-monday-after-08-01'                              => 'Jour de la Découverte',
+    '1st-sunday-in-june'                                  => 'Fête des pères',
+    'monday-after-3-sunday-in-september'                  => 'Lundi du Jeûne Fédéral',
+    '1st-friday-in-august'                                => 'Journée nationale de récolte',
 );

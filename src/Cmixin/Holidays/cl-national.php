@@ -12,7 +12,7 @@ return array(
     '09-18'     => '09-18',
     '09-19'     => '09-19',
     '10-12'     => '10-12',
-    '10-31'     => '= 10-31 if Wednesday then and next Friday if Tuesday then previous Friday',
+    '10-31'     => '= 10-31 if Wednesday then and next Friday and if Tuesday then previous Friday',
     '11-01'     => '11-01',
     '12-08'     => '12-08',
     'christmas' => '12-25',

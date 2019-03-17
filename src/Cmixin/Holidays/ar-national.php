@@ -18,7 +18,7 @@ return array(
     'substitutes-06-20'      => '= 06-20 if Tuesday then previous Monday and if Thursday then next Friday',
     '07-09'                  => '07-09',
     '3rd-monday-of-august'   => '= third Monday of August',
-    '10-12'                  => '= 10-12 if Tuesday,Wednesday then previous Monday if Thursday,Friday,Saturday,Sunday then next Monday',
+    '10-12'                  => '= 10-12 if Tuesday,Wednesday then previous Monday and if Thursday,Friday,Saturday,Sunday then next Monday',
     '4th-monday-of-november' => '= fourth Monday of November',
     '12-08'                  => '12-08',
     'substitutes-12-08'      => '= 12-08 if Tuesday then previous Monday and if Thursday then next Friday',

@@ -4,7 +4,7 @@ return array(
     'new-year'           => '01-01',
     '01-25'              => '01-25',
     'easter-48'          => '= easter -48',
-    '03-18-and'          => '= 03-18 if Saturday then previous Friday if Sunday then next Monday',
+    '03-18-and'          => '= 03-18 if Saturday then previous Friday and if Sunday then next Monday',
     'easter-2'           => '= easter -2',
     'easter'             => '= easter',
     'easter-1'           => '= easter 1',

@@ -25,20 +25,53 @@ First load the mixin in some global bootstrap place of your app:
 
 use Cmixin\BusinessDay;
 
-BusinessDay::enable('Carbon\Carbon');
+// You can select one of our official list
+$baseList = 'us-national'; // or region such as 'us-il'
+
+// You can add/remove days (optional):
+$additionalHolidays = array(
+    'independence-day' => null, // Even if it's holiday, you can force it to null to make your business open
+    'boss-birthday'    => '09-26', // Close the office on September 26th
+    'julian-christmas' => '= julian 12-25', // We support many calendars such as the Julian calendar
+    // We support expressions
+    'special-easter'   => '= Tuesday before easter',
+    'last-monday'      => '= last Monday of October',
+    'conditional'      => '= 02-25 if Tuesday then next Friday', // We support conditions
+    // And we support closures:
+    'very-special'     => function ($year) {
+        if ($year === 2020) {
+            return '01-15';
+        }
+
+        return '02-15';
+    },
+);
+
+BusinessDay::enable('Carbon\Carbon', $baseList, $additionalHolidays);
 // Or if you use Laravel:
-// BusinessDay::enable('Illuminate\Support\Carbon');
+// BusinessDay::enable('Illuminate\Support\Carbon', $baseList, $additionalHolidays);
 ```
 
 Business days methods are now available on any Carbon instance
 used anywhere later.
+
+You can also just enable methods on Carbon then set region/holidays later:
+```php
+<?php
+
+use Cmixin\BusinessDay;
+
+BusinessDay::enable('Carbon\Carbon');
+// Or if you use Laravel:
+// BusinessDay::enable('Illuminate\Support\Carbon');
+```
 
 ### Configure holidays
 
 You can set different holidays lists for different regions
 (to handle different countries, enterprises, etc.)
 
-We provide 330 regional holidays lists of 138 countries that work
+We provide 356 regional holidays lists of 143 countries that work
 out of the box in [src/Cmixin/Holidays](https://github.com/kylekatarnls/business-day/tree/master/src/Cmixin/Holidays).
 
 And you can easily customize them and add your own lists.
@@ -46,44 +79,40 @@ And you can easily customize them and add your own lists.
 A holidays list file is a PHP file that return an array,
 each item of the array represent a holiday of the year.
 
-It can be a fixed date such as `'25/12'` for Christmas or
-a closure that will calculate the date for the given year.
+It can be a fixed date such as `'12-25'` for Christmas,
+a expression starting with `=` like `'third Monday of January'`
+or a closure that will calculate the date for the given year.
 
-**Warning**: the format is **DD/MM**, day slash month,
-both on 2 digits, `'4/05'`, `'04/5'` or `'4/5'` will
-just be ignored. Only `'04/05'` will work and this
-is the 4th of May (*May the Force be with you*), not
-the 5th of April.
+Expressions support any format the [PHP `DateTime` constructor
+supports](http://php.net/manual/en/datetime.formats.php) such as:
 
-For example the Martin Luther King Jr. Day (which fall
-at the third monday of January) can be calculated this way:
-```php
-function ($year) {
-    $date = new DateTime("third monday of january $year");
+  - `second Wednesday of July`
+  - `03-01 - 3 days`
 
-    return $date->format('d/m');
-}
-```
-The same goes for closures, they strictly must return
-strings with **DD/MM** format.
+And we add a lot of syntaxical sugar:
 
-Other example for Easter monday:
-```php
-function ($year) {
-    $days = easter_days($year) + 1;
-    $date = new DateTime("$year-03-21 +$days days");
+  - `= easter 3` (Easter + 3 days)
+  - `= Friday before 01-01` (before/after)
+  - `= 01-01 if Saturday then next Monday and if Sunday,Monday then next Tuesday` (multiple conditions)
+  - `= 01-01 if weekend then next Monday` (weekend = Saturday or Sunday)
+  - `= 01-01 substitute` (substitute = shift the day to the next day that is not Saturday, Sunday or an other holiday,
+  it means if you have both `01-01 substitute` and `01-02 substitute`, you're sure to get the 2 holidays not during the
+  weekend in the right order no matter the days it falls)
+  - `= orthodox -2` (2 days before Orthodox Easter)
+  - `= julian 12-25` (Julian calendar)
+  - `= 02-05 on Monday` holiday only if this is a Monday.
+  - `= 02-05 not on Monday` not an holiday if this is a Monday.
+  - `= 02-05 on even years` even years only.
+  - `= 02-05 on every 5 years since 1999` if year is 1999, 2004, 2009, 2014, etc.
 
-    return $date->format('d/m');
-}
-```
-
-#### setHolidaysRegion
+#### setHolidaysRegion / getHolidaysRegion
 
 To select the set of holidays of a region, use:
 ```php
 Carbon::parse('2000-12-25 00:00:00')->isHoliday(); // false
 Carbon::setHolidaysRegion('us');
 Carbon::parse('2000-12-25 00:00:00')->isHoliday(); // true
+Carbon::getHolidaysRegion(); // 'us-national' (national is the default region of a country code)
 ```
 
 This will select our national preset for USA (only
@@ -331,7 +360,7 @@ echo Carbon::addBusinessDays(6)->format('Y-m-d'); // returns the date 6 business
 
 Alias addBusinessDays.
 
-#### subBusinessDays
+#### subBusinessDays or subtractBusinessDays
 
 Sub days to the date (Carbon instance) skipping holidays and week-ends.
 ```php
@@ -341,7 +370,7 @@ echo Carbon::parse('2018-01-15')->subBusinessDays()->format('Y-m-d'); // 2018-01
 echo Carbon::subBusinessDays(5)->format('Y-m-d'); // returns the date 5 business days date before today (midnight)
 ```
 
-#### subBusinessDay
+#### subBusinessDay or subtractBusinessDay
 
 Alias subBusinessDays.
 
@@ -452,6 +481,55 @@ Remove any previous settings for observed days in the current zone, then make ev
 // Observe only Easter
 Carbon::unobserveAllHolidays();
 Carbon::observeHoliday('easter');
+```
+
+#### diffInBusinessDays
+
+Get the number of open days between 2 dates.
+ 
+```php
+$openDays = Carbon::diffInBusinessDays('December 25'); // If only one date, [now] is used as the second date
+
+echo "You have to work $openDays days until Christmas.\n";
+
+$days = Carbon::parse('2019-06-10')->diffInBusinessDays(Carbon::parse('2019-06-18')->endOfDay());
+
+echo "If you ask to leave from 2019-06-10 to 2019-06-18, it will cost to you $days days of paid vacation.\n";
+// Note the ->endOfDay() to include the last day of the range
+```
+
+#### getBusinessDaysInMonth
+
+Get the number of open days in the current/given month.
+
+```php
+echo Carbon::getBusinessDaysInMonth(); // Open days count in the current month
+echo Carbon::getBusinessDaysInMonth('2019-06'); // Open days count in June 2019
+echo Carbon::parse('2019-06-10')->getBusinessDaysInMonth(); // Can be called from an instance
+```
+
+#### getMonthBusinessDays
+
+Get an array of Carbon objects for each open day in the current/given month.
+
+```php
+print_r(Carbon::getMonthBusinessDays()); // All open days in the current month
+print_r(Carbon::getMonthBusinessDays('2019-06')); // Open days in June 2019
+print_r(Carbon::parse('2019-06-10')->getMonthBusinessDays()); // Can be called from an instance
+```
+
+### Note about timezones
+
+When you set an holidays region, it does not change the timezone, so if January 1st is an holiday,
+`->isHoliday()` returns `true` from `Carbon::parse('2010-01-01 00:00:00.000000)` to
+`Carbon::parse('2010-01-01 23:59:59.999999)` no matter the timezone you set for those `Carbon`
+instance.
+
+If you want to know if it's holiday or business day in somewhere else in the world, you have
+to convert it:
+```php
+Carbon::parse('2010-01-01 02:30', 'Europe/Paris')->setTimezone('America/Toronto')->isHoliday() // false
+Carbon::parse('2010-01-01 12:30', 'Europe/Paris')->setTimezone('America/Toronto')->isHoliday() // true
 ```
 
 ## Contribute

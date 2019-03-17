@@ -73,6 +73,20 @@ class HolidaysList extends MixinBase
     }
 
     /**
+     * Get the current holidays region.
+     *
+     * @return \Closure
+     */
+    public function getHolidaysRegion()
+    {
+        $mixin = $this;
+
+        return function () use ($mixin) {
+            return $mixin->holidaysRegion;
+        };
+    }
+
+    /**
      * Get the holidays for the current region selected.
      *
      * @return \Closure
@@ -165,7 +179,7 @@ class HolidaysList extends MixinBase
             $holidays = $carbonClass::getHolidays();
             $outputClass = $type ? (is_string($type) && $type !== 'string' ? $type : 'DateTime') : $carbonClass;
             $holidaysList = array();
-            $calculator = new HolidayCalculator($year, $outputClass, $type, $holidays, $holidaysList);
+            $calculator = new HolidayCalculator((int) $year, $outputClass, $type, $holidays, $holidaysList);
 
             return function () use ($calculator) {
                 return $calculator->next();

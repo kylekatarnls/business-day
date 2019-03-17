@@ -36,4 +36,5 @@ return array(
     'constitution-day'              => 'Ziua Constituției',
     'independence-day'              => 'Ziua Independentei',
     'mothers-day'                   => 'Ziua Mamei',
+    '1st-saturday-in-october-p2d'   => 'Ziua vinului',
 );

@@ -22,11 +22,11 @@ class BgTest extends TestCase
         $carbon::resetHolidays();
         $carbon::setHolidaysRegion('bg-national');
 
-        self::assertFalse($carbon::parse('2019-04-18')->isHoliday());
-        self::assertTrue($carbon::parse('2019-04-19')->isHoliday());
-        self::assertTrue($carbon::parse('2019-04-20')->isHoliday());
-        self::assertTrue($carbon::parse('2019-04-21')->isHoliday());
-        self::assertTrue($carbon::parse('2019-04-22')->isHoliday());
-        self::assertFalse($carbon::parse('2019-04-23')->isHoliday());
+        self::assertFalse($carbon::parse('2019-04-25')->isHoliday());
+        self::assertTrue($carbon::parse('2019-04-26')->isHoliday());
+        self::assertTrue($carbon::parse('2019-04-27')->isHoliday());
+        self::assertTrue($carbon::parse('2019-04-28')->isHoliday());
+        self::assertTrue($carbon::parse('2019-04-29')->isHoliday());
+        self::assertFalse($carbon::parse('2019-04-30')->isHoliday());
     }
 }

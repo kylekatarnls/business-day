@@ -38,4 +38,7 @@ return array(
     'easter-49'                      => 'Pingst',
     'independence-day'               => 'Självständighetsdagen',
     'mothers-day'                    => 'Mors dag',
+    '3rd-friday-after-06-01-12:00'   => 'Midsommarafton',
+    '3rd-saturday-after-06-01'       => 'Midsommardagen',
+    'sunday-in-march'                => 'Vasaloppet',
 );

@@ -36,4 +36,5 @@ return array(
     'fathers-day'                                                     => 'isadepäev',
     'independence-day'                                                => 'iseseisvuspäev',
     'mothers-day'                                                     => 'emadepäev',
+    '2nd-sunday-in-september'                                         => 'vanavanemate päev',
 );

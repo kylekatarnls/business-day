@@ -34,6 +34,55 @@ class HolidayCalculator
      */
     protected $holidaysList;
 
+    /**
+     * @var array
+     */
+    protected $nextHolidays = array();
+
+    /**
+     * @var array
+     */
+    protected $hijriMonths = array(
+        'muharram',
+        'safar',
+        'rabi al-awwal',
+        'rabi al-thani',
+        'jumada al-awwal',
+        'jumada al-thani',
+        'rajab',
+        'shaban',
+        'ramadan',
+        'shawwal',
+        'dhu al-qidah',
+        'dhu al-hijjah',
+    );
+
+    /**
+     * @var string
+     */
+    protected $hijriRegex;
+
+    protected $jewishMonths = array(
+        'tishrei',
+        'cheshvan',
+        'kislev',
+        'tevet',
+        'shvat',
+        'adar',
+        'adar ii',
+        'nisan',
+        'iyyar',
+        'sivan',
+        'tamuz',
+        'av',
+        'elul',
+    );
+
+    /**
+     * @var string
+     */
+    protected $jewishRegex;
+
     public function __construct($year, $outputClass, $type, &$holidays, &$holidaysList)
     {
         $this->year = $year;
@@ -41,10 +90,16 @@ class HolidayCalculator
         $this->type = $type;
         $this->holidays = &$holidays;
         $this->holidaysList = &$holidaysList;
+        $this->hijriRegex = implode('|', $this->hijriMonths);
+        $this->jewishRegex = implode('|', $this->jewishMonths);
     }
 
     public function next()
     {
+        if ($holiday = array_shift($this->nextHolidays)) {
+            return $this->getHolidayDate($holiday[0], $holiday[1]);
+        }
+
         $holiday = false;
 
         while ($holiday === false) {
@@ -75,39 +130,160 @@ class HolidayCalculator
                 return "$year-03-21 $days days ";
 
             case 'orthodox':
-                return date('Y-m-d ', $this->getOrthodoxEasterTimestamp());
+                return $this->getOrthodoxEasterDate('Y-m-d ');
         }
     }
 
     public function padDate($match)
     {
-        return $this->year.'-'.
-            str_pad($match[1], 2, '0', STR_PAD_LEFT).'-'.
-            str_pad($match[2], 2, '0', STR_PAD_LEFT).
-            $match[3];
+        return $this->year.'-'.$this->twoDigits($match[1]).'-'.$this->twoDigits($match[2]).$match[3];
     }
 
-    protected function getOrthodoxEasterTimestamp($julian = false)
+    public function getHijriDate($year, $month, $day)
     {
-        $year = date('Y', mktime(0, 0, 0, 1, 1, $this->year));
-        $century = floor($year / 100);
-        $nineteenth = $year % 19;
-        $centuryOffset = $julian ? 0 : floor((3 * $century + 3) / 4);
-        $shift = $julian ? 0 : $centuryOffset - floor((8 * $century + 13) / 25);
-        $day = (19 * $nineteenth + 15 + $shift) % 30;
-        $offset = 21 + $day - floor($day / 29) + (floor($day / 28) - floor($day / 29)) * floor($nineteenth / 11);
-        $day = $offset + 7 - (($offset + (($year + floor($year / 4) + 2 - $centuryOffset) % 7) - 7) % 7);
-        $easter = mktime(0, 0, 0, 3, $day, $year);
+        static $exceptions = array(
+            1440 => array(
+                10 => array(
+                    1 => array(2019, 6, 6),
+                ),
+            ),
+        );
 
-        if ($julian) {
-            return strtotime(jdtogregorian(juliantojd(
-                date('m', $easter),
-                date('d', $easter),
-                date('Y', $easter)
-            )));
+        if (isset($exceptions[$year][$month][$day])) {
+            return $exceptions[$year][$month][$day];
         }
 
-        return $easter;
+        $date = array_map('intval', explode('/', jdtogregorian(
+            floor((11 * $year + 3) / 30) + 354 * $year +
+            30 * $month - floor(($month - 1) / 2) + $day + 1948440 - 385
+        )));
+
+        return array($date[2], $date[0], $date[1]);
+    }
+
+    public function convertJulianDate($match)
+    {
+        $year = $this->year;
+
+        do {
+            $time = $this->getJulianTimestamp($year, $match[1], $match[2]);
+            $delta = date('Y', $time) - $this->year;
+            $year += $delta > 0 ? -1 : 1;
+        } while ($delta);
+
+        return date('m-d', $time);
+    }
+
+    public function convertChineseDate($match)
+    {
+        $date = new \Cmixin\BusinessDay\LunarCalendar($this->year.'-'.$match[2]);
+        $date = $date->toGregorian();
+
+        return $this->twoDigits($date[1]).'-'.$this->twoDigits($date[2]);
+    }
+
+    protected function twoDigits($number)
+    {
+        return str_pad($number, 2, '0', STR_PAD_LEFT);
+    }
+
+    protected function getHijriHolidays($hijriDay, $hijriMonthString, $key = null)
+    {
+        $hijriMonth = array_search(strtolower($hijriMonthString), $this->hijriMonths) + 1;
+        $hijriDay = (int) $hijriDay;
+
+        $list = array();
+        $year = -99999;
+
+        for ($i = 0; $year <= $this->year; $i++) {
+            list($year, $month, $day) = $this->getHijriDate($this->year - 579 + $i, $hijriMonth, $hijriDay);
+
+            if ($year === $this->year) {
+                $list[] = "$month-$day";
+            }
+        }
+
+        $year = 99999;
+
+        for ($i = 1; $year >= $this->year; $i++) {
+            list($year, $month, $day) = $this->getHijriDate($this->year - 579 - $i, $hijriMonth, $hijriDay);
+
+            if ($year === $this->year) {
+                array_unshift($list, "$month-$day"); // @codeCoverageIgnore
+            }
+        }
+
+        $result = array_shift($list) ?: false;
+
+        foreach ($list as $index => &$value) {
+            $value = array(($key ?: 'unknown').'-oc-'.($index + 2), $value);
+        }
+
+        $this->nextHolidays = $list;
+
+        return $result;
+    }
+
+    protected function getJewishDate($year, $month, $day)
+    {
+        $date = array_map('intval', explode('/', jdtogregorian(jewishtojd($month, $day, $year))));
+
+        return array($date[2], $date[0], $date[1]);
+    }
+
+    protected function getJewishHolidays($jewishDay, $jewishMonthString, $key = null)
+    {
+        $jewishMonth = array_search(strtolower($jewishMonthString), $this->jewishMonths) + 1;
+        $jewishDay = (int) $jewishDay;
+
+        $list = array();
+        $year = -99999;
+
+        for ($i = 0; $year <= $this->year; $i++) {
+            list($year, $month, $day) = $this->getJewishDate($this->year + 3761 + $i, $jewishMonth, $jewishDay);
+
+            if ($year === $this->year) {
+                $list[] = "$month-$day";
+            }
+        }
+
+        $year = 99999;
+
+        for ($i = 1; $year >= $this->year; $i++) {
+            list($year, $month, $day) = $this->getJewishDate($this->year + 3761 - $i, $jewishMonth, $jewishDay);
+
+            if ($year === $this->year) {
+                array_unshift($list, "$month-$day");
+            }
+        }
+
+        $result = array_shift($list) ?: false;
+
+        foreach ($list as $index => &$value) {
+            $value = array(($key ?: 'unknown').'-oc-'.($index + 2), $value);
+        }
+
+        $this->nextHolidays = $list;
+
+        return $result;
+    }
+
+    protected function getJulianTimestamp($year, $month, $day)
+    {
+        return strtotime(jdtogregorian(juliantojd($month, $day, $year)));
+    }
+
+    protected function getOrthodoxEasterDate($format)
+    {
+        $year = $this->year;
+        $offset = (19 * ($year % 19) + 15) % 30;
+        $weekDay = (2 * ($year % 4) + 4 * ($year % 7) - $offset + 34) % 7;
+        $month = floor(($offset + $weekDay + 114) / 31);
+        $day = ($offset + $weekDay + 114) % 31 + 1;
+
+        $easter = mktime(0, 0, 0, $month, $day + 13, $year);
+
+        return date($format, $easter);
     }
 
     /**
@@ -159,37 +335,105 @@ class HolidayCalculator
         return array($modifiers['before'], $modifiers['after'], $holiday);
     }
 
-    protected function isIgnoredYear(&$holiday)
+    protected function consumeHolidayString($pattern, &$holiday, &$match = null)
     {
-        if (preg_match('/ of even years?$/i', $holiday)) {
-            $holiday = trim(substr($holiday, 0, -14));
-
-            if ($this->year & 1) {
-                return true;
-            }
-        }
-
-        if (preg_match('/every (\d+) years since (\d{4})$/', $holiday, $match)) {
+        if (preg_match($pattern, $holiday, $match)) {
             $holiday = trim(substr($holiday, 0, -strlen($match[0])));
 
-            if (($this->year - $match[2]) % $match[1]) {
-                return true;
-            }
+            return true;
         }
 
         return false;
     }
 
-    protected function calculateDynamicHoliday($holiday)
+    protected function isIgnoredYear(&$holiday)
+    {
+        $since = 0;
+        $every = 0;
+
+        if ($this->consumeHolidayString('/ of (even|odd|leap|non-leap) years?$/i', $holiday, $match)) {
+            if (substr($match[1], -4) === 'leap') {
+                return (!($this->year % 4) && ($this->year % 100 || !($this->year % 400))) !== ($match[1] === 'leap');
+            }
+
+            $since = $match[1] === 'even' ? 0 : 1;
+            $every = 2;
+        }
+
+        if ($this->consumeHolidayString('/ every (\d+) years since (\d{4})$/', $holiday, $match)) {
+            $since = $match[2];
+            $every = $match[1];
+        }
+
+        return $every && ($delta = $this->year - $since) >= 0 && $delta % $every;
+    }
+
+    /**
+     * @param DateTime $dateTime
+     * @param string   $condition
+     * @param bool     $substitute
+     * @param string   $after
+     * @param string   $before
+     *
+     * @return DateTime
+     */
+    protected function handleModifiers($dateTime, $condition, $substitute, $after, $before)
+    {
+        if ($condition && ($action = $this->getConditionalModifier(explode(' and ', $condition), $dateTime))) {
+            $dateTime = $dateTime->modify($action);
+        }
+
+        if ($after) {
+            $dateTime = $dateTime->modify($after);
+        }
+
+        if ($before) {
+            $dateTime = $dateTime->modify("previous $before");
+        }
+
+        while ($substitute && ($dateTime->format('N') > 5 || isset($this->holidaysList[$dateTime->format('d/m')]))) {
+            $dateTime = $dateTime->modify('+1 day');
+        }
+
+        return $dateTime;
+    }
+
+    protected function interpolateEquinox($match)
+    {
+        $month = strtolower($match[1]);
+        $deltas = array(
+            'march'     => 0,
+            'spring'    => 0,
+            'june'      => 8012898,
+            'summer'    => 8012898,
+            'september' => 16105476,
+            'autumn'    => 16105476,
+            'december'  => 23868894,
+            'winter'    => 23868894,
+        );
+        $delta = isset($deltas[$month]) ? $deltas[$month] : 0;
+        $sign = isset($match[2]) && $match[2] === '-' ? -1 : 1;
+        $hours = isset($match[3]) ? $match[3] * 1 : 0;
+        $minutes = isset($match[4]) ? $match[4] * 1 : 0;
+
+        return date(
+            'm-d',
+            round(
+                gmmktime(0, 0, 0, 1, 1, 2000) +
+                (79.3125 + ($this->year - 2000) * 365.2425) * 86400 + $delta +
+                ($hours * 60 + $minutes) * 60 * $sign
+            )
+        );
+    }
+
+    protected function calculateDynamicHoliday($holiday, &$dateTime = null, $key = null)
     {
         $outputClass = $this->outputClass;
         $year = $this->year;
 
         $holiday = str_replace(' in ', ' of ', trim(substr($holiday, 1)));
 
-        if ($substitute = preg_match('/\ssubstitute$/i', $holiday)) {
-            $holiday = trim(substr($holiday, 0, -11));
-        }
+        $substitute = $this->consumeHolidayString('/\ssubstitute$/i', $holiday);
 
         if ($this->isIgnoredYear($holiday)) {
             return false;
@@ -197,7 +441,21 @@ class HolidayCalculator
 
         list($before, $after, $holiday) = $this->extractModifiers($holiday);
 
-        $holiday = preg_replace_callback('/(easter|orthodox)/i', array($this, 'interpolateFixedDate'), trim($holiday));
+        if (preg_match('/^\s*(\d+)\s+('.$this->hijriRegex.')\s*$/i', $holiday, $match)) {
+            return $this->getHijriHolidays($match[1], $match[2], $key);
+        }
+
+        if (preg_match('/^\s*(\d+)\s+('.$this->jewishRegex.')\s*$/i', $holiday, $match)) {
+            return $this->getJewishHolidays($match[1], $match[2], $key);
+        }
+
+        $holiday = preg_replace_callback('/julian\s+(\d+)-(\d+)/i', array($this, 'convertJulianDate'), trim($holiday));
+        // Algorithm for Vietnamese and Korean not found, but Chinese calendar is the same 97% of the time.
+        // If you can implement it, feel free to open a pull-request
+        $holiday = preg_replace_callback('/(chinese|vietnamese|korean)\s+(\d+-L?\d+)/i', array($this, 'convertChineseDate'), trim($holiday));
+        $holiday = preg_replace_callback('/(March|June|September|December)\s+(?:equinox|solstice)(?:\s+of\s+([+-]?)(\d+)(?::(\d+))?)?/i', array($this, 'interpolateEquinox'), trim($holiday));
+        $holiday = preg_replace_callback('/(easter|orthodox)/i', array($this, 'interpolateFixedDate'), $holiday);
+
         $holiday = preg_replace('/\D-\d+\s*$/', '$0 days', $holiday);
         $holiday = preg_replace_callback('/^(\d{1,2})-(\d{1,2})((\s[\s\S]*)?)$/', array($this, 'padDate'), $holiday);
         $holiday = str_replace('$year', $year, $holiday);
@@ -230,29 +488,15 @@ class HolidayCalculator
             }
         }
 
-        if ($condition && ($action = $this->getConditionalModifier(explode(' and ', $condition), $dateTime))) {
-            $dateTime = $dateTime->modify($action);
-        }
-
-        while ($substitute && ($dateTime->format('N') > 5 || isset($this->holidaysList[$dateTime->format('d/m')]))) {
-            $dateTime = $dateTime->modify('+1 day');
-        }
-
-        if ($after) {
-            $dateTime = $dateTime->modify($after);
-        }
-
-        if ($before) {
-            $dateTime = $dateTime->modify("previous $before");
-        }
+        $dateTime = $this->handleModifiers($dateTime, $condition, $substitute, $after, $before);
 
         return $dateTime->format('d/m');
     }
 
-    protected function parseHoliday($holiday)
+    protected function parseHoliday($holiday, &$dateTime = null, $key = null)
     {
         if (substr($holiday, 0, 1) === '=') {
-            $holiday = $this->calculateDynamicHoliday($holiday);
+            $holiday = $this->calculateDynamicHoliday($holiday, $dateTime, $key);
         }
 
         if ($holiday) {
@@ -263,6 +507,9 @@ class HolidayCalculator
 
             $this->holidaysList[$holiday] = true;
         }
+
+        $holiday = preg_replace('/^(\d)\//', '0$1/', $holiday);
+        $holiday = preg_replace('/\/(\d(\/\d+)?)$/', '/0$1', $holiday);
 
         return $holiday;
     }
@@ -283,14 +530,14 @@ class HolidayCalculator
         }
 
         if (is_string($holiday)) {
-            $holiday = $this->parseHoliday($holiday);
+            $holiday = $this->parseHoliday($holiday, $dateTime, $key);
         }
 
         return $holiday
             ? array($key, $holiday
                 ? ($this->type === 'string'
                     ? $holiday
-                    : (isset($dateTime)
+                    : (isset($dateTime) // @codeCoverageIgnore
                         ? $dateTime
                         : $outputClass::createFromFormat('!d/m/Y', "$holiday/$year")
                     )

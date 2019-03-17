@@ -45,4 +45,5 @@ return array(
     '10-dhu-al-hijjah'              => 'Eidul Adha',
     'constitution-day'              => 'Araw ng Saligang Batas',
     'independence-day'              => 'Araw ng Kalayaan',
+    '1st-monday-before-september'   => 'Araw ng mga Bayani',
 );
