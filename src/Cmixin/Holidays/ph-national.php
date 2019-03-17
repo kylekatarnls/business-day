@@ -13,6 +13,6 @@ return array(
     '11-30'                       => '11-30',
     'christmas'                   => '12-25',
     '12-30'                       => '12-30',
-    '1-shawwal'                   => '= 1 Shawwal',
+    '1-shawwal'                   => '= 2 Shawwal', // + 1 day in case the moon couldn't be seen
     '10-dhu-al-hijjah'            => '= 10 Dhu al-Hijjah',
 );

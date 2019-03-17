@@ -141,18 +141,6 @@ class HolidayCalculator
 
     public function getHijriDate($year, $month, $day)
     {
-        static $exceptions = array(
-            1440 => array(
-                10 => array(
-                    1 => array(2019, 6, 6),
-                ),
-            ),
-        );
-
-        if (isset($exceptions[$year][$month][$day])) {
-            return $exceptions[$year][$month][$day];
-        }
-
         $date = array_map('intval', explode('/', jdtogregorian(
             floor((11 * $year + 3) / 30) + 354 * $year +
             30 * $month - floor(($month - 1) / 2) + $day + 1948440 - 385

@@ -5,7 +5,6 @@ Carbon mixin to handle business days
 [![Build Status](https://travis-ci.org/kylekatarnls/business-day.svg?branch=master)](https://travis-ci.org/kylekatarnls/business-day)
 [![Code Climate](https://codeclimate.com/github/kylekatarnls/business-day/badges/gpa.svg)](https://codeclimate.com/github/kylekatarnls/business-day)
 [![Test Coverage](https://codeclimate.com/github/kylekatarnls/business-day/badges/coverage.svg)](https://codeclimate.com/github/kylekatarnls/business-day/coverage)
-[![Issue Count](https://codeclimate.com/github/kylekatarnls/business-day/badges/issue_count.svg)](https://codeclimate.com/github/kylekatarnls/business-day)
 [![StyleCI](https://styleci.io/repos/129502391/shield?branch=master)](https://styleci.io/repos/129502391)
 
 [Professionally supported nesbot/carbon is now available](https://tidelift.com/subscription/pkg/packagist-nesbot-carbon?utm_source=packagist-nesbot-carbon&utm_medium=referral&utm_campaign=readme)
