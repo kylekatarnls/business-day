@@ -209,7 +209,7 @@ class HolidayCalculator
             list($year, $month, $day) = $this->getHijriDate($this->year - 579 - $i, $hijriMonth, $hijriDay);
 
             if ($year === $this->year) {
-                array_unshift($list, "$month-$day");
+                array_unshift($list, "$month-$day"); // @codeCoverageIgnore
             }
         }
 

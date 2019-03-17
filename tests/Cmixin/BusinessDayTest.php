@@ -960,4 +960,10 @@ class BusinessDayTest extends TestCase
         self::assertSame(2, count($carbon::getYearHolidays(2020)));
         self::assertTrue($carbon::parse('2020-12-19')->isHoliday());
     }
+
+    public function testLunarCalendar()
+    {
+        $date = new \Cmixin\BusinessDay\LunarCalendar('2020-02-07');
+        self::assertSame(array(2020, 2, 29), $date->toGregorian());
+    }
 }

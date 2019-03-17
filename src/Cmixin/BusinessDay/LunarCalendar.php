@@ -8,14 +8,8 @@
 
 namespace Cmixin\BusinessDay;
 
-use InvalidArgumentException;
-
 class LunarCalendar
 {
-    const MIN_YEAR = 1900;
-
-    const MAX_YEAR = 2100;
-
     private static $lunarMonthDays = array(
         1887, 0x1694, 0x16aa, 0x4ad5, 0xab6, 0xc4b7, 0x4ae, 0xa56,
         0xb52a, 0x1d2a, 0xd54, 0x75aa, 0x156a, 0x1096d, 0x95c, 0x14ae,
@@ -115,12 +109,11 @@ class LunarCalendar
 
     public static function convertLunarToGregorian($lunar)
     {
+        // Behavior not guaranteed if the year is outside the range 1900-2100
+        // This sound like something we can postpone when just handling holidays
+
         list($lunarYear, $lunarMonth, $lunarDay) = explode('-', $lunar);
         $lunarYear = (int) $lunarYear;
-
-        if ($lunarYear < self::MIN_YEAR || $lunarYear > self::MAX_YEAR) {
-            throw new InvalidArgumentException('Year must be within range 1900-2100');
-        }
 
         $lunarDay = (int) ltrim($lunarDay, '0');
         $leapMonth = substr($lunarMonth, 0, 1) === 'L';
