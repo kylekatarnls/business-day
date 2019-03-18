@@ -3,6 +3,7 @@
 namespace Tests\Cmixin;
 
 use Cmixin\BusinessDay;
+use Cmixin\BusinessDay\Calendar\LunarCalendar;
 use PHPUnit\Framework\TestCase;
 
 class BusinessDayTest extends TestCase
@@ -963,7 +964,7 @@ class BusinessDayTest extends TestCase
 
     public function testLunarCalendar()
     {
-        $date = new \Cmixin\BusinessDay\LunarCalendar('2020-02-07');
+        $date = new LunarCalendar('2020-02-07');
         self::assertSame(array(2020, 2, 29), $date->toGregorian());
     }
 }

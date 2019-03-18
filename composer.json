@@ -3,6 +3,7 @@
     "description": "Carbon mixin to handle business days",
     "type": "library",
     "require": {
+        "php": ">=5.3",
         "nesbot/carbon": "^1.26.2 || ^2.0",
         "ext-calendar": "*"
     },
