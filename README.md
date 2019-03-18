@@ -31,6 +31,7 @@ $baseList = 'us-national'; // or region such as 'us-il'
 $additionalHolidays = array(
     'independence-day' => null, // Even if it's holiday, you can force it to null to make your business open
     'boss-birthday'    => '09-26', // Close the office on September 26th
+    // you can also use slash if you prefer day first '26/09' (September 26th too)
     'julian-christmas' => '= julian 12-25', // We support many calendars such as the Julian calendar
     // We support expressions
     'special-easter'   => '= Tuesday before easter',
