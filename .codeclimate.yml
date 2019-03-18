@@ -3,9 +3,11 @@ engines:
   phpmd:
     enabled: true
     config:
-      rulesets: "unusedcode,codesize,naming,design,controversial,cleancode,phpmd.xml"
+      rulesets: "unusedcode,codesize,naming,design,controversial,phpmd.xml"
   phan:
     enabled: true
+    config:
+      ignore-undeclared: true
   phpcodesniffer:
     enabled: true
   sonar-php:

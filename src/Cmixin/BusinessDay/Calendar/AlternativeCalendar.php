@@ -60,7 +60,11 @@ abstract class AlternativeCalendar implements AlternativeCalendarInterface
         $year = $direction * -99999;
 
         for ($i = $direction > 0 ? 0 : 1; $direction * $year <= $direction * $expectedYear; $i++) {
-            list($year, $month, $day) = $this->getDate($expectedYear - static::$baseYear + $direction * $i, $inputMonth, $inputDay);
+            list($year, $month, $day) = $this->getDate(
+                $expectedYear - static::$baseYear + $direction * $i,
+                $inputMonth,
+                $inputDay
+            );
 
             if ($year === $expectedYear) {
                 $callback("$month-$day");
