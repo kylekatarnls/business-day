@@ -4,6 +4,8 @@ namespace Cmixin\BusinessDay\Calendar;
 
 class JewishCalendar extends AlternativeCalendar
 {
+    protected static $baseYear = -3761;
+
     /**
      * @var array
      */

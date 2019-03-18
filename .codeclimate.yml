@@ -1,0 +1,8 @@
+version: "2"
+engines:
+  phpmd:
+    enabled: true
+    checks:
+      CleanCode/StaticAccess:
+        enabled: true
+        exceptions: Cmixin\BusinessDay\Calendar\HijriCalendar,Cmixin\BusinessDay\Calendar\JewishCalendar

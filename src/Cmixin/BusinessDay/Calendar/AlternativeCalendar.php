@@ -2,8 +2,18 @@
 
 namespace Cmixin\BusinessDay\Calendar;
 
+use Closure;
+
 abstract class AlternativeCalendar implements AlternativeCalendarInterface
 {
+    /**
+     * Base year is the closer delta between current Gregorian year (2019 used for ease) and current calendar year.
+     * It allows to find faster a contemporary date.
+     *
+     * @var int
+     */
+    protected static $baseYear = 0;
+
     /**
      * @var AlternativeCalendar[]
      */
@@ -43,31 +53,35 @@ abstract class AlternativeCalendar implements AlternativeCalendarInterface
         return $this->regex;
     }
 
+    protected function findDate($date, $direction, Closure $callback)
+    {
+        list($expectedYear, $inputMonth, $inputDay) = $date;
+
+        $year = $direction * -99999;
+
+        for ($i = $direction > 0 ? 0 : 1; $direction * $year <= $direction * $expectedYear; $i++) {
+            list($year, $month, $day) = $this->getDate($expectedYear - static::$baseYear + $direction * $i, $inputMonth, $inputDay);
+
+            if ($year === $expectedYear) {
+                $callback("$month-$day");
+            }
+        }
+    }
+
     public function getHolidays($expectedYear, $inputDay, $inputMonthString, $key = null)
     {
         $inputMonth = array_search(strtolower($inputMonthString), $this->months) + 1;
         $inputDay = (int) $inputDay;
 
         $list = array();
-        $year = -99999;
 
-        for ($i = 0; $year <= $expectedYear; $i++) {
-            list($year, $month, $day) = $this->getDate($expectedYear + 3761 + $i, $inputMonth, $inputDay);
+        $this->findDate(array($expectedYear, $inputMonth, $inputDay), 1, function ($date) use (&$list) {
+            $list[] = $date;
+        });
 
-            if ($year === $expectedYear) {
-                $list[] = "$month-$day";
-            }
-        }
-
-        $year = 99999;
-
-        for ($i = 1; $year >= $expectedYear; $i++) {
-            list($year, $month, $day) = $this->getDate($expectedYear + 3761 - $i, $inputMonth, $inputDay);
-
-            if ($year === $expectedYear) {
-                array_unshift($list, "$month-$day");
-            }
-        }
+        $this->findDate(array($expectedYear, $inputMonth, $inputDay), -1, function ($date) use (&$list) {
+            array_unshift($list, $date);
+        });
 
         $result = array_shift($list) ?: false;
 

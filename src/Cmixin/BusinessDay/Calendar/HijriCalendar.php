@@ -4,6 +4,8 @@ namespace Cmixin\BusinessDay\Calendar;
 
 class HijriCalendar extends AlternativeCalendar
 {
+    protected static $baseYear = 579;
+
     /**
      * @var array
      */
