@@ -6,3 +6,8 @@ engines:
       CleanCode/StaticAccess:
         enabled: true
         exceptions: Cmixin\BusinessDay\Calendar\HijriCalendar,Cmixin\BusinessDay\Calendar\JewishCalendar
+exclude_patterns:
+- "tests/"
+- "src/Cmixin/HolidayNames/"
+- "src/Cmixin/Holidays/"
+- "src/Cmixin/BusinessDay/Calendar/LunarCalendar.php"
