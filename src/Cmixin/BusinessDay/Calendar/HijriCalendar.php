@@ -2,9 +2,6 @@
 
 namespace Cmixin\BusinessDay\Calendar;
 
-/**
- * @internal
- */
 class HijriCalendar extends AlternativeCalendar
 {
     /**

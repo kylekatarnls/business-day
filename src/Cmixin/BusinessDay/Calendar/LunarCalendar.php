@@ -8,9 +8,6 @@
 
 namespace Cmixin\BusinessDay\Calendar;
 
-/**
- * @internal
- */
 class LunarCalendar
 {
     private static $lunarMonthDays = array(

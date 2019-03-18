@@ -2,13 +2,10 @@
 
 namespace Cmixin\BusinessDay\Calendar;
 
-/**
- * @internal
- */
 abstract class AlternativeCalendar implements AlternativeCalendarInterface
 {
     /**
-     * @var static
+     * @var AlternativeCalendar[]
      */
     protected static $singletons = array();
 
@@ -77,8 +74,6 @@ abstract class AlternativeCalendar implements AlternativeCalendarInterface
         foreach ($list as $index => &$value) {
             $value = array(($key ?: 'unknown').'-oc-'.($index + 2), $value);
         }
-
-        $this->nextHolidays = $list;
 
         return array($result, $list);
     }

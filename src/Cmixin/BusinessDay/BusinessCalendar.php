@@ -2,9 +2,6 @@
 
 namespace Cmixin\BusinessDay;
 
-use Carbon\Carbon;
-use Cmixin\BusinessDay;
-
 class BusinessCalendar extends HolidayObserver
 {
     /**
@@ -18,7 +15,7 @@ class BusinessCalendar extends HolidayObserver
         $getThisOrToday = static::getThisOrToday();
 
         return function ($self = null) use ($getThisOrToday, $mixin) {
-            /** @var Carbon|BusinessDay $self */
+            /** @var \Carbon\Carbon|\Cmixin\BusinessDay $self */
             $self = $getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
 
             return $self->isWeekday() && !$self->isHoliday();
@@ -38,7 +35,7 @@ class BusinessCalendar extends HolidayObserver
         $getThisOrToday = static::getThisOrToday();
 
         return function ($self = null) use ($mixin, $getThisOrToday, $method) {
-            /** @var Carbon|BusinessDay $self */
+            /** @var static $self */
             $self = $getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
 
             do {
@@ -62,7 +59,6 @@ class BusinessCalendar extends HolidayObserver
         $getThisOrToday = static::getThisOrToday();
 
         return function ($self = null) use ($mixin, $getThisOrToday, $method) {
-            /** @var Carbon|BusinessDay $self */
             $self = $getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
 
             return $self->isBusinessDay() ? $self : $self->$method();
