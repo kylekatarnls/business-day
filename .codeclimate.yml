@@ -2,10 +2,14 @@ version: "2"
 engines:
   phpmd:
     enabled: true
-    checks:
-      CleanCode/StaticAccess:
-        enabled: true
-        exceptions: Cmixin\BusinessDay\Calendar\HijriCalendar,Cmixin\BusinessDay\Calendar\JewishCalendar
+    config:
+      rulesets: "unusedcode,codesize,naming,design,controversial,cleancode,phpmd.xml"
+  phan:
+    enabled: true
+  phpcodesniffer:
+    enabled: true
+  sonar-php:
+    enabled: true
 exclude_patterns:
 - "tests/"
 - "src/Cmixin/HolidayNames/"
