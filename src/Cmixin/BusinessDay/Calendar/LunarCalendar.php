@@ -6,8 +6,11 @@
  * - https://github.com/peterkahl/chinese-lunar-calendar Chinese Lunar Calendar.
  */
 
-namespace Cmixin\BusinessDay;
+namespace Cmixin\BusinessDay\Calendar;
 
+/**
+ * @internal
+ */
 class LunarCalendar
 {
     private static $lunarMonthDays = array(

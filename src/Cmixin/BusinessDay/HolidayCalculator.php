@@ -2,6 +2,10 @@
 
 namespace Cmixin\BusinessDay;
 
+use Cmixin\BusinessDay\Calendar\AlternativeCalendar;
+use Cmixin\BusinessDay\Calendar\HijriCalendar;
+use Cmixin\BusinessDay\Calendar\JewishCalendar;
+use Cmixin\BusinessDay\Calendar\LunarCalendar;
 use DateTime;
 
 /**
@@ -40,48 +44,9 @@ class HolidayCalculator
     protected $nextHolidays = array();
 
     /**
-     * @var array
+     * @var AlternativeCalendar[]
      */
-    protected $hijriMonths = array(
-        'muharram',
-        'safar',
-        'rabi al-awwal',
-        'rabi al-thani',
-        'jumada al-awwal',
-        'jumada al-thani',
-        'rajab',
-        'shaban',
-        'ramadan',
-        'shawwal',
-        'dhu al-qidah',
-        'dhu al-hijjah',
-    );
-
-    /**
-     * @var string
-     */
-    protected $hijriRegex;
-
-    protected $jewishMonths = array(
-        'tishrei',
-        'cheshvan',
-        'kislev',
-        'tevet',
-        'shvat',
-        'adar',
-        'adar ii',
-        'nisan',
-        'iyyar',
-        'sivan',
-        'tamuz',
-        'av',
-        'elul',
-    );
-
-    /**
-     * @var string
-     */
-    protected $jewishRegex;
+    protected $calendars;
 
     public function __construct($year, $outputClass, $type, &$holidays, &$holidaysList)
     {
@@ -90,8 +55,10 @@ class HolidayCalculator
         $this->type = $type;
         $this->holidays = &$holidays;
         $this->holidaysList = &$holidaysList;
-        $this->hijriRegex = implode('|', $this->hijriMonths);
-        $this->jewishRegex = implode('|', $this->jewishMonths);
+        $this->calendars = array(
+            HijriCalendar::get(),
+            JewishCalendar::get(),
+        );
     }
 
     public function next()
@@ -139,16 +106,6 @@ class HolidayCalculator
         return $this->year.'-'.$this->twoDigits($match[1]).'-'.$this->twoDigits($match[2]).$match[3];
     }
 
-    public function getHijriDate($year, $month, $day)
-    {
-        $date = array_map('intval', explode('/', jdtogregorian(
-            floor((11 * $year + 3) / 30) + 354 * $year +
-            30 * $month - floor(($month - 1) / 2) + $day + 1948440 - 385
-        )));
-
-        return array($date[2], $date[0], $date[1]);
-    }
-
     public function convertJulianDate($match)
     {
         $year = $this->year;
@@ -164,7 +121,7 @@ class HolidayCalculator
 
     public function convertChineseDate($match)
     {
-        $date = new \Cmixin\BusinessDay\LunarCalendar($this->year.'-'.$match[2]);
+        $date = new LunarCalendar($this->year.'-'.$match[2]);
         $date = $date->toGregorian();
 
         return $this->twoDigits($date[1]).'-'.$this->twoDigits($date[2]);
@@ -173,87 +130,6 @@ class HolidayCalculator
     protected function twoDigits($number)
     {
         return str_pad($number, 2, '0', STR_PAD_LEFT);
-    }
-
-    protected function getHijriHolidays($hijriDay, $hijriMonthString, $key = null)
-    {
-        $hijriMonth = array_search(strtolower($hijriMonthString), $this->hijriMonths) + 1;
-        $hijriDay = (int) $hijriDay;
-
-        $list = array();
-        $year = -99999;
-
-        for ($i = 0; $year <= $this->year; $i++) {
-            list($year, $month, $day) = $this->getHijriDate($this->year - 579 + $i, $hijriMonth, $hijriDay);
-
-            if ($year === $this->year) {
-                $list[] = "$month-$day";
-            }
-        }
-
-        $year = 99999;
-
-        for ($i = 1; $year >= $this->year; $i++) {
-            list($year, $month, $day) = $this->getHijriDate($this->year - 579 - $i, $hijriMonth, $hijriDay);
-
-            if ($year === $this->year) {
-                array_unshift($list, "$month-$day"); // @codeCoverageIgnore
-            }
-        }
-
-        $result = array_shift($list) ?: false;
-
-        foreach ($list as $index => &$value) {
-            $value = array(($key ?: 'unknown').'-oc-'.($index + 2), $value);
-        }
-
-        $this->nextHolidays = $list;
-
-        return $result;
-    }
-
-    protected function getJewishDate($year, $month, $day)
-    {
-        $date = array_map('intval', explode('/', jdtogregorian(jewishtojd($month, $day, $year))));
-
-        return array($date[2], $date[0], $date[1]);
-    }
-
-    protected function getJewishHolidays($jewishDay, $jewishMonthString, $key = null)
-    {
-        $jewishMonth = array_search(strtolower($jewishMonthString), $this->jewishMonths) + 1;
-        $jewishDay = (int) $jewishDay;
-
-        $list = array();
-        $year = -99999;
-
-        for ($i = 0; $year <= $this->year; $i++) {
-            list($year, $month, $day) = $this->getJewishDate($this->year + 3761 + $i, $jewishMonth, $jewishDay);
-
-            if ($year === $this->year) {
-                $list[] = "$month-$day";
-            }
-        }
-
-        $year = 99999;
-
-        for ($i = 1; $year >= $this->year; $i++) {
-            list($year, $month, $day) = $this->getJewishDate($this->year + 3761 - $i, $jewishMonth, $jewishDay);
-
-            if ($year === $this->year) {
-                array_unshift($list, "$month-$day");
-            }
-        }
-
-        $result = array_shift($list) ?: false;
-
-        foreach ($list as $index => &$value) {
-            $value = array(($key ?: 'unknown').'-oc-'.($index + 2), $value);
-        }
-
-        $this->nextHolidays = $list;
-
-        return $result;
     }
 
     protected function getJulianTimestamp($year, $month, $day)
@@ -429,12 +305,14 @@ class HolidayCalculator
 
         list($before, $after, $holiday) = $this->extractModifiers($holiday);
 
-        if (preg_match('/^\s*(\d+)\s+('.$this->hijriRegex.')\s*$/i', $holiday, $match)) {
-            return $this->getHijriHolidays($match[1], $match[2], $key);
-        }
+        foreach ($this->calendars as $calendar) {
+            if (preg_match('/^\s*(\d+)\s+('.$calendar->getRegex().')\s*$/i', $holiday, $match)) {
+                list($result, $nextHolidays) = $calendar->getHolidays($this->year, $match[1], $match[2], $key);
 
-        if (preg_match('/^\s*(\d+)\s+('.$this->jewishRegex.')\s*$/i', $holiday, $match)) {
-            return $this->getJewishHolidays($match[1], $match[2], $key);
+                $this->nextHolidays = $nextHolidays;
+
+                return $result;
+            }
         }
 
         $holiday = preg_replace_callback('/julian\s+(\d+)-(\d+)/i', array($this, 'convertJulianDate'), trim($holiday));

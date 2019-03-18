@@ -5,7 +5,7 @@ namespace Cmixin\BusinessDay;
 use Carbon\Carbon;
 use Cmixin\BusinessDay;
 
-class Holiday extends HolidaysList
+class Holiday extends YearCrawler
 {
     const DEFAULT_HOLIDAY_LOCALE = 'en';
 
