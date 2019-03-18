@@ -6,6 +6,7 @@
     <description>Custom rules for business-day</description>
 
     <rule ref="rulesets/cleancode.xml">
+        <exclude name="StaticAccess"/>
     </rule>
 
     <rule ref="rulesets/cleancode.xml/StaticAccess">
