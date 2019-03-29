@@ -121,6 +121,35 @@ holidays common to all states).
 Before selecting a region the list of holidays is
 empty so `isHoliday` will return `false` for any date.
 
+#### getYearHolidays
+
+Get the holiday dates list for a given year:
+
+```php
+Carbon::setHolidaysRegion('us');
+
+foreach (Carbon::getYearHolidays(2020) as $id => $holiday) {
+    echo $holiday->getHolidayName().': '.$holiday->format('l, F j, Y')."\n";
+}
+
+// If Carbon::getYearHolidays() is called without argument, current year is used instead.
+```
+
+It will output:
+
+```text
+New Year: Wednesday, January 1, 2020
+Martin Luther King Jr. Day: Monday, January 20, 2020
+Washington’s Birthday: Monday, February 17, 2020
+Memorial Day: Monday, May 25, 2020
+Independence Day: Monday, July 6, 2020
+Labor Day: Monday, September 7, 2020
+Columbus Day: Monday, October 12, 2020
+Day of the veterans: Wednesday, November 11, 2020
+Thanksgiving: Thursday, November 26, 2020
+Christmas: Friday, December 25, 2020
+```
+
 #### getHolidays
 
 This method allow you to get the holiday list for a
