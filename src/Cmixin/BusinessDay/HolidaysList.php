@@ -15,12 +15,19 @@ class HolidaysList extends MixinBase
     public $holidaysRegion = null;
 
     /**
-     * Set the holidays region (see src/Cmixin/Holidays for examples).
+     * Return a standardized region name.
      *
      * @return \Closure
      */
     public function standardizeHolidaysRegion()
     {
+        /**
+         * Return a standardized region name.
+         *
+         * @param string $region
+         *
+         * @return string
+         */
         return function ($region) {
             $region = preg_replace('/[^a-z0-9_-]/', '', str_replace('_', '-', strtolower($region)));
 
@@ -37,6 +44,11 @@ class HolidaysList extends MixinBase
     {
         $mixin = $this;
 
+        /**
+         * Set the holidays region (see src/Cmixin/Holidays for examples).
+         *
+         * @param string $region
+         */
         return function ($region) use ($mixin) {
             $region = call_user_func($mixin->standardizeHolidaysRegion(), $region);
             $mixin->holidaysRegion = $region;
@@ -81,6 +93,11 @@ class HolidaysList extends MixinBase
     {
         $mixin = $this;
 
+        /**
+         * Get the current holidays region.
+         *
+         * @return null|string
+         */
         return function () use ($mixin) {
             return $mixin->holidaysRegion;
         };
@@ -95,6 +112,13 @@ class HolidaysList extends MixinBase
     {
         $mixin = $this;
 
+        /**
+         * Get the holidays for the current region selected.
+         *
+         * @param string $region
+         *
+         * @return array
+         */
         return function ($region = null) use ($mixin) {
             $region = is_string($region)
                 ? call_user_func($mixin->standardizeHolidaysRegion(), $region)
@@ -117,6 +141,12 @@ class HolidaysList extends MixinBase
     {
         $mixin = $this;
 
+        /**
+         * Set the holidays list.
+         *
+         * @param string $region
+         * @param array  $holidays
+         */
         return function ($region, $holidays) use ($mixin) {
             $region = call_user_func($mixin->standardizeHolidaysRegion(), $region);
             $addHolidays = $mixin->addHolidays();
@@ -126,7 +156,7 @@ class HolidaysList extends MixinBase
     }
 
     /**
-     * Set the holidays list.
+     * Reset the holidays list.
      *
      * @return \Closure
      */
@@ -134,6 +164,9 @@ class HolidaysList extends MixinBase
     {
         $mixin = $this;
 
+        /**
+         * Reset the holidays list.
+         */
         return function () use ($mixin) {
             $mixin->holidaysRegion = null;
             $mixin->holidays = array();
@@ -173,6 +206,15 @@ class HolidaysList extends MixinBase
     {
         $mixin = $this;
 
+        /**
+         * Push a holiday to the holidays list of a region.
+         *
+         * @param string          $region  region where the holiday is observed.
+         * @param string|\Closure $holiday date or closure that get the year as parameter and returns the date
+         * @param string          $key     optional holiday ID
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|null
+         */
         return function ($region, $holiday, $key = null) use ($mixin) {
             $region = call_user_func($mixin->standardizeHolidaysRegion(), $region);
             $mixin->initializeHolidaysRegion($region);
@@ -198,16 +240,26 @@ class HolidaysList extends MixinBase
     {
         $mixin = $this;
 
-        return function ($holidayKey = null, $name = null, $value = null) use ($mixin) {
+        /**
+         * Set/change the name of holiday by ID for a given language (or a list of languages).
+         *
+         * @param string       $holidayKey holiday ID (identifier key)
+         * @param string|array $language   language 2-chars code (or an array with languages codes as keys and new names for each language as value).
+         * @param string       $name       new name (ignored if $language is an array)
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|null
+         */
+        return function ($holidayKey = null, $language = null, $name = null) use ($mixin) {
             static $dictionary;
 
-            if ($mixin instanceof Holiday && ($name = is_string($name) ? array($name => $value) : $name)) {
+            if ($mixin instanceof Holiday && ($language = is_string($language) ? array($language => $name) : $language)) {
                 if (!isset($dictionary)) {
                     $dictionary = $mixin->getHolidayNamesDictionary();
                 }
-                foreach ($name as $language => $text) {
-                    $dictionary($language);
-                    $mixin->holidayNames[$language][$holidayKey] = $text;
+
+                foreach ($language as $languageId => $name) {
+                    $dictionary($languageId);
+                    $mixin->holidayNames[$languageId][$holidayKey] = $name;
                 }
             }
 
@@ -216,7 +268,7 @@ class HolidaysList extends MixinBase
     }
 
     /**
-     * Add a holiday to the holidays list of a region then init name and observed state.
+     * Add a holiday to the holidays list of a region and optionally init its ID, name and observed state.
      *
      * @return \Closure
      */
@@ -225,6 +277,17 @@ class HolidaysList extends MixinBase
         $mixin = $this;
         $dictionary = $this->setHolidayName();
 
+        /**
+         * Add a holiday to the holidays list of a region and optionally init its ID, name and observed state.
+         *
+         * @param string          $region   region where the holiday is observed.
+         * @param string|\Closure $holiday  date or closure that get the year as parameter and returns the date
+         * @param string          $key      optional holiday ID
+         * @param string          $name     optional name
+         * @param boolean         $observed optional observed state
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|null
+         */
         return function ($region, $holiday, $key = null, $name = null, $observed = null) use ($mixin, $dictionary) {
             static $observer;
 
@@ -239,6 +302,7 @@ class HolidaysList extends MixinBase
                 if (!isset($observer)) {
                     $observer = $mixin->setHolidayObserveStatus();
                 }
+
                 $observer($key, $observed);
             }
 
@@ -253,6 +317,15 @@ class HolidaysList extends MixinBase
      */
     public function unpackHoliday()
     {
+        /**
+         * Unpack a holiday array definition.
+         *
+         * @param array   &$holiday
+         * @param string  &$name
+         * @param boolean &$observed
+         *
+         * @return array
+         */
         return function (&$holiday, &$name = null, &$observed = null) {
             if (!isset($holiday['date'])) {
                 throw new \InvalidArgumentException(
@@ -283,6 +356,16 @@ class HolidaysList extends MixinBase
     {
         $mixin = $this;
 
+        /**
+         * Check a holiday definition and unpack it if it's an array.
+         *
+         * @param array   &$holiday
+         * @param string  $key
+         * @param string  &$name
+         * @param boolean &$observed
+         *
+         * @return array
+         */
         return function (&$holiday, $key, &$name = null, &$observed = null) use ($mixin) {
             $unpack = $mixin->unpackHoliday();
 
@@ -309,6 +392,12 @@ class HolidaysList extends MixinBase
     {
         $mixin = $this;
 
+        /**
+         * Add a holiday to the holidays list of a region and optionally init their IDs, names and observed states (if provided as array-definitions).
+         *
+         * @param string $region
+         * @param array  $holidays
+         */
         return function ($region, $holidays) use ($mixin) {
             $region = call_user_func($mixin->standardizeHolidaysRegion(), $region);
             $mixin->initializeHolidaysRegion($region);
