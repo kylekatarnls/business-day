@@ -77,20 +77,31 @@ class Generator
     /**
      * @param string $source
      * @param string $destination
+     * @param string $name
      *
      * @throws \ReflectionException
      */
-    public function writeHelpers($source, $destination)
+    public function writeHelpers($source, $destination, $name = '_ide_business_day', array $classes = null)
     {
         $methods = $this->getMethodsDefinitions($source);
 
-        $code = "<?php\n\n".
-            "namespace Carbon\n{\n    class Carbon\n    {\n$methods    }\n}\n\n".
-            "namespace Carbon\n{\n    class CarbonImmutable\n    {\n$methods    }\n}\n\n".
-            "namespace Illuminate\Support\n{\n    class Carbon\n    {\n$methods    }\n}\n";
+        $classes = $classes ?: array(
+            'Carbon\Carbon',
+            'Carbon\CarbonImmutable',
+            'Illuminate\Support\Carbon',
+        );
 
-        file_put_contents("$destination/_ide_business_day_static.php", $code);
-        file_put_contents("$destination/_ide_business_day_instantiated.php", str_replace(
+        $code = "<?php\n";
+
+        foreach ($classes as $class) {
+            $class = explode('\\', $class);
+            $className = array_pop($class);
+            $namespace = implode('\\', $class);
+            $code .= "\nnamespace $namespace\n{\n    class $className\n    {\n$methods    }\n}\n";
+        }
+
+        file_put_contents("$destination/{$name}_static.php", $code);
+        file_put_contents("$destination/{$name}_instantiated.php", str_replace(
             "\n        public static function ",
             "\n        public function ",
             $code
