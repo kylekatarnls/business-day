@@ -10,13 +10,17 @@ use ReflectionParameter;
 class Generator
 {
     /**
+     * @param callable|null $boot
+     *
      * @throws \ReflectionException
      *
      * @return mixed
      */
-    protected function getMethods()
+    protected function getMethods($boot)
     {
-        BusinessDay::enable('\Carbon\Carbon');
+        call_user_func($boot ?: function () {
+            BusinessDay::enable('\Carbon\Carbon');
+        });
 
         $c = new ReflectionClass(Carbon::now());
         $macros = $c->getProperty('globalMacros');
@@ -26,17 +30,20 @@ class Generator
     }
 
     /**
+     * @param callable|null $boot
+     * @param string        $source
+     *
      * @throws \ReflectionException
      *
      * @return string
      */
-    protected function getMethodsDefinitions($source)
+    protected function getMethodsDefinitions($boot, $source)
     {
         $methods = '';
         $source = str_replace('\\', '/', realpath($source));
         $sourceLength = strlen($source);
 
-        foreach ($this->getMethods() as $name => $closure) {
+        foreach ($this->getMethods($boot) as $name => $closure) {
             try {
                 $function = new \ReflectionFunction($closure);
             } catch (\ReflectionException $e) {
@@ -75,15 +82,16 @@ class Generator
     }
 
     /**
-     * @param string $source
-     * @param string $destination
-     * @param string $name
+     * @param string   $source
+     * @param string   $destination
+     * @param callable $boot
+     * @param string   $name
      *
      * @throws \ReflectionException
      */
-    public function writeHelpers($source, $destination, $name = '_ide_business_day', array $classes = null)
+    public function writeHelpers($source, $destination, $name = '_ide_business_day', callable $boot = null, array $classes = null)
     {
-        $methods = $this->getMethodsDefinitions($source);
+        $methods = $this->getMethodsDefinitions($boot, $source);
 
         $classes = $classes ?: array(
             'Carbon\Carbon',
