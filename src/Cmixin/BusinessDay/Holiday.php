@@ -65,7 +65,7 @@ class Holiday extends YearCrawler
          *
          * @param \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface $self optional context
          *
-         * @return boolean
+         * @return bool
          */
         return function ($self = null) use ($mixin, $getThisOrToday) {
             /** @var Carbon|BusinessDay $self */

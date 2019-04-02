@@ -19,7 +19,7 @@ class BusinessCalendar extends HolidayObserver
          *
          * @param \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface $self optional context
          *
-         * @return boolean
+         * @return bool
          */
         return function ($self = null) use ($getThisOrToday, $mixin) {
             /** @var \Carbon\Carbon|\Cmixin\BusinessDay $self */
@@ -46,7 +46,7 @@ class BusinessCalendar extends HolidayObserver
          *
          * @param \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface $self optional context
          *
-         * @return boolean
+         * @return bool
          */
         return function ($self = null) use ($mixin, $getThisOrToday, $method) {
             /** @var static $self */
@@ -77,7 +77,7 @@ class BusinessCalendar extends HolidayObserver
          *
          * @param \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface $self optional context
          *
-         * @return boolean
+         * @return bool
          */
         return function ($self = null) use ($mixin, $getThisOrToday, $method) {
             $self = $getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
@@ -98,7 +98,7 @@ class BusinessCalendar extends HolidayObserver
          *
          * @param \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface $self optional context
          *
-         * @return boolean
+         * @return bool
          */
         return $this->nextBusinessDay('subDay');
     }
@@ -115,7 +115,7 @@ class BusinessCalendar extends HolidayObserver
          *
          * @param \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface $self optional context
          *
-         * @return boolean
+         * @return bool
          */
         return $this->currentOrNextBusinessDay('previousBusinessDay');
     }

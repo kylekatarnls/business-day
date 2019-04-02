@@ -76,7 +76,7 @@ abstract class MixinBase
          *
          * @param mixed $value
          *
-         * @return boolean
+         * @return bool
          */
         return function ($value) {
             return $value instanceof \DateTime || $value instanceof \DateTimeInterface;

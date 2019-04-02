@@ -284,7 +284,7 @@ class HolidaysList extends MixinBase
          * @param string|\Closure $holiday   date or closure that get the year as parameter and returns the date
          * @param string          $holidayId optional holiday ID
          * @param string          $name      optional name
-         * @param boolean         $observed  optional observed state
+         * @param bool            $observed  optional observed state
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|null
          */
@@ -320,9 +320,9 @@ class HolidaysList extends MixinBase
         /**
          * Unpack a holiday array definition.
          *
-         * @param array   &$holiday
-         * @param string  &$name
-         * @param boolean &$observed
+         * @param array  &$holiday
+         * @param string &$name
+         * @param bool   &$observed
          *
          * @return array
          */
@@ -359,10 +359,10 @@ class HolidaysList extends MixinBase
         /**
          * Check a holiday definition and unpack it if it's an array.
          *
-         * @param array   &$holiday
-         * @param string  $holidayId
-         * @param string  &$name
-         * @param boolean &$observed
+         * @param array  &$holiday
+         * @param string $holidayId
+         * @param string &$name
+         * @param bool   &$observed
          *
          * @return array
          */

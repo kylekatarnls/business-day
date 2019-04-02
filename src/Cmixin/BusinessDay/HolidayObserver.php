@@ -78,7 +78,7 @@ class HolidayObserver extends Holiday
          * Set a holiday as observed/unobserved in the selected zone.
          *
          * @param string                                                         $holidayId ID key of the holiday
-         * @param boolean                                                        $observed  observed state
+         * @param bool                                                           $observed  observed state
          * @param \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface $self      optional context
          *
          * @return $this|null
@@ -114,7 +114,7 @@ class HolidayObserver extends Holiday
          * Set a holiday as observed/unobserved in the selected zone (can take array of holidays).
          *
          * @param string|array                                                   $holidayId ID key of the holiday
-         * @param boolean                                                        $observed  observed state
+         * @param bool                                                           $observed  observed state
          * @param \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface $self      optional context
          *
          * @return $this|null
@@ -252,7 +252,7 @@ class HolidayObserver extends Holiday
          *
          * @param string $holidayId
          *
-         * @return boolean
+         * @return bool
          */
         return function ($holidayId = null) use ($mixin, $allHolidays) {
             $zone = $mixin->observedHolidaysZone;
@@ -288,7 +288,7 @@ class HolidayObserver extends Holiday
          *
          * @param string $holidayId holiday ID to check (current date used instead if omitted)
          *
-         * @return boolean
+         * @return bool
          */
         return function ($holidayId = null, $self = null) use ($mixin, $getThisOrToday, $swap) {
             $swap($holidayId, $self);
