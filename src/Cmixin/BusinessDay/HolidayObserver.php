@@ -33,8 +33,7 @@ class HolidayObserver extends Holiday
          * Set the selected zone for observed holidays. So next observe methods will be saved and considered in this
          * given custom zone.
          *
-         * @param string                                                         $zone
-         * @param \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface $self optional context
+         * @param string $zone
          *
          * @return $this|null
          */
@@ -77,9 +76,8 @@ class HolidayObserver extends Holiday
         /**
          * Set a holiday as observed/unobserved in the selected zone.
          *
-         * @param string                                                         $holidayId ID key of the holiday
-         * @param bool                                                           $observed  observed state
-         * @param \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface $self      optional context
+         * @param string $holidayId ID key of the holiday
+         * @param bool   $observed  observed state
          *
          * @return $this|null
          */
@@ -113,9 +111,8 @@ class HolidayObserver extends Holiday
         /**
          * Set a holiday as observed/unobserved in the selected zone (can take array of holidays).
          *
-         * @param string|array                                                   $holidayId ID key of the holiday
-         * @param bool                                                           $observed  observed state
-         * @param \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface $self      optional context
+         * @param string|array $holidayId ID key of the holiday
+         * @param bool         $observed  observed state
          *
          * @return $this|null
          */

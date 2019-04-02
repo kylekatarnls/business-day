@@ -17,8 +17,6 @@ class BusinessCalendar extends HolidayObserver
         /**
          * Checks the date to see if it is a business day (neither a weekend day nor a holiday).
          *
-         * @param \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface $self optional context
-         *
          * @return bool
          */
         return function ($self = null) use ($getThisOrToday, $mixin) {
@@ -43,8 +41,6 @@ class BusinessCalendar extends HolidayObserver
 
         /**
          * Sets the date to the next business day (neither a weekend day nor a holiday).
-         *
-         * @param \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface $self optional context
          *
          * @return bool
          */
@@ -75,8 +71,6 @@ class BusinessCalendar extends HolidayObserver
         /**
          * Sets the date to the current or next business day (neither a weekend day nor a holiday).
          *
-         * @param \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface $self optional context
-         *
          * @return bool
          */
         return function ($self = null) use ($mixin, $getThisOrToday, $method) {
@@ -96,8 +90,6 @@ class BusinessCalendar extends HolidayObserver
         /**
          * Sets the date to the previous business day (neither a weekend day nor a holiday).
          *
-         * @param \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface $self optional context
-         *
          * @return bool
          */
         return $this->nextBusinessDay('subDay');
@@ -112,8 +104,6 @@ class BusinessCalendar extends HolidayObserver
     {
         /**
          * Sets the date to the current or previous business day.
-         *
-         * @param \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface $self optional context
          *
          * @return bool
          */

@@ -16,9 +16,8 @@ class YearCrawler extends HolidaysList
         /**
          * Get the holidays dates for a given year (current year if no parameter given).
          *
-         * @param int                                                            $year input year, year of the current instance or context used if omitted, current year used if omitted and called statically
-         * @param string                                                         $type can be 'string' (to return dates as string) or a class name to returns instances of this class
-         * @param \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface $self optional context
+         * @param int    $year input year, year of the current instance or context used if omitted, current year used if omitted and called statically
+         * @param string $type can be 'string' (to return dates as string) or a class name to returns instances of this class
          *
          * @return array
          */
@@ -50,9 +49,8 @@ class YearCrawler extends HolidaysList
         /**
          * Get a next() callback to call to iterate over holidays of a year.
          *
-         * @param int                                                            $year input year, year of the current instance or context used if omitted, current year used if omitted and called statically
-         * @param string                                                         $type can be 'string' (to return dates as string) or a class name to returns instances of this class
-         * @param \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface $self optional context
+         * @param int    $year input year, year of the current instance or context used if omitted, current year used if omitted and called statically
+         * @param string $type can be 'string' (to return dates as string) or a class name to returns instances of this class
          *
          * @return \Closure
          */

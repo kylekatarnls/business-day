@@ -22,8 +22,7 @@ class BusinessDay extends BusinessCalendar
         /**
          * Add a given number of business days to the current date.
          *
-         * @param int                                                            $days
-         * @param \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface $self optional context
+         * @param int $days
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
@@ -57,8 +56,6 @@ class BusinessDay extends BusinessCalendar
         /**
          * Add one business day to the current date.
          *
-         * @param \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface $self optional context
-         *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
         return $this->addBusinessDays();
@@ -74,8 +71,7 @@ class BusinessDay extends BusinessCalendar
         /**
          * Subtract a given number of business days to the current date.
          *
-         * @param int                                                            $days
-         * @param \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface $self optional context
+         * @param int $days
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
@@ -94,8 +90,7 @@ class BusinessDay extends BusinessCalendar
         /**
          * Subtract a given number of business days to the current date.
          *
-         * @param int                                                            $days
-         * @param \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface $self optional context
+         * @param int $days
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
@@ -111,8 +106,6 @@ class BusinessDay extends BusinessCalendar
     {
         /**
          * Subtract one business day to the current date.
-         *
-         * @param \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface $self optional context
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
@@ -130,8 +123,6 @@ class BusinessDay extends BusinessCalendar
     {
         /**
          * Subtract one business day to the current date.
-         *
-         * @param \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface $self optional context
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
@@ -152,7 +143,6 @@ class BusinessDay extends BusinessCalendar
          * Returns the difference between 2 dates in business days.
          *
          * @param \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface $other other date
-         * @param \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface $self  optional context
          *
          * @return int
          */
@@ -183,8 +173,6 @@ class BusinessDay extends BusinessCalendar
         /**
          * Get the number of business days in the current month.
          *
-         * @param \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface $self optional context
-         *
          * @return int
          */
         return function ($self = null) use ($mixin, $getThisOrToday, $carbonClass) {
@@ -210,8 +198,6 @@ class BusinessDay extends BusinessCalendar
 
         /**
          * Get list of date objects for each business day in the current month.
-         *
-         * @param \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface $self optional context
          *
          * @return array
          */
