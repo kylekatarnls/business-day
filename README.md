@@ -458,6 +458,10 @@ Carbon::parse('2018-01-15')->isObservedHoliday(); // true
 Carbon::setHolidaysRegion('us-national');
 Carbon::parse('2018-01-15')->isObservedHoliday(); // true
 // So you can observe holidays that are not in the current region with no restriction
+// You can check observance by ID:
+Carbon::isObservedHoliday('christmas'); // false
+Carbon::isObservedHoliday('labor-day'); // true
+Carbon::isObservedHoliday(); // check if today is an observed holiday
 ```
 
 #### observeHoliday

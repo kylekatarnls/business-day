@@ -22,6 +22,13 @@ class Holiday extends YearCrawler
         $getThisOrToday = static::getThisOrToday();
         $getNextFunction = static::getYearHolidaysNextFunction();
 
+        /**
+         * Get the identifier of the current holiday or false if it's not a holiday.
+         *
+         * @param \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface $self optional context
+         *
+         * @return string|false
+         */
         return function ($self = null) use ($mixin, $getThisOrToday, $getNextFunction) {
             /** @var Carbon|BusinessDay $self */
             $self = $getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
@@ -32,10 +39,10 @@ class Holiday extends YearCrawler
             $next = $getNextFunction($year, 'string', $self);
 
             while ($data = $next()) {
-                list($key, $holiday) = $data;
+                list($holidayId, $holiday) = $data;
 
                 if ($holiday && $date.(strlen($holiday) > 5 ? "/$year" : '') === $holiday) {
-                    return $key;
+                    return $holidayId;
                 }
             }
 
@@ -53,6 +60,13 @@ class Holiday extends YearCrawler
         $mixin = $this;
         $getThisOrToday = static::getThisOrToday();
 
+        /**
+         * Checks the date to see if it is a holiday.
+         *
+         * @param \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface $self optional context
+         *
+         * @return boolean
+         */
         return function ($self = null) use ($mixin, $getThisOrToday) {
             /** @var Carbon|BusinessDay $self */
             $self = $getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
@@ -71,6 +85,13 @@ class Holiday extends YearCrawler
         $mixin = $this;
         $defaultLocale = static::DEFAULT_HOLIDAY_LOCALE;
 
+        /**
+         * Get the holidays in the given language.
+         *
+         * @param string $locale language
+         *
+         * @return array
+         */
         return function ($locale) use ($mixin, $defaultLocale) {
             if (isset($mixin->holidayNames[$locale])) {
                 return $mixin->holidayNames[$locale] ?: $mixin->holidayNames[$defaultLocale];
@@ -106,14 +127,23 @@ class Holiday extends YearCrawler
         $swap = static::swapDateTimeParam();
         $dictionary = $this->getHolidayNamesDictionary();
 
+        /**
+         * Get the name of the current holiday (using the locale given in parameter or the current date locale)
+         * or false if it's not a holiday.
+         *
+         * @param string                                                         $locale language ("en" by default)
+         * @param \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface $self   optional context
+         *
+         * @return string|false
+         */
         return function ($locale = null, $self = null) use ($mixin, $carbonClass, $getThisOrToday, $swap, $dictionary) {
             $swap($locale, $self);
 
             /** @var Carbon|BusinessDay $self */
             $self = $getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
-            $key = $self->getHolidayId();
+            $holidayId = $self->getHolidayId();
 
-            if ($key === false) {
+            if ($holidayId === false) {
                 return false;
             }
 
@@ -121,10 +151,10 @@ class Holiday extends YearCrawler
                 $locale = (isset($self->locale) ? $self->locale : $carbonClass::getLocale()) ?: 'en';
             }
 
-            /* @var string $key */
+            /* @var string $holidayId */
             $names = $dictionary(preg_replace('/^([^_-]+)([_-].*)$/', '$1', $locale));
 
-            return isset($names[$key]) ? $names[$key] : 'Unknown';
+            return isset($names[$holidayId]) ? $names[$holidayId] : 'Unknown';
         };
     }
 }
