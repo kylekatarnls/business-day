@@ -25,8 +25,6 @@ class Holiday extends YearCrawler
         /**
          * Get the identifier of the current holiday or false if it's not a holiday.
          *
-         * @param \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface $self optional context
-         *
          * @return string|false
          */
         return function ($self = null) use ($mixin, $getThisOrToday, $getNextFunction) {
@@ -62,8 +60,6 @@ class Holiday extends YearCrawler
 
         /**
          * Checks the date to see if it is a holiday.
-         *
-         * @param \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface $self optional context
          *
          * @return bool
          */
@@ -131,8 +127,7 @@ class Holiday extends YearCrawler
          * Get the name of the current holiday (using the locale given in parameter or the current date locale)
          * or false if it's not a holiday.
          *
-         * @param string                                                         $locale language ("en" by default)
-         * @param \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface $self   optional context
+         * @param string $locale language ("en" by default)
          *
          * @return string|false
          */
