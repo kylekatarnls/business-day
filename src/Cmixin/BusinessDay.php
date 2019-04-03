@@ -5,6 +5,7 @@ namespace Cmixin;
 use Carbon\Carbon;
 use Cmixin\BusinessDay\BusinessCalendar;
 use Cmixin\BusinessDay\BusinessMonth;
+use Cmixin\BusinessDay\Emulator;
 
 class BusinessDay extends BusinessCalendar
 {
@@ -25,7 +26,7 @@ class BusinessDay extends BusinessCalendar
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
         return function ($days = 1, $self = null) use ($mixin, $factor) {
-            $carbonClass = get_class();
+            $carbonClass = @get_class() ?: Emulator::getClass(new \Exception());
 
             list($days, $self) = $carbonClass::swapDateTimeParam($days, $self, 1);
 
@@ -146,7 +147,7 @@ class BusinessDay extends BusinessCalendar
          * @return int
          */
         return function ($other = null, $self = null) use ($mixin) {
-            $carbonClass = get_class();
+            $carbonClass = @get_class() ?: Emulator::getClass(new \Exception());
 
             /** @var Carbon|BusinessDay $self */
             $self = $carbonClass::getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
@@ -174,7 +175,7 @@ class BusinessDay extends BusinessCalendar
          * @return int
          */
         return function ($self = null) use ($mixin) {
-            $carbonClass = get_class();
+            $carbonClass = @get_class() ?: Emulator::getClass(new \Exception());
             $month = new BusinessMonth(
                 $carbonClass::getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null),
                 $carbonClass
@@ -199,7 +200,7 @@ class BusinessDay extends BusinessCalendar
          * @return array
          */
         return function ($self = null) use ($mixin) {
-            $carbonClass = get_class();
+            $carbonClass = @get_class() ?: Emulator::getClass(new \Exception());
             $month = new BusinessMonth(
                 $carbonClass::getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null),
                 $carbonClass
