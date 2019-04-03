@@ -247,7 +247,7 @@ class HolidayObserver extends Holiday
         /**
          * Check if a given holiday ID is observed in the selected zone.
          *
-         * @param string $holidayId
+         * @param string|false|null $holidayId
          *
          * @return bool
          */
@@ -277,8 +277,6 @@ class HolidayObserver extends Holiday
     public function isObservedHoliday()
     {
         $mixin = $this;
-        $getThisOrToday = static::getThisOrToday();
-        $swap = static::swapDateTimeParam();
 
         /**
          * Checks the date to see if it is a holiday observed in the selected zone.
@@ -287,18 +285,18 @@ class HolidayObserver extends Holiday
          *
          * @return bool
          */
-        return function ($holidayId = null, $self = null) use ($mixin, $getThisOrToday, $swap) {
-            $swap($holidayId, $self);
+        return function ($holidayId = null, $self = null) use ($mixin) {
+            $carbonClass = @get_class() ?: Emulator::getClass(new \Exception());
+
+            list($holidayId, $self) = $carbonClass::swapDateTimeParam($holidayId, $self, null);
 
             if (!$holidayId) {
                 /** @var Carbon|BusinessDay $self */
-                $self = $getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
+                $self = $carbonClass::getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
                 $holidayId = $self->getHolidayId();
             }
 
-            $check = $mixin->checkObservedHoliday();
-
-            return $check($holidayId);
+            return $carbonClass::checkObservedHoliday($holidayId);
         };
     }
 }

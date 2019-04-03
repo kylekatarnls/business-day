@@ -19,22 +19,22 @@ class Holiday extends YearCrawler
     public function getHolidayId()
     {
         $mixin = $this;
-        $getThisOrToday = static::getThisOrToday();
-        $getNextFunction = static::getYearHolidaysNextFunction();
 
         /**
          * Get the identifier of the current holiday or false if it's not a holiday.
          *
          * @return string|false
          */
-        return function ($self = null) use ($mixin, $getThisOrToday, $getNextFunction) {
+        return function ($self = null) use ($mixin) {
+            $carbonClass = @get_class() ?: Emulator::getClass(new \Exception());
+
             /** @var Carbon|BusinessDay $self */
-            $self = $getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
+            $self = $carbonClass::getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
 
             $date = $self->format('d/m');
             $year = $self->year;
 
-            $next = $getNextFunction($year, 'string', $self);
+            $next = $self->getYearHolidaysNextFunction($year, 'string', $self);
 
             while ($data = $next()) {
                 list($holidayId, $holiday) = $data;
@@ -56,16 +56,17 @@ class Holiday extends YearCrawler
     public function isHoliday()
     {
         $mixin = $this;
-        $getThisOrToday = static::getThisOrToday();
 
         /**
          * Checks the date to see if it is a holiday.
          *
          * @return bool
          */
-        return function ($self = null) use ($mixin, $getThisOrToday) {
+        return function ($self = null) use ($mixin) {
+            $carbonClass = @get_class() ?: Emulator::getClass(new \Exception());
+
             /** @var Carbon|BusinessDay $self */
-            $self = $getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
+            $self = $carbonClass::getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
 
             return $self->getHolidayId() !== false;
         };
@@ -118,9 +119,6 @@ class Holiday extends YearCrawler
     public function getHolidayName()
     {
         $mixin = $this;
-        $carbonClass = static::getCarbonClass();
-        $getThisOrToday = static::getThisOrToday();
-        $swap = static::swapDateTimeParam();
         $dictionary = $this->getHolidayNamesDictionary();
 
         /**
@@ -131,11 +129,13 @@ class Holiday extends YearCrawler
          *
          * @return string|false
          */
-        return function ($locale = null, $self = null) use ($mixin, $carbonClass, $getThisOrToday, $swap, $dictionary) {
-            $swap($locale, $self);
+        return function ($locale = null, $self = null) use ($mixin, $dictionary) {
+            $carbonClass = @get_class() ?: Emulator::getClass(new \Exception());
+
+            list($locale, $self) = $carbonClass::swapDateTimeParam($locale, $self, null);
 
             /** @var Carbon|BusinessDay $self */
-            $self = $getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
+            $self = $carbonClass::getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
             $holidayId = $self->getHolidayId();
 
             if ($holidayId === false) {
