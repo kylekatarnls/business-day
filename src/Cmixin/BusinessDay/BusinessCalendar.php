@@ -12,16 +12,17 @@ class BusinessCalendar extends HolidayObserver
     public function isBusinessDay()
     {
         $mixin = $this;
-        $getThisOrToday = static::getThisOrToday();
 
         /**
          * Checks the date to see if it is a business day (neither a weekend day nor a holiday).
          *
          * @return bool
          */
-        return function ($self = null) use ($getThisOrToday, $mixin) {
+        return function ($self = null) use ($mixin) {
+            $carbonClass = get_class();
+
             /** @var \Carbon\Carbon|\Cmixin\BusinessDay $self */
-            $self = $getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
+            $self = $carbonClass::getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
 
             return $self->isWeekday() && !$self->isHoliday();
         };
@@ -37,16 +38,17 @@ class BusinessCalendar extends HolidayObserver
     public function nextBusinessDay($method = 'addDay')
     {
         $mixin = $this;
-        $getThisOrToday = static::getThisOrToday();
 
         /**
          * Sets the date to the next business day (neither a weekend day nor a holiday).
          *
          * @return bool
          */
-        return function ($self = null) use ($mixin, $getThisOrToday, $method) {
+        return function ($self = null) use ($mixin, $method) {
+            $carbonClass = get_class();
+
             /** @var static $self */
-            $self = $getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
+            $self = $carbonClass::getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
 
             do {
                 $self->$method();
@@ -66,15 +68,16 @@ class BusinessCalendar extends HolidayObserver
     public function currentOrNextBusinessDay($method = 'nextBusinessDay')
     {
         $mixin = $this;
-        $getThisOrToday = static::getThisOrToday();
 
         /**
          * Sets the date to the current or next business day (neither a weekend day nor a holiday).
          *
          * @return bool
          */
-        return function ($self = null) use ($mixin, $getThisOrToday, $method) {
-            $self = $getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
+        return function ($self = null) use ($mixin, $method) {
+            $carbonClass = get_class();
+
+            $self = $carbonClass::getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
 
             return $self->isBusinessDay() ? $self : $self->$method();
         };

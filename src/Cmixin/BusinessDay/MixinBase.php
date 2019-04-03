@@ -4,11 +4,21 @@ namespace Cmixin\BusinessDay;
 
 abstract class MixinBase
 {
-    protected static $carbonClass = null;
-
-    protected static function getCarbonClass()
+    /**
+     * Returns the current class name of static facade or current instance.
+     *
+     * @return \Closure
+     */
+    public static function getCarbonClass()
     {
-        return static::$carbonClass ?: 'Carbon\Carbon';
+        /**
+         * Returns the current class name of static facade or current instance.
+         *
+         * @return string
+         */
+        return function () {
+            return get_class();
+        };
     }
 
     public static function enable($carbonClass = null)
@@ -19,23 +29,27 @@ abstract class MixinBase
             };
         }
 
-        static::$carbonClass = $carbonClass;
-        $carbonClass = static::getCarbonClass();
-        $mixin = new static();
+        $isArray = is_array($carbonClass);
+        $carbonClasses = (array) $carbonClass;
+        $mixins = array();
 
-        $carbonClass::mixin($mixin);
+        foreach ($carbonClasses as $carbonClass) {
+            $mixin = new static();
 
-        $arguments = func_get_args();
+            $carbonClass::mixin($mixin);
 
-        if (isset($arguments[1]) && is_string($region = $arguments[1])) {
-            $carbonClass::setHolidaysRegion($region);
+            $arguments = func_get_args();
 
-            if (isset($arguments[2])) {
-                $carbonClass::addHolidays($region, $arguments[2]);
+            if (isset($arguments[1]) && is_string($region = $arguments[1])) {
+                $carbonClass::setHolidaysRegion($region);
+
+                if (isset($arguments[2])) {
+                    $carbonClass::addHolidays($region, $arguments[2]);
+                }
             }
         }
 
-        return $mixin;
+        return $isArray ? $mixins : $mixin;
     }
 
     /**
@@ -45,8 +59,6 @@ abstract class MixinBase
      */
     public function getThisOrToday()
     {
-        $staticClass = static::getCarbonClass();
-
         /**
          * Return current context $this or Carbon::today() if called statically.
          *
@@ -55,12 +67,14 @@ abstract class MixinBase
          *
          * @return \Carbon\CarbonInterface|\Carbon\Carbon|\Carbon\CarbonImmutable
          */
-        return function ($self, $context) use ($staticClass) {
+        return function ($self, $context) {
+            $carbonClass = get_class();
+
             if (!isset($self) && isset($context)) {
                 $self = $context;
             }
 
-            return $self ?: $staticClass::today();
+            return $self ?: $carbonClass::today();
         };
     }
 
@@ -90,21 +104,24 @@ abstract class MixinBase
      */
     public function swapDateTimeParam()
     {
-        $check = static::isDateTimeInstance();
-        $staticClass = static::getCarbonClass();
-
         /**
          * Store a first variable as Carbon instance into the second variable if the first one is a date.
          *
-         * @param mixed &$date        First variable to check if it's a date (DateTime or DateTimeInterface)
-         * @param mixed &$target      Target variable that will be replaced by the first one if it's a date
+         * @param mixed $date         First variable to check if it's a date (DateTime or DateTimeInterface)
+         * @param mixed $target       Target variable that will be replaced by the first one if it's a date
          * @param mixed $defaultValue Value to store in the first variable if it's a date
+         *
+         * @return array the new pair of variables
          */
-        return function (&$date, &$target, $defaultValue = null) use ($check, $staticClass) {
-            if ($check($date)) {
-                $target = $staticClass::instance($date);
+        return function ($date, $target, $defaultValue) {
+            $carbonClass = get_class();
+
+            if ($carbonClass::isDateTimeInstance($date)) {
+                $target = $carbonClass::instance($date);
                 $date = $defaultValue;
             }
+
+            return array($date, $target);
         };
     }
 }

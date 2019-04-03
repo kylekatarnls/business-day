@@ -11,8 +11,6 @@ class YearCrawler extends HolidaysList
      */
     public function getYearHolidays()
     {
-        $getNextFunction = static::getYearHolidaysNextFunction();
-
         /**
          * Get the holidays dates for a given year (current year if no parameter given).
          *
@@ -21,8 +19,9 @@ class YearCrawler extends HolidaysList
          *
          * @return array
          */
-        return function ($year = null, $type = null, $self = null) use ($getNextFunction) {
-            $next = $getNextFunction($year, $type, $self);
+        return function ($year = null, $type = null, $self = null) {
+            $carbonClass = get_class();
+            $next = $carbonClass::getYearHolidaysNextFunction($year, $type, $self);
             $holidays = array();
 
             while ($data = $next()) {
@@ -43,8 +42,6 @@ class YearCrawler extends HolidaysList
     public function getYearHolidaysNextFunction()
     {
         $mixin = $this;
-        $carbonClass = static::getCarbonClass();
-        $getThisOrToday = static::getThisOrToday();
 
         /**
          * Get a next() callback to call to iterate over holidays of a year.
@@ -54,8 +51,9 @@ class YearCrawler extends HolidaysList
          *
          * @return \Closure
          */
-        return function ($year = null, $type = null, $self = null) use ($mixin, $carbonClass, $getThisOrToday) {
-            $year = $year ?: $getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null)->year;
+        return function ($year = null, $type = null, $self = null) use ($mixin) {
+            $carbonClass = get_class();
+            $year = $year ?: $carbonClass::getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null)->year;
             $holidays = $carbonClass::getHolidays();
             $outputClass = $type ? (is_string($type) && $type !== 'string' ? $type : 'DateTime') : $carbonClass;
             $holidaysList = array();
