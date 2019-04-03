@@ -15,27 +15,25 @@ namespace Carbon
          */
         public function addBusinessDays($days = 1, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay.php:27
+            // Content, see src/Cmixin/BusinessDay.php:28
         }
 
         /**
          * @see \Cmixin\BusinessDay::addBusinessDay
          *
-         * Add a given number of business days to the current date.
-         *
-         * @param int $days
+         * Add one business day to the current date.
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
         public function addBusinessDay($days = 1, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay.php:27
+            // Content, see src/Cmixin/BusinessDay.php:28
         }
 
         /**
          * @see \Cmixin\BusinessDay::subBusinessDays
          *
-         * Add a given number of business days to the current date.
+         * Subtract a given number of business days to the current date.
          *
          * @param int $days
          *
@@ -43,13 +41,13 @@ namespace Carbon
          */
         public function subBusinessDays($days = 1, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay.php:27
+            // Content, see src/Cmixin/BusinessDay.php:28
         }
 
         /**
          * @see \Cmixin\BusinessDay::subtractBusinessDays
          *
-         * Add a given number of business days to the current date.
+         * Subtract a given number of business days to the current date.
          *
          * @param int $days
          *
@@ -57,35 +55,31 @@ namespace Carbon
          */
         public function subtractBusinessDays($days = 1, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay.php:27
+            // Content, see src/Cmixin/BusinessDay.php:28
         }
 
         /**
          * @see \Cmixin\BusinessDay::subBusinessDay
          *
-         * Add a given number of business days to the current date.
-         *
-         * @param int $days
+         * Subtract one business day to the current date.
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
         public function subBusinessDay($days = 1, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay.php:27
+            // Content, see src/Cmixin/BusinessDay.php:28
         }
 
         /**
          * @see \Cmixin\BusinessDay::subtractBusinessDay
          *
-         * Add a given number of business days to the current date.
-         *
-         * @param int $days
+         * Subtract one business day to the current date.
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
         public function subtractBusinessDay($days = 1, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay.php:27
+            // Content, see src/Cmixin/BusinessDay.php:28
         }
 
         /**
@@ -99,7 +93,7 @@ namespace Carbon
          */
         public function diffInBusinessDays($other = null, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay.php:148
+            // Content, see src/Cmixin/BusinessDay.php:149
         }
 
         /**
@@ -111,7 +105,7 @@ namespace Carbon
          */
         public function getBusinessDaysInMonth($self = null)
         {
-            // Content, see src/Cmixin/BusinessDay.php:176
+            // Content, see src/Cmixin/BusinessDay.php:177
         }
 
         /**
@@ -123,7 +117,7 @@ namespace Carbon
          */
         public function getMonthBusinessDays($self = null)
         {
-            // Content, see src/Cmixin/BusinessDay.php:201
+            // Content, see src/Cmixin/BusinessDay.php:202
         }
 
         /**
@@ -165,7 +159,7 @@ namespace Carbon
         /**
          * @see \Cmixin\BusinessDay\BusinessCalendar::previousBusinessDay
          *
-         * Sets the date to the next business day (neither a weekend day nor a holiday).
+         * Sets the date to the previous business day (neither a weekend day nor a holiday).
          *
          * @return bool
          */
@@ -177,7 +171,7 @@ namespace Carbon
         /**
          * @see \Cmixin\BusinessDay\BusinessCalendar::currentOrPreviousBusinessDay
          *
-         * Sets the date to the current or next business day (neither a weekend day nor a holiday).
+         * Sets the date to the current or previous business day.
          *
          * @return bool
          */
@@ -246,10 +240,9 @@ namespace Carbon
         /**
          * @see \Cmixin\BusinessDay\HolidayObserver::observeHoliday
          *
-         * Set a holiday as observed/unobserved in the selected zone (can take array of holidays).
+         * Set a holiday as observed in the selected zone.
          *
-         * @param string|array $holidayId ID key of the holiday
-         * @param bool         $observed  observed state
+         * @param string $holidayId ID key of the holiday
          *
          * @return $this|null
          */
@@ -261,10 +254,9 @@ namespace Carbon
         /**
          * @see \Cmixin\BusinessDay\HolidayObserver::unobserveHoliday
          *
-         * Set a holiday as observed/unobserved in the selected zone (can take array of holidays).
+         * Set a holiday as not observed in the selected zone.
          *
-         * @param string|array $holidayId ID key of the holiday
-         * @param bool         $observed  observed state
+         * @param string $holidayId ID key of the holiday
          *
          * @return $this|null
          */
@@ -276,10 +268,9 @@ namespace Carbon
         /**
          * @see \Cmixin\BusinessDay\HolidayObserver::observeHolidays
          *
-         * Set a holiday as observed/unobserved in the selected zone (can take array of holidays).
+         * Set a holiday as observed in the selected zone.
          *
-         * @param string|array $holidayId ID key of the holiday
-         * @param bool         $observed  observed state
+         * @param array $holidayIds ID keys of the holidays
          *
          * @return $this|null
          */
@@ -291,10 +282,9 @@ namespace Carbon
         /**
          * @see \Cmixin\BusinessDay\HolidayObserver::unobserveHolidays
          *
-         * Set a holiday as observed/unobserved in the selected zone (can take array of holidays).
+         * Set a holiday as not observed in the selected zone.
          *
-         * @param string|array $holidayId ID key of the holiday
-         * @param bool         $observed  observed state
+         * @param array $holidayIds ID keys of the holidays
          *
          * @return $this|null
          */
@@ -306,10 +296,7 @@ namespace Carbon
         /**
          * @see \Cmixin\BusinessDay\HolidayObserver::observeAllHolidays
          *
-         * Set a holiday as observed/unobserved in the selected zone (can take array of holidays).
-         *
-         * @param string|array $holidayId ID key of the holiday
-         * @param bool         $observed  observed state
+         * Set all holidays as observed in the selected zone.
          *
          * @return $this|null
          */
@@ -321,10 +308,7 @@ namespace Carbon
         /**
          * @see \Cmixin\BusinessDay\HolidayObserver::unobserveAllHolidays
          *
-         * Set a holiday as observed/unobserved in the selected zone (can take array of holidays).
-         *
-         * @param string|array $holidayId ID key of the holiday
-         * @param bool         $observed  observed state
+         * Set all holidays as observed in the selected zone.
          *
          * @return $this|null
          */
@@ -687,27 +671,25 @@ namespace Carbon
          */
         public function addBusinessDays($days = 1, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay.php:27
+            // Content, see src/Cmixin/BusinessDay.php:28
         }
 
         /**
          * @see \Cmixin\BusinessDay::addBusinessDay
          *
-         * Add a given number of business days to the current date.
-         *
-         * @param int $days
+         * Add one business day to the current date.
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
         public function addBusinessDay($days = 1, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay.php:27
+            // Content, see src/Cmixin/BusinessDay.php:28
         }
 
         /**
          * @see \Cmixin\BusinessDay::subBusinessDays
          *
-         * Add a given number of business days to the current date.
+         * Subtract a given number of business days to the current date.
          *
          * @param int $days
          *
@@ -715,13 +697,13 @@ namespace Carbon
          */
         public function subBusinessDays($days = 1, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay.php:27
+            // Content, see src/Cmixin/BusinessDay.php:28
         }
 
         /**
          * @see \Cmixin\BusinessDay::subtractBusinessDays
          *
-         * Add a given number of business days to the current date.
+         * Subtract a given number of business days to the current date.
          *
          * @param int $days
          *
@@ -729,35 +711,31 @@ namespace Carbon
          */
         public function subtractBusinessDays($days = 1, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay.php:27
+            // Content, see src/Cmixin/BusinessDay.php:28
         }
 
         /**
          * @see \Cmixin\BusinessDay::subBusinessDay
          *
-         * Add a given number of business days to the current date.
-         *
-         * @param int $days
+         * Subtract one business day to the current date.
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
         public function subBusinessDay($days = 1, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay.php:27
+            // Content, see src/Cmixin/BusinessDay.php:28
         }
 
         /**
          * @see \Cmixin\BusinessDay::subtractBusinessDay
          *
-         * Add a given number of business days to the current date.
-         *
-         * @param int $days
+         * Subtract one business day to the current date.
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
         public function subtractBusinessDay($days = 1, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay.php:27
+            // Content, see src/Cmixin/BusinessDay.php:28
         }
 
         /**
@@ -771,7 +749,7 @@ namespace Carbon
          */
         public function diffInBusinessDays($other = null, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay.php:148
+            // Content, see src/Cmixin/BusinessDay.php:149
         }
 
         /**
@@ -783,7 +761,7 @@ namespace Carbon
          */
         public function getBusinessDaysInMonth($self = null)
         {
-            // Content, see src/Cmixin/BusinessDay.php:176
+            // Content, see src/Cmixin/BusinessDay.php:177
         }
 
         /**
@@ -795,7 +773,7 @@ namespace Carbon
          */
         public function getMonthBusinessDays($self = null)
         {
-            // Content, see src/Cmixin/BusinessDay.php:201
+            // Content, see src/Cmixin/BusinessDay.php:202
         }
 
         /**
@@ -837,7 +815,7 @@ namespace Carbon
         /**
          * @see \Cmixin\BusinessDay\BusinessCalendar::previousBusinessDay
          *
-         * Sets the date to the next business day (neither a weekend day nor a holiday).
+         * Sets the date to the previous business day (neither a weekend day nor a holiday).
          *
          * @return bool
          */
@@ -849,7 +827,7 @@ namespace Carbon
         /**
          * @see \Cmixin\BusinessDay\BusinessCalendar::currentOrPreviousBusinessDay
          *
-         * Sets the date to the current or next business day (neither a weekend day nor a holiday).
+         * Sets the date to the current or previous business day.
          *
          * @return bool
          */
@@ -918,10 +896,9 @@ namespace Carbon
         /**
          * @see \Cmixin\BusinessDay\HolidayObserver::observeHoliday
          *
-         * Set a holiday as observed/unobserved in the selected zone (can take array of holidays).
+         * Set a holiday as observed in the selected zone.
          *
-         * @param string|array $holidayId ID key of the holiday
-         * @param bool         $observed  observed state
+         * @param string $holidayId ID key of the holiday
          *
          * @return $this|null
          */
@@ -933,10 +910,9 @@ namespace Carbon
         /**
          * @see \Cmixin\BusinessDay\HolidayObserver::unobserveHoliday
          *
-         * Set a holiday as observed/unobserved in the selected zone (can take array of holidays).
+         * Set a holiday as not observed in the selected zone.
          *
-         * @param string|array $holidayId ID key of the holiday
-         * @param bool         $observed  observed state
+         * @param string $holidayId ID key of the holiday
          *
          * @return $this|null
          */
@@ -948,10 +924,9 @@ namespace Carbon
         /**
          * @see \Cmixin\BusinessDay\HolidayObserver::observeHolidays
          *
-         * Set a holiday as observed/unobserved in the selected zone (can take array of holidays).
+         * Set a holiday as observed in the selected zone.
          *
-         * @param string|array $holidayId ID key of the holiday
-         * @param bool         $observed  observed state
+         * @param array $holidayIds ID keys of the holidays
          *
          * @return $this|null
          */
@@ -963,10 +938,9 @@ namespace Carbon
         /**
          * @see \Cmixin\BusinessDay\HolidayObserver::unobserveHolidays
          *
-         * Set a holiday as observed/unobserved in the selected zone (can take array of holidays).
+         * Set a holiday as not observed in the selected zone.
          *
-         * @param string|array $holidayId ID key of the holiday
-         * @param bool         $observed  observed state
+         * @param array $holidayIds ID keys of the holidays
          *
          * @return $this|null
          */
@@ -978,10 +952,7 @@ namespace Carbon
         /**
          * @see \Cmixin\BusinessDay\HolidayObserver::observeAllHolidays
          *
-         * Set a holiday as observed/unobserved in the selected zone (can take array of holidays).
-         *
-         * @param string|array $holidayId ID key of the holiday
-         * @param bool         $observed  observed state
+         * Set all holidays as observed in the selected zone.
          *
          * @return $this|null
          */
@@ -993,10 +964,7 @@ namespace Carbon
         /**
          * @see \Cmixin\BusinessDay\HolidayObserver::unobserveAllHolidays
          *
-         * Set a holiday as observed/unobserved in the selected zone (can take array of holidays).
-         *
-         * @param string|array $holidayId ID key of the holiday
-         * @param bool         $observed  observed state
+         * Set all holidays as observed in the selected zone.
          *
          * @return $this|null
          */
@@ -1359,27 +1327,25 @@ namespace Illuminate\Support
          */
         public function addBusinessDays($days = 1, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay.php:27
+            // Content, see src/Cmixin/BusinessDay.php:28
         }
 
         /**
          * @see \Cmixin\BusinessDay::addBusinessDay
          *
-         * Add a given number of business days to the current date.
-         *
-         * @param int $days
+         * Add one business day to the current date.
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
         public function addBusinessDay($days = 1, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay.php:27
+            // Content, see src/Cmixin/BusinessDay.php:28
         }
 
         /**
          * @see \Cmixin\BusinessDay::subBusinessDays
          *
-         * Add a given number of business days to the current date.
+         * Subtract a given number of business days to the current date.
          *
          * @param int $days
          *
@@ -1387,13 +1353,13 @@ namespace Illuminate\Support
          */
         public function subBusinessDays($days = 1, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay.php:27
+            // Content, see src/Cmixin/BusinessDay.php:28
         }
 
         /**
          * @see \Cmixin\BusinessDay::subtractBusinessDays
          *
-         * Add a given number of business days to the current date.
+         * Subtract a given number of business days to the current date.
          *
          * @param int $days
          *
@@ -1401,35 +1367,31 @@ namespace Illuminate\Support
          */
         public function subtractBusinessDays($days = 1, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay.php:27
+            // Content, see src/Cmixin/BusinessDay.php:28
         }
 
         /**
          * @see \Cmixin\BusinessDay::subBusinessDay
          *
-         * Add a given number of business days to the current date.
-         *
-         * @param int $days
+         * Subtract one business day to the current date.
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
         public function subBusinessDay($days = 1, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay.php:27
+            // Content, see src/Cmixin/BusinessDay.php:28
         }
 
         /**
          * @see \Cmixin\BusinessDay::subtractBusinessDay
          *
-         * Add a given number of business days to the current date.
-         *
-         * @param int $days
+         * Subtract one business day to the current date.
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
         public function subtractBusinessDay($days = 1, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay.php:27
+            // Content, see src/Cmixin/BusinessDay.php:28
         }
 
         /**
@@ -1443,7 +1405,7 @@ namespace Illuminate\Support
          */
         public function diffInBusinessDays($other = null, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay.php:148
+            // Content, see src/Cmixin/BusinessDay.php:149
         }
 
         /**
@@ -1455,7 +1417,7 @@ namespace Illuminate\Support
          */
         public function getBusinessDaysInMonth($self = null)
         {
-            // Content, see src/Cmixin/BusinessDay.php:176
+            // Content, see src/Cmixin/BusinessDay.php:177
         }
 
         /**
@@ -1467,7 +1429,7 @@ namespace Illuminate\Support
          */
         public function getMonthBusinessDays($self = null)
         {
-            // Content, see src/Cmixin/BusinessDay.php:201
+            // Content, see src/Cmixin/BusinessDay.php:202
         }
 
         /**
@@ -1509,7 +1471,7 @@ namespace Illuminate\Support
         /**
          * @see \Cmixin\BusinessDay\BusinessCalendar::previousBusinessDay
          *
-         * Sets the date to the next business day (neither a weekend day nor a holiday).
+         * Sets the date to the previous business day (neither a weekend day nor a holiday).
          *
          * @return bool
          */
@@ -1521,7 +1483,7 @@ namespace Illuminate\Support
         /**
          * @see \Cmixin\BusinessDay\BusinessCalendar::currentOrPreviousBusinessDay
          *
-         * Sets the date to the current or next business day (neither a weekend day nor a holiday).
+         * Sets the date to the current or previous business day.
          *
          * @return bool
          */
@@ -1590,10 +1552,9 @@ namespace Illuminate\Support
         /**
          * @see \Cmixin\BusinessDay\HolidayObserver::observeHoliday
          *
-         * Set a holiday as observed/unobserved in the selected zone (can take array of holidays).
+         * Set a holiday as observed in the selected zone.
          *
-         * @param string|array $holidayId ID key of the holiday
-         * @param bool         $observed  observed state
+         * @param string $holidayId ID key of the holiday
          *
          * @return $this|null
          */
@@ -1605,10 +1566,9 @@ namespace Illuminate\Support
         /**
          * @see \Cmixin\BusinessDay\HolidayObserver::unobserveHoliday
          *
-         * Set a holiday as observed/unobserved in the selected zone (can take array of holidays).
+         * Set a holiday as not observed in the selected zone.
          *
-         * @param string|array $holidayId ID key of the holiday
-         * @param bool         $observed  observed state
+         * @param string $holidayId ID key of the holiday
          *
          * @return $this|null
          */
@@ -1620,10 +1580,9 @@ namespace Illuminate\Support
         /**
          * @see \Cmixin\BusinessDay\HolidayObserver::observeHolidays
          *
-         * Set a holiday as observed/unobserved in the selected zone (can take array of holidays).
+         * Set a holiday as observed in the selected zone.
          *
-         * @param string|array $holidayId ID key of the holiday
-         * @param bool         $observed  observed state
+         * @param array $holidayIds ID keys of the holidays
          *
          * @return $this|null
          */
@@ -1635,10 +1594,9 @@ namespace Illuminate\Support
         /**
          * @see \Cmixin\BusinessDay\HolidayObserver::unobserveHolidays
          *
-         * Set a holiday as observed/unobserved in the selected zone (can take array of holidays).
+         * Set a holiday as not observed in the selected zone.
          *
-         * @param string|array $holidayId ID key of the holiday
-         * @param bool         $observed  observed state
+         * @param array $holidayIds ID keys of the holidays
          *
          * @return $this|null
          */
@@ -1650,10 +1608,7 @@ namespace Illuminate\Support
         /**
          * @see \Cmixin\BusinessDay\HolidayObserver::observeAllHolidays
          *
-         * Set a holiday as observed/unobserved in the selected zone (can take array of holidays).
-         *
-         * @param string|array $holidayId ID key of the holiday
-         * @param bool         $observed  observed state
+         * Set all holidays as observed in the selected zone.
          *
          * @return $this|null
          */
@@ -1665,10 +1620,7 @@ namespace Illuminate\Support
         /**
          * @see \Cmixin\BusinessDay\HolidayObserver::unobserveAllHolidays
          *
-         * Set a holiday as observed/unobserved in the selected zone (can take array of holidays).
-         *
-         * @param string|array $holidayId ID key of the holiday
-         * @param bool         $observed  observed state
+         * Set all holidays as observed in the selected zone.
          *
          * @return $this|null
          */

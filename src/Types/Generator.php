@@ -42,6 +42,7 @@ class Generator
         $methods = '';
         $source = str_replace('\\', '/', realpath($source));
         $sourceLength = strlen($source);
+        $files = array();
 
         foreach ($this->getMethods($boot) as $name => $closure) {
             try {
@@ -50,17 +51,57 @@ class Generator
                 continue;
             }
 
-            $file = str_replace('\\', '/', $function->getFileName());
+            $file = $function->getFileName();
+
+            if (!isset($files[$file])) {
+                $files[$file] = file($file);
+            }
+
+            $lines = $files[$file];
+            $file = str_replace('\\', '/', $file);
 
             if (substr($file, 0, $sourceLength + 1) !== "$source/") {
                 continue;
             }
 
             $file = substr($file, $sourceLength + 1);
-
             $parameters = implode(', ', array_map(array($this, 'dumpParameter'), $function->getParameters()));
             $methodDocBlock = trim($function->getDocComment() ?: '');
+            $length = $function->getStartLine() - 1;
+            $code = array_slice($lines, 0, $length);
             $className = '\\'.str_replace('/', '\\', substr($file, 0, -4));
+
+            for ($i = $length - 1; $i >= 0; $i--) {
+                if (preg_match('/^\s*(public|protected)\s+function\s+(\S+)\(.*\)(\s*\{)?$/', $code[$i], $match)) {
+                    if ($name !== $match[2]) {
+                        $method = new \ReflectionMethod($className, $name);
+                        $methodFile = $method->getFileName();
+
+                        if (!isset($files[$methodFile])) {
+                            $files[$methodFile] = file($methodFile);
+                        }
+
+                        $length = $method->getEndLine() - 1;
+                        $lines = $files[$methodFile];
+                        $code = array_slice($lines, 0, $length);
+
+                        for ($i = $length - 1; $i >= 0; $i--) {
+                            if (preg_match('/^\s*(public|protected)\s+function\s+(\S+)\(.*\)(\s*\{)?$/', $code[$i], $match)) {
+                                break;
+                            }
+                        }
+
+                        $code = implode('', array_slice($code, $i));
+
+                        if (preg_match('/(\/\*\*[\s\S]+\*\/)\s+return\s/U', $code, $match)) {
+                            $methodDocBlock = $match[1];
+                        }
+                    }
+
+                    break;
+                }
+            }
+
             $file .= ':'.$function->getStartLine();
 
             if ($methods !== '') {
