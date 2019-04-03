@@ -5,20 +5,22 @@ namespace Cmixin\BusinessDay;
 abstract class MixinBase
 {
     /**
-     * Returns the current class name of static facade or current instance.
+     * @deprecated
      *
-     * @return \Closure
+     * @var string
      */
-    public static function getCarbonClass()
+    protected static $carbonClass = null;
+
+    /**
+     * @deprecated
+     *
+     * Returns the last class name enabled via static facade.
+     *
+     * @return string
+     */
+    protected static function getCarbonClass()
     {
-        /**
-         * Returns the current class name of static facade or current instance.
-         *
-         * @return string
-         */
-        return function () {
-            return get_class();
-        };
+        return static::$carbonClass ?: 'Carbon\Carbon';
     }
 
     public static function enable($carbonClass = null)
@@ -34,10 +36,9 @@ abstract class MixinBase
         $mixins = array();
 
         foreach ($carbonClasses as $carbonClass) {
+            static::$carbonClass = $carbonClass;
             $mixin = new static();
-
             $carbonClass::mixin($mixin);
-
             $arguments = func_get_args();
 
             if (isset($arguments[1]) && is_string($region = $arguments[1])) {
