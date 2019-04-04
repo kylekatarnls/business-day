@@ -5,4 +5,4 @@ include __DIR__.'/src/Types/Generator.php';
 
 $sources = __DIR__.'/src';
 $generator = new \Types\Generator();
-$generator->writeHelpers($sources, $sources);
+$generator->writeHelpers('Cmixin\BusinessDay', $sources, $sources);

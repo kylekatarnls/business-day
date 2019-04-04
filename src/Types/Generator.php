@@ -32,12 +32,13 @@ class Generator
     /**
      * @param callable|null $boot
      * @param string        $source
+     * @param string        $defaultClass
      *
      * @throws \ReflectionException
      *
      * @return string
      */
-    protected function getMethodsDefinitions($boot, $source)
+    protected function getMethodsDefinitions($boot, $source, $defaultClass)
     {
         $methods = '';
         $source = str_replace('\\', '/', realpath($source));
@@ -74,7 +75,12 @@ class Generator
             for ($i = $length - 1; $i >= 0; $i--) {
                 if (preg_match('/^\s*(public|protected)\s+function\s+(\S+)\(.*\)(\s*\{)?$/', $code[$i], $match)) {
                     if ($name !== $match[2]) {
-                        $method = new \ReflectionMethod($className, $name);
+                        try {
+                            $method = new \ReflectionMethod($className, $name);
+                        } catch (\ReflectionException $e) {
+                            $method = new \ReflectionMethod($defaultClass, $name);
+                        }
+
                         $methodFile = $method->getFileName();
 
                         if (!isset($files[$methodFile])) {
@@ -102,6 +108,7 @@ class Generator
                 }
             }
 
+            $methodDocBlock = preg_replace('/^ +\*/m', '         *', $methodDocBlock);
             $file .= ':'.$function->getStartLine();
 
             if ($methods !== '') {
@@ -123,6 +130,7 @@ class Generator
     }
 
     /**
+     * @param string   $defaultClass
      * @param string   $source
      * @param string   $destination
      * @param callable $boot
@@ -130,9 +138,9 @@ class Generator
      *
      * @throws \ReflectionException
      */
-    public function writeHelpers($source, $destination, $name = '_ide_business_day', callable $boot = null, array $classes = null)
+    public function writeHelpers($defaultClass, $source, $destination, $name = '_ide_business_day', callable $boot = null, array $classes = null)
     {
-        $methods = $this->getMethodsDefinitions($boot, $source);
+        $methods = $this->getMethodsDefinitions($boot, $source, $defaultClass);
 
         $classes = $classes ?: array(
             'Carbon\Carbon',
