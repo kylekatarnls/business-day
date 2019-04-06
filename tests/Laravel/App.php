@@ -1,32 +1,18 @@
 <?php
 
-use Illuminate\Events\EventDispatcher;
-use Symfony\Component\Translation\Translator;
-
 class App
 {
-    /**
-     * @var string
-     */
-    protected static $version;
-
-    /**
-     * @var Translator
-     */
-    public $translator;
-
-    /**
-     * @var EventDispatcher
-     */
-    public $events;
+    public $region = 'us';
 
     public function get($name)
     {
-        return $name === 'config' ? $this : array(
-            'region' => 'us',
-            'with'   => array(
-                'foo' => '09-07',
-            ),
-        );
+        return $name === 'config' ? $this : function ($app) {
+            return array(
+                'region' => $app->region,
+                'with'   => array(
+                    'foo' => '09-07',
+                ),
+            );
+        };
     }
 }

@@ -28,5 +28,7 @@ class ServiceProviderTest extends TestCase
 
         $this->assertSame('foo', Carbon::parse('2019-09-07')->getHolidayId());
         $this->assertSame('us-national', Carbon::getHolidaysRegion());
+
+        $this->assertNull($service->register());
     }
 }
