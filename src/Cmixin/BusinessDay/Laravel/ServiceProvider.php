@@ -16,16 +16,21 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         }
 
         if (is_array($config) && isset($config['region'])) {
-            BusinessDay::enable(
-                array_filter(array(
-                    'Carbon\Carbon',
-                    'Carbon\CarbonImmutable',
-                    'Illuminate\Support\Carbon',
-                    'Illuminate\Support\Facades\Date',
-                ), 'class_exists'),
-                $config['region'],
-                isset($config['with']) ? $config['with'] : null
-            );
+            $classes = array_filter(array(
+                'Carbon\Carbon',
+                'Carbon\CarbonImmutable',
+                'Illuminate\Support\Carbon',
+            ), 'class_exists');
+
+            // @codeCoverageIgnoreStart
+            if (class_exists('Illuminate\Support\Facades\Date') &&
+                (($now = \Illuminate\Support\Facades\Date::now()) instanceof \DateTimeInterface) &&
+                !in_array($class = get_class($now), $classes)) {
+                $classes[] = $class;
+            }
+            // @codeCoverageIgnoreEnd
+
+            BusinessDay::enable($classes, $config['region'], isset($config['with']) ? $config['with'] : null);
         }
     }
 
