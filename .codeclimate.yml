@@ -18,5 +18,4 @@ exclude_patterns:
 - "src/Cmixin/Holidays/"
 - "src/Cmixin/BusinessDay/Calendar/LunarCalendar.php"
 - "src/Types/"
-- "src/_ide_business_day_instantiated.php"
-- "src/_ide_business_day_static.php"
+- "types"

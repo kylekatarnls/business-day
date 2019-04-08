@@ -146,6 +146,7 @@ class Generator
             'Carbon\Carbon',
             'Carbon\CarbonImmutable',
             'Illuminate\Support\Carbon',
+            'Illuminate\Support\Facades\Date',
         );
 
         $code = "<?php\n";

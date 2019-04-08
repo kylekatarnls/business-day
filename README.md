@@ -561,6 +561,23 @@ print_r(Carbon::getMonthBusinessDays('2019-06')); // Open days in June 2019
 print_r(Carbon::parse('2019-06-10')->getMonthBusinessDays()); // Can be called from an instance
 ```
 
+### Laravel
+
+To enable business-day globally in Laravel, set default holidays settings in the config file **config/carbon.php**
+(create this file if it does not exist yet):
+
+```php
+<?php return [
+  'holidays' => [
+    'region' => 'us',
+    'with' => [
+      'boss-birthday' => '09-26',
+      'last-monday'   => '= last Monday of October',
+    ],
+  ],
+];
+```
+
 ### Note about timezones
 
 When you set an holidays region, it does not change the timezone, so if January 1st is an holiday,
