@@ -4,7 +4,7 @@ return array(
     '01-01-and'          => '= 01-01 substitute',
     '01-26-and'          => '= 01-26 substitute',
     'easter-2'           => '= easter -2',
-    'easter-1'           => '= easter 1',
+    'easter-p1'          => '= easter 1',
     'easter'             => '= easter',
     '04-25-and'          => '= 04-25 substitute',
     '2nd-monday-of-june' => '= second Monday of June',

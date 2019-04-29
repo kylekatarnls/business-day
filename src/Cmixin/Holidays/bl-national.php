@@ -7,7 +7,7 @@ return array(
     'easter-46'          => '= easter -46',
     'easter-21'          => '= easter -21',
     'easter'             => '= easter',
-    'easter-1'           => '= easter 1',
+    'easter-p1'          => '= easter 1',
     '05-01'              => '05-01',
     'easter-39'          => '= easter 39',
     '05-08'              => '05-08',

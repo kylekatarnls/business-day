@@ -5,7 +5,7 @@ return array(
     '01-21'                => '01-21',
     'easter-2'             => '= easter -2',
     'easter'               => '= easter',
-    'easter-1'             => '= easter 1',
+    'easter-p1'            => '= easter 1',
     '04-28'                => '04-28',
     '05-01'                => '= 05-01 if Sunday then next Monday',
     'easter-49'            => '= easter 49',

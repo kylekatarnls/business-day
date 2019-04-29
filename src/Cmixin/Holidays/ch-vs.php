@@ -4,7 +4,7 @@ return array_replace(require __DIR__.'/ch-national.php', array(
     'new-year-next-day'                 => null,
     '03-19'                             => '03-19',
     'easter-2'                          => '= easter -2',
-    'easter-1'                          => '= easter 1',
+    'easter-p1'                         => '= easter 1',
     '05-01-12:00'                       => '= 05-01 12:00',
     'easter-50'                         => '= easter 50',
     'easter-60'                         => '= easter 60',

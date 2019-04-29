@@ -4,7 +4,7 @@ return array(
     '01-01-and-if-sunday-then-next-monday'  => '= 01-01 substitute',
     'easter-2'                              => '= easter -2',
     'easter'                                => '= easter',
-    'easter-1'                              => '= easter 1',
+    'easter-p1'                             => '= easter 1',
     '05-01-and-if-sunday-then-next-monday'  => '= 05-01 substitute',
     '06-01-and-if-sunday-then-next-monday'  => '= 06-01 substitute',
     '10-10-and-if-sunday-then-next-monday'  => '= 10-10 substitute',

@@ -12,7 +12,7 @@ return array(
     'easter-3'             => '= easter -3',
     'easter-2'             => '= easter -2',
     'easter'               => '= easter',
-    'easter-1'             => '= easter 1',
+    'easter-p1'            => '= easter 1',
     'thursday-after-04-18' => '= Thursday after 04-18',
     '05-01'                => '05-01',
     '2nd-sunday-of-may'    => '= second Sunday of May',
