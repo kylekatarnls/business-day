@@ -7,7 +7,7 @@ return array(
     'substitutes-03-21'  => '= 03-21 if Sunday then next Monday',
     'easter-2'           => '= easter -2',
     'easter'             => '= easter',
-    'easter-1'           => '= easter 1',
+    'easter-p1'          => '= easter 1',
     '04-27'              => '04-27',
     'substitutes-04-27'  => '= 04-27 if Sunday then next Monday',
     '05-01'              => '05-01',

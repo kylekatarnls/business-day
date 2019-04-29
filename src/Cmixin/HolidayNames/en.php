@@ -445,6 +445,7 @@ return array(
     'kitchen-guardians'                                                                                   => 'Kitchen guardians',
     'europe-day'                                                                                          => 'Europe Day',
     'easter-1'                                                                                            => 'Family Day',
+    'easter-p1'                                                                                           => 'Easter Monday',
     'national-women-s-day'                                                                                => 'National Women\'s Day',
     'nelson-mandela-day'                                                                                  => 'Nelson Mandela Day',
     'heritage-day'                                                                                        => 'Heritage Day',

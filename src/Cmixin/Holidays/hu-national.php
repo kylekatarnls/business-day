@@ -8,7 +8,7 @@ return array(
     '03-15'              => '03-15',
     '04-16'              => '04-16',
     'easter'             => '= easter',
-    'easter-1'           => '= easter 1',
+    'easter-p1'          => '= easter 1',
     '05-01'              => '05-01',
     '1st-sunday-of-may'  => '= first Sunday of May',
     '05-21'              => '05-21',

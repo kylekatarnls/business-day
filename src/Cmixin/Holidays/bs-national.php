@@ -5,7 +5,7 @@ return array(
     '01-10-and'            => '= 01-10 substitute',
     'easter-2'             => '= easter -2',
     'easter'               => '= easter',
-    'easter-1'             => '= easter 1',
+    'easter-p1'            => '= easter 1',
     '2nd-sunday-of-may'    => '= second Sunday of May',
     'easter-49'            => '= easter 49',
     'easter-50'            => '= easter 50',

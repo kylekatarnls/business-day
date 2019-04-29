@@ -6,7 +6,7 @@ return array(
     'new-year'                                                                     => '01-01',
     '01-26'                                                                        => '01-26',
     '03-20'                                                                        => '03-20',
-    'easter-1'                                                                     => '= easter 1',
+    'easter-p1'                                                                    => '= easter 1',
     '04-06'                                                                        => '04-06',
     '04-25'                                                                        => '04-25',
     '12-25-and-if-sunday-then-next-tuesday'                                        => '= 12-25 if sunday then next tuesday',
