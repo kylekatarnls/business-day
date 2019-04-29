@@ -5,7 +5,7 @@ return array(
     '03-09'                            => '03-09',
     '03-12'                            => '= 03-12 substitute',
     'easter-2'                         => '= easter -2',
-    'easter-1'                         => '= easter 1',
+    'easter-p1'                        => '= easter 1',
     '05-01'                            => '= 05-01 substitute',
     '05-25'                            => '= 05-25 substitute',
     '1st-monday-of-july'               => '= first Monday of July',

@@ -5,7 +5,7 @@ return array(
     'new-year-next-day'                => '01-02',
     'substitutes-01-02'                => '= 01-02 if Monday then next Tuesday',
     'easter-2'                         => '= easter -2',
-    'easter-1'                         => '= easter 1',
+    'easter-p1'                        => '= easter 1',
     'easter'                           => '= easter',
     'easter-39'                        => '= easter 39',
     '05-01'                            => '05-01',

@@ -7,7 +7,7 @@ return array(
     '05-02'                => '= 05-02 substitute',
     '01-06'                => '01-06',
     'easter'               => '= easter',
-    'easter-1'             => '= easter 1',
+    'easter-p1'            => '= easter 1',
     'easter-60'            => '= easter 60',
     '08-15'                => '08-15',
     '11-01'                => '11-01',

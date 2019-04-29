@@ -156,6 +156,7 @@ return array(
     'easter-3'                                            => 'Jeudi saint',
     'easter-2'                                            => 'Vendredi saint',
     'easter-1'                                            => 'Samedi saint',
+    'easter-p1'                                           => 'Lundi de Pâques',
     'easter-39'                                           => 'Ascension',
     'easter-49'                                           => 'Pentecôte',
     'easter-50'                                           => 'Lundi de Pentecôte',

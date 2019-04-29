@@ -3,7 +3,7 @@
 return array(
     'new-year'           => '01-01',
     '01-06'              => '01-06',
-    'easter-1'           => '= easter 1',
+    'easter-p1'          => '= easter 1',
     'easter'             => '= easter',
     '05-01'              => '05-01',
     '2nd-sunday-of-may'  => '= second Sunday of May',
