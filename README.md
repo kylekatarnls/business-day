@@ -1,5 +1,6 @@
 # business-day
-Carbon mixin to handle business days
+
+[Carbon](https://carbon.nesbot.com/) mixin to handle business days
 
 [![Latest Stable Version](https://poser.pugx.org/cmixin/business-day/v/stable.png)](https://packagist.org/packages/cmixin/business-day)
 [![Build Status](https://travis-ci.org/kylekatarnls/business-day.svg?branch=master)](https://travis-ci.org/kylekatarnls/business-day)
