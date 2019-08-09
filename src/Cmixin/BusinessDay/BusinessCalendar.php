@@ -51,7 +51,7 @@ class BusinessCalendar extends HolidayObserver
             $self = $carbonClass::getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
 
             do {
-                $self->$method();
+                $self = $self->$method();
             } while (!$self->isBusinessDay());
 
             return $self;
