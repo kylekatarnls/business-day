@@ -6,7 +6,7 @@ use Cmixin\BusinessDay;
 use Cmixin\BusinessDay\Calendar\LunarCalendar;
 use PHPUnit\Framework\TestCase;
 
-class BusinessDayImmutableTest  extends TestCase
+class BusinessDayImmutableTest extends TestCase
 {
     const CARBON_CLASS = 'Carbon\CarbonImmutable';
 
