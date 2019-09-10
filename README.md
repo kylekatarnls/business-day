@@ -595,7 +595,7 @@ Carbon::parse('2010-01-01 12:30', 'Europe/Paris')->setTimezone('America/Toronto'
 
 ## Contribute
 
-The scope of this library is to date business date and time utilities to Carbon,
+The scope of this library is to provide business date and time utilities to Carbon,
 if you think of a feature in this scope, feel free to submit a pull-request.
 
 We will also happily merge any holidays file matching an official country, state
