@@ -30,5 +30,12 @@
     "minimum-stability": "dev",
     "scripts": {
         "types": "php types.php"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Cmixin\\BusinessDay\\Laravel\\ServiceProvider"
+            ]
+        }
     }
 }
