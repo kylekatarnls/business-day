@@ -189,13 +189,56 @@ class HolidayCalculator extends CalculatorBase
         return $holiday;
     }
 
-    protected function calculateDynamicHoliday(string $holiday, &$dateTime = null, $key = null)
+    protected function filterConditions(array $onConditions)
+    {
+        $checks = [
+            'on'    => false,
+            'notOn' => true,
+        ];
+
+        foreach ($checks as $check => $expected) {
+            if ($onConditions[$check]) {
+                $days = strtolower($onConditions[$check]);
+                $days = $days === 'weekend' ? 'Saturday, Sunday' : $days;
+
+                yield $days => $expected;
+            }
+        }
+    }
+
+    protected function parseHolidaysString(string $holiday): ?array
     {
         $outputClass = $this->outputClass;
         $year = $this->year;
 
-        $holiday = str_replace(' in ', ' of ', trim(substr($holiday, 1)));
+        $holiday = $this->parseKeywords($holiday);
+        $holiday = str_replace('$year', $year, $holiday);
+        $onConditions = [];
+        [$holiday, $onConditions['notOn']] = array_pad(explode(' not on ', $holiday, 2), 2, null);
+        [$holiday, $onConditions['on']] = array_pad(explode(' on ', $holiday, 2), 2, null);
+        [$holiday, $condition] = array_pad(explode(' if ', $holiday, 2), 2, null);
 
+        if (strpos($holiday, "$year") === false) {
+            $holiday .= " $year";
+        }
+
+        /** @var DateTime $dateTime */
+        $dateTime = new $outputClass($holiday);
+
+        foreach ($this->filterConditions($onConditions) as $days => $expected) {
+            $days = array_map('trim', explode(',', $days));
+
+            if (in_array(strtolower($dateTime->format('l')), $days) === $expected) {
+                return null;
+            }
+        }
+
+        return [$dateTime, $condition];
+    }
+
+    protected function calculateDynamicHoliday(string $holiday, &$dateTime = null, $key = null)
+    {
+        $holiday = str_replace(' in ', ' of ', trim(substr($holiday, 1)));
         $substitute = $this->consumeHolidayString('/\ssubstitute$/i', $holiday);
 
         if ($this->isIgnoredYear($holiday)) {
@@ -214,36 +257,13 @@ class HolidayCalculator extends CalculatorBase
             }
         }
 
-        $holiday = $this->parseKeywords($holiday);
-        $holiday = str_replace('$year', $year, $holiday);
-        $onConditions = [];
-        [$holiday, $onConditions['notOn']] = array_pad(explode(' not on ', $holiday, 2), 2, null);
-        [$holiday, $onConditions['on']] = array_pad(explode(' on ', $holiday, 2), 2, null);
-        [$holiday, $condition] = array_pad(explode(' if ', $holiday, 2), 2, null);
+        $holidayDefinition = $this->parseHolidaysString($holiday);
 
-        if (strpos($holiday, "$year") === false) {
-            $holiday .= " $year";
+        if ($holidayDefinition === null) {
+            return null;
         }
 
-        /** @var DateTime $dateTime */
-        $dateTime = new $outputClass($holiday);
-
-        $checks = [
-            'on'    => false,
-            'notOn' => true,
-        ];
-
-        foreach ($checks as $check => $expected) {
-            if ($onConditions[$check]) {
-                $days = strtolower($onConditions[$check]);
-                $days = explode(',', $days === 'weekend' ? 'Saturday, Sunday' : $days);
-
-                if (in_array(strtolower($dateTime->format('l')), array_map('trim', $days)) === $expected) {
-                    return null;
-                }
-            }
-        }
-
+        [$dateTime, $condition] = $holidayDefinition;
         $dateTime = $this->handleModifiers($dateTime, $condition, $substitute, $after, $before);
 
         return $dateTime->format('d/m');
