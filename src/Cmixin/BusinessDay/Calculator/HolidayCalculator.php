@@ -167,16 +167,15 @@ class HolidayCalculator extends CalculatorBase
         $equinox = '/(March|June|September|December)\s+(?:equinox|solstice)(?:\s+of\s+([+-]?)(\d+)(?::(\d+))?)?/i';
 
         return [
-            '/julian\s+(\d+)-(\d+)/i' => [$this, 'convertJulianDate'],
+            '/julian\s+(\d+)-(\d+)/i'                      => [$this, 'convertJulianDate'],
             // Algorithm for Vietnamese and Korean not found, but Chinese calendar is the same 97% of the time.
             // If you can implement it, feel free to open a pull-request
             '/(chinese|vietnamese|korean)\s+(\d+-L?\d+)/i' => [$this, 'convertChineseDate'],
-            $equinox => [$this, 'interpolateEquinox'],
-            '/(easter|orthodox)/i' => [$this, 'interpolateFixedDate'],
-
-            '/\D-\d+\s*$/' => '$0 days',
-            '/^(\d{1,2})-(\d{1,2})((\s[\s\S]*)?)$/' => [$this, 'padDate'],
-            '/(\s\d+)\s*$/' => '$1 days',
+            $equinox                                       => [$this, 'interpolateEquinox'],
+            '/(easter|orthodox)/i'                         => [$this, 'interpolateFixedDate'],
+            '/\D-\d+\s*$/'                                 => '$0 days',
+            '/^(\d{1,2})-(\d{1,2})((\s[\s\S]*)?)$/'        => [$this, 'padDate'],
+            '/(\s\d+)\s*$/'                                => '$1 days',
         ];
     }
 
