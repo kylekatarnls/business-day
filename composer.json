@@ -32,6 +32,9 @@
         "types": "php types.php"
     },
     "extra": {
+        "branch-alias": {
+            "dev-master": "2.x-dev"
+        },
         "laravel": {
             "providers": [
                 "Cmixin\\BusinessDay\\Laravel\\ServiceProvider"
