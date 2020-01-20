@@ -3,6 +3,7 @@
 namespace Tests\Cmixin;
 
 use Cmixin\BusinessDay;
+use Cmixin\BusinessDay\Calculator\HolidayCalculator;
 use Cmixin\BusinessDay\Calendar\LunarCalendar;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
@@ -946,8 +947,8 @@ class BusinessDayTest extends TestCase
     public function testHolidayCalculatorInterpolation()
     {
         $holidays = [];
-        $holidaysList = [];
-        $calculator = new BusinessDay\HolidayCalculator(2019, static::CARBON_CLASS, 'string', $holidays, $holidaysList);
+        $calculator = new HolidayCalculator(2019, 'string', $holidays);
+        $calculator->setOutputClass(static::CARBON_CLASS);
 
         self::assertNull($calculator->interpolateFixedDate(['ko']));
     }

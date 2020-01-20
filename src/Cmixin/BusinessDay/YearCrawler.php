@@ -2,6 +2,8 @@
 
 namespace Cmixin\BusinessDay;
 
+use Cmixin\BusinessDay\Calculator\HolidayCalculator;
+
 class YearCrawler extends HolidaysList
 {
     /**
@@ -25,7 +27,7 @@ class YearCrawler extends HolidaysList
             $holidays = [];
 
             while ($data = $next()) {
-                list($key, $holiday) = $data;
+                [$key, $holiday] = $data;
 
                 $holidays[$key] = $holiday;
             }
@@ -57,7 +59,9 @@ class YearCrawler extends HolidaysList
             $holidays = $carbonClass::getHolidays();
             $outputClass = $type ? (is_string($type) && $type !== 'string' ? $type : 'DateTime') : $carbonClass;
             $holidaysList = [];
-            $calculator = new HolidayCalculator((int) $year, $outputClass, $type, $holidays, $holidaysList);
+            $calculator = new HolidayCalculator((int) $year, $type, $holidays);
+            $calculator->setOutputClass($outputClass);
+            $calculator->setHolidaysList($holidaysList);
 
             return function () use ($calculator) {
                 return $calculator->next();
