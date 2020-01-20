@@ -9,7 +9,7 @@ class Holiday extends YearCrawler
 {
     const DEFAULT_HOLIDAY_LOCALE = 'en';
 
-    public $holidayNames = array();
+    public $holidayNames = [];
 
     /**
      * Get the identifier of the current holiday or false if it's not a holiday.

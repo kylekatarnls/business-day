@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'vietnamese-new-year'                                    => 'Tết',
     'vietnamese-new-year-holidays'                           => 'Tết ngày lễ',
     'hung-kings-commemorations'                              => 'Giỗ tổ Hùng Vương',
@@ -52,4 +52,4 @@ return array(
     'new-year'                                               => 'Tết dương lịch',
     '03-08'                                                  => 'Quốc tế Phụ nữ',
     '05-01'                                                  => 'Ngày Quốc tế Lao động',
-);
+];

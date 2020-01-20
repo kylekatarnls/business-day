@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'midsummer-eve'        => 'Juhannusaatto',
     'midsummer-day'        => 'Juhannuspäivä',
     'friday-after-06-19'   => 'Juhannusaatto',
@@ -20,4 +20,4 @@ return array(
     'easter-49'            => 'Helluntaipäivä',
     'independence-day'     => 'Itsenäisyyspäivä',
     'mothers-day'          => 'Äitien päivä',
-);
+];

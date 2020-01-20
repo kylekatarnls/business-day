@@ -9,7 +9,7 @@ class HijriCalendar extends AlternativeCalendar
     /**
      * @var array
      */
-    protected $months = array(
+    protected $months = [
         'muharram',
         'safar',
         'rabi al-awwal',
@@ -22,7 +22,7 @@ class HijriCalendar extends AlternativeCalendar
         'shawwal',
         'dhu al-qidah',
         'dhu al-hijjah',
-    );
+    ];
 
     public function getDate($year, $month, $day)
     {
@@ -31,6 +31,6 @@ class HijriCalendar extends AlternativeCalendar
             30 * $month - floor(($month - 1) / 2) + $day + 1948440 - 385
         )));
 
-        return array($date[2], $date[0], $date[1]);
+        return [$date[2], $date[0], $date[1]];
     }
 }

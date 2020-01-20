@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'first-philippine-republic-day' => 'Araw ng Unang Republika ng Pilipinas',
     'chinese-new-year'              => 'Bagong Taon ng mga Tsino',
     'lantern-festival'              => 'Piyesta ng mga Parol Tsino',
@@ -46,4 +46,4 @@ return array(
     'constitution-day'              => 'Araw ng Saligang Batas',
     'independence-day'              => 'Araw ng Kalayaan',
     '1st-monday-before-september'   => 'Araw ng mga Bayani',
-);
+];

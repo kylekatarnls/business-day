@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'memorial-day-of-the-republic'                                => 'A köztársaság emléknapja',
     'memorial-day-for-the-victims-of-the-communist-dictatorships' => 'A kommunista diktatúrák áldozatainak emléknapja',
     'national-day'                                                => 'Nemzeti ünnep',
@@ -34,4 +34,4 @@ return array(
     'easter-49'                                                   => 'Pünkösdvasárnap',
     'easter-50'                                                   => 'Pünkösdhétfő',
     'mothers-day'                                                 => 'Anyák napja',
-);
+];

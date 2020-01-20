@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'new-year-holiday'               => 'Новогодние каникулы',
     'defender-of-the-fatherland-day' => 'День защитника Отечества',
     'national-flag-day'              => 'День Государственного флага',
@@ -19,4 +19,4 @@ return array(
     'new-year'                       => 'Новый год',
     '03-08'                          => 'Международный женский день',
     'christmas'                      => 'Рождество Христово',
-);
+];

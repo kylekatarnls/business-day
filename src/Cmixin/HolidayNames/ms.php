@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'new-year'          => 'Awal Tahun Masihi',
     'national-day'      => 'Hari Kebangsaan',
     'armed-forces-day'  => 'Hari Angkatan Bersenjata Diraja Brunei',
@@ -19,4 +19,4 @@ return array(
     '12-rabi-al-awwal'  => 'Maulidur Rasul',
     '27-rajab'          => 'Israk dan Mikraj',
     '1-ramadan'         => 'Hari Pertama Berpuasa',
-);
+];

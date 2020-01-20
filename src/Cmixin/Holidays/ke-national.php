@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     '01-01-and-if-sunday-then-next-monday'  => '= 01-01 substitute',
     'easter-2'                              => '= easter -2',
     'easter'                                => '= easter',
@@ -14,4 +14,4 @@ return array(
     '12-26-and-if-sunday-then-next-monday'  => '= 12-26 substitute',
     '1-shawwal'                             => '= 1 Shawwal',
     '10-dhu-al-hijjah'                      => '= 10 Dhu al-Hijjah',
-);
+];

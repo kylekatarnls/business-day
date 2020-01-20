@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     '01-01-and-if-saturday-then-next-monday-if-sunday-then-next-tuesday'            => '= 01-01 substitute',
     '01-02-and-if-saturday-then-next-monday-if-sunday-then-next-tuesday'            => '= 01-02 substitute',
     '03-08-and-if-saturday,sunday-then-next-monday'                                 => '= 03-08 substitute',
@@ -18,4 +18,4 @@ return array(
     '2-shawwal-and-if-saturday-then-next-monday-if-sunday-then-next-tuesday'        => '= 2 Shawwal substitute',
     '10-dhu-al-hijjah-and-if-saturday-then-next-monday-if-sunday-then-next-tuesday' => '= 10 Dhu al-Hijjah substitute',
     '11-dhu-al-hijjah-and-if-saturday-then-next-monday-if-sunday-then-next-tuesday' => '= 11 Dhu al-Hijjah substitute',
-);
+];

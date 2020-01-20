@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'granny-march-day'                                             => 'Баба Марта',
     'liberation-day'                                               => 'Ден на Освобождението на България от Османската Империя',
     'st.-george-s-day'                                             => 'Гергьовден',
@@ -25,4 +25,4 @@ return array(
     'easter'                                                       => 'Великден',
     'easter-1'                                                     => 'Велики понеделник',
     'independence-day'                                             => 'Ден на независимостта',
-);
+];

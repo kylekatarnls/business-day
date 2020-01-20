@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'restoration-of-independence-day'               => 'Latvijas Republikas Neatkarības atjaunošanas diena',
     'midsummer-eve'                                 => 'Līgo Diena',
     'midsummer'                                     => 'Jāņi',
@@ -22,4 +22,4 @@ return array(
     'substitutes'                                   => 'aizstājējs diena',
     '05-04-and-if-saturday,sunday-then-next-monday' => 'Latvijas Republikas Neatkarības atjaunošanas diena',
     '11-18-and-if-saturday,sunday-then-next-monday' => 'Latvijas Republikas proklamēšanas diena',
-);
+];

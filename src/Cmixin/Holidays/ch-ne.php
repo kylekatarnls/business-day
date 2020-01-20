@@ -1,6 +1,6 @@
 <?php
 
-return array_replace(require __DIR__.'/ch-national.php', array(
+return array_replace(require __DIR__.'/ch-national.php', [
     '01-02-on-monday'                    => '= 01-02 on Monday',
     'new-year-next-day'                  => '01-02',
     '03-01'                              => '03-01',
@@ -11,4 +11,4 @@ return array_replace(require __DIR__.'/ch-national.php', array(
     'monday-after-3-sunday-in-september' => '= Monday after third Sunday of September',
     'christmas-next-day'                 => '12-26',
     '12-26-on-monday'                    => '= 12-26 on Monday',
-));
+]);

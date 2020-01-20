@@ -16,11 +16,11 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         }
 
         if (is_array($config) && isset($config['region'])) {
-            $classes = array_filter(array(
+            $classes = array_filter([
                 'Carbon\Carbon',
                 'Carbon\CarbonImmutable',
                 'Illuminate\Support\Carbon',
-            ), 'class_exists');
+            ], 'class_exists');
 
             // @codeCoverageIgnoreStart
             if (class_exists('Illuminate\Support\Facades\Date') &&

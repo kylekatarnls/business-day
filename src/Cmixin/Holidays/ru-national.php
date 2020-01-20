@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'new-year'     => '01-01',
     'julian-12-25' => '= julian 12-25',
     '01-02'        => '= 01-02 not on Sunday',
@@ -17,4 +17,4 @@ return array(
     '05-09'        => '05-09',
     '06-12'        => '06-12',
     '11-04'        => '11-04',
-);
+];

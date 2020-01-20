@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     '12-31'                   => '12-31',
     '01-01'                   => '01-01',
     '01-02'                   => '01-02',
@@ -23,4 +23,4 @@ return array(
     '09-21'                   => '09-21',
     '2nd-saturday-of-october' => '= second Saturday of October',
     '12-07'                   => '12-07',
-);
+];

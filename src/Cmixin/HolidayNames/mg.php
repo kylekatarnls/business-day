@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'martyrs-day'      => 'Martioran\'ny tolona tamin\'ny 1947',
     'africa-day'       => 'Andron\'i Afrika',
     'independence-day' => 'Fetim-pirenena',
@@ -15,4 +15,4 @@ return array(
     'easter-1'         => 'Alatsinain\'ny Paska',
     'easter-39'        => 'Andro niakarana',
     'easter-50'        => 'Alatsinain\'ny Pentekosta',
-);
+];

@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'new-year'            => '01-01',
     '01-26'               => '01-26',
     '4th-monday-in-march' => '= fourth monday of March',
@@ -14,4 +14,4 @@ return array(
     'chinese-01-0-03'     => '= chinese 01-04',
     '1-shawwal'           => '= 1 Shawwal',
     '10-dhu-al-hijjah'    => '= 10 Dhu al-Hijjah',
-);
+];

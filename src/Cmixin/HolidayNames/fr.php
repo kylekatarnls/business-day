@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'armistice-1918'                                      => 'Armistice 1918',
     'ascension'                                           => 'Ascension',
     'assumption'                                          => 'Assomption',
@@ -176,4 +176,4 @@ return array(
     '1st-sunday-in-june'                                  => 'Fête des pères',
     'monday-after-3-sunday-in-september'                  => 'Lundi du Jeûne Fédéral',
     '1st-friday-in-august'                                => 'Journée nationale de récolte',
-);
+];

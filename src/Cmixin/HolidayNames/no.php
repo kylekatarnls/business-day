@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'carnival'                   => 'Fastelavn',
     'constitution-day'           => '17. mai',
     'midsummar-eve'              => 'Sankthansaften',
@@ -35,4 +35,4 @@ return array(
     '3rd-sunday-before-12-24'    => 'Andre søndag i advent',
     '2nd-sunday-before-12-24'    => 'Tredje søndag i advent',
     '1st-sunday-before-12-24'    => 'Fjerde søndag i advent',
-);
+];

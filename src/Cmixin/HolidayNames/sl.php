@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'armistice-1918'                                              => 'Premirje 1918',
     'ascension'                                                   => 'Vzpon',
     'assumption'                                                  => 'Marijino vnebovzetje',
@@ -71,4 +71,4 @@ return array(
     '05-01'                                                       => 'praznik dela',
     '08-15'                                                       => 'Marijino vnebovzetje',
     'easter-1'                                                    => 'Velikonočni ponedeljek',
-);
+];

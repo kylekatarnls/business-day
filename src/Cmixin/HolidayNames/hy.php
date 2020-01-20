@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'pre-christmas-holidays'                     => 'Նախածննդյան տոներ',
     'army-day'                                   => 'Բանակի օր',
     'mother-language-day'                        => 'Մայրենի լեզվի օր',
@@ -34,4 +34,4 @@ return array(
     'independence-day'                           => 'Անկախության օր',
     'mothers-day'                                => 'Ցեղասպանության զոհերի հիշատակի օր',
     '2nd-saturday-in-october'                    => 'Թարգմանչաց տոն',
-);
+];

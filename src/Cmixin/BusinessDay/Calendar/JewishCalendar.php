@@ -9,7 +9,7 @@ class JewishCalendar extends AlternativeCalendar
     /**
      * @var array
      */
-    protected $months = array(
+    protected $months = [
         'tishrei',
         'cheshvan',
         'kislev',
@@ -23,12 +23,12 @@ class JewishCalendar extends AlternativeCalendar
         'tamuz',
         'av',
         'elul',
-    );
+    ];
 
     public function getDate($year, $month, $day)
     {
         $date = array_map('intval', explode('/', jdtogregorian(jewishtojd($month, $day, $year))));
 
-        return array($date[2], $date[0], $date[1]);
+        return [$date[2], $date[0], $date[1]];
     }
 }

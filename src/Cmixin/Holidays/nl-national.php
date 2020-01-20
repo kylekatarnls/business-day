@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'new-year'           => '01/01', // Nieuwjaarsdag
     // Paaszondag
     'easter'             => '= easter',
@@ -18,4 +18,4 @@ return array(
     'pentecost-monday'   => '= easter + 50',
     'christmas'          => '25/12', // Eerste Kerstdag
     'christmas-next-day' => '26/12', // Tweede Kerstdag
-);
+];

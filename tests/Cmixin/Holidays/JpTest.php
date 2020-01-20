@@ -9,7 +9,7 @@ class JpTest extends TestCase
 {
     const CARBON_CLASS = 'Carbon\Carbon';
 
-    protected function setUp()
+    protected function setUp(): void
     {
         BusinessDay::enable(static::CARBON_CLASS);
         $carbon = static::CARBON_CLASS;
@@ -21,9 +21,9 @@ class JpTest extends TestCase
         $carbon = static::CARBON_CLASS;
         $carbon::resetHolidays();
         $carbon::setHolidaysRegion('jp-national');
-        $carbon::addHolidays('jp-national', array(
+        $carbon::addHolidays('jp-national', [
             'june-solstice' => '= June solstice of +09:00',
-        ));
+        ]);
 
         self::assertFalse($carbon::parse('2019-03-20')->isHoliday());
         self::assertTrue($carbon::parse('2019-03-21')->isHoliday());

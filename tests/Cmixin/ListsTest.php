@@ -10,7 +10,7 @@ class ListsTest extends TestCase
 {
     const CARBON_CLASS = 'Carbon\Carbon';
 
-    protected function setUp()
+    protected function setUp(): void
     {
         BusinessDay::enable(static::CARBON_CLASS);
     }
@@ -41,10 +41,10 @@ class ListsTest extends TestCase
 
     public function getHolidaysLists()
     {
-        $lists = array();
+        $lists = [];
 
         foreach (glob(__DIR__.'/../../src/Cmixin/Holidays/*.php') as $file) {
-            $lists[] = array(substr(basename($file), 0, -4));
+            $lists[] = [substr(basename($file), 0, -4)];
         }
 
         return $lists;
@@ -74,10 +74,10 @@ class ListsTest extends TestCase
 
     public function getHolidaysNames()
     {
-        $names = array();
+        $names = [];
 
         foreach (glob(__DIR__.'/../../src/Cmixin/HolidayNames/*.php') as $file) {
-            $names[] = array(substr(basename($file), 0, -4));
+            $names[] = [substr(basename($file), 0, -4)];
         }
 
         return $names;
@@ -98,13 +98,13 @@ class ListsTest extends TestCase
     {
         Carbon::setHolidaysRegion('us');
 
-        $days = array();
+        $days = [];
 
         foreach (Carbon::getYearHolidays(2020) as $id => $holiday) {
             $days[] = $holiday->getHolidayName().': '.$holiday->format('l, F j, Y');
         }
 
-        self::assertSame(array(
+        self::assertSame([
             'New Year: Wednesday, January 1, 2020',
             'Martin Luther King Jr. Day: Monday, January 20, 2020',
             'Washington’s Birthday: Monday, February 17, 2020',
@@ -115,6 +115,6 @@ class ListsTest extends TestCase
             'Day of the veterans: Wednesday, November 11, 2020',
             'Thanksgiving: Thursday, November 26, 2020',
             'Christmas: Friday, December 25, 2020',
-        ), $days);
+        ], $days);
     }
 }

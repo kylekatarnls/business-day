@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'betico-croes-day'                                                      => 'Dia di Betico',
     'national-anthem-and-flag-day'                                          => 'Dia di Himno y Bandera',
     'kings-day'                                                             => 'Aña di Rey',
@@ -25,4 +25,4 @@ return array(
     'easter'                                                                => 'Dia Pasco di Resureccion',
     'easter-1'                                                              => 'Di dos Dia Pasco di Resureccion',
     'easter-39'                                                             => 'Dia di Asuncion',
-);
+];

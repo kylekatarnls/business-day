@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'demilitarization-day'           => 'Ålands demilitariseringsdag',
     'autonomy-day'                   => 'Självstyrelsedagen',
     'midsummer-eve'                  => 'Midsommarafton',
@@ -41,4 +41,4 @@ return array(
     '3rd-friday-after-06-01-12:00'   => 'Midsommarafton',
     '3rd-saturday-after-06-01'       => 'Midsommardagen',
     'sunday-in-march'                => 'Vasaloppet',
-);
+];

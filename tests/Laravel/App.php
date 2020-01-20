@@ -7,12 +7,12 @@ class App
     public function get($name)
     {
         return $name === 'config' ? $this : function ($app) {
-            return array(
+            return [
                 'region' => $app->region,
-                'with'   => array(
+                'with'   => [
                     'foo' => '09-07',
-                ),
-            );
+                ],
+            ];
         };
     }
 }

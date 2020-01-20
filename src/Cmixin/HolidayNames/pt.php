@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'liberation-day'                                                              => 'Dia do Início da Luta Armada de Libertação Nacional',
     'international-woman-s-day'                                                   => 'Dia Internacional da Mulher',
     'peace-day'                                                                   => 'Dia da Paz',
@@ -94,4 +94,4 @@ return array(
     '1st-sunday-before-11-01-in-even-years'                                       => 'Dia de Eleição',
     '1st-sunday-in-march'                                                         => 'Revolução Pernambucana de 1817',
     '3rd-tuesday-in-october'                                                      => 'Dia do Comércio',
-);
+];

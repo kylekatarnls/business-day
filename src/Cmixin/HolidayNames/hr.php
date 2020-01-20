@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'statehood-day'                         => 'Dan državnosti',
     '06-22'                                 => 'Dan antifašističke borbe',
     '06-25'                                 => 'Dan državnosti',
@@ -35,4 +35,4 @@ return array(
     'independence-day'                      => 'Dan neovisnosti',
     'mothers-day'                           => 'Majčin dan',
     'substitutes'                           => 'zamjena dan',
-);
+];

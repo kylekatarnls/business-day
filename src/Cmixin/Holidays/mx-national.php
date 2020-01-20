@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'new-year'                       => '01-01',
     '02-05'                          => '02-05',
     '1st-monday-of-february'         => '= first Monday of February',
@@ -13,4 +13,4 @@ return array(
     '3rd-monday-of-november'         => '= third Monday of November',
     '12-01-every-6-years-since-1934' => '= 12-01 every 6 years since 1934',
     'christmas'                      => '12-25',
-);
+];

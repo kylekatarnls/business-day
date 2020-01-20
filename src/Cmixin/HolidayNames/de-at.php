@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     '05-01'              => 'Staatsfeiertag',
     '11-11'              => 'Martinstag',
     '10-10'              => 'Tag der Volksabstimmung',
@@ -10,4 +10,4 @@ return array(
     '03-19'              => 'Josefitag',
     'christmas'          => 'Christtag',
     'christmas-next-day' => 'Stefanitag',
-);
+];

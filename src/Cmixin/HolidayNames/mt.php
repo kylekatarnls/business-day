@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'feast-of-saint-paul-s-shipwreck-of-malta' => 'Nawfraġju ta\' San Pawl',
     'freedom-day'                              => 'Jum il-Ħelsien',
     'june-7th'                                 => 'Sette Giugno',
@@ -20,4 +20,4 @@ return array(
     'christmas'                                => 'Il-Milied',
     'easter-2'                                 => 'Il-Ġimgħa l-Kbira',
     'independence-day'                         => 'Jum l-Indipendenza',
-);
+];

@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'flag-day'           => 'Flaggdagur',
     'great-prayer-day'   => 'Dýri biðidagur',
     'st.olav-s-day'      => 'Ólavsøka',
@@ -20,4 +20,4 @@ return array(
     'easter-49'          => 'Hvítusunnudagur',
     'easter-50'          => 'Annar hvítusunnudagur',
     'constitution-day'   => 'Grundlógardagur',
-);
+];

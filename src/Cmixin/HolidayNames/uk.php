@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'victory-day'                                    => 'День перемоги над нацизмом у Другій світовій війні',
     'defender-of-ukraine-day'                        => 'День захисника України',
     '05-09-and-if-saturday,-sunday-then-next-monday' => 'День перемоги над нацизмом у Другій світовій війні',
@@ -14,4 +14,4 @@ return array(
     'constitution-day'                               => 'День Конституції',
     'independence-day'                               => 'День Незалежності',
     'substitutes'                                    => 'замінити день',
-);
+];

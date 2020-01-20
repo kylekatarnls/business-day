@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'new-year-holiday'                     => 'Festa e Vitit të Ri',
     'league-of-lezhyo-day'                 => 'Dita e Besëlidhjes së Lezhës',
     'teacher-s-day'                        => 'Dita e Mësuesit',
@@ -53,4 +53,4 @@ return array(
     'liberation-day'                       => 'Dita e Çlirimit',
     'mothers-day'                          => 'Dita e Nënës',
     'substitutes'                          => 'ditë zëvendësuese',
-);
+];

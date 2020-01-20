@@ -206,7 +206,7 @@ class BusinessDay extends BusinessCalendar
                 $carbonClass
             );
             $date = $month->getStart();
-            $dates = array();
+            $dates = [];
 
             while ($date < $month->getEnd()) {
                 if ($date->isBusinessDay()) {

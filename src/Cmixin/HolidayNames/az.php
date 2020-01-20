@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'martyrs-day'                                   => 'Qara Yanvar',
     'spring-festival'                               => 'Novruz',
     'day-of-victory-over-fascism'                   => 'Faşizm üzərində qələbə günü',
@@ -35,4 +35,4 @@ return array(
     '10-18-and-if-saturday,sunday-then-next-monday' => 'Dövlət Müstəqilliyi günü',
     '11-09-and-if-saturday,sunday-then-next-monday' => 'Dövlət Bayrağı günü',
     '12-31-and-if-saturday,sunday-then-next-monday' => 'Dünya azərbaycanlıların həmrəyliyi günü',
-);
+];

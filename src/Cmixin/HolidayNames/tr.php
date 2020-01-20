@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'national-sovereignty-and-children-s-day' => 'Ulusal Egemenlik ve Çocuk Bayramı',
     '05-01'                                   => 'Emek ve Dayanışma Günü',
     'commemoration-of-atatyurk'               => 'Atatürk\'ü Anma Gençlik ve Spor Bayramı',
@@ -16,4 +16,4 @@ return array(
     '27-rajab'                                => 'Miraç Gecesi',
     '1-shawwal'                               => 'Ramazan Bayramı',
     '10-dhu-al-hijjah'                        => 'Kurban Bayramı',
-);
+];

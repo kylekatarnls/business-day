@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'statehood-day'                                => 'Дан државности',
     'armistice-day'                                => 'Дан примирја',
     'saint-sava-day'                               => 'Свети Сава',
@@ -39,4 +39,4 @@ return array(
     '10-tishrei'                                   => 'Јом Кипур',
     'independence-day'                             => 'Дан независности',
     'substitutes'                                  => 'замена дан',
-);
+];

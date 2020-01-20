@@ -1,6 +1,6 @@
 <?php
 
-return array_replace(require __DIR__.'/gb-national.php', array(
+return array_replace(require __DIR__.'/gb-national.php', [
     '2nd-monday-of-march'     => '= second Monday of March',
     'easter'                  => '= easter',
     '04-28'                   => '04-28',
@@ -10,4 +10,4 @@ return array_replace(require __DIR__.'/gb-national.php', array(
     'monday-before-september' => '= Monday before September',
     '09-10'                   => '09-10',
     '09-10-and'               => '= 09-10 if Sunday, Saturday then previous Monday',
-));
+]);

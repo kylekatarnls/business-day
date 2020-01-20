@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'new-year'                => '01-01',
     '04-30'                   => '04-30',
     '05-01'                   => '05-01',
@@ -12,4 +12,4 @@ return array(
     'vietnamese-1-0-1-p3'     => '= vietnamese 1-1 + 3 days',
     'vietnamese-1-0-1-p4'     => '= vietnamese 1-1 + 4 days',
     'vietnamese-3-0-10'       => '= vietnamese 3-10',
-);
+];

@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'new-year'                               => 'Deň vzniku Slovenskej republiky',
     'day-of-victory-over-fascism'            => 'Deň víťazstva nad fašizmom',
     'saints-cyril-and-methodius-day'         => 'Sviatok svätého Cyrila a Metoda',
@@ -22,4 +22,4 @@ return array(
     'easter'                                 => 'Veľká noc',
     'easter-1'                               => 'Veľkonočný pondelok',
     'constitution-day'                       => 'Deň Ústavy',
-);
+];

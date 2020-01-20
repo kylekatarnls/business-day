@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'new-year'           => '01-01',
     '02-16'              => '02-16',
     '03-11'              => '03-11',
@@ -15,4 +15,4 @@ return array(
     '12-24'              => '12-24',
     'christmas'          => '12-25',
     'christmas-next-day' => '12-26',
-);
+];

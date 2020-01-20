@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'day-of-remembrance-for-truth-and-justice'                                                            => 'Día de la Memoria por la Verdad y la Justicia',
     'bridge-day'                                                                                          => 'Feriado Puente Turístico',
     'day-of-the-veterans-and-the-fallen-of-malvinas-war'                                                  => 'Día del Veterano y de los Caídos en la Guerra de Malvinas',
@@ -195,4 +195,4 @@ return array(
     '1st-monday-in-february'                                                                              => 'Día de la Constitución (día libre)',
     '3rd-monday-in-march'                                                                                 => 'Natalicio de Benito Juárez (día libre)',
     '3rd-monday-in-november'                                                                              => 'Día de la Revolución (día libre)',
-);
+];

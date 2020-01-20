@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     '05-01'              => 'Święto Państwowe; Święto Pracy',
     'constitution-day'   => 'Święto Narodowe Trzeciego Maja',
     '05-03'              => 'Święto Narodowe Trzeciego Maja',
@@ -16,4 +16,4 @@ return array(
     'easter-60'          => 'Dzień Bożego Ciała',
     'independence-day'   => 'Narodowe Święto Niepodległości',
     'mothers-day'        => 'Dzień Matki',
-);
+];

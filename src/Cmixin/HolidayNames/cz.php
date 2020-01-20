@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'new-year'                               => 'Nový rok; Den obnovy samostatného českého státu',
     'ugly-wednesday'                         => 'Škaredá středa',
     'liberation-day'                         => 'Den vítězství or Den osvobození',
@@ -25,4 +25,4 @@ return array(
     'easter-1'                               => 'Bílá sobota',
     'easter'                                 => 'Neděle velikonoční',
     'mothers-day'                            => 'Den matek',
-);
+];

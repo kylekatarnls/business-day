@@ -17,12 +17,12 @@ abstract class AlternativeCalendar implements AlternativeCalendarInterface
     /**
      * @var AlternativeCalendar[]
      */
-    protected static $singletons = array();
+    protected static $singletons = [];
 
     /**
      * @var array
      */
-    protected $months = array();
+    protected $months = [];
 
     /**
      * @var string
@@ -77,22 +77,22 @@ abstract class AlternativeCalendar implements AlternativeCalendarInterface
         $inputMonth = array_search(strtolower($inputMonthString), $this->months) + 1;
         $inputDay = (int) $inputDay;
 
-        $list = array();
+        $list = [];
 
-        $this->findDate(array($expectedYear, $inputMonth, $inputDay), 1, function ($date) use (&$list) {
+        $this->findDate([$expectedYear, $inputMonth, $inputDay], 1, function ($date) use (&$list) {
             $list[] = $date;
         });
 
-        $this->findDate(array($expectedYear, $inputMonth, $inputDay), -1, function ($date) use (&$list) {
+        $this->findDate([$expectedYear, $inputMonth, $inputDay], -1, function ($date) use (&$list) {
             array_unshift($list, $date);
         });
 
         $result = array_shift($list) ?: false;
 
         foreach ($list as $index => &$value) {
-            $value = array(($key ?: 'unknown').'-oc-'.($index + 2), $value);
+            $value = [($key ?: 'unknown').'-oc-'.($index + 2), $value];
         }
 
-        return array($result, $list);
+        return [$result, $list];
     }
 }

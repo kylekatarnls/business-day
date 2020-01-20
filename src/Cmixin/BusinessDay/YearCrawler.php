@@ -22,7 +22,7 @@ class YearCrawler extends HolidaysList
         return function ($year = null, $type = null, $self = null) {
             $carbonClass = @get_class() ?: Emulator::getClass(new \Exception());
             $next = $carbonClass::getYearHolidaysNextFunction($year, $type, $self);
-            $holidays = array();
+            $holidays = [];
 
             while ($data = $next()) {
                 list($key, $holiday) = $data;
@@ -56,7 +56,7 @@ class YearCrawler extends HolidaysList
             $year = $year ?: $carbonClass::getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null)->year;
             $holidays = $carbonClass::getHolidays();
             $outputClass = $type ? (is_string($type) && $type !== 'string' ? $type : 'DateTime') : $carbonClass;
-            $holidaysList = array();
+            $holidaysList = [];
             $calculator = new HolidayCalculator((int) $year, $outputClass, $type, $holidays, $holidaysList);
 
             return function () use ($calculator) {

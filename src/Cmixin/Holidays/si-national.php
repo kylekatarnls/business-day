@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'new-year'          => '01/01', // novo leto
     'new-year-next-day' => '02/01', // novo leto
     'preseren-day'      => '08/02', // Prešernov dan, slovenski kulturni praznik
@@ -25,4 +25,4 @@ return array(
     'easter-monday'     => '= easter + 1',
     // binkoštna nedelja - binkošti
     'pentecost'         => '= easter + 49',
-);
+];

@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'new-year'         => '01-01',
     '01-13'            => '01-13',
     '04-27'            => '04-27',
@@ -14,4 +14,4 @@ return array(
     '13-rabi-al-awwal' => '= 13 Rabi al-awwal',
     '2-shawwal'        => '= 2 Shawwal',
     '11-dhu-al-hijjah' => '= 11 Dhu al-Hijjah',
-);
+];

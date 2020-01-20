@@ -1,6 +1,6 @@
 <?php
 
-return array_replace(require __DIR__.'/ch-national.php', array(
+return array_replace(require __DIR__.'/ch-national.php', [
     '01-06'                       => '01-06',
     '03-19'                       => '03-19',
     'easter-60'                   => '= easter 60',
@@ -9,4 +9,4 @@ return array_replace(require __DIR__.'/ch-national.php', array(
     '12-08'                       => '12-08',
     'christmas-next-day'          => '12-26',
     '12-26-not-on-monday,-friday' => '= 12-26 not on Monday, Friday',
-));
+]);

@@ -33,7 +33,7 @@ abstract class MixinBase
 
         $isArray = is_array($carbonClass);
         $carbonClasses = (array) $carbonClass;
-        $mixins = array();
+        $mixins = [];
 
         foreach ($carbonClasses as $carbonClass) {
             static::$carbonClass = $carbonClass;
@@ -122,7 +122,7 @@ abstract class MixinBase
                 $date = $defaultValue;
             }
 
-            return array($date, $target);
+            return [$date, $target];
         };
     }
 }

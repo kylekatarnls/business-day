@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'new-year'                                     => '01-01',
     'substitutes-01-01-if-sunday-then-next-monday' => '= 01-01 if sunday then next monday',
     'easter-2'                                     => '= easter -2',
@@ -45,4 +45,4 @@ return array(
     'chinese-01-0-02-if-sunday-then-next-monday'   => '= chinese 01-02 if sunday then next monday',
     '1-shawwal'                                    => '= 1 Shawwal',
     '10-dhu-al-hijjah'                             => '= 10 Dhu al-Hijjah',
-);
+];

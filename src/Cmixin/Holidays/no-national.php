@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'new-year'                => '01-01',
     '2nd-sunday-of-february'  => '= second Sunday of February',
     'easter-49'               => '= easter 49',
@@ -22,4 +22,4 @@ return array(
     '1st-sunday-before-12-24' => '= Sunday before 12-24',
     'christmas'               => '12-25',
     'christmas-next-day'      => '12-26',
-);
+];

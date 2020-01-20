@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     '01-06-in-non-leap-years' => '= 01-06 of non-leap years',
     '01-07-in-leap-years'     => '= 01-07 of leap years',
     '01-19'                   => '01-19',
@@ -17,4 +17,4 @@ return array(
     '12-rabi-al-awwal'        => '= 12 Rabi al-awwal',
     '1-shawwal'               => '= 1 Shawwal',
     '10-dhu-al-hijjah'        => '= 10 Dhu al-Hijjah',
-);
+];
