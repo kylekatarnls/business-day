@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'day-of-restoration-of-the-state-of-lithuania'    => 'Lietuvos valstybės atkūrimo diena',
     'day-of-restoration-of-independence-of-lithuania' => 'Lietuvos nepriklausomybės atkūrimo diena',
     'st.-john-s-day'                                  => 'Joninės, Rasos',
@@ -19,4 +19,4 @@ return array(
     'easter'                                          => 'Velykos',
     'fathers-day'                                     => 'Tėvo diena',
     'mothers-day'                                     => 'Motinos diena',
-);
+];

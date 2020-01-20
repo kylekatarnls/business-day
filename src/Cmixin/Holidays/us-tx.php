@@ -1,6 +1,6 @@
 <?php
 
-return array_replace(require __DIR__.'/us-national.php', array(
+return array_replace(require __DIR__.'/us-national.php', [
     '01-19'                                 => '01-19',
     '03-02'                                 => '03-02',
     '03-31'                                 => '03-31',
@@ -11,4 +11,4 @@ return array_replace(require __DIR__.'/us-national.php', array(
     'friday-after-4th-thursday-of-november' => '= Friday after fourth Thursday of November',
     '12-24'                                 => '12-24',
     'christmas-next-day'                    => '12-26',
-));
+]);

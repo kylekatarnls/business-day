@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'new-year'               => '01-01',
     '03-08-12:00'            => '= 03-08 12:00',
     '05-01'                  => '05-01',
@@ -13,4 +13,4 @@ return array(
     //'chinese-5-01-solarterm' => '= chinese 05-01 solarterm',
     'chinese-05-0-05'        => '= chinese 05-05',
     'chinese-08-0-15'        => '= chinese 08-15',
-);
+];

@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'easter-48'                        => 'Fastelavn',
     'prayer-day'                       => 'Store Bededag',
     'flag-day'                         => 'Flagdag',
@@ -27,4 +27,4 @@ return array(
     'easter-50'                        => '2. Pinsedag',
     'constitution-day'                 => 'Grundlovsdag',
     'mothers-day'                      => 'Mors Dag',
-);
+];

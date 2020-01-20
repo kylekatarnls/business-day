@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'ash-sunday'                                   => 'Καθαρά Δευτέρα',
     'clean-monday'                                 => 'Καθαρά Δευτέρα',
     'annunciation,-anniversary-of-1821-revolution' => 'Ευαγγελισμός, Εθνική Εορτή',
@@ -24,4 +24,4 @@ return array(
     'easter-1'                                     => 'Δευτέρα του Πάσχα',
     'easter-49'                                    => 'Αγίου Πνεύματος',
     'mothers-day'                                  => 'Γιορτή της μητέρας',
-);
+];

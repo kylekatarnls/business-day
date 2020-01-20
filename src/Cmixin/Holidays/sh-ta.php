@@ -1,6 +1,6 @@
 <?php
 
-return array_replace(require __DIR__.'/sh-national.php', array(
+return array_replace(require __DIR__.'/sh-national.php', [
     'easter-39'           => '= easter 39',
     '2012-04-23'          => '= 2012-04-23',
     '2013-05-03'          => '= 2013-05-03',
@@ -11,4 +11,4 @@ return array_replace(require __DIR__.'/sh-national.php', array(
     '2018-06-02'          => '= 2018-06-02',
     '08-14'               => '08-14',
     'monday-before-09-01' => '= Monday before 09-01',
-));
+]);

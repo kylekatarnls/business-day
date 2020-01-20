@@ -6,7 +6,7 @@ class BusinessDayImmutableTest extends BusinessDayTest
 {
     const CARBON_CLASS = 'Carbon\CarbonImmutable';
 
-    protected function setUp()
+    protected function setUp(): void
     {
         if (!class_exists(static::CARBON_CLASS)) {
             $this->markTestSkipped('CarbonImmutable test skipped as it does not exist in Carbon < 2.0.0');

@@ -4,6 +4,7 @@ namespace Tests\Cmixin;
 
 use Cmixin\BusinessDay;
 use Cmixin\BusinessDay\Calendar\LunarCalendar;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 class BusinessDayTest extends TestCase
@@ -12,7 +13,7 @@ class BusinessDayTest extends TestCase
 
     public static function assertCarbonList($expected, $actual, $format = 'Y-m-d')
     {
-        $output = array();
+        $output = [];
 
         foreach ($actual as $key => $date) {
             self::assertInstanceOf(static::CARBON_CLASS, $date);
@@ -22,7 +23,7 @@ class BusinessDayTest extends TestCase
         self::assertSame($expected, $output);
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         BusinessDay::enable(static::CARBON_CLASS);
         $carbon = static::CARBON_CLASS;
@@ -102,13 +103,13 @@ class BusinessDayTest extends TestCase
     public function testIsHoliday()
     {
         $carbon = static::CARBON_CLASS;
-        $coruscantHolidays = array(
+        $coruscantHolidays = [
             '27/12',
             '28/12',
-        );
+        ];
         for ($year = 1808; $year < 2500; $year += 20) {
             $carbon::resetHolidays();
-            self::assertSame(array(), $carbon::getHolidays());
+            self::assertSame([], $carbon::getHolidays());
             $carbon::setHolidays('coruscant', $coruscantHolidays);
             self::assertFalse($carbon::parse("$year-12-25 03:30:40")->isHoliday());
             self::assertFalse($carbon::parse("$year-12-26 03:30:40")->isHoliday());
@@ -131,10 +132,10 @@ class BusinessDayTest extends TestCase
             self::assertTrue($carbon::parse("$year-12-25 03:30:40")->isHoliday());
             self::assertFalse($carbon::parse("$year-12-26 03:30:40")->isHoliday());
             self::assertFalse($carbon::parse("$year-12-27 03:30:40")->isHoliday());
-            $carbon::addHolidays('fr-national', array(
+            $carbon::addHolidays('fr-national', [
                 '15/11',
                 '27/12',
-            ));
+            ]);
             self::assertTrue($carbon::parse("$year-12-25 03:30:40")->isHoliday());
             self::assertFalse($carbon::parse("$year-12-26 03:30:40")->isHoliday());
             self::assertTrue($carbon::parse("$year-12-27 03:30:40")->isHoliday());
@@ -151,9 +152,9 @@ class BusinessDayTest extends TestCase
     public function testWeekendRule()
     {
         $carbon = static::CARBON_CLASS;
-        $coruscantHolidays = array(
+        $coruscantHolidays = [
             '= 03-01 if not weekend then next Saturday',
-        );
+        ];
         $carbon::resetHolidays();
         $carbon::setHolidays('coruscant', $coruscantHolidays);
         $carbon::setHolidaysRegion('coruscant');
@@ -193,60 +194,58 @@ class BusinessDayTest extends TestCase
         self::assertFalse($carbon::parse('2015-12-26 03:30:40')->isHoliday());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Holiday array definition should at least contains a "date" entry.
-     */
     public function testAddHolidaysArrayNotDate()
     {
+        self::expectException(InvalidArgumentException::class);
+        self::expectExceptionMessage('Holiday array definition should at least contains a "date" entry.');
+
         $carbon = static::CARBON_CLASS;
-        $carbon::addHolidays('fr-national', array(
-            'foo-bar' => array(
+        $carbon::addHolidays('fr-national', [
+            'foo-bar' => [
                 'observe' => true,
-            ),
-        ));
+            ],
+        ]);
     }
 
     public function testAddHolidaysInEnable()
     {
         $carbon = static::CARBON_CLASS;
-        BusinessDay::enable($carbon, 'fr-national', array(
+        BusinessDay::enable($carbon, 'fr-national', [
             'custom-holiday' => '05/12',
             'christmas'      => null,
-        ));
+        ]);
         self::assertTrue($carbon::parse('2010-01-01')->isHoliday());
         self::assertTrue($carbon::parse('2010-12-05')->isHoliday());
         self::assertFalse($carbon::parse('2010-12-25')->isHoliday());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Holiday array definition need a string identifier as main array key.
-     */
     public function testAddHolidaysArrayIntKey()
     {
+        self::expectException(InvalidArgumentException::class);
+        self::expectExceptionMessage('Holiday array definition need a string identifier as main array key.');
+
         $carbon = static::CARBON_CLASS;
-        $carbon::addHolidays('fr-national', array(
-            array(
+        $carbon::addHolidays('fr-national', [
+            [
                 'date'    => '15/11',
                 'observe' => true,
-            ),
-        ));
+            ],
+        ]);
     }
 
     public function testAddHolidaysArray()
     {
         $carbon = static::CARBON_CLASS;
-        $carbon::addHolidays('fr-national', array(
-            'foo-bar' => array(
+        $carbon::addHolidays('fr-national', [
+            'foo-bar' => [
                 'date'     => '15/11',
                 'observed' => true,
-                'name'     => array(
+                'name'     => [
                     'en' => 'Foo bar',
                     'fr' => 'Machin chose',
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
         self::assertFalse($carbon::parse('2010-11-15 03:30:40')->isHoliday());
         self::assertFalse($carbon::parse('2010-11-15 03:30:40')->isObservedHoliday());
         self::assertFalse($carbon::parse('2010-11-15 03:30:40')->getHolidayName());
@@ -271,15 +270,15 @@ class BusinessDayTest extends TestCase
     public function testIsHolidayStatic()
     {
         $carbon = static::CARBON_CLASS;
-        $coruscantHolidays = array(
+        $coruscantHolidays = [
             '12-27',
             '28/12',
-        );
+        ];
         for ($year = 1808; $year < 2500; $year += 20) {
             $carbon::resetHolidays();
             $carbon::setHolidays('coruscant', $coruscantHolidays);
             self::assertSame($coruscantHolidays, $carbon::getHolidays('coruscant'));
-            self::assertSame(array(), $carbon::getHolidays());
+            self::assertSame([], $carbon::getHolidays());
             $carbon::setTestNow($carbon::parse("$year-12-25 03:30:40"));
             self::assertFalse($carbon::isHoliday());
             $carbon::setTestNow($carbon::parse("$year-12-26 03:30:40"));
@@ -310,10 +309,10 @@ class BusinessDayTest extends TestCase
             self::assertFalse($carbon::isHoliday());
             $carbon::setTestNow($carbon::parse("$year-12-27 03:30:40"));
             self::assertFalse($carbon::isHoliday());
-            $carbon::addHolidays('fr-national', array(
+            $carbon::addHolidays('fr-national', [
                 '15/11',
                 '27/12',
-            ));
+            ]);
             $carbon::setTestNow($carbon::parse("$year-12-25 03:30:40"));
             self::assertTrue($carbon::isHoliday());
             $carbon::setTestNow($carbon::parse("$year-12-26 03:30:40"));
@@ -334,10 +333,10 @@ class BusinessDayTest extends TestCase
     public function testYearSpecificHoliday()
     {
         $carbon = static::CARBON_CLASS;
-        $specialHolidays = array(
+        $specialHolidays = [
             '2003-01-03',
             '04/01/2004',
-        );
+        ];
         $carbon::resetHolidays();
         $carbon::setHolidays('special', $specialHolidays);
         $carbon::setHolidaysRegion('special');
@@ -768,7 +767,7 @@ class BusinessDayTest extends TestCase
         self::assertFalse($carbon::parse('2018-01-01')->isObservedHoliday());
         self::assertFalse($carbon::parse('2018-12-25')->isObservedHoliday());
         self::assertFalse($carbon::parse('2018-12-26')->isObservedHoliday());
-        $carbon::observeHolidays(array('christmas', 'new-year'));
+        $carbon::observeHolidays(['christmas', 'new-year']);
         self::assertTrue($carbon::isObservedHoliday('new-year'));
         self::assertTrue($carbon::isObservedHoliday('christmas'));
         self::assertTrue($carbon::parse('2018-01-01')->isObservedHoliday());
@@ -813,12 +812,11 @@ class BusinessDayTest extends TestCase
         self::assertSame('Nouvel an', $date->locale('fr')->getHolidayName());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage You must pass holiday names as a string or "all".
-     */
     public function testObserveHolidaysInvalidArgument()
     {
+        self::expectException(InvalidArgumentException::class);
+        self::expectExceptionMessage('You must pass holiday names as a string or "all".');
+
         $carbon = static::CARBON_CLASS;
         $carbon::observeHoliday(42);
     }
@@ -852,7 +850,7 @@ class BusinessDayTest extends TestCase
         $carbon::setHolidaysRegion('fr-national');
         $carbon::setTestNow('2020-01-16');
 
-        self::assertCarbonList(array(
+        self::assertCarbonList([
             '2020-01-02',
             '2020-01-03',
             '2020-01-06',
@@ -875,8 +873,8 @@ class BusinessDayTest extends TestCase
             '2020-01-29',
             '2020-01-30',
             '2020-01-31',
-        ), $carbon::getMonthBusinessDays());
-        self::assertCarbonList(array(
+        ], $carbon::getMonthBusinessDays());
+        self::assertCarbonList([
             '2019-05-02',
             '2019-05-03',
             '2019-05-06',
@@ -897,8 +895,8 @@ class BusinessDayTest extends TestCase
             '2019-05-28',
             '2019-05-29',
             '2019-05-31',
-        ), $carbon::getMonthBusinessDays('2019-05'));
-        self::assertCarbonList(array(
+        ], $carbon::getMonthBusinessDays('2019-05'));
+        self::assertCarbonList([
             '2019-05-02',
             '2019-05-03',
             '2019-05-06',
@@ -919,8 +917,8 @@ class BusinessDayTest extends TestCase
             '2019-05-28',
             '2019-05-29',
             '2019-05-31',
-        ), $carbon::getMonthBusinessDays(new \DateTime('2019-05-31 23:59:59.999999')));
-        self::assertCarbonList(array(
+        ], $carbon::getMonthBusinessDays(new \DateTime('2019-05-31 23:59:59.999999')));
+        self::assertCarbonList([
             '2019-03-01',
             '2019-03-04',
             '2019-03-05',
@@ -942,24 +940,24 @@ class BusinessDayTest extends TestCase
             '2019-03-27',
             '2019-03-28',
             '2019-03-29',
-        ), $carbon::parse('2019-03-01', 'Europe/Paris')->getMonthBusinessDays());
+        ], $carbon::parse('2019-03-01', 'Europe/Paris')->getMonthBusinessDays());
     }
 
     public function testHolidayCalculatorInterpolation()
     {
-        $holidays = array();
-        $holidaysList = array();
+        $holidays = [];
+        $holidaysList = [];
         $calculator = new BusinessDay\HolidayCalculator(2019, static::CARBON_CLASS, 'string', $holidays, $holidaysList);
 
-        self::assertNull($calculator->interpolateFixedDate(array('ko')));
+        self::assertNull($calculator->interpolateFixedDate(['ko']));
     }
 
     public function testWhenHijriHolidayHappensTwiceAGregorianYear()
     {
         $carbon = static::CARBON_CLASS;
-        BusinessDay::enable($carbon, 'custom-hijri', array(
+        BusinessDay::enable($carbon, 'custom-hijri', [
             '27-rabi-al-thani' => '= 27 Rabi al-thani',
-        ));
+        ]);
 
         self::assertTrue($carbon::parse('2019-01-05')->isHoliday());
         self::assertTrue($carbon::parse('2019-12-25')->isHoliday());
@@ -968,9 +966,9 @@ class BusinessDayTest extends TestCase
     public function testWhenJewishHolidayMissInAGregorianYear()
     {
         $carbon = static::CARBON_CLASS;
-        BusinessDay::enable($carbon, 'custom-jewish', array(
+        BusinessDay::enable($carbon, 'custom-jewish', [
             '4-tevet' => '= 4 Tevet',
-        ));
+        ]);
 
         self::assertSame(1, count($carbon::getYearHolidays(2018)));
         self::assertTrue($carbon::parse('2018-12-12')->isHoliday());
@@ -983,6 +981,6 @@ class BusinessDayTest extends TestCase
     public function testLunarCalendar()
     {
         $date = new LunarCalendar('2020-02-07');
-        self::assertSame(array(2020, 2, 29), $date->toGregorian());
+        self::assertSame([2020, 2, 29], $date->toGregorian());
     }
 }

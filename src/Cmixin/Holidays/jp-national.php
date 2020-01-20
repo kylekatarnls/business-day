@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     '01-01-and-if-sunday-then-next-monday'                   => '= 01-01 substitute',
     '2nd-monday-in-january'                                  => '= second Monday of January',
     '02-11-and-if-sunday-then-next-monday'                   => '= 02-11 substitute',
@@ -26,4 +26,4 @@ return array(
     '12-23-and-if-sunday-then-next-monday'                   => '= 12-23 substitute',
     'march-equinox-in-+09:00-and-if-sunday-then-next-monday' => '= March equinox of +09:00 substitute',
     'september-equinox-in-+09:00'                            => '= September equinox of +09:00',
-);
+];

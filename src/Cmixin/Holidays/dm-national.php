@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'new-year'             => '= 01-01 substitute',
     'easter-48'            => '= easter -48',
     'easter-47'            => '= easter -47',
@@ -15,4 +15,4 @@ return array(
     '11-04'                => '= 11-04 if Sunday then next Monday and if Monday then next Tuesday',
     'christmas'            => '= 12-25 substitute',
     'christmas-next-day'   => '= 12-26 substitute',
-);
+];

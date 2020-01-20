@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'new-year'                   => '01-01',
     '03-08'                      => '03-08',
     'orthodox'                   => '= orthodox',
@@ -17,4 +17,4 @@ return array(
     'julian-12-25'               => '= julian 12-25',
     'julian-12-25-p1'            => '= julian 12-25 + 1 day',
     'julian-12-25-p2'            => '= julian 12-25 + 2 days',
-);
+];

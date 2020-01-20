@@ -7,7 +7,7 @@ class HolidaysList extends MixinBase
     /**
      * @var array
      */
-    public $holidays = array();
+    public $holidays = [];
 
     /**
      * @var string|null
@@ -125,7 +125,7 @@ class HolidaysList extends MixinBase
                 : $mixin->holidaysRegion;
 
             if (!$region || !isset($mixin->holidays[$region])) {
-                return array();
+                return [];
             }
 
             return $mixin->holidays[$region];
@@ -150,7 +150,7 @@ class HolidaysList extends MixinBase
         return function ($region, $holidays) use ($mixin) {
             $region = call_user_func($mixin->standardizeHolidaysRegion(), $region);
             $addHolidays = $mixin->addHolidays();
-            $mixin->holidays[$region] = array();
+            $mixin->holidays[$region] = [];
             $addHolidays($region, $holidays);
         };
     }
@@ -169,7 +169,7 @@ class HolidaysList extends MixinBase
          */
         return function () use ($mixin) {
             $mixin->holidaysRegion = null;
-            $mixin->holidays = array();
+            $mixin->holidays = [];
         };
     }
 
@@ -186,7 +186,7 @@ class HolidaysList extends MixinBase
             $region = call_user_func($this->standardizeHolidaysRegion(), $region);
 
             if (!isset($this->holidays[$region])) {
-                $this->holidays[$region] = array();
+                $this->holidays[$region] = [];
             }
 
             return $this;
@@ -252,7 +252,7 @@ class HolidaysList extends MixinBase
         return function ($holidayKey = null, $language = null, $name = null) use ($mixin) {
             static $dictionary;
 
-            if ($mixin instanceof Holiday && ($language = is_string($language) ? array($language => $name) : $language)) {
+            if ($mixin instanceof Holiday && ($language = is_string($language) ? [$language => $name] : $language)) {
                 if (!isset($dictionary)) {
                     $dictionary = $mixin->getHolidayNamesDictionary();
                 }

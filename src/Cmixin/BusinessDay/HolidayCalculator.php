@@ -41,7 +41,7 @@ class HolidayCalculator
     /**
      * @var array
      */
-    protected $nextHolidays = array();
+    protected $nextHolidays = [];
 
     /**
      * @var AlternativeCalendar[]
@@ -55,10 +55,10 @@ class HolidayCalculator
         $this->type = $type;
         $this->holidays = &$holidays;
         $this->holidaysList = &$holidaysList;
-        $this->calendars = array(
+        $this->calendars = [
             HijriCalendar::get(),
             JewishCalendar::get(),
-        );
+        ];
     }
 
     public function next()
@@ -86,7 +86,7 @@ class HolidayCalculator
 
         switch ($match[0]) {
             case 'easter':
-                static $easterDays = array();
+                static $easterDays = [];
 
                 if (!isset($easterDays[$year])) {
                     $easterDays[$year] = easter_days($year);
@@ -180,10 +180,10 @@ class HolidayCalculator
 
     protected function extractModifiers($holiday)
     {
-        $modifiers = array(
+        $modifiers = [
             'before' => null,
             'after'  => null,
-        );
+        ];
 
         foreach ($modifiers as $variable => &$modifier) {
             $holiday = explode(" $variable ", $holiday, 2);
@@ -196,7 +196,7 @@ class HolidayCalculator
             $holiday = $holiday[0];
         }
 
-        return array($modifiers['before'], $modifiers['after'], $holiday);
+        return [$modifiers['before'], $modifiers['after'], $holiday];
     }
 
     protected function consumeHolidayString($pattern, &$holiday, &$match = null)
@@ -265,7 +265,7 @@ class HolidayCalculator
     protected function interpolateEquinox($match)
     {
         $month = strtolower($match[1]);
-        $deltas = array(
+        $deltas = [
             'march'     => 0,
             'spring'    => 0,
             'june'      => 8012898,
@@ -274,7 +274,7 @@ class HolidayCalculator
             'autumn'    => 16105476,
             'december'  => 23868894,
             'winter'    => 23868894,
-        );
+        ];
         $delta = isset($deltas[$month]) ? $deltas[$month] : 0;
         $sign = isset($match[2]) && $match[2] === '-' ? -1 : 1;
         $hours = isset($match[3]) ? $match[3] * 1 : 0;
@@ -315,18 +315,18 @@ class HolidayCalculator
             }
         }
 
-        $holiday = preg_replace_callback('/julian\s+(\d+)-(\d+)/i', array($this, 'convertJulianDate'), trim($holiday));
+        $holiday = preg_replace_callback('/julian\s+(\d+)-(\d+)/i', [$this, 'convertJulianDate'], trim($holiday));
         // Algorithm for Vietnamese and Korean not found, but Chinese calendar is the same 97% of the time.
         // If you can implement it, feel free to open a pull-request
-        $holiday = preg_replace_callback('/(chinese|vietnamese|korean)\s+(\d+-L?\d+)/i', array($this, 'convertChineseDate'), trim($holiday));
-        $holiday = preg_replace_callback('/(March|June|September|December)\s+(?:equinox|solstice)(?:\s+of\s+([+-]?)(\d+)(?::(\d+))?)?/i', array($this, 'interpolateEquinox'), trim($holiday));
-        $holiday = preg_replace_callback('/(easter|orthodox)/i', array($this, 'interpolateFixedDate'), $holiday);
+        $holiday = preg_replace_callback('/(chinese|vietnamese|korean)\s+(\d+-L?\d+)/i', [$this, 'convertChineseDate'], trim($holiday));
+        $holiday = preg_replace_callback('/(March|June|September|December)\s+(?:equinox|solstice)(?:\s+of\s+([+-]?)(\d+)(?::(\d+))?)?/i', [$this, 'interpolateEquinox'], trim($holiday));
+        $holiday = preg_replace_callback('/(easter|orthodox)/i', [$this, 'interpolateFixedDate'], $holiday);
 
         $holiday = preg_replace('/\D-\d+\s*$/', '$0 days', $holiday);
-        $holiday = preg_replace_callback('/^(\d{1,2})-(\d{1,2})((\s[\s\S]*)?)$/', array($this, 'padDate'), $holiday);
+        $holiday = preg_replace_callback('/^(\d{1,2})-(\d{1,2})((\s[\s\S]*)?)$/', [$this, 'padDate'], $holiday);
         $holiday = str_replace('$year', $year, $holiday);
         $holiday = preg_replace('/(\s\d+)\s*$/', '$1 days', $holiday);
-        $onConditions = array();
+        $onConditions = [];
         list($holiday, $onConditions['notOn']) = array_pad(explode(' not on ', $holiday, 2), 2, null);
         list($holiday, $onConditions['on']) = array_pad(explode(' on ', $holiday, 2), 2, null);
         list($holiday, $condition) = array_pad(explode(' if ', $holiday, 2), 2, null);
@@ -338,10 +338,10 @@ class HolidayCalculator
         /** @var DateTime $dateTime */
         $dateTime = new $outputClass($holiday);
 
-        $checks = array(
+        $checks = [
             'on'    => false,
             'notOn' => true,
-        );
+        ];
 
         foreach ($checks as $check => $expected) {
             if ($onConditions[$check]) {
@@ -400,7 +400,7 @@ class HolidayCalculator
         }
 
         return $holiday
-            ? array($key, $holiday
+            ? [$key, $holiday
                 ? ($this->type === 'string'
                     ? $holiday
                     : (isset($dateTime) // @codeCoverageIgnore
@@ -409,7 +409,7 @@ class HolidayCalculator
                     )
                 )
                 : $holiday,
-            )
+            ]
             : false;
     }
 }

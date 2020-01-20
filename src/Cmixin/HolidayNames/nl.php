@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'armistice-1918'                                                        => 'Wapenstilstand 1918',
     'ascension'                                                             => 'Hemelvaart',
     'assumption'                                                            => 'Veronderstelling',
@@ -90,4 +90,4 @@ return array(
     'revolution-day'                                                        => 'Dag van de revolutie',
     'substitutes'                                                           => 'substituut',
     '3rd-tuesday-in-september'                                              => 'Prinsjesdag',
-);
+];

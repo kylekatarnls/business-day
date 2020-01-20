@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'anniversary-of-the-tartu-peace-treaty'                           => 'Tartu rahulepingu aastapäev',
     'native-language-day'                                             => 'emakeelepäev',
     'national-flag-day'                                               => 'Eesti lipu päev',
@@ -37,4 +37,4 @@ return array(
     'independence-day'                                                => 'iseseisvuspäev',
     'mothers-day'                                                     => 'emadepäev',
     '2nd-sunday-in-september'                                         => 'vanavanemate päev',
-);
+];

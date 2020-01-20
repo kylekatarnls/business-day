@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'new-year'         => 'رأس السنة الميلادية',
     'national-day'     => 'اليوم الوطني',
     '05-01'            => 'يوم العمال',
@@ -20,4 +20,4 @@ return array(
     '9-dhu-al-hijjah'  => 'يوم عرفة',
     '10-dhu-al-hijjah' => 'عيد الأضحى',
     'independence-day' => 'عيد الاستقلال',
-);
+];

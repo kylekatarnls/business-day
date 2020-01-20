@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'chinese-01-0-01-and-if-sunday-then-next-tuesday-if-saturday-then-next-monday' => '= chinese 01-01 substitute',
     'chinese-01-0-02-and-if-sunday-then-next-tuesday-if-saturday-then-next-monday' => '= chinese 01-02 substitute',
     'new-year'                                                                     => '01-01',
@@ -15,4 +15,4 @@ return array(
     '1-shawwal-and-if-sunday-then-next-monday'                                     => '= 1 Shawwal substitute',
     '10-dhu-al-hijjah-and-if-sunday-then-next-monday'                              => '= 10 Dhu al-Hijjah substitute',
     '12-rabi-al-awwal-and-if-sunday-then-next-monday'                              => '= 12 Rabi al-awwal substitute',
-);
+];

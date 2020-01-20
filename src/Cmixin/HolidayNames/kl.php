@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'prayer-day'         => 'tussiarfissuaq',
     'national-day'       => 'ullortuneq',
     'easter-26'          => 'tussiarfissuaq',
@@ -16,4 +16,4 @@ return array(
     'easter-39'          => 'qilaliarfik',
     'easter-49'          => 'piinsip ullua',
     'easter-50'          => 'piinsip aappaa',
-);
+];

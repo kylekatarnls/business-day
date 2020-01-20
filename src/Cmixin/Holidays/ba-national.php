@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'new-year'             => '= 01-01 substitute',
     'new-year-next-day'    => '= 01-02 substitute',
     '05-01'                => '= 05-01 substitute',
@@ -29,4 +29,4 @@ return array(
     '2-shawwal-p3d'        => '= 2 Shawwal',
     '3-shawwal-p3d'        => '= 3 Shawwal',
     '4-shawwal-p3d'        => '= 4 Shawwal',
-);
+];

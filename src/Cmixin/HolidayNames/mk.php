@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'saints-cyril-and-methodius-day'               => 'Св. Кирил и Методиј',
     'day-of-the-republic'                          => 'Ден на Републиката',
     'revolution-day'                               => 'Ден на востанието',
@@ -43,4 +43,4 @@ return array(
     '10-tishrei'                                   => 'Јом Кипур',
     'independence-day'                             => 'Ден на независноста',
     'substitutes'                                  => 'заменет ден',
-);
+];

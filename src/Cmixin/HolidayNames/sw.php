@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'madaraka-day'                         => 'Siku ya Madaraka',
     'mashujaa-day'                         => 'Siku ya Mashujaa',
     'jamhuri-day'                          => 'Siku ya Jamhuri',
@@ -16,4 +16,4 @@ return array(
     '1-shawwal'                            => 'Idd-ul-Fitr',
     '10-dhu-al-hijjah'                     => 'Idd-ul-Azha',
     'independence-day'                     => 'Siku ya uhuru',
-);
+];

@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'new-year'          => '01-01',
     '03-01'             => '03-01',
     '05-05'             => '05-05',
@@ -16,4 +16,4 @@ return array(
     'korean-8-0-14'     => '= korean 8-14',
     'korean-8-0-15'     => '= korean 8-15',
     'korean-8-0-15-p1'  => '= korean 8-16',
-);
+];

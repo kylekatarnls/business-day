@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'korean-new-year'           => '설날',
     'independence-movement-day' => '3·1절',
     'children-s-day'            => '어린이날',
@@ -22,4 +22,4 @@ return array(
     'new-year'                  => '신정',
     'christmas'                 => '기독탄신일',
     'constitution-day'          => '제헌절',
-);
+];

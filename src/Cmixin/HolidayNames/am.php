@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'victory-at-adwa-day'       => 'የዓድዋ ድል በዓል',
     'day-of-lament'             => 'የቀይ ሽብር መታሰቢያ ቀን',
     'derg-downfall-day'         => 'ደርግ የወደቀበት ቀን',
@@ -21,4 +21,4 @@ return array(
     '10-dhu-al-hijjah'          => 'ዒድ አል አድሐ',
     '09-27-in-non-leap-years'   => 'ብርሐነ-መስቀል',
     '09-28-in-leap-years'       => 'ብርሐነ-መስቀል',
-);
+];

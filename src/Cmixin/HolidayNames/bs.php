@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'substitutes'                          => 'zamjena dan',
     '01-02-and-if-sunday-then-next-monday' => 'Drugi dan Nove Godine',
     '05-02-and-if-sunday-then-next-monday' => 'Drugi dan Dana rada',
@@ -31,4 +31,4 @@ return array(
     '1-tishrei'                            => 'Roš Hašana',
     '10-tishrei'                           => 'Jom Kipur',
     'independence-day'                     => 'Dan nezavisnosti',
-);
+];

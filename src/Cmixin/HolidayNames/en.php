@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'armistice-1918'                                                                                      => 'Armistice 1918',
     'ascension'                                                                                           => 'Ascension',
     'assumption'                                                                                          => 'Assomption',
@@ -1116,4 +1116,4 @@ return array(
     '1st-monday-in-july'                                                                                  => 'Heroes\' Day',
     'tuesday-after-1st-monday-in-july'                                                                    => 'Unity Day',
     '2nd-tuesday-in-august'                                                                               => 'Defence Forces Day',
-);
+];

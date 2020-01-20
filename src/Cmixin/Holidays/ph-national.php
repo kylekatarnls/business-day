@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'new-year'                    => '01-01',
     'easter-3'                    => '= easter -3',
     'easter-2'                    => '= easter -2',
@@ -15,4 +15,4 @@ return array(
     '12-30'                       => '12-30',
     '1-shawwal'                   => '= 2 Shawwal', // + 1 day in case the moon couldn't be seen
     '10-dhu-al-hijjah'            => '= 10 Dhu al-Hijjah',
-);
+];

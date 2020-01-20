@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'prayer-day'                                      => 'Buß- und Bettag',
     'berchtold-day'                                   => 'Berchtoldstag',
     'easter-39'                                       => 'Auffahrt',
@@ -81,4 +81,4 @@ return array(
     '4th-sunday-before-12-25'                         => '1. Advent',
     '2nd-sunday-before-12-25'                         => '3. Advent',
     '1st-sunday-before-12-25'                         => '4. Advent',
-);
+];

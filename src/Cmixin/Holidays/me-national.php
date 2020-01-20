@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     '05-21-and-if-sunday-then-next-tuesday' => '= 05-21 if sunday then next tuesday',
     '05-22-and-if-sunday-then-next-monday'  => '= 05-22 substitute',
     '07-13-and-if-sunday-then-next-tuesday' => '= 07-13 if sunday then next tuesday',
@@ -32,4 +32,4 @@ return array(
     //    '15-nisan-p2d'                          => '= 15 Nisan P2D',
     //    '1-tishrei'                             => '= 1 Tishrei',
     //    '10-tishrei-p2d'                        => '= 10 Tishrei P2D',
-);
+];

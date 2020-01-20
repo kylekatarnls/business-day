@@ -1,5 +1,5 @@
 <?php
 
-return array(
+return [
     '03-25' => 'Annuntiatio Mariæ',
-);
+];

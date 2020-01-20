@@ -4,3 +4,4 @@ composer.lock
 /coverage/
 /.idea/
 /.vscode/
+.phpunit.result.cache

@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     '01-01-and-if-sunday-then-next-tuesday' => '= 01-01 if Sunday then next Tuesday',
     '01-02-and-if-sunday-then-next-monday'  => '= 01-02 substitute',
     '03-14-and-if-sunday-then-next-monday'  => '= 03-14 substitute',
@@ -17,4 +17,4 @@ return array(
     '12-25-and-if-sunday-then-next-monday'  => '= 12-25 substitute',
     '1-shawwal'                             => '= 1 Shawwal',
     '10-dhu-al-hijjah'                      => '= 10 Dhu al-Hijjah',
-);
+];

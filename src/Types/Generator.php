@@ -43,7 +43,7 @@ class Generator
         $methods = '';
         $source = str_replace('\\', '/', realpath($source));
         $sourceLength = strlen($source);
-        $files = array();
+        $files = [];
 
         foreach ($this->getMethods($boot) as $name => $closure) {
             try {
@@ -66,7 +66,7 @@ class Generator
             }
 
             $file = substr($file, $sourceLength + 1);
-            $parameters = implode(', ', array_map(array($this, 'dumpParameter'), $function->getParameters()));
+            $parameters = implode(', ', array_map([$this, 'dumpParameter'], $function->getParameters()));
             $methodDocBlock = trim($function->getDocComment() ?: '');
             $length = $function->getStartLine() - 1;
             $code = array_slice($lines, 0, $length);
@@ -142,12 +142,12 @@ class Generator
     {
         $methods = $this->getMethodsDefinitions($boot, $source, $defaultClass);
 
-        $classes = $classes ?: array(
+        $classes = $classes ?: [
             'Carbon\Carbon',
             'Carbon\CarbonImmutable',
             'Illuminate\Support\Carbon',
             'Illuminate\Support\Facades\Date',
-        );
+        ];
 
         $code = "<?php\n";
 

@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'january-second'                                         => '銀行休業日',
     'january-third'                                          => '銀行休業日',
     'coming-of-age-day'                                      => '成人の日',
@@ -49,4 +49,4 @@ return array(
     '3rd-monday-in-september'                                => '敬老の日',
     'september-equinox-in-+09:00'                            => '秋分の日',
     '2nd-monday-in-october'                                  => '体育の日',
-);
+];

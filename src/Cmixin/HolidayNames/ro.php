@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'unification-day'               => 'Ziua Unirii',
     '03-08'                         => 'Ziua Mamei',
     'children-s-day'                => 'Ziua Copilului',
@@ -37,4 +37,4 @@ return array(
     'independence-day'              => 'Ziua Independentei',
     'mothers-day'                   => 'Ziua Mamei',
     '1st-saturday-in-october-p2d'   => 'Ziua vinului',
-);
+];

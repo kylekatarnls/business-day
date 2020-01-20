@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     '01-06'                                               => 'Epifania',
     'feast-of-saint-agatha'                               => 'Festa di Sant’Agata',
     'anniversary-of-the-arengo'                           => 'Anniversario dell\'Arengo',
@@ -59,4 +59,4 @@ return array(
     'easter-50'                                           => 'Lunedì di Pentecoste',
     'easter-60'                                           => 'Corpus Domini',
     'mothers-day'                                         => 'Festa della mamma',
-);
+];

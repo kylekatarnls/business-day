@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'new-year'               => '= 01-01 substitute', // New Year's Day
     // Martin Luther King Jr. Day
     'mlk-day'                => '= third Monday of january',
@@ -26,4 +26,4 @@ return array(
     //    'friday-after-4th-thursday-in-november'                                 => '= Friday after fourth Thursday of November',
     //    '12-24'                                                                 => '12-24',
     //    '12-31'                                                                 => '12-31',
-);
+];

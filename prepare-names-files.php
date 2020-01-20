@@ -1,6 +1,6 @@
 <?php
 
-$keys = array();
+$keys = [];
 foreach (glob('src/Cmixin/Holidays/*.php') as $file) {
     $keys = array_merge($keys, include $file);
 }
@@ -10,7 +10,7 @@ sort($keys);
 
 foreach (glob('src/Cmixin/HolidayNames/*.php') as $file) {
     $data = include $file;
-    $newData = array();
+    $newData = [];
 
     foreach ($keys as $key) {
         $newData[$key] = isset($data[$key]) ? $data[$key] : 'Unknown';

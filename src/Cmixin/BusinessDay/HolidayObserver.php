@@ -12,7 +12,7 @@ class HolidayObserver extends Holiday
     /**
      * @var array
      */
-    public $observedHolidays = array();
+    public $observedHolidays = [];
 
     /**
      * @var string
@@ -90,7 +90,7 @@ class HolidayObserver extends Holiday
 
             $zone = $mixin->observedHolidaysZone;
             if ($holidayId === $allHolidays || !isset($mixin->observedHolidays[$zone])) {
-                $mixin->observedHolidays[$zone] = array();
+                $mixin->observedHolidays[$zone] = [];
             }
 
             $mixin->observedHolidays[$zone][$holidayId] = $observed;
@@ -253,7 +253,7 @@ class HolidayObserver extends Holiday
          */
         return function ($holidayId = null) use ($mixin, $allHolidays) {
             $zone = $mixin->observedHolidaysZone;
-            $days = isset($mixin->observedHolidays[$zone]) ? $mixin->observedHolidays[$zone] : array();
+            $days = isset($mixin->observedHolidays[$zone]) ? $mixin->observedHolidays[$zone] : [];
 
             if ($holidayId) {
                 if (isset($days[$holidayId])) {

@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'new-year'                => '01-01',
     '05-01'                   => '05-01',
     'somaliland-independence' => '06-26',
@@ -9,4 +9,4 @@ return array(
     '12-rabi-al-awwal'        => '= 12 Rabi al-awwal',
     '1-shawwal'               => '= 1 Shawwal',
     '10-dhu-al-hijjah'        => '= 10 Dhu al-Hijjah',
-);
+];

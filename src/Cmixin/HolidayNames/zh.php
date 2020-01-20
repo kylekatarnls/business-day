@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'youth-day'              => '青年节',
     'children-s-day'         => '六一儿童节',
     'army-day'               => '建军节',
@@ -23,4 +23,4 @@ return array(
     'new-year'               => '元旦',
     '03-08'                  => '国际妇女节',
     '05-01'                  => '劳动节',
-);
+];

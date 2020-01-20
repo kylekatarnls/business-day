@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'friday-after-01-18'     => 'Bóndadagur',
     'woman-s-day'            => 'Konudagur',
     'easter-48'              => 'Bolludagur',
@@ -39,4 +39,4 @@ return array(
     'mothers-day'            => 'Mæðradagurinn',
     '1st-sunday-in-june'     => 'Sjómannadagurinn',
     'monday-in-august'       => 'Frídagur verslunarmanna',
-);
+];

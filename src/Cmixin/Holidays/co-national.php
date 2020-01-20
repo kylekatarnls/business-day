@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'new-year'               => '01-01',
     'monday-after-01-06'     => '= Monday after 01-06',
     'monday-after-03-19'     => '= Monday after 03-19',
@@ -21,4 +21,4 @@ return array(
     'monday-after-11-11'     => '= Monday after 11-11',
     '12-08'                  => '12-08',
     'christmas'              => '12-25',
-);
+];
