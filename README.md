@@ -29,7 +29,7 @@ use Cmixin\BusinessDay;
 $baseList = 'us-national'; // or region such as 'us-il'
 
 // You can add/remove days (optional):
-$additionalHolidays = array(
+$additionalHolidays = [
     'independence-day' => null, // Even if it's holiday, you can force it to null to make your business open
     'boss-birthday'    => '09-26', // Close the office on September 26th
     // you can also use slash if you prefer day first '26/09' (September 26th too)
@@ -46,17 +46,17 @@ $additionalHolidays = array(
 
         return '02-15';
     },
-);
+];
 
 BusinessDay::enable('Carbon\Carbon', $baseList, $additionalHolidays);
 // Or if you use Laravel:
 // BusinessDay::enable('Illuminate\Support\Carbon', $baseList, $additionalHolidays);
 
 // And you can even enable multiple classes at once:
-BusinessDay::enable(array(
+BusinessDay::enable([
     'Carbon\Carbon',
     'Carbon\CarbonImmutable',
-), $baseList, $additionalHolidays);
+], $baseList, $additionalHolidays);
 ```
 
 [Try in the live editor](http://try-carbon.herokuapp.com/?input=%24baseList%20%3D%20%27us-national%27%3B%20%2F%2F%20or%20region%20such%20as%20%27us-il%27%0A%0A%2F%2F%20You%20can%20add%2Fremove%20days%20(optional)%3A%0A%24additionalHolidays%20%3D%20array(%0A%20%20%20%20%27independence-day%27%20%3D%3E%20null%2C%20%2F%2F%20Even%20if%20it%27s%20holiday%2C%20you%20can%20force%20it%20to%20null%20to%20make%20your%20business%20open%0A%20%20%20%20%27boss-birthday%27%20%20%20%20%3D%3E%20%2709-26%27%2C%20%2F%2F%20Close%20the%20office%20on%20September%2026th%0A%20%20%20%20%2F%2F%20you%20can%20also%20use%20slash%20if%20you%20prefer%20day%20first%20%2726%2F09%27%20(September%2026th%20too)%0A%20%20%20%20%27julian-christmas%27%20%3D%3E%20%27%3D%20julian%2012-25%27%2C%20%2F%2F%20We%20support%20many%20calendars%20such%20as%20the%20Julian%20calendar%0A%20%20%20%20%2F%2F%20We%20support%20expressions%0A%20%20%20%20%27special-easter%27%20%20%20%3D%3E%20%27%3D%20Tuesday%20before%20easter%27%2C%0A%20%20%20%20%27last-monday%27%20%20%20%20%20%20%3D%3E%20%27%3D%20last%20Monday%20of%20October%27%2C%0A%20%20%20%20%27conditional%27%20%20%20%20%20%20%3D%3E%20%27%3D%2002-25%20if%20Tuesday%20then%20next%20Friday%27%2C%20%2F%2F%20We%20support%20conditions%0A%20%20%20%20%2F%2F%20And%20we%20support%20closures%3A%0A%20%20%20%20%27very-special%27%20%20%20%20%20%3D%3E%20function%20(%24year)%20%7B%0A%20%20%20%20%20%20%20%20if%20(%24year%20%3D%3D%3D%202020)%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20return%20%2701-15%27%3B%0A%20%20%20%20%20%20%20%20%7D%0A%0A%20%20%20%20%20%20%20%20return%20%2702-15%27%3B%0A%20%20%20%20%7D%2C%0A)%3B%0A%0ABusinessDay%3A%3Aenable(%27Carbon%5CCarbon%27%2C%20%24baseList%2C%20%24additionalHolidays)%3B%0A%0A%24date%20%3D%20Carbon%3A%3Aparse(%272019-12-25%27)%3B%0A%0Aif%20(%24date-%3EisHoliday())%20%7B%0A%20%20%24name%20%3D%20%24date-%3EgetHolidayName()%3B%0A%20%20echo%20%22December%2025th%20is%20an%20holiday%20in%202019%20as%20it%27s%20%24name%5Cn%22%3B%0A%7D%20else%20%7B%0A%20%20echo%20%22December%2025th%20is%20not%20an%20holiday%20in%202019.%5Cn%22%3B%0A%7D%0A%0A%24date%20%3D%20Carbon%3A%3Aparse(%272019-04-16%27)%3B%0A%0Aif%20(%24date-%3EisHoliday())%20%7B%0A%20%20%24id%20%3D%20%24date-%3EgetHolidayId()%3B%0A%20%20echo%20%22April%2016th%20is%20an%20holiday%20in%202019%20as%20it%27s%20%24id%5Cn%22%3B%0A%7D%20else%20%7B%0A%20%20echo%20%22April%2016th%20is%20not%20an%20holiday%20in%202019.%5Cn%22%3B%0A%7D%0A%0A%24date%20%3D%20Carbon%3A%3Aparse(%272020-04-16%27)%3B%0A%0Aif%20(%24date-%3EisHoliday())%20%7B%0A%20%20%24id%20%3D%20%24date-%3EgetHolidayId()%3B%0A%20%20echo%20%22April%2016th%20is%20an%20holiday%20in%202020%20as%20it%27s%20%24id%5Cn%22%3B%0A%7D%20else%20%7B%0A%20%20echo%20%22April%2016th%20is%20not%20an%20holiday%20in%202020.%5Cn%22%3B%0A%7D%0A)
@@ -180,26 +180,26 @@ It's how you can set your own holidays lists:
 ```php
 Carbon::setHolidays('us-il', array_merge(
     Carbon::getHolidays('us-national'),
-    array(
+    [
         // Presidents' Day
         'presidents-day' => '= third monday of february', // can be a datetime expression
         // Columbus Day
         'columbus-day' => function ($year) { // can be a closure
             $date = new DateTime("second monday of october $year");
-    
+
             return $date->format('d/m');
         },
         // Day after Thanksgiving
         'thanksgiving-next-day' => '= fourth thursday of november $year +1 day', // '$year' will be replaced by current year
-    )
+    ]
 ));
 Carbon::setHolidays('my-enterprise', array_merge(
     Carbon::getHolidays('us-is'),
-    array(
+    [
         // Lincoln's Birthday
         'lincolns-birthday' => '= 02-12 substitute', // substitute will shift the holiday until it does not fall on Saturday, Sunday or an other holiday
         'company-closed-day' => '= 04-05 if friday then previous wednesday', // custom rules can be applied with if/then (if can be followed by a day name or "weekend")
-    )
+    ]
 ));
 // Then when you select my-enterprise, all us-national,
 // us-il and my-enterprise days are enabled
@@ -209,16 +209,16 @@ Carbon::setHolidaysRegion('my-enterprise');
 You can also pass deep array to `setHolidays` to set in the same call holidays dates and either observed flags, names
 (in different languages) or both:
 ```php
-Carbon::setHolidays('my-enterprise', array(
-    'lincolns-birthday' => array(
+Carbon::setHolidays('my-enterprise', [
+    'lincolns-birthday' => [
         'date'     => '12/02',
         'observed' => true,
-        'name'     => array(
+        'name'     => [
             'en' => "Lincoln's Birthday",
             'fr' => 'Anniversaire du Président Lincoln',
-        ),
-    ),
-));
+        ],
+    ],
+]);
 ```
 
 #### addHolidays
@@ -227,14 +227,14 @@ While setHolidays replace the whole holidays list for a given region, addHoliday
 append holidays to the current list.
 
 ```php
-Carbon::addHolidays('my-list', array(
+Carbon::addHolidays('my-list', [
     'poney'        => '20/01',
     'swimmingpool' => '21/01',
-)));
-Carbon::addHolidays('my-list', array(
+]);
+Carbon::addHolidays('my-list', [
     'boss-birthday'          => '10/02',
     'boss-birthday-next-day' => '11/02',
-)));
+]);
 Carbon::getHolidays('my-list') // contains 20/01, 21/01, 10/02 and 11/02
 ```
 
@@ -427,7 +427,7 @@ Carbon::unobserveHoliday('independence-day');
 
 Carbon::setObservedHolidaysZone('Illinois-subsidiary-company');
 Carbon::observeAllHolidays();
-Carbon::unobserveHolidays(array('labor-day', 'mlk-day'));
+Carbon::unobserveHolidays(['labor-day', 'mlk-day']);
 
 Carbon::setObservedHolidaysZone('Nevada-subsidiary-company');
 Carbon::parse('2018-01-15')->isObservedHoliday(); // true
@@ -459,7 +459,7 @@ Carbon::parse('2018-01-15')->isHoliday(); // true
 // By default no holiday is observed
 Carbon::parse('2018-01-15')->isObservedHoliday(); // false
 // Then you can observe a list of holidays
-Carbon::unobserveHolidays(array('christmas', 'new-year'));
+Carbon::unobserveHolidays(['christmas', 'new-year']);
 Carbon::parse('2018-01-15')->isObservedHoliday(); // true
 // Observed holidays are kept if you change the holidays region:
 Carbon::setHolidaysRegion('us-national');
@@ -476,7 +476,7 @@ Carbon::isObservedHoliday(); // check if today is an observed holiday
 Observe holidays. You can have multiple set of observed days using `setObservedHolidaysZone`.
 
 ```php
-Carbon::observeHoliday(array('christmas', 'new-year'));
+Carbon::observeHoliday(['christmas', 'new-year']);
 Carbon::observeHoliday('easter');
 ```
 
@@ -485,7 +485,7 @@ Carbon::observeHoliday('easter');
 Alias of `observeHoliday`.
 
 ```php
-Carbon::observeHolidays(array('christmas', 'new-year'));
+Carbon::observeHolidays(['christmas', 'new-year']);
 Carbon::observeHolidays('easter');
 ```
 
@@ -494,7 +494,7 @@ Carbon::observeHolidays('easter');
 Set holidays as not observed. You can have multiple set of observed days using `setObservedHolidaysZone`.
 
 ```php
-Carbon::unobserveHoliday(array('christmas', 'new-year'));
+Carbon::unobserveHoliday(['christmas', 'new-year']);
 Carbon::unobserveHoliday('easter');
 ```
 
@@ -503,7 +503,7 @@ Carbon::unobserveHoliday('easter');
 Alias of `unobserveHoliday`.
 
 ```php
-Carbon::unobserveHolidays(array('christmas', 'new-year'));
+Carbon::unobserveHolidays(['christmas', 'new-year']);
 Carbon::unobserveHolidays('easter');
 ```
 
@@ -530,7 +530,7 @@ Carbon::observeHoliday('easter');
 #### diffInBusinessDays
 
 Get the number of open days between 2 dates.
- 
+
 ```php
 $openDays = Carbon::diffInBusinessDays('December 25'); // If only one date, [now] is used as the second date
 
