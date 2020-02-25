@@ -11,8 +11,10 @@ return [
     '30-ramadan'       => '= 30 Ramadan',
     '1-shawwal'        => '= 1 Shawwal',
     '2-shawwal'        => '= 2 Shawwal',
+    '3-shawwal'        => '= 3 Shawwal',
     '9-dhu-al-hijjah'  => '= 09 Dhu al-Hijjah',
     '10-dhu-al-hijjah' => '= 10 Dhu al-Hijjah',
     '11-dhu-al-hijjah' => '= 11 Dhu al-Hijjah',
     '12-dhu-al-hijjah' => '= 12 Dhu al-Hijjah',
+    '13-dhu-al-hijjah' => '= 13 Dhu al-Hijjah',
 ];
