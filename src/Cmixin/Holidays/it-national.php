@@ -14,5 +14,5 @@ return [
     '12-08'              => '12-08',
     'christmas'          => '12-25',
     'christmas-next-day' => '12-26',
-    '2011-03-17'         => '= 2011-03-17',
+    'unification-day'    => '03-17 on year 2011'
 ];
