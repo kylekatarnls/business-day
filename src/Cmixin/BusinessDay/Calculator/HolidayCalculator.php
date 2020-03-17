@@ -311,9 +311,11 @@ class HolidayCalculator extends CalculatorBase
 
         return $holiday
             ? [$key, $holiday
-                ? ($this->type === 'string'
+                ? (
+                    $this->type === 'string'
                     ? $holiday
-                    : (isset($dateTime) // @codeCoverageIgnore
+                    : (
+                        isset($dateTime) // @codeCoverageIgnore
                         ? $dateTime
                         : $outputClass::createFromFormat('!d/m/Y', "$holiday/$year")
                     )
