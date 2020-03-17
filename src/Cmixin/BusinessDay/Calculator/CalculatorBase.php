@@ -98,7 +98,8 @@ class CalculatorBase
 
             list($condition, $action) = array_pad(explode(' then ', $condition, 2), 2, null);
             $condition = strtolower($condition);
-            $condition = (bool) ($condition === 'weekend'
+            $condition = (bool) (
+                $condition === 'weekend'
                 ? ($dateTime->format('N') > 5)
                 : in_array(strtolower($dateTime->format('l')), array_map('trim', explode(',', $condition)))
             );
