@@ -14,5 +14,9 @@ return [
     '12-08'              => '12-08',
     'christmas'          => '12-25',
     'christmas-next-day' => '12-26',
-    'unification-day'    => '03-17 on year 2011',
+    'unification-day'    => function ($year) {
+        if ($year === 2011) {
+            return '17/03';
+        }
+    },
 ];
