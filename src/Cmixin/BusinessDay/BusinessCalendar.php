@@ -42,7 +42,7 @@ class BusinessCalendar extends HolidayObserver
         /**
          * Sets the date to the next business day (neither a weekend day nor a holiday).
          *
-         * @return bool
+         * @return \Carbon\CarbonInterface|\Carbon\Carbon|\Carbon\CarbonImmutable
          */
         return function ($self = null) use ($mixin, $method) {
             $carbonClass = @get_class() ?: Emulator::getClass(new \Exception());
@@ -72,7 +72,7 @@ class BusinessCalendar extends HolidayObserver
         /**
          * Sets the date to the current or next business day (neither a weekend day nor a holiday).
          *
-         * @return bool
+         * @return \Carbon\CarbonInterface|\Carbon\Carbon|\Carbon\CarbonImmutable
          */
         return function ($self = null) use ($mixin, $method) {
             $carbonClass = @get_class() ?: Emulator::getClass(new \Exception());
@@ -93,7 +93,7 @@ class BusinessCalendar extends HolidayObserver
         /**
          * Sets the date to the previous business day (neither a weekend day nor a holiday).
          *
-         * @return bool
+         * @return \Carbon\CarbonInterface|\Carbon\Carbon|\Carbon\CarbonImmutable
          */
         return $this->nextBusinessDay('subDay');
     }
@@ -108,7 +108,7 @@ class BusinessCalendar extends HolidayObserver
         /**
          * Sets the date to the current or previous business day.
          *
-         * @return bool
+         * @return \Carbon\CarbonInterface|\Carbon\Carbon|\Carbon\CarbonImmutable
          */
         return $this->currentOrNextBusinessDay('previousBusinessDay');
     }
