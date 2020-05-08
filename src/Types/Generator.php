@@ -5,6 +5,8 @@ namespace Types;
 use Carbon\Carbon;
 use Cmixin\BusinessDay;
 use ReflectionClass;
+use ReflectionException;
+use ReflectionMethod;
 use ReflectionParameter;
 
 class Generator
@@ -12,7 +14,7 @@ class Generator
     /**
      * @param callable|null $boot
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      *
      * @return mixed
      */
@@ -34,7 +36,7 @@ class Generator
      * @param string        $source
      * @param string        $defaultClass
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      *
      * @return string
      */
@@ -48,7 +50,7 @@ class Generator
         foreach ($this->getMethods($boot) as $name => $closure) {
             try {
                 $function = new \ReflectionFunction($closure);
-            } catch (\ReflectionException $e) {
+            } catch (ReflectionException $e) {
                 continue;
             }
 
@@ -76,9 +78,9 @@ class Generator
                 if (preg_match('/^\s*(public|protected)\s+function\s+(\S+)\(.*\)(\s*\{)?$/', $code[$i], $match)) {
                     if ($name !== $match[2]) {
                         try {
-                            $method = new \ReflectionMethod($className, $name);
-                        } catch (\ReflectionException $e) {
-                            $method = new \ReflectionMethod($defaultClass, $name);
+                            $method = new ReflectionMethod($className, $name);
+                        } catch (ReflectionException $e) {
+                            $method = new ReflectionMethod($defaultClass, $name);
                         }
 
                         $methodFile = $method->getFileName();
@@ -136,7 +138,7 @@ class Generator
      * @param callable $boot
      * @param string   $name
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function writeHelpers($defaultClass, $source, $destination, $name = '_ide_business_day', callable $boot = null, array $classes = null)
     {
@@ -200,7 +202,7 @@ class Generator
             if ($parameter->isDefaultValueAvailable()) {
                 $output .= ' = '.$this->dumpValue($parameter->getDefaultValue());
             }
-        } catch (\ReflectionException $exp) {
+        } catch (ReflectionException $exp) {
         }
 
         return $output;

@@ -137,7 +137,7 @@ namespace Carbon
          *
          * Sets the date to the next business day (neither a weekend day nor a holiday).
          *
-         * @return bool
+         * @return \Carbon\CarbonInterface|\Carbon\Carbon|\Carbon\CarbonImmutable
          */
         public static function nextBusinessDay($self = null)
         {
@@ -149,7 +149,7 @@ namespace Carbon
          *
          * Sets the date to the current or next business day (neither a weekend day nor a holiday).
          *
-         * @return bool
+         * @return \Carbon\CarbonInterface|\Carbon\Carbon|\Carbon\CarbonImmutable
          */
         public static function currentOrNextBusinessDay($self = null)
         {
@@ -161,7 +161,7 @@ namespace Carbon
          *
          * Sets the date to the previous business day (neither a weekend day nor a holiday).
          *
-         * @return bool
+         * @return \Carbon\CarbonInterface|\Carbon\Carbon|\Carbon\CarbonImmutable
          */
         public static function previousBusinessDay($self = null)
         {
@@ -173,7 +173,7 @@ namespace Carbon
          *
          * Sets the date to the current or previous business day.
          *
-         * @return bool
+         * @return \Carbon\CarbonInterface|\Carbon\Carbon|\Carbon\CarbonImmutable
          */
         public static function currentOrPreviousBusinessDay($self = null)
         {
@@ -410,7 +410,7 @@ namespace Carbon
          */
         public static function getYearHolidays($year = null, $type = null, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay/YearCrawler.php:22
+            // Content, see src/Cmixin/BusinessDay/YearCrawler.php:24
         }
 
         /**
@@ -425,7 +425,7 @@ namespace Carbon
          */
         public static function getYearHolidaysNextFunction($year = null, $type = null, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay/YearCrawler.php:54
+            // Content, see src/Cmixin/BusinessDay/YearCrawler.php:56
         }
 
         /**
@@ -793,7 +793,7 @@ namespace Carbon
          *
          * Sets the date to the next business day (neither a weekend day nor a holiday).
          *
-         * @return bool
+         * @return \Carbon\CarbonInterface|\Carbon\Carbon|\Carbon\CarbonImmutable
          */
         public static function nextBusinessDay($self = null)
         {
@@ -805,7 +805,7 @@ namespace Carbon
          *
          * Sets the date to the current or next business day (neither a weekend day nor a holiday).
          *
-         * @return bool
+         * @return \Carbon\CarbonInterface|\Carbon\Carbon|\Carbon\CarbonImmutable
          */
         public static function currentOrNextBusinessDay($self = null)
         {
@@ -817,7 +817,7 @@ namespace Carbon
          *
          * Sets the date to the previous business day (neither a weekend day nor a holiday).
          *
-         * @return bool
+         * @return \Carbon\CarbonInterface|\Carbon\Carbon|\Carbon\CarbonImmutable
          */
         public static function previousBusinessDay($self = null)
         {
@@ -829,7 +829,7 @@ namespace Carbon
          *
          * Sets the date to the current or previous business day.
          *
-         * @return bool
+         * @return \Carbon\CarbonInterface|\Carbon\Carbon|\Carbon\CarbonImmutable
          */
         public static function currentOrPreviousBusinessDay($self = null)
         {
@@ -1066,7 +1066,7 @@ namespace Carbon
          */
         public static function getYearHolidays($year = null, $type = null, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay/YearCrawler.php:22
+            // Content, see src/Cmixin/BusinessDay/YearCrawler.php:24
         }
 
         /**
@@ -1081,7 +1081,7 @@ namespace Carbon
          */
         public static function getYearHolidaysNextFunction($year = null, $type = null, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay/YearCrawler.php:54
+            // Content, see src/Cmixin/BusinessDay/YearCrawler.php:56
         }
 
         /**
@@ -1449,7 +1449,7 @@ namespace Illuminate\Support
          *
          * Sets the date to the next business day (neither a weekend day nor a holiday).
          *
-         * @return bool
+         * @return \Carbon\CarbonInterface|\Carbon\Carbon|\Carbon\CarbonImmutable
          */
         public static function nextBusinessDay($self = null)
         {
@@ -1461,7 +1461,7 @@ namespace Illuminate\Support
          *
          * Sets the date to the current or next business day (neither a weekend day nor a holiday).
          *
-         * @return bool
+         * @return \Carbon\CarbonInterface|\Carbon\Carbon|\Carbon\CarbonImmutable
          */
         public static function currentOrNextBusinessDay($self = null)
         {
@@ -1473,7 +1473,7 @@ namespace Illuminate\Support
          *
          * Sets the date to the previous business day (neither a weekend day nor a holiday).
          *
-         * @return bool
+         * @return \Carbon\CarbonInterface|\Carbon\Carbon|\Carbon\CarbonImmutable
          */
         public static function previousBusinessDay($self = null)
         {
@@ -1485,7 +1485,7 @@ namespace Illuminate\Support
          *
          * Sets the date to the current or previous business day.
          *
-         * @return bool
+         * @return \Carbon\CarbonInterface|\Carbon\Carbon|\Carbon\CarbonImmutable
          */
         public static function currentOrPreviousBusinessDay($self = null)
         {
@@ -1722,7 +1722,7 @@ namespace Illuminate\Support
          */
         public static function getYearHolidays($year = null, $type = null, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay/YearCrawler.php:22
+            // Content, see src/Cmixin/BusinessDay/YearCrawler.php:24
         }
 
         /**
@@ -1737,7 +1737,7 @@ namespace Illuminate\Support
          */
         public static function getYearHolidaysNextFunction($year = null, $type = null, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay/YearCrawler.php:54
+            // Content, see src/Cmixin/BusinessDay/YearCrawler.php:56
         }
 
         /**
@@ -2105,7 +2105,7 @@ namespace Illuminate\Support\Facades
          *
          * Sets the date to the next business day (neither a weekend day nor a holiday).
          *
-         * @return bool
+         * @return \Carbon\CarbonInterface|\Carbon\Carbon|\Carbon\CarbonImmutable
          */
         public static function nextBusinessDay($self = null)
         {
@@ -2117,7 +2117,7 @@ namespace Illuminate\Support\Facades
          *
          * Sets the date to the current or next business day (neither a weekend day nor a holiday).
          *
-         * @return bool
+         * @return \Carbon\CarbonInterface|\Carbon\Carbon|\Carbon\CarbonImmutable
          */
         public static function currentOrNextBusinessDay($self = null)
         {
@@ -2129,7 +2129,7 @@ namespace Illuminate\Support\Facades
          *
          * Sets the date to the previous business day (neither a weekend day nor a holiday).
          *
-         * @return bool
+         * @return \Carbon\CarbonInterface|\Carbon\Carbon|\Carbon\CarbonImmutable
          */
         public static function previousBusinessDay($self = null)
         {
@@ -2141,7 +2141,7 @@ namespace Illuminate\Support\Facades
          *
          * Sets the date to the current or previous business day.
          *
-         * @return bool
+         * @return \Carbon\CarbonInterface|\Carbon\Carbon|\Carbon\CarbonImmutable
          */
         public static function currentOrPreviousBusinessDay($self = null)
         {
@@ -2378,7 +2378,7 @@ namespace Illuminate\Support\Facades
          */
         public static function getYearHolidays($year = null, $type = null, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay/YearCrawler.php:22
+            // Content, see src/Cmixin/BusinessDay/YearCrawler.php:24
         }
 
         /**
@@ -2393,7 +2393,7 @@ namespace Illuminate\Support\Facades
          */
         public static function getYearHolidaysNextFunction($year = null, $type = null, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay/YearCrawler.php:54
+            // Content, see src/Cmixin/BusinessDay/YearCrawler.php:56
         }
 
         /**
