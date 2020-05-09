@@ -91,6 +91,21 @@ class Generator
 
                         $length = $method->getEndLine() - 1;
                         $lines = $files[$methodFile];
+
+                        if ($length > 3 && preg_match('/^\s*\*+\/\s*$/', $lines[$length - 2])) {
+                            $doc = '';
+
+                            for ($i = $length - 2; $i >= max(0, $length - 42); $i--) {
+                                $doc = $lines[$i].$doc;
+
+                                if (preg_match('/\s*\/\*{2,}\s*/', $lines[$i])) {
+                                    $methodDocBlock = trim($doc);
+
+                                    break;
+                                }
+                            }
+                        }
+
                         $code = array_slice($lines, 0, $length);
 
                         for ($i = $length - 1; $i >= 0; $i--) {
