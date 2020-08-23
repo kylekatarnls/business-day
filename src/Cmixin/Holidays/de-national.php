@@ -6,7 +6,6 @@ return [
     'easter'                  => '= easter',
     'easter-p1'               => '= easter 1',
     'labor-day'               => '05-01',
-    'constitution-day'        => '05-23',
     'easter-39'               => '= easter 39',
     'easter-50'               => '= easter 50',
     '10-03'                   => '10-03',
