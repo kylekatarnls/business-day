@@ -6,7 +6,7 @@ return [
     'easter-39'                                       => 'Auffahrt',
     'easter-40'                                       => 'Feiertagsbrücke',
     'easter-61'                                       => 'Feiertagsbrücke',
-    '08-15'                                           => 'Staatsfeiertag',
+    'national-day'                                    => 'Staatsfeiertag',
     '09-08'                                           => 'Mariä Geburt',
     'christmas-next-day'                              => 'Stephanstag',
     '01-06'                                           => 'Erscheinung des Herrn',
@@ -67,7 +67,7 @@ return [
     '15-nisan'                                        => 'Pessach',
     '1-tishrei'                                       => 'Rosch Haschana',
     '10-tishrei'                                      => 'Jom Kippur',
-    'constitution-day'                                => 'Tag der Verfassung',
+    'constitution-day'                                => 'Tag des Grundgesetzes',
     'independence-day'                                => 'Unabhängigkeitstag',
     'mothers-day'                                     => 'Muttertag',
     'national-holiday'                                => 'Nationalfeiertag',
@@ -81,4 +81,5 @@ return [
     '4th-sunday-before-12-25'                         => '1. Advent',
     '2nd-sunday-before-12-25'                         => '3. Advent',
     '1st-sunday-before-12-25'                         => '4. Advent',
+    'labor-day'                                       => 'Tag der Arbeit',
 ];
