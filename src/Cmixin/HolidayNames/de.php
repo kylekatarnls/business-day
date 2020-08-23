@@ -82,4 +82,6 @@ return [
     '2nd-sunday-before-12-25'                         => '3. Advent',
     '1st-sunday-before-12-25'                         => '4. Advent',
     'labor-day'                                       => 'Tag der Arbeit',
+    'epiphany'                                        => 'Heilige Drei Könige',
+    'children-s-day'                                  => 'Weltkindertag',
 ];
