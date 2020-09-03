@@ -45,7 +45,7 @@ abstract class MixinBase
                 $carbonClass::setHolidaysRegion($region);
 
                 if (isset($arguments[2])) {
-                    $carbonClass::addHolidays($region, $arguments[2]);
+                    $carbonClass::addHolidays($carbonClass::getHolidaysRegion(), $arguments[2]);
                 }
             }
         }
