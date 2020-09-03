@@ -984,4 +984,14 @@ class BusinessDayTest extends TestCase
         $date = new LunarCalendar('2020-02-07');
         self::assertSame([2020, 2, 29], $date->toGregorian());
     }
+
+    public function testFallbackRegionWithCustomHolidays()
+    {
+        $carbon = static::CARBON_CLASS;
+        BusinessDay::enable($carbon, 'us-US', [
+            'custom' => '2020-09-16',
+        ]);
+
+        self::assertTrue($carbon::parse('2020-9-16')->isHoliday());
+    }
 }
