@@ -4,25 +4,6 @@ namespace Cmixin\BusinessDay;
 
 abstract class MixinBase
 {
-    /**
-     * @deprecated
-     *
-     * @var string
-     */
-    protected static $carbonClass = null;
-
-    /**
-     * @deprecated
-     *
-     * Returns the last class name enabled via static facade.
-     *
-     * @return string
-     */
-    protected static function getCarbonClass()
-    {
-        return static::$carbonClass ?: 'Carbon\Carbon';
-    }
-
     public static function enable($carbonClass = null)
     {
         if ($carbonClass === null) {
@@ -36,7 +17,6 @@ abstract class MixinBase
         $mixins = [];
 
         foreach ($carbonClasses as $carbonClass) {
-            static::$carbonClass = $carbonClass;
             $mixin = new static();
             $carbonClass::mixin($mixin);
             $arguments = func_get_args();
