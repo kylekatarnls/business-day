@@ -309,6 +309,20 @@ Carbon::setHolidayName('christmas', 'en', 'Christmas Day');
 Carbon::parse('2018-12-25')->getHolidayName() // "Christmas Day"
 ```
 
+It also allows you to name an additional holiday you added manually and you can
+specify multiple languages using array:
+
+```php
+BusinessDay::enable('Carbon\Carbon', 'us-national', [
+  'company-creation' => '05-15',
+]);
+
+Carbon::setHolidayName('company-creation', [
+  'en' => 'The Day The Company Was Created',
+  'fr' => "Le jour de la création de l'Entreprise",
+]);
+```
+
 #### isBusinessDay
 
 Returns `true` if the date (Carbon instance) is nor a week-end day neither
