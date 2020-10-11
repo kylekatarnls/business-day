@@ -52,9 +52,9 @@ class YearCrawler extends HolidaysList
          * @param int    $year input year, year of the current instance or context used if omitted, current year used if omitted and called statically
          * @param string $type can be 'string' (to return dates as string) or a class name to returns instances of this class
          *
-         * @return \Closure
+         * @return callable
          */
-        return function ($year = null, $type = null, $self = null) use ($mixin) {
+        return function ($year = null, $type = null, $self = null) use ($mixin): callable {
             $carbonClass = @get_class() ?: Emulator::getClass(new Exception());
             $year = $year ?: $carbonClass::getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null)->year;
             $holidays = $carbonClass::getHolidays();
@@ -64,9 +64,7 @@ class YearCrawler extends HolidaysList
             $calculator->setOutputClass($outputClass);
             $calculator->setHolidaysList($holidaysList);
 
-            return function () use ($calculator) {
-                return $calculator->next();
-            };
+            return [$calculator, 'next'];
         };
     }
 }

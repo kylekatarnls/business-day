@@ -1004,13 +1004,17 @@ class BusinessDayTest extends TestCase
         $carbon::parse('2020-09-16')->setHolidayData([
             'info' => 'You may need to know...',
         ]);
-        $carbon::parse('2020-10-12')->setHolidayData([
+        $carbon::parse('2020-10-13')->setHolidayData([
             'info' => 'Lost if not an holiday.',
         ]);
         $carbon::setHolidayDataById('christmas', [
             'info' => 'It may be cold in USA',
         ]);
 
+        // Empty array if not filled
+        self::assertSame([], $carbon::parse('2020-10-12')->getHolidayData());
+        // null if not holiday
+        self::assertNull($carbon::parse('2020-10-13')->getHolidayData());
         self::assertSame([
             'info' => 'You may need to know...',
         ], $carbon::getHolidayDataById('custom'));
