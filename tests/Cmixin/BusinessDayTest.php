@@ -994,4 +994,34 @@ class BusinessDayTest extends TestCase
 
         self::assertTrue($carbon::parse('2020-9-16')->isHoliday());
     }
+
+    public function testDataStorage()
+    {
+        $carbon = static::CARBON_CLASS;
+        BusinessDay::enable($carbon, 'us-US', [
+            'custom' => '2020-09-16',
+        ]);
+        $carbon::parse('2020-09-16')->setHolidayData([
+            'info' => 'You may need to know...',
+        ]);
+        $carbon::parse('2020-10-12')->setHolidayData([
+            'info' => 'Lost if not an holiday.',
+        ]);
+        $carbon::setHolidayDataById('christmas', [
+            'info' => 'It may be cold in USA',
+        ]);
+
+        self::assertSame([
+            'info' => 'You may need to know...',
+        ], $carbon::getHolidayDataById('custom'));
+        // Note that locale does not matter
+        self::assertSame([
+            'info' => 'It may be cold in USA',
+        ], $carbon::parse('2020-12-25')->locale('fr')->getHolidayData());
+        // Neither region if the same ID is used:
+        $carbon::setHolidaysRegion('fr-national');
+        self::assertSame([
+            'info' => 'It may be cold in USA',
+        ], $carbon::parse('2020-12-25')->locale('fr')->getHolidayData());
+    }
 }

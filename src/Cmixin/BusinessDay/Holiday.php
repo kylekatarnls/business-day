@@ -8,6 +8,8 @@ use Exception;
 
 class Holiday extends YearCrawler
 {
+    use HolidayData;
+
     const DEFAULT_HOLIDAY_LOCALE = 'en';
 
     public $holidayNames = [];
