@@ -4,6 +4,8 @@ namespace Cmixin\BusinessDay;
 
 use Carbon\Carbon;
 use Cmixin\BusinessDay;
+use Exception;
+use InvalidArgumentException;
 
 class HolidayObserver extends Holiday
 {
@@ -83,7 +85,7 @@ class HolidayObserver extends Holiday
          */
         return function ($holidayId, $observed, $self = null) use ($mixin, $allHolidays) {
             if (!is_string($holidayId)) {
-                throw new \InvalidArgumentException(
+                throw new InvalidArgumentException(
                     'You must pass holiday names as a string or "'.$allHolidays.'".'
                 );
             }
@@ -286,7 +288,7 @@ class HolidayObserver extends Holiday
          * @return bool
          */
         return function ($holidayId = null, $self = null) use ($mixin) {
-            $carbonClass = @get_class() ?: Emulator::getClass(new \Exception());
+            $carbonClass = @get_class() ?: Emulator::getClass(new Exception());
 
             list($holidayId, $self) = $carbonClass::swapDateTimeParam($holidayId, $self, null);
 

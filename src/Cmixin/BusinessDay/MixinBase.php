@@ -2,6 +2,8 @@
 
 namespace Cmixin\BusinessDay;
 
+use Exception;
+
 abstract class MixinBase
 {
     public static function enable($carbonClass = null)
@@ -49,7 +51,7 @@ abstract class MixinBase
          * @return \Carbon\CarbonInterface|\Carbon\Carbon|\Carbon\CarbonImmutable
          */
         return function ($self, $context) {
-            $carbonClass = @get_class() ?: Emulator::getClass(new \Exception());
+            $carbonClass = @get_class() ?: Emulator::getClass(new Exception());
 
             if (!isset($self) && isset($context)) {
                 $self = $context;
@@ -95,7 +97,7 @@ abstract class MixinBase
          * @return array the new pair of variables
          */
         return function ($date, $target, $defaultValue) {
-            $carbonClass = @get_class() ?: Emulator::getClass(new \Exception());
+            $carbonClass = @get_class() ?: Emulator::getClass(new Exception());
 
             if ($carbonClass::isDateTimeInstance($date)) {
                 $target = $carbonClass::instance($date);

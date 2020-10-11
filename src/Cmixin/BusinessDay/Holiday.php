@@ -4,6 +4,7 @@ namespace Cmixin\BusinessDay;
 
 use Carbon\Carbon;
 use Cmixin\BusinessDay;
+use Exception;
 
 class Holiday extends YearCrawler
 {
@@ -26,7 +27,7 @@ class Holiday extends YearCrawler
          * @return string|false
          */
         return function ($self = null) use ($mixin) {
-            $carbonClass = @get_class() ?: Emulator::getClass(new \Exception());
+            $carbonClass = @get_class() ?: Emulator::getClass(new Exception());
 
             /** @var Carbon|BusinessDay $self */
             $self = $carbonClass::getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
@@ -63,7 +64,7 @@ class Holiday extends YearCrawler
          * @return bool
          */
         return function ($self = null) use ($mixin) {
-            $carbonClass = @get_class() ?: Emulator::getClass(new \Exception());
+            $carbonClass = @get_class() ?: Emulator::getClass(new Exception());
 
             /** @var Carbon|BusinessDay $self */
             $self = $carbonClass::getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
@@ -130,7 +131,7 @@ class Holiday extends YearCrawler
          * @return string|false
          */
         return function ($locale = null, $self = null) use ($mixin, $dictionary) {
-            $carbonClass = @get_class() ?: Emulator::getClass(new \Exception());
+            $carbonClass = @get_class() ?: Emulator::getClass(new Exception());
 
             list($locale, $self) = $carbonClass::swapDateTimeParam($locale, $self, null);
 

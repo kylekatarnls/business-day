@@ -2,6 +2,8 @@
 
 namespace Cmixin\BusinessDay;
 
+use InvalidArgumentException;
+
 class HolidaysList extends MixinBase
 {
     /**
@@ -328,7 +330,7 @@ class HolidaysList extends MixinBase
          */
         return function (&$holiday, &$name = null, &$observed = null) {
             if (!isset($holiday['date'])) {
-                throw new \InvalidArgumentException(
+                throw new InvalidArgumentException(
                     'Holiday array definition should at least contains a "date" entry.'
                 );
             }
@@ -371,7 +373,7 @@ class HolidaysList extends MixinBase
 
             if (is_array($holiday)) {
                 if (is_int($holidayId)) {
-                    throw new \InvalidArgumentException(
+                    throw new InvalidArgumentException(
                         'Holiday array definition need a string identifier as main array key.'
                     );
                 }

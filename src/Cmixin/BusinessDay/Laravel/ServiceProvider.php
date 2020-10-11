@@ -4,8 +4,11 @@ namespace Cmixin\BusinessDay\Laravel;
 
 use Closure;
 use Cmixin\BusinessDay;
+use DateTimeInterface;
+use Illuminate\Support\Facades\Date;
+use Illuminate\Support\ServiceProvider as ServiceProviderBase;
 
-class ServiceProvider extends \Illuminate\Support\ServiceProvider
+class ServiceProvider extends ServiceProviderBase
 {
     public function boot()
     {
@@ -24,7 +27,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
             // @codeCoverageIgnoreStart
             if (class_exists('Illuminate\Support\Facades\Date') &&
-                (($now = \Illuminate\Support\Facades\Date::now()) instanceof \DateTimeInterface) &&
+                (($now = Date::now()) instanceof DateTimeInterface) &&
                 !in_array($class = get_class($now), $classes)) {
                 $classes[] = $class;
             }

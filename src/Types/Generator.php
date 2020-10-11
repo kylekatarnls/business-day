@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Cmixin\BusinessDay;
 use ReflectionClass;
 use ReflectionException;
+use ReflectionFunction;
 use ReflectionMethod;
 use ReflectionParameter;
 
@@ -49,7 +50,7 @@ class Generator
 
         foreach ($this->getMethods($boot) as $name => $closure) {
             try {
-                $function = new \ReflectionFunction($closure);
+                $function = new ReflectionFunction($closure);
             } catch (ReflectionException $e) {
                 continue;
             }

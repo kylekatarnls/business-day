@@ -2,6 +2,8 @@
 
 namespace Cmixin\BusinessDay;
 
+use Exception;
+
 class BusinessCalendar extends HolidayObserver
 {
     /**
@@ -19,7 +21,7 @@ class BusinessCalendar extends HolidayObserver
          * @return bool
          */
         return function ($self = null) use ($mixin) {
-            $carbonClass = @get_class() ?: Emulator::getClass(new \Exception());
+            $carbonClass = @get_class() ?: Emulator::getClass(new Exception());
 
             /** @var \Carbon\Carbon|\Cmixin\BusinessDay $self */
             $self = $carbonClass::getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
@@ -45,7 +47,7 @@ class BusinessCalendar extends HolidayObserver
          * @return \Carbon\CarbonInterface|\Carbon\Carbon|\Carbon\CarbonImmutable
          */
         return function ($self = null) use ($mixin, $method) {
-            $carbonClass = @get_class() ?: Emulator::getClass(new \Exception());
+            $carbonClass = @get_class() ?: Emulator::getClass(new Exception());
 
             /** @var static $self */
             $self = $carbonClass::getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
@@ -75,7 +77,7 @@ class BusinessCalendar extends HolidayObserver
          * @return \Carbon\CarbonInterface|\Carbon\Carbon|\Carbon\CarbonImmutable
          */
         return function ($self = null) use ($mixin, $method) {
-            $carbonClass = @get_class() ?: Emulator::getClass(new \Exception());
+            $carbonClass = @get_class() ?: Emulator::getClass(new Exception());
 
             $self = $carbonClass::getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
 
