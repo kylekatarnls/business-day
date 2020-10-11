@@ -57,7 +57,7 @@ class HolidaysList extends MixinBase
 
             if (!isset($mixin->holidays[$region])) {
                 if (!file_exists($file = __DIR__."/../Holidays/$region.php")) {
-                    list($country, $subRegion) = array_pad(explode('-', $region, 2), 2, '');
+                    [$country, $subRegion] = array_pad(explode('-', $region, 2), 2, '');
                     $nation = "$country-national";
 
                     if (!isset($mixin->holidays[$nation])) {

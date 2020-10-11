@@ -55,12 +55,12 @@ abstract class AlternativeCalendar implements AlternativeCalendarInterface
 
     protected function findDate($date, $direction, Closure $callback)
     {
-        list($expectedYear, $inputMonth, $inputDay) = $date;
+        [$expectedYear, $inputMonth, $inputDay] = $date;
 
         $year = $direction * -99999;
 
         for ($i = $direction > 0 ? 0 : 1; $direction * $year <= $direction * $expectedYear; $i++) {
-            list($year, $month, $day) = $this->getDate(
+            [$year, $month, $day] = $this->getDate(
                 $expectedYear - static::$baseYear + $direction * $i,
                 $inputMonth,
                 $inputDay

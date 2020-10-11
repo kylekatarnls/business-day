@@ -29,7 +29,7 @@ class BusinessDay extends BusinessCalendar
         return function ($days = 1, $self = null) use ($mixin, $factor) {
             $carbonClass = @get_class() ?: Emulator::getClass(new Exception());
 
-            list($days, $self) = $carbonClass::swapDateTimeParam($days, $self, 1);
+            [$days, $self] = $carbonClass::swapDateTimeParam($days, $self, 1);
 
             /** @var Carbon|BusinessDay $self */
             $self = $carbonClass::getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);

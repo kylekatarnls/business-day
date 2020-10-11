@@ -290,7 +290,7 @@ class HolidayObserver extends Holiday
         return function ($holidayId = null, $self = null) use ($mixin) {
             $carbonClass = @get_class() ?: Emulator::getClass(new Exception());
 
-            list($holidayId, $self) = $carbonClass::swapDateTimeParam($holidayId, $self, null);
+            [$holidayId, $self] = $carbonClass::swapDateTimeParam($holidayId, $self, null);
 
             if (!$holidayId) {
                 /** @var Carbon|BusinessDay $self */

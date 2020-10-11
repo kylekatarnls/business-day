@@ -112,7 +112,7 @@ class LunarCalendar
         // Behavior not guaranteed if the year is outside the range 1900-2100
         // This sound like something we can postpone when just handling holidays
 
-        list($lunarYear, $lunarMonth, $lunarDay) = explode('-', $lunar);
+        [$lunarYear, $lunarMonth, $lunarDay] = explode('-', $lunar);
         $lunarYear = (int) $lunarYear;
 
         $lunarDay = (int) ltrim($lunarDay, '0');

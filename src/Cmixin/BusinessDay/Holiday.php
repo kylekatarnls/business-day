@@ -38,7 +38,7 @@ class Holiday extends YearCrawler
             $next = $self->getYearHolidaysNextFunction($year, 'string', $self);
 
             while ($data = $next()) {
-                list($holidayId, $holiday) = $data;
+                [$holidayId, $holiday] = $data;
 
                 if ($holiday && $date.(strlen($holiday) > 5 ? "/$year" : '') === $holiday) {
                     return $holidayId;
@@ -133,7 +133,7 @@ class Holiday extends YearCrawler
         return function ($locale = null, $self = null) use ($mixin, $dictionary) {
             $carbonClass = @get_class() ?: Emulator::getClass(new Exception());
 
-            list($locale, $self) = $carbonClass::swapDateTimeParam($locale, $self, null);
+            [$locale, $self] = $carbonClass::swapDateTimeParam($locale, $self, null);
 
             /** @var Carbon|BusinessDay $self */
             $self = $carbonClass::getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);

@@ -96,7 +96,7 @@ class CalculatorBase
                 $condition = substr($condition, 4);
             }
 
-            list($condition, $action) = array_pad(explode(' then ', $condition, 2), 2, null);
+            [$condition, $action] = array_pad(explode(' then ', $condition, 2), 2, null);
             $condition = strtolower($condition);
             $condition = (bool) (
                 $condition === 'weekend'
