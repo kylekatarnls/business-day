@@ -47,6 +47,8 @@ return [
     '12-08'                                               => 'Immacolata Concezione',
     'christmas'                                           => 'Natale',
     'christmas-next-day'                                  => 'Santo Stefano',
+    'restauration-republique'                             => 'Restaurazione della Repubblica',
+    'jeune-genevois'                                      => 'Jeûne genevois',
     '12-31'                                               => 'Ultimo dell’anno',
     'easter-46'                                           => 'Ceneri',
     'easter-7'                                            => 'Domenica delle Palme',
