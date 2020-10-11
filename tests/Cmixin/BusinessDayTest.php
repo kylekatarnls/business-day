@@ -1037,12 +1037,12 @@ class BusinessDayTest extends TestCase
                 'us' => [
                     'il' => [
                         '2020-02-03' => [
-                            'id' => 'foo',
+                            'id'   => 'foo',
                             'name' => 'February Foo',
                             'info' => 'First one',
                         ],
                         '2020-11-23' => [
-                            'id' => 'bar',
+                            'id'   => 'bar',
                             'name' => 'November Bar',
                             'info' => 'Last one',
                         ],
