@@ -576,6 +576,62 @@ print_r(Carbon::getMonthBusinessDays('2019-06')); // Open days in June 2019
 print_r(Carbon::parse('2019-06-10')->getMonthBusinessDays()); // Can be called from an instance
 ```
 
+### setHolidayGetter
+
+```php
+Carbon::setHolidayGetter(function (string $region, CarbonInterface $self, callable $fallback) {
+    [$country, $state] = explode('-', $region);
+    $date = $self->format('Y-m-d');
+
+    // Assuming the API you use does not support dates after 2040, you can fallback to the default internal data
+    if ($self->year > 2040) {
+        return $fallback();
+    }
+
+    $holidayData = file_get_contents("https://someholidaysapi.com/holidays/?country=$country&state=$state&date=$date");
+
+    return $holidayData
+        ? $holidayData['name'] // The function should return a unique string (like an name or an ID)
+        : false; // or false if the day is not a holiday
+});
+```
+
+### setHolidayDataById
+
+Set an array of data for a given holiday ID.
+
+```php
+Carbon::setHolidayDataById('christmas', [
+    'info' => 'It may be cold in USA',
+]);
+```
+
+### setHolidayData
+
+Set an array of data for current holiday (does nothing if the current day is not a holiday).
+
+```php
+Carbon::parse('2020-12-25')->setHolidayData([
+    'info' => 'It may be cold in USA',
+]);
+```
+
+### getHolidayDataById
+
+Get stored array of data for a given holiday ID.
+
+```php
+Carbon::getHolidayDataById('christmas')
+```
+
+### getHolidayData
+
+Get stored array of data for current holiday (`null` if the current day is not a holiday).
+
+```php
+Carbon::parse('2020-12-25')->getHolidayData('christmas')
+```
+
 ### Laravel
 
 To enable business-day globally in Laravel, set default holidays settings in the config file **config/carbon.php**
