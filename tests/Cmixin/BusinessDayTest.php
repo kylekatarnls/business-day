@@ -2,6 +2,7 @@
 
 namespace Tests\Cmixin;
 
+use Carbon\CarbonInterface;
 use Cmixin\BusinessDay;
 use Cmixin\BusinessDay\Calculator\HolidayCalculator;
 use Cmixin\BusinessDay\Calendar\LunarCalendar;
@@ -993,5 +994,90 @@ class BusinessDayTest extends TestCase
         ]);
 
         self::assertTrue($carbon::parse('2020-9-16')->isHoliday());
+    }
+
+    public function testDataStorage()
+    {
+        $carbon = static::CARBON_CLASS;
+        BusinessDay::enable($carbon, 'us-US', [
+            'custom' => '2020-09-16',
+        ]);
+        $carbon::parse('2020-09-16')->setHolidayData([
+            'info' => 'You may need to know...',
+        ]);
+        $carbon::parse('2020-10-13')->setHolidayData([
+            'info' => 'Lost if not an holiday.',
+        ]);
+        $carbon::setHolidayDataById('christmas', [
+            'info' => 'It may be cold in USA',
+        ]);
+
+        // Empty array if not filled
+        self::assertSame([], $carbon::parse('2020-10-12')->getHolidayData());
+        // null if not holiday
+        self::assertNull($carbon::parse('2020-10-13')->getHolidayData());
+        self::assertSame([
+            'info' => 'You may need to know...',
+        ], $carbon::getHolidayDataById('custom'));
+        // Note that locale does not matter
+        self::assertSame([
+            'info' => 'It may be cold in USA',
+        ], $carbon::parse('2020-12-25')->locale('fr')->getHolidayData());
+        // Neither region if the same ID is used:
+        $carbon::setHolidaysRegion('fr-national');
+        self::assertSame([
+            'info' => 'It may be cold in USA',
+        ], $carbon::parse('2020-12-25')->locale('fr')->getHolidayData());
+    }
+
+    public function testHolidayGetter()
+    {
+        $apiMock = [
+            '2020' => [
+                'us' => [
+                    'il' => [
+                        '2020-02-03' => [
+                            'id'   => 'foo',
+                            'name' => 'February Foo',
+                            'info' => 'First one',
+                        ],
+                        '2020-11-23' => [
+                            'id'   => 'bar',
+                            'name' => 'November Bar',
+                            'info' => 'Last one',
+                        ],
+                    ],
+                ],
+            ],
+        ];
+        $carbon = static::CARBON_CLASS;
+        BusinessDay::enable($carbon, 'us-IL');
+        $carbon::setHolidayGetter(function (string $region, CarbonInterface $self, callable $fallback) use ($apiMock, $carbon) {
+            [$country, $state] = explode('-', $region);
+            $yearHolidays = $apiMock[$self->year] ?? null;
+
+            if (!$yearHolidays) {
+                // Optionally the default method (using internal lists) can be used as a fallback:
+                return $fallback();
+            }
+
+            $holiday = (($yearHolidays[$country] ?? [])[$state] ?? [])[$self->format('Y-m-d')] ?? null;
+
+            if (!$holiday) {
+                return false;
+            }
+
+            $carbon::setHolidayName($holiday['id'], 'en', $holiday['name']);
+            $carbon::setHolidayDataById($holiday['id'], $holiday);
+
+            return $holiday['id'];
+        });
+
+        self::assertFalse($carbon::parse('2020-01-01')->isHoliday()); // 2020 uses the custom getter
+        self::assertTrue($carbon::parse('2021-01-01')->isHoliday()); // 2021 uses the fallback
+        self::assertTrue($carbon::parse('2020-02-03')->isHoliday());
+        self::assertSame('February Foo', $carbon::parse('2020-02-03')->getHolidayName());
+        self::assertSame('bar', $carbon::parse('2020-11-23')->getHolidayId());
+        self::assertSame('Last one', $carbon::parse('2020-11-23')->getHolidayData()['info']);
     }
 }

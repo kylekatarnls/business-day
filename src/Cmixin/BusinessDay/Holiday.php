@@ -8,9 +8,40 @@ use Exception;
 
 class Holiday extends YearCrawler
 {
+    use HolidayData;
+
     const DEFAULT_HOLIDAY_LOCALE = 'en';
 
+    /**
+     * @var array
+     */
     public $holidayNames = [];
+
+    /**
+     * @var callable|null
+     */
+    public $holidayGetter = null;
+
+    /**
+     * Set the strategy to get the holiday ID from a date object.
+     *
+     * @return \Closure
+     */
+    public function setHolidayGetter()
+    {
+        $mixin = $this;
+
+        /**
+         * Set the strategy to get the holiday ID from a date object.
+         *
+         * @return $this|null
+         */
+        return function (callable $holidayGetter) use ($mixin) {
+            $mixin->holidayGetter = $holidayGetter;
+
+            return isset($this) && $this !== $mixin ? $this : null;
+        };
+    }
 
     /**
      * Get the identifier of the current holiday or false if it's not a holiday.
@@ -32,20 +63,26 @@ class Holiday extends YearCrawler
             /** @var Carbon|BusinessDay $self */
             $self = $carbonClass::getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
 
-            $date = $self->format('d/m');
-            $year = $self->year;
+            $fallback = function () use ($self) {
+                $date = $self->format('d/m');
+                $year = $self->year;
 
-            $next = $self->getYearHolidaysNextFunction($year, 'string', $self);
+                $next = $self->getYearHolidaysNextFunction($year, 'string', $self);
 
-            while ($data = $next()) {
-                [$holidayId, $holiday] = $data;
+                while ($data = $next()) {
+                    [$holidayId, $holiday] = $data;
 
-                if ($holiday && $date.(strlen($holiday) > 5 ? "/$year" : '') === $holiday) {
-                    return $holidayId;
+                    if ($holiday && $date.(strlen($holiday) > 5 ? "/$year" : '') === $holiday) {
+                        return $holidayId;
+                    }
                 }
-            }
 
-            return false;
+                return false;
+            };
+
+            return $mixin->holidayGetter
+                ? ($mixin->holidayGetter)($mixin->holidaysRegion, $self, $fallback)
+                : $fallback();
         };
     }
 
