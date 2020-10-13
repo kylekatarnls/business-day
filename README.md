@@ -591,7 +591,7 @@ Carbon::setHolidayGetter(function (string $region, CarbonInterface $self, callab
     $holidayData = file_get_contents("https://someholidaysapi.com/holidays/?country=$country&state=$state&date=$date");
 
     return $holidayData
-        ? $holidayData['name'] // The function should return a unique string (like an name or an ID)
+        ? $holidayData['name'] // The function should return a unique string (like a name or an ID)
         : false; // or false if the day is not a holiday
 });
 ```
