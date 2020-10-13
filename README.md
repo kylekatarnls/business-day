@@ -629,7 +629,7 @@ Carbon::getHolidayDataById('christmas')
 Get stored array of data for current holiday (`null` if the current day is not a holiday).
 
 ```php
-Carbon::parse('2020-12-25')->getHolidayData('christmas')
+Carbon::parse('2020-12-25')->getHolidayData()
 ```
 
 ### Laravel
