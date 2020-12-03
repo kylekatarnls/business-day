@@ -4,7 +4,9 @@ namespace Cmixin\BusinessDay;
 
 use Carbon\Carbon;
 use Cmixin\BusinessDay;
+use Cmixin\BusinessDay\Calculator\MixinConfigPropagator;
 use Exception;
+use SplObjectStorage;
 
 class Holiday extends YearCrawler
 {
@@ -23,6 +25,11 @@ class Holiday extends YearCrawler
     public $holidayGetter = null;
 
     /**
+     * @var SplObjectStorage<object,callable>|null
+     */
+    public $holidayGetters = null;
+
+    /**
      * Set the strategy to get the holiday ID from a date object.
      *
      * @return \Closure
@@ -34,12 +41,17 @@ class Holiday extends YearCrawler
         /**
          * Set the strategy to get the holiday ID from a date object.
          *
+         * @param callable|null $holidayGetter
+         * @param object|null   $self
+         *
          * @return $this|null
          */
-        return function (callable $holidayGetter) use ($mixin) {
-            $mixin->holidayGetter = $holidayGetter;
-
-            return isset($this) && $this !== $mixin ? $this : null;
+        return function (?callable $holidayGetter, $self = null) use ($mixin) {
+            return MixinConfigPropagator::setHolidayGetter(
+                $mixin,
+                isset($this) && $this !== $mixin ? $this : $self,
+                $holidayGetter
+            );
         };
     }
 
@@ -60,8 +72,10 @@ class Holiday extends YearCrawler
         return function ($self = null) use ($mixin) {
             $carbonClass = @get_class() ?: Emulator::getClass(new Exception());
 
+            $date = isset($this) && $this !== $mixin ? $this : null;
+
             /** @var Carbon|BusinessDay $self */
-            $self = $carbonClass::getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
+            $self = $carbonClass::getThisOrToday($self, $date);
 
             $fallback = function () use ($self) {
                 $date = $self->format('d/m');
@@ -80,8 +94,10 @@ class Holiday extends YearCrawler
                 return false;
             };
 
-            return $mixin->holidayGetter
-                ? ($mixin->holidayGetter)($mixin->holidaysRegion, $self, $fallback)
+            $holidayGetter = MixinConfigPropagator::getHolidayGetter($mixin, $date ?? $self);
+
+            return $holidayGetter
+                ? $holidayGetter($mixin->holidaysRegion, $self, $fallback)
                 : $fallback();
         };
     }

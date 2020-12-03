@@ -1,0 +1,108 @@
+name: Tests
+
+on:
+  push:
+    branches: [ '**' ]
+  pull_request:
+    branches: [ '**' ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php: ['7.1', '7.2', '7.3', '7.4']
+        setup: ['lowest', 'stable']
+
+    name: PHP ${{ matrix.php }}
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php }}
+        extensions: calendar
+        tools: composer:v2
+
+    - name: Cache Composer packages
+      id: composer-cache
+      uses: actions/cache@v2
+      with:
+        path: vendor
+        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-php-
+
+    - name: Install dependencies
+      if: steps.composer-cache.outputs.cache-hit != 'true'
+      run: composer update --prefer-dist --prefer-${{ matrix.setup }} --no-progress --no-suggest ${{ matrix.php > 8 && '--ignore-platform-req=php' || '' }}
+
+    - name: Code Climate Test Reporter Preparation
+      if: matrix.php == '7.4' && matrix.setup == 'stable'
+      run: |
+        curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter;
+        chmod +x ./cc-test-reporter;
+        ./cc-test-reporter before-build;
+      env:
+        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+
+    - name: Run test suite
+      run: |
+        if [[ ${MATRIX_CONFIG} == "7.4-stable" ]]; then
+          vendor/bin/phpunit --coverage-text --coverage-clover=clover.xml;
+        else
+          ./vendor/bin/phpunit --no-coverage;
+        fi;
+      env:
+        MATRIX_CONFIG: ${{ matrix.php }}-${{ matrix.setup }}
+
+    - name: Code Climate Test Reporter
+      if: matrix.php == '7.4' && matrix.setup == 'stable'
+      run: ./cc-test-reporter after-build --exit-code 0;
+      env:
+        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+
+    - name: Coverage
+      if: matrix.php == '7.4' && matrix.setup == 'stable'
+      run: bash <(curl -s https://codecov.io/bash);
+
+  multitest:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php: ['7.4']
+        setup: ['stable']
+
+    name: Multitest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: calendar
+          tools: composer:v2
+
+      - name: Cache Composer packages
+        id: composer-cache
+        uses: actions/cache@v2
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-multi-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php-multi-
+
+      - name: Install dependencies
+        if: steps.composer-cache.outputs.cache-hit != 'true'
+        run: |
+          composer require kylekatarnls/multi-tester:^1.1 --dev --no-update;
+          composer update --prefer-dist --prefer-${{ matrix.setup }} --no-progress --no-suggest ${{ matrix.composerOptions }};
+
+      - name: Run test suites
+        run: vendor/bin/multi-tester --verbose
