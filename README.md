@@ -576,7 +576,7 @@ print_r(Carbon::getMonthBusinessDays('2019-06')); // Open days in June 2019
 print_r(Carbon::parse('2019-06-10')->getMonthBusinessDays()); // Can be called from an instance
 ```
 
-### setBusinessDayChecker
+#### setBusinessDayChecker
 
 Customize the way to determine if a date is a business day or not.
  
@@ -600,7 +600,7 @@ If not set or set to `null`, the default calculation is:
 $date->isWeekday() && !$date->isHoliday()
 ```
 
-### setHolidayGetter
+#### setHolidayGetter
 
 Customize the way to determine if a date is a holiday and which one it is.
  
@@ -627,7 +627,7 @@ $date = Carbon::parse('2020-12-03');
 $date->setHolidayGetter($someFunction);
 ```
 
-### setHolidayDataById
+#### setHolidayDataById
 
 Set an array of data for a given holiday ID.
 
@@ -637,7 +637,7 @@ Carbon::setHolidayDataById('christmas', [
 ]);
 ```
 
-### setHolidayData
+#### setHolidayData
 
 Set an array of data for current holiday (does nothing if the current day is not a holiday).
 
@@ -647,7 +647,7 @@ Carbon::parse('2020-12-25')->setHolidayData([
 ]);
 ```
 
-### getHolidayDataById
+#### getHolidayDataById
 
 Get stored array of data for a given holiday ID.
 
@@ -655,7 +655,7 @@ Get stored array of data for a given holiday ID.
 Carbon::getHolidayDataById('christmas')
 ```
 
-### getHolidayData
+#### getHolidayData
 
 Get stored array of data for current holiday (`null` if the current day is not a holiday).
 
