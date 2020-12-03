@@ -2,10 +2,66 @@
 
 namespace Cmixin\BusinessDay;
 
+use DateTime;
 use Exception;
+use SplObjectStorage;
 
 class BusinessCalendar extends HolidayObserver
 {
+    /**
+     * @var callable|null
+     */
+    public $businessDayChecker = null;
+
+    /**
+     * @var SplObjectStorage<object,callable>|null
+     */
+    public $businessDayCheckers = null;
+
+    /**
+     * Change the way to check if a date is a business day.
+     *
+     * @return \Closure
+     */
+    public function setBusinessDayChecker()
+    {
+        $mixin = $this;
+
+        /**
+         * Checks the date to see if it is a business day (neither a weekend day nor a holiday).
+         *
+         * @param callable|null $checkCallback
+         * @param object|null   $self
+         *
+         * @return $this|null
+         */
+        return function (?callable $checkCallback = null, $self = null) use ($mixin) {
+            $date = isset($this) && $this !== $mixin ? $this : $self;
+            $storage = $date ?? $mixin;
+
+            if (!$date) {
+                $storage->businessDayChecker = $checkCallback;
+
+                return null;
+            }
+
+            // If mutable
+            if ($date instanceof DateTime) {
+                $date->businessDayChecker = $checkCallback;
+
+                return $date;
+            }
+
+            if (!$mixin->businessDayCheckers) {
+                $mixin->businessDayCheckers = new SplObjectStorage();
+            }
+
+            $mixin->businessDayCheckers[$date] = $checkCallback;
+
+            return $date;
+        };
+    }
+
     /**
      * Checks the date to see if it is a business day (neither a weekend day nor a holiday).
      *
@@ -25,6 +81,14 @@ class BusinessCalendar extends HolidayObserver
 
             /** @var \Carbon\Carbon|\Cmixin\BusinessDay $self */
             $self = $carbonClass::getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
+            $date = isset($this) && $this !== $mixin ? $this : $self;
+            $businessDayChecker = $date && isset($date->businessDayChecker)
+                ? $date->businessDayChecker
+                : ($mixin->businessDayCheckers[$date] ?? $mixin->businessDayChecker);
+
+            if ($businessDayChecker) {
+                return $businessDayChecker($self);
+            }
 
             return $self->isWeekday() && !$self->isHoliday();
         };
@@ -53,7 +117,19 @@ class BusinessCalendar extends HolidayObserver
             $self = $carbonClass::getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
 
             do {
+                if (!($self instanceof DateTime)) {
+                    $original = $self;
+                }
+
                 $self = $self->$method();
+
+                if (isset($original)) {
+                    foreach ([$mixin->businessDayCheckers, $mixin->holidayGetters] as $config) {
+                        if ($config && isset($config[$original])) {
+                            $config[$self] = $config[$original];
+                        }
+                    }
+                }
             } while (!$self->isBusinessDay());
 
             return $self;

@@ -576,9 +576,36 @@ print_r(Carbon::getMonthBusinessDays('2019-06')); // Open days in June 2019
 print_r(Carbon::parse('2019-06-10')->getMonthBusinessDays()); // Can be called from an instance
 ```
 
+### setBusinessDayChecker
+
+Customize the way to determine if a date is a business day or not.
+ 
+```php
+// Global way
+Carbon::setBusinessDayChecker(function (CarbonInterface $date) {
+    return $date->isWeekday()
+        && !$date->isHoliday()
+        || in_array($date->format('Y-m-d'), [
+            '2020-12-06', // Exceptional Sunday open day
+        ]);
+});
+
+// Single object config (prior to global)
+$date = Carbon::parse('2020-12-03');
+$date->setBusinessDayChecker($someFunction);
+```
+
+If not set or set to `null`, the default calculation is:
+```php
+$date->isWeekday() && !$date->isHoliday()
+```
+
 ### setHolidayGetter
 
+Customize the way to determine if a date is a holiday and which one it is.
+ 
 ```php
+// Global way
 Carbon::setHolidayGetter(function (string $region, CarbonInterface $self, callable $fallback) {
     [$country, $state] = explode('-', $region);
     $date = $self->format('Y-m-d');
@@ -594,6 +621,10 @@ Carbon::setHolidayGetter(function (string $region, CarbonInterface $self, callab
         ? $holidayData['name'] // The function should return a unique string (like a name or an ID)
         : false; // or false if the day is not a holiday
 });
+
+// Single object config (prior to global)
+$date = Carbon::parse('2020-12-03');
+$date->setHolidayGetter($someFunction);
 ```
 
 ### setHolidayDataById

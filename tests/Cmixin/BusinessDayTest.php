@@ -2,15 +2,24 @@
 
 namespace Tests\Cmixin;
 
-use Carbon\CarbonInterface;
 use Cmixin\BusinessDay;
 use Cmixin\BusinessDay\Calculator\HolidayCalculator;
-use Cmixin\BusinessDay\Calendar\LunarCalendar;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use Tests\Cmixin\Traits\AddAndSubDays;
+use Tests\Cmixin\Traits\AlternativeCalendars;
+use Tests\Cmixin\Traits\ConfigSetters;
+use Tests\Cmixin\Traits\Observable;
+use Tests\Cmixin\Traits\PreviousAndNext;
 
 class BusinessDayTest extends TestCase
 {
+    use AddAndSubDays;
+    use AlternativeCalendars;
+    use ConfigSetters;
+    use Observable;
+    use PreviousAndNext;
+
     const CARBON_CLASS = 'Carbon\Carbon';
 
     public static function assertCarbonList($expected, $actual, $format = 'Y-m-d')
@@ -412,289 +421,6 @@ class BusinessDayTest extends TestCase
         self::assertFalse($carbon::isBusinessDay());
     }
 
-    public function testNextBusinessDay()
-    {
-        $carbon = static::CARBON_CLASS;
-        $carbon::setHolidaysRegion('fr-national');
-        self::assertSame('02/05/2018', $carbon::parse('2018-05-01 12:00:00')->nextBusinessDay()->format('d/m/Y'));
-        self::assertSame('05/04/2018', $carbon::parse('2018-04-04 12:00:00')->nextBusinessDay()->format('d/m/Y'));
-        self::assertSame('16/04/2018', $carbon::parse('2018-04-14 12:00:00')->nextBusinessDay()->format('d/m/Y'));
-        self::assertSame('16/04/2018', $carbon::parse('2018-04-15 12:00:00')->nextBusinessDay()->format('d/m/Y'));
-        self::assertSame('17/04/2018', $carbon::parse('2018-04-16 12:00:00')->nextBusinessDay()->format('d/m/Y'));
-        self::assertSame('12/11/2018', $carbon::parse('2018-11-11 12:00:00')->nextBusinessDay()->format('d/m/Y'));
-    }
-
-    public function testNextBusinessDayStatic()
-    {
-        $carbon = static::CARBON_CLASS;
-        $carbon::setHolidaysRegion('fr-national');
-        $carbon::setTestNow($carbon::parse('2018-05-01 12:00:00'));
-        self::assertSame('02/05/2018', $carbon::nextBusinessDay()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-04-04 12:00:00'));
-        self::assertSame('05/04/2018', $carbon::nextBusinessDay()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-04-14 12:00:00'));
-        self::assertSame('16/04/2018', $carbon::nextBusinessDay()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-04-15 12:00:00'));
-        self::assertSame('16/04/2018', $carbon::nextBusinessDay()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-04-16 12:00:00'));
-        self::assertSame('17/04/2018', $carbon::nextBusinessDay()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-11-11 12:00:00'));
-        self::assertSame('12/11/2018', $carbon::nextBusinessDay()->format('d/m/Y'));
-    }
-
-    public function testCurrentOrNextBusinessDay()
-    {
-        $carbon = static::CARBON_CLASS;
-        $carbon::setHolidaysRegion('fr-national');
-        self::assertSame('02/05/2018', $carbon::parse('2018-05-01 12:00:00')->currentOrNextBusinessDay()->format('d/m/Y'));
-        self::assertSame('04/04/2018', $carbon::parse('2018-04-04 12:00:00')->currentOrNextBusinessDay()->format('d/m/Y'));
-        self::assertSame('16/04/2018', $carbon::parse('2018-04-14 12:00:00')->currentOrNextBusinessDay()->format('d/m/Y'));
-        self::assertSame('16/04/2018', $carbon::parse('2018-04-15 12:00:00')->currentOrNextBusinessDay()->format('d/m/Y'));
-        self::assertSame('16/04/2018', $carbon::parse('2018-04-16 12:00:00')->currentOrNextBusinessDay()->format('d/m/Y'));
-        self::assertSame('12/11/2018', $carbon::parse('2018-11-11 12:00:00')->currentOrNextBusinessDay()->format('d/m/Y'));
-    }
-
-    public function testCurrentOrNextBusinessDayStatic()
-    {
-        $carbon = static::CARBON_CLASS;
-        $carbon::setHolidaysRegion('fr-national');
-        $carbon::setTestNow($carbon::parse('2018-05-01 12:00:00'));
-        self::assertSame('02/05/2018', $carbon::currentOrNextBusinessDay()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-04-04 12:00:00'));
-        self::assertSame('04/04/2018', $carbon::currentOrNextBusinessDay()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-04-14 12:00:00'));
-        self::assertSame('16/04/2018', $carbon::currentOrNextBusinessDay()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-04-15 12:00:00'));
-        self::assertSame('16/04/2018', $carbon::currentOrNextBusinessDay()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-04-16 12:00:00'));
-        self::assertSame('16/04/2018', $carbon::currentOrNextBusinessDay()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-11-11 12:00:00'));
-        self::assertSame('12/11/2018', $carbon::currentOrNextBusinessDay()->format('d/m/Y'));
-    }
-
-    public function testPreviousBusinessDay()
-    {
-        $carbon = static::CARBON_CLASS;
-        $carbon::setHolidaysRegion('fr-national');
-        self::assertSame('30/04/2018', $carbon::parse('2018-05-01 12:00:00')->previousBusinessDay()->format('d/m/Y'));
-        self::assertSame('03/04/2018', $carbon::parse('2018-04-04 12:00:00')->previousBusinessDay()->format('d/m/Y'));
-        self::assertSame('13/04/2018', $carbon::parse('2018-04-14 12:00:00')->previousBusinessDay()->format('d/m/Y'));
-        self::assertSame('13/04/2018', $carbon::parse('2018-04-15 12:00:00')->previousBusinessDay()->format('d/m/Y'));
-        self::assertSame('13/04/2018', $carbon::parse('2018-04-16 12:00:00')->previousBusinessDay()->format('d/m/Y'));
-        self::assertSame('09/11/2018', $carbon::parse('2018-11-11 12:00:00')->previousBusinessDay()->format('d/m/Y'));
-    }
-
-    public function testPreviousBusinessDayStatic()
-    {
-        $carbon = static::CARBON_CLASS;
-        $carbon::setHolidaysRegion('fr-national');
-        $carbon::setTestNow($carbon::parse('2018-05-01 12:00:00'));
-        self::assertSame('30/04/2018', $carbon::previousBusinessDay()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-04-04 12:00:00'));
-        self::assertSame('03/04/2018', $carbon::previousBusinessDay()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-04-14 12:00:00'));
-        self::assertSame('13/04/2018', $carbon::previousBusinessDay()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-04-15 12:00:00'));
-        self::assertSame('13/04/2018', $carbon::previousBusinessDay()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-04-16 12:00:00'));
-        self::assertSame('13/04/2018', $carbon::previousBusinessDay()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-11-11 12:00:00'));
-        self::assertSame('09/11/2018', $carbon::previousBusinessDay()->format('d/m/Y'));
-    }
-
-    public function testCurrentOrPreviousBusinessDay()
-    {
-        $carbon = static::CARBON_CLASS;
-        $carbon::setHolidaysRegion('fr-national');
-        self::assertSame('30/04/2018', $carbon::parse('2018-05-01 12:00:00')->currentOrPreviousBusinessDay()->format('d/m/Y'));
-        self::assertSame('04/04/2018', $carbon::parse('2018-04-04 12:00:00')->currentOrPreviousBusinessDay()->format('d/m/Y'));
-        self::assertSame('13/04/2018', $carbon::parse('2018-04-14 12:00:00')->currentOrPreviousBusinessDay()->format('d/m/Y'));
-        self::assertSame('13/04/2018', $carbon::parse('2018-04-15 12:00:00')->currentOrPreviousBusinessDay()->format('d/m/Y'));
-        self::assertSame('16/04/2018', $carbon::parse('2018-04-16 12:00:00')->currentOrPreviousBusinessDay()->format('d/m/Y'));
-        self::assertSame('09/11/2018', $carbon::parse('2018-11-11 12:00:00')->currentOrPreviousBusinessDay()->format('d/m/Y'));
-    }
-
-    public function testCurrentOrPreviousBusinessDayStatic()
-    {
-        $carbon = static::CARBON_CLASS;
-        $carbon::setHolidaysRegion('fr-national');
-        $carbon::setTestNow($carbon::parse('2018-05-01 12:00:00'));
-        self::assertSame('30/04/2018', $carbon::currentOrPreviousBusinessDay()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-04-04 12:00:00'));
-        self::assertSame('04/04/2018', $carbon::currentOrPreviousBusinessDay()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-04-14 12:00:00'));
-        self::assertSame('13/04/2018', $carbon::currentOrPreviousBusinessDay()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-04-15 12:00:00'));
-        self::assertSame('13/04/2018', $carbon::currentOrPreviousBusinessDay()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-04-16 12:00:00'));
-        self::assertSame('16/04/2018', $carbon::currentOrPreviousBusinessDay()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-11-11 12:00:00'));
-        self::assertSame('09/11/2018', $carbon::currentOrPreviousBusinessDay()->format('d/m/Y'));
-    }
-
-    public function testAddBusinessDay()
-    {
-        $carbon = static::CARBON_CLASS;
-        $carbon::setHolidaysRegion('fr-national');
-        self::assertSame('02/05/2018', $carbon::parse('2018-05-01 12:00:00')->addBusinessDay()->format('d/m/Y'));
-        self::assertSame('05/04/2018', $carbon::parse('2018-04-04 12:00:00')->addBusinessDay()->format('d/m/Y'));
-        self::assertSame('16/04/2018', $carbon::parse('2018-04-14 12:00:00')->addBusinessDay()->format('d/m/Y'));
-        self::assertSame('16/04/2018', $carbon::parse('2018-04-15 12:00:00')->addBusinessDay()->format('d/m/Y'));
-        self::assertSame('17/04/2018', $carbon::parse('2018-04-16 12:00:00')->addBusinessDay()->format('d/m/Y'));
-        self::assertSame('12/11/2018', $carbon::parse('2018-11-11 12:00:00')->addBusinessDay()->format('d/m/Y'));
-        self::assertSame('02/05/2018', $carbon::parse('2018-05-01 12:00:00')->addBusinessDays()->format('d/m/Y'));
-        self::assertSame('05/04/2018', $carbon::parse('2018-04-04 12:00:00')->addBusinessDays()->format('d/m/Y'));
-        self::assertSame('16/04/2018', $carbon::parse('2018-04-14 12:00:00')->addBusinessDays()->format('d/m/Y'));
-        self::assertSame('16/04/2018', $carbon::parse('2018-04-15 12:00:00')->addBusinessDays()->format('d/m/Y'));
-        self::assertSame('17/04/2018', $carbon::parse('2018-04-16 12:00:00')->addBusinessDays()->format('d/m/Y'));
-        self::assertSame('12/11/2018', $carbon::parse('2018-11-11 12:00:00')->addBusinessDays()->format('d/m/Y'));
-        self::assertSame('11/05/2018', $carbon::parse('2018-05-01 12:00:00')->addBusinessDays(6)->format('d/m/Y'));
-        self::assertSame('17/04/2018', $carbon::parse('2018-04-04 12:00:00')->addBusinessDays(9)->format('d/m/Y'));
-        self::assertSame('24/05/2018', $carbon::parse('2018-04-14 12:00:00')->addBusinessDays(25)->format('d/m/Y'));
-        self::assertSame('18/04/2018', $carbon::parse('2018-04-15 12:00:00')->addBusinessDays(3)->format('d/m/Y'));
-        self::assertSame('18/04/2018', $carbon::parse('2018-04-16 12:00:00')->addBusinessDays(2)->format('d/m/Y'));
-        self::assertSame('04/12/2018', $carbon::parse('2018-11-11 12:00:00')->addBusinessDays(17)->format('d/m/Y'));
-    }
-
-    public function testAddBusinessDayStatic()
-    {
-        $carbon = static::CARBON_CLASS;
-        $carbon::setHolidaysRegion('fr-national');
-        $carbon::setTestNow($carbon::parse('2018-05-01 12:00:00'));
-        self::assertSame('02/05/2018', $carbon::addBusinessDay()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-04-04 12:00:00'));
-        self::assertSame('05/04/2018', $carbon::addBusinessDay()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-04-14 12:00:00'));
-        self::assertSame('16/04/2018', $carbon::addBusinessDay()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-04-15 12:00:00'));
-        self::assertSame('16/04/2018', $carbon::addBusinessDay()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-04-16 12:00:00'));
-        self::assertSame('17/04/2018', $carbon::addBusinessDay()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-11-11 12:00:00'));
-        self::assertSame('12/11/2018', $carbon::addBusinessDay()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-05-01 12:00:00'));
-        self::assertSame('02/05/2018', $carbon::addBusinessDays()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-04-04 12:00:00'));
-        self::assertSame('05/04/2018', $carbon::addBusinessDays()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-04-14 12:00:00'));
-        self::assertSame('16/04/2018', $carbon::addBusinessDays()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-04-15 12:00:00'));
-        self::assertSame('16/04/2018', $carbon::addBusinessDays()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-04-16 12:00:00'));
-        self::assertSame('17/04/2018', $carbon::addBusinessDays()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-11-11 12:00:00'));
-        self::assertSame('12/11/2018', $carbon::addBusinessDays()->format('d/m/Y'));
-        self::assertSame('12/11/2018', $carbon::addBusinessDays(new \DateTime('2018-11-11 12:00:00'))->format('d/m/Y'));
-    }
-
-    public function testSubBusinessDay()
-    {
-        $carbon = static::CARBON_CLASS;
-        $carbon::setHolidaysRegion('fr-national');
-        self::assertSame('30/04/2018', $carbon::parse('2018-05-01 12:00:00')->subBusinessDay()->format('d/m/Y'));
-        self::assertSame('03/04/2018', $carbon::parse('2018-04-04 12:00:00')->subBusinessDay()->format('d/m/Y'));
-        self::assertSame('13/04/2018', $carbon::parse('2018-04-14 12:00:00')->subBusinessDay()->format('d/m/Y'));
-        self::assertSame('13/04/2018', $carbon::parse('2018-04-15 12:00:00')->subBusinessDay()->format('d/m/Y'));
-        self::assertSame('13/04/2018', $carbon::parse('2018-04-16 12:00:00')->subBusinessDay()->format('d/m/Y'));
-        self::assertSame('09/11/2018', $carbon::parse('2018-11-11 12:00:00')->subBusinessDay()->format('d/m/Y'));
-        self::assertSame('30/04/2018', $carbon::parse('2018-05-01 12:00:00')->subBusinessDays()->format('d/m/Y'));
-        self::assertSame('03/04/2018', $carbon::parse('2018-04-04 12:00:00')->subBusinessDays()->format('d/m/Y'));
-        self::assertSame('13/04/2018', $carbon::parse('2018-04-14 12:00:00')->subBusinessDays()->format('d/m/Y'));
-        self::assertSame('13/04/2018', $carbon::parse('2018-04-15 12:00:00')->subBusinessDays()->format('d/m/Y'));
-        self::assertSame('13/04/2018', $carbon::parse('2018-04-16 12:00:00')->subBusinessDays()->format('d/m/Y'));
-        self::assertSame('09/11/2018', $carbon::parse('2018-11-11 12:00:00')->subBusinessDays()->format('d/m/Y'));
-        self::assertSame('23/04/2018', $carbon::parse('2018-05-01 12:00:00')->subBusinessDays(6)->format('d/m/Y'));
-        self::assertSame('21/03/2018', $carbon::parse('2018-04-04 12:00:00')->subBusinessDays(9)->format('d/m/Y'));
-        self::assertSame('09/03/2018', $carbon::parse('2018-04-14 12:00:00')->subBusinessDays(25)->format('d/m/Y'));
-        self::assertSame('11/04/2018', $carbon::parse('2018-04-15 12:00:00')->subBusinessDays(3)->format('d/m/Y'));
-        self::assertSame('12/04/2018', $carbon::parse('2018-04-16 12:00:00')->subBusinessDays(2)->format('d/m/Y'));
-        self::assertSame('17/10/2018', $carbon::parse('2018-11-11 12:00:00')->subBusinessDays(17)->format('d/m/Y'));
-    }
-
-    public function testSubtractBusinessDay()
-    {
-        $carbon = static::CARBON_CLASS;
-        $carbon::setHolidaysRegion('fr-national');
-        self::assertSame('30/04/2018', $carbon::parse('2018-05-01 12:00:00')->subtractBusinessDay()->format('d/m/Y'));
-        self::assertSame('03/04/2018', $carbon::parse('2018-04-04 12:00:00')->subtractBusinessDay()->format('d/m/Y'));
-        self::assertSame('13/04/2018', $carbon::parse('2018-04-14 12:00:00')->subtractBusinessDay()->format('d/m/Y'));
-        self::assertSame('13/04/2018', $carbon::parse('2018-04-15 12:00:00')->subtractBusinessDay()->format('d/m/Y'));
-        self::assertSame('13/04/2018', $carbon::parse('2018-04-16 12:00:00')->subtractBusinessDay()->format('d/m/Y'));
-        self::assertSame('09/11/2018', $carbon::parse('2018-11-11 12:00:00')->subtractBusinessDay()->format('d/m/Y'));
-        self::assertSame('30/04/2018', $carbon::parse('2018-05-01 12:00:00')->subtractBusinessDays()->format('d/m/Y'));
-        self::assertSame('03/04/2018', $carbon::parse('2018-04-04 12:00:00')->subtractBusinessDays()->format('d/m/Y'));
-        self::assertSame('13/04/2018', $carbon::parse('2018-04-14 12:00:00')->subtractBusinessDays()->format('d/m/Y'));
-        self::assertSame('13/04/2018', $carbon::parse('2018-04-15 12:00:00')->subtractBusinessDays()->format('d/m/Y'));
-        self::assertSame('13/04/2018', $carbon::parse('2018-04-16 12:00:00')->subtractBusinessDays()->format('d/m/Y'));
-        self::assertSame('09/11/2018', $carbon::parse('2018-11-11 12:00:00')->subtractBusinessDays()->format('d/m/Y'));
-        self::assertSame('23/04/2018', $carbon::parse('2018-05-01 12:00:00')->subtractBusinessDays(6)->format('d/m/Y'));
-        self::assertSame('21/03/2018', $carbon::parse('2018-04-04 12:00:00')->subtractBusinessDays(9)->format('d/m/Y'));
-        self::assertSame('09/03/2018', $carbon::parse('2018-04-14 12:00:00')->subtractBusinessDays(25)->format('d/m/Y'));
-        self::assertSame('11/04/2018', $carbon::parse('2018-04-15 12:00:00')->subtractBusinessDays(3)->format('d/m/Y'));
-        self::assertSame('12/04/2018', $carbon::parse('2018-04-16 12:00:00')->subtractBusinessDays(2)->format('d/m/Y'));
-        self::assertSame('17/10/2018', $carbon::parse('2018-11-11 12:00:00')->subtractBusinessDays(17)->format('d/m/Y'));
-    }
-
-    public function testSubBusinessDayStatic()
-    {
-        $carbon = static::CARBON_CLASS;
-        $carbon::setHolidaysRegion('fr-national');
-        $carbon::setTestNow($carbon::parse('2018-05-01 12:00:00'));
-        self::assertSame('30/04/2018', $carbon::subBusinessDay()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-04-04 12:00:00'));
-        self::assertSame('03/04/2018', $carbon::subBusinessDay()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-04-14 12:00:00'));
-        self::assertSame('13/04/2018', $carbon::subBusinessDay()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-04-15 12:00:00'));
-        self::assertSame('13/04/2018', $carbon::subBusinessDay()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-04-16 12:00:00'));
-        self::assertSame('13/04/2018', $carbon::subBusinessDay()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-11-11 12:00:00'));
-        self::assertSame('09/11/2018', $carbon::subBusinessDay()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-05-01 12:00:00'));
-        self::assertSame('30/04/2018', $carbon::subBusinessDays()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-04-04 12:00:00'));
-        self::assertSame('03/04/2018', $carbon::subBusinessDays()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-04-14 12:00:00'));
-        self::assertSame('13/04/2018', $carbon::subBusinessDays()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-04-15 12:00:00'));
-        self::assertSame('13/04/2018', $carbon::subBusinessDays()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-04-16 12:00:00'));
-        self::assertSame('13/04/2018', $carbon::subBusinessDays()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-11-11 12:00:00'));
-        self::assertSame('09/11/2018', $carbon::subBusinessDays()->format('d/m/Y'));
-    }
-
-    public function testSubtractBusinessDayStatic()
-    {
-        $carbon = static::CARBON_CLASS;
-        $carbon::setHolidaysRegion('fr-national');
-        $carbon::setTestNow($carbon::parse('2018-05-01 12:00:00'));
-        self::assertSame('30/04/2018', $carbon::subtractBusinessDay()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-04-04 12:00:00'));
-        self::assertSame('03/04/2018', $carbon::subtractBusinessDay()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-04-14 12:00:00'));
-        self::assertSame('13/04/2018', $carbon::subtractBusinessDay()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-04-15 12:00:00'));
-        self::assertSame('13/04/2018', $carbon::subtractBusinessDay()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-04-16 12:00:00'));
-        self::assertSame('13/04/2018', $carbon::subtractBusinessDay()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-11-11 12:00:00'));
-        self::assertSame('09/11/2018', $carbon::subtractBusinessDay()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-05-01 12:00:00'));
-        self::assertSame('30/04/2018', $carbon::subtractBusinessDays()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-04-04 12:00:00'));
-        self::assertSame('03/04/2018', $carbon::subtractBusinessDays()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-04-14 12:00:00'));
-        self::assertSame('13/04/2018', $carbon::subtractBusinessDays()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-04-15 12:00:00'));
-        self::assertSame('13/04/2018', $carbon::subtractBusinessDays()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-04-16 12:00:00'));
-        self::assertSame('13/04/2018', $carbon::subtractBusinessDays()->format('d/m/Y'));
-        $carbon::setTestNow($carbon::parse('2018-11-11 12:00:00'));
-        self::assertSame('09/11/2018', $carbon::subtractBusinessDays()->format('d/m/Y'));
-    }
-
     public function testGetHolidayId()
     {
         $carbon = static::CARBON_CLASS;
@@ -705,76 +431,6 @@ class BusinessDayTest extends TestCase
         self::assertSame('christmas-next-day', $date->getHolidayId());
         $carbon::setHolidaysRegion('si-national');
         self::assertSame('independence-day', $date->getHolidayId());
-    }
-
-    public function testObservedHolidaysZone()
-    {
-        $carbon = static::CARBON_CLASS;
-        self::assertSame('default', $carbon::getObservedHolidaysZone());
-        self::assertSame('default', $carbon::now()->getObservedHolidaysZone());
-        $carbon::setObservedHolidaysZone('my-company');
-        self::assertSame('my-company', $carbon::getObservedHolidaysZone());
-        self::assertSame('my-company', $carbon::now()->getObservedHolidaysZone());
-        $carbon::now()->setObservedHolidaysZone('foobar');
-        self::assertSame('foobar', $carbon::getObservedHolidaysZone());
-        self::assertSame('foobar', $carbon::now()->getObservedHolidaysZone());
-    }
-
-    public function testObserveHolidays()
-    {
-        $carbon = static::CARBON_CLASS;
-        $carbon::setHolidaysRegion('fr-national');
-        self::assertFalse($carbon::isObservedHoliday('new-year'));
-        self::assertFalse($carbon::isObservedHoliday('christmas'));
-        self::assertFalse($carbon::parse('2018-01-01')->isObservedHoliday());
-        self::assertFalse($carbon::parse('2018-12-25')->isObservedHoliday());
-        self::assertFalse($carbon::parse('2018-12-26')->isObservedHoliday());
-        $carbon::setTestNow('2018-12-26');
-        self::assertFalse($carbon::isObservedHoliday());
-        $carbon::setTestNow('2018-12-25');
-        self::assertFalse($carbon::isObservedHoliday());
-        self::assertFalse($carbon::isObservedHoliday(new \DateTime('2018-12-25')));
-        $carbon::observeHoliday('christmas');
-        self::assertFalse($carbon::isObservedHoliday('new-year'));
-        self::assertTrue($carbon::isObservedHoliday('christmas'));
-        self::assertFalse($carbon::parse('2018-01-01')->isObservedHoliday());
-        self::assertTrue($carbon::parse('2018-12-25')->isObservedHoliday());
-        self::assertFalse($carbon::parse('2018-12-26')->isObservedHoliday());
-        $carbon::setTestNow('2018-12-26');
-        self::assertFalse($carbon::isObservedHoliday());
-        $carbon::setTestNow('2018-12-25');
-        self::assertTrue($carbon::isObservedHoliday());
-        self::assertTrue($carbon::isObservedHoliday(new \DateTime('2018-12-25')));
-        $carbon::unobserveHoliday('christmas');
-        self::assertFalse($carbon::isObservedHoliday('new-year'));
-        self::assertFalse($carbon::isObservedHoliday('christmas'));
-        self::assertFalse($carbon::parse('2018-01-01')->isObservedHoliday());
-        self::assertFalse($carbon::parse('2018-12-25')->isObservedHoliday());
-        self::assertFalse($carbon::parse('2018-12-26')->isObservedHoliday());
-        $carbon::observeAllHolidays();
-        self::assertTrue($carbon::isObservedHoliday('new-year'));
-        self::assertTrue($carbon::isObservedHoliday('christmas'));
-        self::assertTrue($carbon::parse('2018-01-01')->isObservedHoliday());
-        self::assertTrue($carbon::parse('2018-12-25')->isObservedHoliday());
-        self::assertFalse($carbon::parse('2018-12-26')->isObservedHoliday());
-        $carbon::unobserveHoliday('christmas');
-        self::assertTrue($carbon::isObservedHoliday('new-year'));
-        self::assertFalse($carbon::isObservedHoliday('christmas'));
-        self::assertTrue($carbon::parse('2018-01-01')->isObservedHoliday());
-        self::assertFalse($carbon::parse('2018-12-25')->isObservedHoliday());
-        self::assertFalse($carbon::parse('2018-12-26')->isObservedHoliday());
-        $carbon::unobserveAllHolidays();
-        self::assertFalse($carbon::isObservedHoliday('new-year'));
-        self::assertFalse($carbon::isObservedHoliday('christmas'));
-        self::assertFalse($carbon::parse('2018-01-01')->isObservedHoliday());
-        self::assertFalse($carbon::parse('2018-12-25')->isObservedHoliday());
-        self::assertFalse($carbon::parse('2018-12-26')->isObservedHoliday());
-        $carbon::observeHolidays(['christmas', 'new-year']);
-        self::assertTrue($carbon::isObservedHoliday('new-year'));
-        self::assertTrue($carbon::isObservedHoliday('christmas'));
-        self::assertTrue($carbon::parse('2018-01-01')->isObservedHoliday());
-        self::assertTrue($carbon::parse('2018-12-25')->isObservedHoliday());
-        self::assertFalse($carbon::parse('2018-12-26')->isObservedHoliday());
     }
 
     public function testGetHolidayName()
@@ -954,38 +610,6 @@ class BusinessDayTest extends TestCase
         self::assertNull($calculator->interpolateFixedDate(['ko']));
     }
 
-    public function testWhenHijriHolidayHappensTwiceAGregorianYear()
-    {
-        $carbon = static::CARBON_CLASS;
-        BusinessDay::enable($carbon, 'custom-hijri', [
-            '27-rabi-al-thani' => '= 27 Rabi al-thani',
-        ]);
-
-        self::assertTrue($carbon::parse('2019-01-05')->isHoliday());
-        self::assertTrue($carbon::parse('2019-12-25')->isHoliday());
-    }
-
-    public function testWhenJewishHolidayMissInAGregorianYear()
-    {
-        $carbon = static::CARBON_CLASS;
-        BusinessDay::enable($carbon, 'custom-jewish', [
-            '4-tevet' => '= 4 Tevet',
-        ]);
-
-        self::assertSame(1, count($carbon::getYearHolidays(2018)));
-        self::assertTrue($carbon::parse('2018-12-12')->isHoliday());
-        self::assertSame(0, count($carbon::getYearHolidays(2019)));
-        self::assertTrue($carbon::parse('2020-01-01')->isHoliday());
-        self::assertSame(2, count($carbon::getYearHolidays(2020)));
-        self::assertTrue($carbon::parse('2020-12-19')->isHoliday());
-    }
-
-    public function testLunarCalendar()
-    {
-        $date = new LunarCalendar('2020-02-07');
-        self::assertSame([2020, 2, 29], $date->toGregorian());
-    }
-
     public function testFallbackRegionWithCustomHolidays()
     {
         $carbon = static::CARBON_CLASS;
@@ -1028,56 +652,5 @@ class BusinessDayTest extends TestCase
         self::assertSame([
             'info' => 'It may be cold in USA',
         ], $carbon::parse('2020-12-25')->locale('fr')->getHolidayData());
-    }
-
-    public function testHolidayGetter()
-    {
-        $apiMock = [
-            '2020' => [
-                'us' => [
-                    'il' => [
-                        '2020-02-03' => [
-                            'id'   => 'foo',
-                            'name' => 'February Foo',
-                            'info' => 'First one',
-                        ],
-                        '2020-11-23' => [
-                            'id'   => 'bar',
-                            'name' => 'November Bar',
-                            'info' => 'Last one',
-                        ],
-                    ],
-                ],
-            ],
-        ];
-        $carbon = static::CARBON_CLASS;
-        BusinessDay::enable($carbon, 'us-IL');
-        $carbon::setHolidayGetter(function (string $region, CarbonInterface $self, callable $fallback) use ($apiMock, $carbon) {
-            [$country, $state] = explode('-', $region);
-            $yearHolidays = $apiMock[$self->year] ?? null;
-
-            if (!$yearHolidays) {
-                // Optionally the default method (using internal lists) can be used as a fallback:
-                return $fallback();
-            }
-
-            $holiday = (($yearHolidays[$country] ?? [])[$state] ?? [])[$self->format('Y-m-d')] ?? null;
-
-            if (!$holiday) {
-                return false;
-            }
-
-            $carbon::setHolidayName($holiday['id'], 'en', $holiday['name']);
-            $carbon::setHolidayDataById($holiday['id'], $holiday);
-
-            return $holiday['id'];
-        });
-
-        self::assertFalse($carbon::parse('2020-01-01')->isHoliday()); // 2020 uses the custom getter
-        self::assertTrue($carbon::parse('2021-01-01')->isHoliday()); // 2021 uses the fallback
-        self::assertTrue($carbon::parse('2020-02-03')->isHoliday());
-        self::assertSame('February Foo', $carbon::parse('2020-02-03')->getHolidayName());
-        self::assertSame('bar', $carbon::parse('2020-11-23')->getHolidayId());
-        self::assertSame('Last one', $carbon::parse('2020-11-23')->getHolidayData()['info']);
     }
 }

@@ -5,6 +5,7 @@ namespace Cmixin\BusinessDay;
 use Carbon\Carbon;
 use Cmixin\BusinessDay;
 use Exception;
+use SplObjectStorage;
 
 class Holiday extends YearCrawler
 {
@@ -23,6 +24,11 @@ class Holiday extends YearCrawler
     public $holidayGetter = null;
 
     /**
+     * @var SplObjectStorage<object,callable>|null
+     */
+    public $holidayGetters = null;
+
+    /**
      * Set the strategy to get the holiday ID from a date object.
      *
      * @return \Closure
@@ -34,12 +40,27 @@ class Holiday extends YearCrawler
         /**
          * Set the strategy to get the holiday ID from a date object.
          *
+         * @param callable|null $holidayGetter
+         * @param object|null   $self
+         *
          * @return $this|null
          */
-        return function (callable $holidayGetter) use ($mixin) {
-            $mixin->holidayGetter = $holidayGetter;
+        return function (?callable $holidayGetter, $self = null) use ($mixin) {
+            $date = isset($this) && $this !== $mixin ? $this : $self;
 
-            return isset($this) && $this !== $mixin ? $this : null;
+            if (!$date) {
+                $mixin->holidayGetter = $holidayGetter;
+
+                return null;
+            }
+
+            if (!$mixin->holidayGetters) {
+                $mixin->holidayGetters = new SplObjectStorage();
+            }
+
+            $mixin->holidayGetters[$date] = $holidayGetter;
+
+            return $date;
         };
     }
 
@@ -80,8 +101,11 @@ class Holiday extends YearCrawler
                 return false;
             };
 
-            return $mixin->holidayGetter
-                ? ($mixin->holidayGetter)($mixin->holidaysRegion, $self, $fallback)
+            $date = isset($this) && $this !== $mixin ? $this : $self;
+            $holidayGetter = $mixin->holidayGetters[$date] ?? $mixin->holidayGetter;
+
+            return $holidayGetter
+                ? $holidayGetter($mixin->holidaysRegion, $self, $fallback)
                 : $fallback();
         };
     }
