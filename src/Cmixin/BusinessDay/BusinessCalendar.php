@@ -2,7 +2,7 @@
 
 namespace Cmixin\BusinessDay;
 
-use DateTime;
+use Cmixin\BusinessDay\Calculator\MixinConfigPropagator;
 use Exception;
 use SplObjectStorage;
 
@@ -36,29 +36,11 @@ class BusinessCalendar extends HolidayObserver
          * @return $this|null
          */
         return function (?callable $checkCallback = null, $self = null) use ($mixin) {
-            $date = isset($this) && $this !== $mixin ? $this : $self;
-            $storage = $date ?? $mixin;
-
-            if (!$date) {
-                $storage->businessDayChecker = $checkCallback;
-
-                return null;
-            }
-
-            // If mutable
-            if ($date instanceof DateTime) {
-                $date->businessDayChecker = $checkCallback;
-
-                return $date;
-            }
-
-            if (!$mixin->businessDayCheckers) {
-                $mixin->businessDayCheckers = new SplObjectStorage();
-            }
-
-            $mixin->businessDayCheckers[$date] = $checkCallback;
-
-            return $date;
+            return MixinConfigPropagator::setBusinessDayChecker(
+                $mixin,
+                isset($this) && $this !== $mixin ? $this : $self,
+                $checkCallback
+            );
         };
     }
 
@@ -79,12 +61,11 @@ class BusinessCalendar extends HolidayObserver
         return function ($self = null) use ($mixin) {
             $carbonClass = @get_class() ?: Emulator::getClass(new Exception());
 
+            $date = isset($this) && $this !== $mixin ? $this : null;
+
             /** @var \Carbon\Carbon|\Cmixin\BusinessDay $self */
-            $self = $carbonClass::getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
-            $date = isset($this) && $this !== $mixin ? $this : $self;
-            $businessDayChecker = $date && isset($date->businessDayChecker)
-                ? $date->businessDayChecker
-                : ($mixin->businessDayCheckers[$date] ?? $mixin->businessDayChecker);
+            $self = $carbonClass::getThisOrToday($self, $date);
+            $businessDayChecker = MixinConfigPropagator::getBusinessDayChecker($mixin, $date ?? $self);
 
             if ($businessDayChecker) {
                 return $businessDayChecker($self);
@@ -117,19 +98,7 @@ class BusinessCalendar extends HolidayObserver
             $self = $carbonClass::getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
 
             do {
-                if (!($self instanceof DateTime)) {
-                    $original = $self;
-                }
-
-                $self = $self->$method();
-
-                if (isset($original)) {
-                    foreach ([$mixin->businessDayCheckers, $mixin->holidayGetters] as $config) {
-                        if ($config && isset($config[$original])) {
-                            $config[$self] = $config[$original];
-                        }
-                    }
-                }
+                $self = MixinConfigPropagator::apply($mixin, $self, $method);
             } while (!$self->isBusinessDay());
 
             return $self;

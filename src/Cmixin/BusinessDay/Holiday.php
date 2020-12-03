@@ -4,6 +4,7 @@ namespace Cmixin\BusinessDay;
 
 use Carbon\Carbon;
 use Cmixin\BusinessDay;
+use Cmixin\BusinessDay\Calculator\MixinConfigPropagator;
 use Exception;
 use SplObjectStorage;
 
@@ -46,21 +47,11 @@ class Holiday extends YearCrawler
          * @return $this|null
          */
         return function (?callable $holidayGetter, $self = null) use ($mixin) {
-            $date = isset($this) && $this !== $mixin ? $this : $self;
-
-            if (!$date) {
-                $mixin->holidayGetter = $holidayGetter;
-
-                return null;
-            }
-
-            if (!$mixin->holidayGetters) {
-                $mixin->holidayGetters = new SplObjectStorage();
-            }
-
-            $mixin->holidayGetters[$date] = $holidayGetter;
-
-            return $date;
+            return MixinConfigPropagator::setHolidayGetter(
+                $mixin,
+                isset($this) && $this !== $mixin ? $this : $self,
+                $holidayGetter
+            );
         };
     }
 
@@ -81,8 +72,10 @@ class Holiday extends YearCrawler
         return function ($self = null) use ($mixin) {
             $carbonClass = @get_class() ?: Emulator::getClass(new Exception());
 
+            $date = isset($this) && $this !== $mixin ? $this : null;
+
             /** @var Carbon|BusinessDay $self */
-            $self = $carbonClass::getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
+            $self = $carbonClass::getThisOrToday($self, $date);
 
             $fallback = function () use ($self) {
                 $date = $self->format('d/m');
@@ -101,8 +94,7 @@ class Holiday extends YearCrawler
                 return false;
             };
 
-            $date = isset($this) && $this !== $mixin ? $this : $self;
-            $holidayGetter = $mixin->holidayGetters[$date] ?? $mixin->holidayGetter;
+            $holidayGetter = MixinConfigPropagator::getHolidayGetter($mixin, $date ?? $self);
 
             return $holidayGetter
                 ? $holidayGetter($mixin->holidaysRegion, $self, $fallback)
