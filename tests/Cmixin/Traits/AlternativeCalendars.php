@@ -2,7 +2,6 @@
 
 namespace Tests\Cmixin\Traits;
 
-use Carbon\CarbonInterface;
 use Cmixin\BusinessDay;
 use Cmixin\BusinessDay\Calendar\LunarCalendar;
 
