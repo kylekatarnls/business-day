@@ -4,7 +4,7 @@ namespace Cmixin\BusinessDay;
 
 use Carbon\Carbon;
 use Cmixin\BusinessDay;
-use Exception;
+use Cmixin\BusinessDay\Util\Context;
 
 trait HolidayData
 {
@@ -24,7 +24,7 @@ trait HolidayData
          *
          * @return array|null
          */
-        return function (string $id) use ($mixin): ?array {
+        return static function (string $id) use ($mixin): ?array {
             return $mixin->holidayData[$id] ?? [];
         };
     }
@@ -43,10 +43,10 @@ trait HolidayData
          *
          * @return $this|null
          */
-        return function (string $id, array $data) use ($mixin) {
+        return static function (string $id, array $data) use ($mixin) {
             $mixin->holidayData[$id] = $data;
 
-            return isset($this) && $this !== $mixin ? $this : null;
+            return isset($this) && Context::isNotMixin($this, $mixin) ? $this : null;
         };
     }
 
@@ -64,18 +64,16 @@ trait HolidayData
          *
          * @return array|null
          */
-        return function ($self = null) use ($mixin): ?array {
-            $carbonClass = @get_class() ?: Emulator::getClass(new Exception());
-
+        return static function (): ?array {
             /** @var Carbon|BusinessDay $self */
-            $self = $carbonClass::getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
+            $self = static::this();
             $holidayId = $self->getHolidayId();
 
             if (!$holidayId) {
                 return null;
             }
 
-            return $carbonClass::getHolidayDataById($holidayId);
+            return static::getHolidayDataById($holidayId);
         };
     }
 
@@ -86,23 +84,21 @@ trait HolidayData
      */
     public function setHolidayData()
     {
-        $mixin = $this;
-
         /**
          * Set stored data set for the current holiday, does nothing if it's not a holiday.
          *
          * @return $this|null
          */
-        return function (array $data, $self = null) use ($mixin) {
-            $carbonClass = @get_class() ?: Emulator::getClass(new Exception());
-
+        return static function (array $data) {
             /** @var Carbon|BusinessDay $self */
-            $self = $carbonClass::getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
+            $self = static::this();
             $holidayId = $self->getHolidayId();
 
             if (!$holidayId) {
                 return null;
             }
+
+            $carbonClass = get_class($self);
 
             return $carbonClass::setHolidayDataById($holidayId, $data);
         };

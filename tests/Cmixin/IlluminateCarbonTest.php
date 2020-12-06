@@ -2,6 +2,9 @@
 
 namespace Tests\Cmixin;
 
+/**
+ * @group illuminate
+ */
 class IlluminateCarbonTest extends BusinessDayTest
 {
     const CARBON_CLASS = 'Tests\Cmixin\IlluminateCarbon';

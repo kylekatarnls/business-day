@@ -4,6 +4,7 @@ namespace Tests\Cmixin;
 
 use Cmixin\BusinessDay;
 use Cmixin\BusinessDay\Calculator\HolidayCalculator;
+use DateTime;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Tests\Cmixin\Traits\AddAndSubDays;
@@ -12,6 +13,9 @@ use Tests\Cmixin\Traits\ConfigSetters;
 use Tests\Cmixin\Traits\Observable;
 use Tests\Cmixin\Traits\PreviousAndNext;
 
+/**
+ * @group mutable
+ */
 class BusinessDayTest extends TestCase
 {
     use AddAndSubDays;
@@ -403,6 +407,9 @@ class BusinessDayTest extends TestCase
         self::assertFalse($carbon::parse('2018-11-11 12:00:00')->isBusinessDay());
     }
 
+    /**
+     * @group i
+     */
     public function testIsBusinessDayStatic()
     {
         $carbon = static::CARBON_CLASS;
@@ -441,7 +448,7 @@ class BusinessDayTest extends TestCase
         $carbon::setTestNow('2018-12-25');
         self::assertSame('en', $carbon::getLocale());
         self::assertSame('Christmas', $carbon::getHolidayName());
-        self::assertSame('National Day', $carbon::getHolidayName(new \DateTime('2018-07-14')));
+        self::assertSame('National Day', $carbon::getHolidayName(new DateTime('2018-07-14')));
         self::assertSame('Noël', $carbon::getHolidayName('fr'));
         $carbon::setTestNow('2018-12-26');
         self::assertFalse($carbon::getHolidayName());
@@ -486,7 +493,7 @@ class BusinessDayTest extends TestCase
         $carbon::setTestNow('2020-07-16');
 
         self::assertSame(0, $carbon::diffInBusinessDays());
-        self::assertSame(4, $carbon::diffInBusinessDays('2020-07-09'));
+        self::assertSame(4, abs($carbon::diffInBusinessDays('2020-07-09')));
         self::assertSame(3, $carbon::parse('2020-07-06')->diffInBusinessDays('2020-07-09'));
         self::assertSame(24, $carbon::parse('2020-07-06')->diffInBusinessDays('2020-08-09'));
     }
@@ -502,6 +509,9 @@ class BusinessDayTest extends TestCase
         self::assertSame(23, $carbon::parse('2019-07')->getBusinessDaysInMonth());
     }
 
+    /**
+     * @group i
+     */
     public function testGetMonthBusinessDays()
     {
         $carbon = static::CARBON_CLASS;
@@ -575,7 +585,7 @@ class BusinessDayTest extends TestCase
             '2019-05-28',
             '2019-05-29',
             '2019-05-31',
-        ], $carbon::getMonthBusinessDays(new \DateTime('2019-05-31 23:59:59.999999')));
+        ], $carbon::getMonthBusinessDays(new DateTime('2019-05-31 23:59:59.999999')));
         self::assertCarbonList([
             '2019-03-01',
             '2019-03-04',

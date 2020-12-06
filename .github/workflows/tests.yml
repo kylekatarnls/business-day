@@ -11,11 +11,12 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
+      fail-fast: false
       matrix:
-        php: ['7.1', '7.2', '7.3', '7.4']
-        setup: ['lowest', 'stable']
+        php: ['7.1', '7.2', '7.3', '7.4', '8.0', '8.1']
+        setup: ['lowest', 'stable', 'next']
 
-    name: PHP ${{ matrix.php }}
+    name: PHP ${{ matrix.php }} - ${{ matrix.setup }}
 
     steps:
     - uses: actions/checkout@v2
@@ -32,13 +33,13 @@ jobs:
       uses: actions/cache@v2
       with:
         path: vendor
-        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+        key: ${{ runner.os }}-${{ matrix.setup }}-php-${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
         restore-keys: |
-          ${{ runner.os }}-php-
+          ${{ runner.os }}-${{ matrix.setup }}-php-${{ matrix.php }}-
 
     - name: Install dependencies
       if: steps.composer-cache.outputs.cache-hit != 'true'
-      run: composer update --prefer-dist --prefer-${{ matrix.setup }} --no-progress --no-suggest ${{ matrix.php > 8 && '--ignore-platform-req=php' || '' }}
+      run: composer update --prefer-dist ${{ matrix.setup != 'next' && format('--prefer-{0}', matrix.setup) || '' }} --no-progress --no-suggest ${{ matrix.php >= 8 && '--ignore-platform-req=php' || '' }}
 
     - name: Code Climate Test Reporter Preparation
       if: matrix.php == '7.4' && matrix.setup == 'stable'
@@ -54,7 +55,7 @@ jobs:
         if [[ ${MATRIX_CONFIG} == "7.4-stable" ]]; then
           vendor/bin/phpunit --coverage-text --coverage-clover=clover.xml;
         else
-          ./vendor/bin/phpunit --no-coverage;
+          vendor/bin/phpunit --no-coverage;
         fi;
       env:
         MATRIX_CONFIG: ${{ matrix.php }}-${{ matrix.setup }}
@@ -94,14 +95,14 @@ jobs:
         uses: actions/cache@v2
         with:
           path: vendor
-          key: ${{ runner.os }}-php-multi-${{ hashFiles('**/composer.lock') }}
+          key: ${{ runner.os }}-php-multi-${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
           restore-keys: |
-            ${{ runner.os }}-php-multi-
+            ${{ runner.os }}-php-multi-${{ matrix.php }}-
 
       - name: Install dependencies
         if: steps.composer-cache.outputs.cache-hit != 'true'
         run: |
-          composer require kylekatarnls/multi-tester:^1.1 --dev --no-update;
+          composer require kylekatarnls/multi-tester:^1.1 --no-update;
           composer update --prefer-dist --prefer-${{ matrix.setup }} --no-progress --no-suggest ${{ matrix.composerOptions }};
 
       - name: Run test suites

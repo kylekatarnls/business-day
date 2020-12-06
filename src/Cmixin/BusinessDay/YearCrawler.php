@@ -3,7 +3,6 @@
 namespace Cmixin\BusinessDay;
 
 use Cmixin\BusinessDay\Calculator\HolidayCalculator;
-use Exception;
 
 class YearCrawler extends HolidaysList
 {
@@ -22,8 +21,8 @@ class YearCrawler extends HolidaysList
          *
          * @return array
          */
-        return function ($year = null, $type = null, $self = null) {
-            $carbonClass = @get_class() ?: Emulator::getClass(new Exception());
+        return static function ($year = null, $type = null, $self = null) {
+            $carbonClass = get_class(static::this());
             $next = $carbonClass::getYearHolidaysNextFunction($year, $type, $self);
             $holidays = [];
 
@@ -44,8 +43,6 @@ class YearCrawler extends HolidaysList
      */
     public function getYearHolidaysNextFunction()
     {
-        $mixin = $this;
-
         /**
          * Get a next() callback to call to iterate over holidays of a year.
          *
@@ -54,9 +51,10 @@ class YearCrawler extends HolidaysList
          *
          * @return callable
          */
-        return function ($year = null, $type = null, $self = null) use ($mixin): callable {
-            $carbonClass = @get_class() ?: Emulator::getClass(new Exception());
-            $year = $year ?: $carbonClass::getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null)->year;
+        return static function ($year = null, $type = null): callable {
+            $self = static::this();
+            $carbonClass = get_class($self);
+            $year = $year ?: $self->year;
             $holidays = $carbonClass::getHolidays();
             $outputClass = $type ? (is_string($type) && $type !== 'string' ? $type : 'DateTime') : $carbonClass;
             $holidaysList = [];

@@ -5,7 +5,6 @@ namespace Cmixin\BusinessDay;
 use Carbon\Carbon;
 use Cmixin\BusinessDay;
 use Cmixin\BusinessDay\Calculator\MixinConfigPropagator;
-use Exception;
 use SplObjectStorage;
 
 class Holiday extends YearCrawler
@@ -42,14 +41,13 @@ class Holiday extends YearCrawler
          * Set the strategy to get the holiday ID from a date object.
          *
          * @param callable|null $holidayGetter
-         * @param object|null   $self
          *
          * @return $this|null
          */
-        return function (?callable $holidayGetter, $self = null) use ($mixin) {
+        return static function (?callable $holidayGetter) use ($mixin) {
             return MixinConfigPropagator::setHolidayGetter(
                 $mixin,
-                isset($this) && $this !== $mixin ? $this : $self,
+                end(static::$macroContextStack) ?: null,
                 $holidayGetter
             );
         };
@@ -69,13 +67,9 @@ class Holiday extends YearCrawler
          *
          * @return string|false
          */
-        return function ($self = null) use ($mixin) {
-            $carbonClass = @get_class() ?: Emulator::getClass(new Exception());
-
-            $date = isset($this) && $this !== $mixin ? $this : null;
-
+        return static function () use ($mixin) {
             /** @var Carbon|BusinessDay $self */
-            $self = $carbonClass::getThisOrToday($self, $date);
+            $self = static::this();
 
             $fallback = function () use ($self) {
                 $date = $self->format('d/m');
@@ -94,7 +88,7 @@ class Holiday extends YearCrawler
                 return false;
             };
 
-            $holidayGetter = MixinConfigPropagator::getHolidayGetter($mixin, $date ?? $self);
+            $holidayGetter = MixinConfigPropagator::getHolidayGetter($mixin, $self);
 
             return $holidayGetter
                 ? $holidayGetter($mixin->holidaysRegion, $self, $fallback)
@@ -116,11 +110,9 @@ class Holiday extends YearCrawler
          *
          * @return bool
          */
-        return function ($self = null) use ($mixin) {
-            $carbonClass = @get_class() ?: Emulator::getClass(new Exception());
-
+        return static function () {
             /** @var Carbon|BusinessDay $self */
-            $self = $carbonClass::getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
+            $self = static::this();
 
             return $self->getHolidayId() !== false;
         };
@@ -143,7 +135,7 @@ class Holiday extends YearCrawler
          *
          * @return array
          */
-        return function ($locale) use ($mixin, $defaultLocale) {
+        return static function ($locale) use ($mixin, $defaultLocale) {
             if (isset($mixin->holidayNames[$locale])) {
                 return $mixin->holidayNames[$locale] ?: $mixin->holidayNames[$defaultLocale];
             }
@@ -172,7 +164,6 @@ class Holiday extends YearCrawler
      */
     public function getHolidayName()
     {
-        $mixin = $this;
         $dictionary = $this->getHolidayNamesDictionary();
 
         /**
@@ -183,21 +174,21 @@ class Holiday extends YearCrawler
          *
          * @return string|false
          */
-        return function ($locale = null, $self = null) use ($mixin, $dictionary) {
-            $carbonClass = @get_class() ?: Emulator::getClass(new Exception());
-
-            [$locale, $self] = $carbonClass::swapDateTimeParam($locale, $self, null);
-
+        return static function ($date = null, $locale = null) use ($dictionary) {
             /** @var Carbon|BusinessDay $self */
-            $self = $carbonClass::getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
-            $holidayId = $self->getHolidayId();
+            $self = static::this();
+            /** @var Carbon|BusinessDay $date */
+            [$locale, $date] = static::swapDateTimeParam($locale, $date, null);
+            $locale = $locale ?? (is_string($date) ? $date : null);
+            $date = is_object($date) ? $self->resolveCarbon($date) : $self;
+            $holidayId = $date->getHolidayId();
 
             if ($holidayId === false) {
                 return false;
             }
 
             if (!$locale) {
-                $locale = (isset($self->locale) ? $self->locale : $carbonClass::getLocale()) ?: 'en';
+                $locale = ($date->locale ?? get_class($date)::getLocale()) ?: 'en';
             }
 
             /* @var string $holidayId */
