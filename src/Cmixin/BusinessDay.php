@@ -5,8 +5,6 @@ namespace Cmixin;
 use Carbon\Carbon;
 use Cmixin\BusinessDay\BusinessCalendar;
 use Cmixin\BusinessDay\BusinessMonth;
-use Cmixin\BusinessDay\Emulator;
-use Exception;
 
 class BusinessDay extends BusinessCalendar
 {
@@ -17,8 +15,6 @@ class BusinessDay extends BusinessCalendar
      */
     public function addBusinessDays($factor = 1)
     {
-        $mixin = $this;
-
         /**
          * Add a given number of business days to the current date.
          *
@@ -26,25 +22,25 @@ class BusinessDay extends BusinessCalendar
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
-        return function ($days = 1, $self = null) use ($mixin, $factor) {
-            $carbonClass = @get_class() ?: Emulator::getClass(new Exception());
-
-            [$days, $self] = $carbonClass::swapDateTimeParam($days, $self, 1);
-
+        return static function ($days = 1, $date = null) use ($factor) {
             /** @var Carbon|BusinessDay $self */
-            $self = $carbonClass::getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
+            $self = static::this();
+
+            [$days, $date] = static::swapDateTimeParam($days, $date, null);
+            $days = ($days ?? (is_object($date) ? null : $date)) ?? 1;
+            $date = is_object($date) ? $self->resolveCarbon($date) : $self;
 
             $days *= $factor;
 
             for ($i = $days; $i > 0; $i--) {
-                $self = $self->nextBusinessDay();
+                $date = $date->nextBusinessDay();
             }
 
             for ($i = $days; $i < 0; $i++) {
-                $self = $self->previousBusinessDay();
+                $date = $date->previousBusinessDay();
             }
 
-            return $self;
+            return $date;
         };
     }
 
@@ -138,8 +134,6 @@ class BusinessDay extends BusinessCalendar
      */
     public function diffInBusinessDays()
     {
-        $mixin = $this;
-
         /**
          * Returns the difference between 2 dates in business days.
          *
@@ -147,13 +141,11 @@ class BusinessDay extends BusinessCalendar
          *
          * @return int
          */
-        return function ($other = null, $self = null) use ($mixin) {
-            $carbonClass = @get_class() ?: Emulator::getClass(new Exception());
-
+        return static function ($other = null) {
             /** @var Carbon|BusinessDay $self */
-            $self = $carbonClass::getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
+            $self = static::this();
 
-            return $self->diffInDaysFiltered(function ($date) {
+            return $self->diffInDaysFiltered(static function ($date) {
                 /* @var Carbon|static $date */
 
                 return $date->isBusinessDay();
@@ -168,19 +160,14 @@ class BusinessDay extends BusinessCalendar
      */
     public function getBusinessDaysInMonth()
     {
-        $mixin = $this;
-
         /**
          * Get the number of business days in the current month.
          *
          * @return int
          */
-        return function ($self = null) use ($mixin) {
-            $carbonClass = @get_class() ?: Emulator::getClass(new Exception());
-            $month = new BusinessMonth(
-                $carbonClass::getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null),
-                $carbonClass
-            );
+        return static function ($date = null) {
+            $self = static::this();
+            $month = new BusinessMonth($date ?? $self, get_class($self));
 
             return $month->getStart()->diffInBusinessDays($month->getEnd());
         };
@@ -193,19 +180,14 @@ class BusinessDay extends BusinessCalendar
      */
     public function getMonthBusinessDays()
     {
-        $mixin = $this;
-
         /**
          * Get list of date objects for each business day in the current month.
          *
          * @return array
          */
-        return function ($self = null) use ($mixin) {
-            $carbonClass = @get_class() ?: Emulator::getClass(new Exception());
-            $month = new BusinessMonth(
-                $carbonClass::getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null),
-                $carbonClass
-            );
+        return static function ($date = null) {
+            $self = static::this();
+            $month = new BusinessMonth($date ?? $self, get_class($self));
             $date = $month->getStart();
             $dates = [];
 

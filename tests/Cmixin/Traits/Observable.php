@@ -4,15 +4,19 @@ namespace Tests\Cmixin\Traits;
 
 trait Observable
 {
+    /**
+     * @group i
+     */
     public function testObservedHolidaysZone()
     {
         $carbon = static::CARBON_CLASS;
         self::assertSame('default', $carbon::getObservedHolidaysZone());
         self::assertSame('default', $carbon::now()->getObservedHolidaysZone());
-        $carbon::setObservedHolidaysZone('my-company');
+        self::assertNull($carbon::setObservedHolidaysZone('my-company'));
         self::assertSame('my-company', $carbon::getObservedHolidaysZone());
         self::assertSame('my-company', $carbon::now()->getObservedHolidaysZone());
-        $carbon::now()->setObservedHolidaysZone('foobar');
+        $now = $carbon::now();
+        self::assertSame($now, $now->setObservedHolidaysZone('foobar'));
         self::assertSame('foobar', $carbon::getObservedHolidaysZone());
         self::assertSame('foobar', $carbon::now()->getObservedHolidaysZone());
     }

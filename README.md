@@ -556,6 +556,11 @@ echo "If you ask to leave from 2019-06-10 to 2019-06-18, it will cost to you $da
 // Note the ->endOfDay() to include the last day of the range
 ```
 
+⚠️ Behavior is different for Carbon 2 and 3:
+
+- Carbon <= 2 returns an absolute number (always positive).
+- Carbon >= 3 returns a negative number passed dare is before current date, positive else.
+
 #### getBusinessDaysInMonth
 
 Get the number of open days in the current/given month.

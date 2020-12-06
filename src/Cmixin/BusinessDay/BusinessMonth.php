@@ -18,8 +18,8 @@ class BusinessMonth
     protected $end;
 
     /**
-     * @param \Carbon\Carbon|\Cmixin\BusinessDay $date
-     * @param string                             $carbonClass
+     * @param \Carbon\Carbon|\Cmixin\BusinessDay|string $date
+     * @param string                                    $carbonClass
      */
     public function __construct($date, $carbonClass)
     {

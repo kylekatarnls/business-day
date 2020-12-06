@@ -2,9 +2,7 @@
 
 namespace Cmixin\BusinessDay;
 
-use Carbon\Carbon;
-use Cmixin\BusinessDay;
-use Exception;
+use Cmixin\BusinessDay\Util\Context;
 use InvalidArgumentException;
 
 class HolidayObserver extends Holiday
@@ -42,7 +40,7 @@ class HolidayObserver extends Holiday
         return function ($zone, $self = null) use ($mixin) {
             $mixin->observedHolidaysZone = $zone;
 
-            return isset($this) && $this !== $mixin ? $this : (isset($self) ? $self : null);
+            return isset($this) && Context::isNotMixin($this, $mixin) ? $this : (isset($self) ? $self : null);
         };
     }
 
@@ -60,7 +58,7 @@ class HolidayObserver extends Holiday
          *
          * @return string|null
          */
-        return function () use ($mixin) {
+        return static function () use ($mixin) {
             return $mixin->observedHolidaysZone;
         };
     }
@@ -97,7 +95,7 @@ class HolidayObserver extends Holiday
 
             $mixin->observedHolidays[$zone][$holidayId] = $observed;
 
-            return isset($this) && $this !== $mixin ? $this : (isset($self) ? $self : null);
+            return isset($this) && Context::isNotMixin($this, $mixin) ? $this : (isset($self) ? $self : null);
         };
     }
 
@@ -134,7 +132,7 @@ class HolidayObserver extends Holiday
                 $setter($holidayId, $observed);
             }
 
-            return isset($this) && $this !== $mixin ? $this : (isset($self) ? $self : null);
+            return isset($this) && Context::isNotMixin($this, $mixin) ? $this : (isset($self) ? $self : null);
         };
     }
 
@@ -253,7 +251,7 @@ class HolidayObserver extends Holiday
          *
          * @return bool
          */
-        return function ($holidayId = null) use ($mixin, $allHolidays) {
+        return static function ($holidayId = null) use ($mixin, $allHolidays) {
             $zone = $mixin->observedHolidaysZone;
             $days = isset($mixin->observedHolidays[$zone]) ? $mixin->observedHolidays[$zone] : [];
 
@@ -278,8 +276,6 @@ class HolidayObserver extends Holiday
      */
     public function isObservedHoliday()
     {
-        $mixin = $this;
-
         /**
          * Checks the date to see if it is a holiday observed in the selected zone.
          *
@@ -287,16 +283,18 @@ class HolidayObserver extends Holiday
          *
          * @return bool
          */
-        return function ($holidayId = null, $self = null) use ($mixin) {
-            $carbonClass = @get_class() ?: Emulator::getClass(new Exception());
+        return function ($holidayId = null, $date = null) {
+            $self = static::this();
 
-            [$holidayId, $self] = $carbonClass::swapDateTimeParam($holidayId, $self, null);
+            [$holidayId, $date] = static::swapDateTimeParam($holidayId, $date, null);
+            $holidayId = $holidayId ?? (is_object($holidayId) ? null : $holidayId);
+            $date = is_object($date) ? $self->resolveCarbon($date) : $self;
 
             if (!$holidayId) {
-                /** @var Carbon|BusinessDay $self */
-                $self = $carbonClass::getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
-                $holidayId = $self->getHolidayId();
+                $holidayId = $date->getHolidayId();
             }
+
+            $carbonClass = get_class($date);
 
             return $carbonClass::checkObservedHoliday($holidayId);
         };

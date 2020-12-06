@@ -2,6 +2,7 @@
 
 namespace Cmixin\BusinessDay;
 
+use Cmixin\BusinessDay\Util\Context;
 use InvalidArgumentException;
 
 class HolidaysList extends MixinBase
@@ -30,7 +31,7 @@ class HolidaysList extends MixinBase
          *
          * @return string
          */
-        return function ($region) {
+        return static function ($region) {
             $region = preg_replace('/[^a-z0-9_-]/', '', str_replace('_', '-', strtolower($region)));
 
             return strpos($region, '-') === false ? "$region-national" : $region;
@@ -51,7 +52,7 @@ class HolidaysList extends MixinBase
          *
          * @param string $region
          */
-        return function ($region) use ($mixin) {
+        return static function ($region) use ($mixin) {
             $region = call_user_func($mixin->standardizeHolidaysRegion(), $region);
             $mixin->holidaysRegion = $region;
 
@@ -100,7 +101,7 @@ class HolidaysList extends MixinBase
          *
          * @return null|string
          */
-        return function () use ($mixin) {
+        return static function () use ($mixin) {
             return $mixin->holidaysRegion;
         };
     }
@@ -121,7 +122,7 @@ class HolidaysList extends MixinBase
          *
          * @return array
          */
-        return function ($region = null) use ($mixin) {
+        return static function ($region = null) use ($mixin) {
             $region = is_string($region)
                 ? call_user_func($mixin->standardizeHolidaysRegion(), $region)
                 : $mixin->holidaysRegion;
@@ -149,7 +150,7 @@ class HolidaysList extends MixinBase
          * @param string $region
          * @param array  $holidays
          */
-        return function ($region, $holidays) use ($mixin) {
+        return static function ($region, $holidays) use ($mixin) {
             $region = call_user_func($mixin->standardizeHolidaysRegion(), $region);
             $addHolidays = $mixin->addHolidays();
             $mixin->holidays[$region] = [];
@@ -169,7 +170,7 @@ class HolidaysList extends MixinBase
         /**
          * Reset the holidays list.
          */
-        return function () use ($mixin) {
+        return static function () use ($mixin) {
             $mixin->holidaysRegion = null;
             $mixin->holidays = [];
         };
@@ -194,7 +195,7 @@ class HolidaysList extends MixinBase
             return $this;
         }
 
-        return function () {
+        return static function () {
             return true;
         };
     }
@@ -217,19 +218,19 @@ class HolidaysList extends MixinBase
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|null
          */
-        return function ($region, $holiday, $holidayId = null) use ($mixin) {
+        return static function ($region, $holiday, $holidayId = null) use ($mixin) {
             $region = call_user_func($mixin->standardizeHolidaysRegion(), $region);
             $mixin->initializeHolidaysRegion($region);
 
             if (is_string($holidayId)) {
                 $mixin->holidays[$region][$holidayId] = $holiday;
 
-                return isset($this) && $this !== $mixin ? $this : null;
+                return isset($this) && Context::isNotMixin($this, $mixin) ? $this : null;
             }
 
             $mixin->holidays[$region][] = $holiday;
 
-            return isset($this) && $this !== $mixin ? $this : null;
+            return isset($this) && Context::isNotMixin($this, $mixin) ? $this : null;
         };
     }
 
@@ -251,7 +252,7 @@ class HolidaysList extends MixinBase
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|null
          */
-        return function ($holidayKey = null, $language = null, $name = null) use ($mixin) {
+        return static function ($holidayKey = null, $language = null, $name = null) use ($mixin) {
             static $dictionary;
 
             if ($mixin instanceof Holiday && ($language = is_string($language) ? [$language => $name] : $language)) {
@@ -265,7 +266,7 @@ class HolidaysList extends MixinBase
                 }
             }
 
-            return isset($this) && $this !== $mixin ? $this : null;
+            return isset($this) && Context::isNotMixin($this, $mixin) ? $this : null;
         };
     }
 
@@ -290,7 +291,7 @@ class HolidaysList extends MixinBase
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|null
          */
-        return function ($region, $holiday, $holidayId = null, $name = null, $observed = null) use ($mixin, $dictionary) {
+        return static function ($region, $holiday, $holidayId = null, $name = null, $observed = null) use ($mixin, $dictionary) {
             static $observer;
 
             $region = call_user_func($mixin->standardizeHolidaysRegion(), $region);
@@ -308,7 +309,7 @@ class HolidaysList extends MixinBase
                 $observer($holidayId, $observed);
             }
 
-            return isset($this) && $this !== $mixin ? $this : null;
+            return isset($this) && Context::isNotMixin($this, $mixin) ? $this : null;
         };
     }
 
@@ -328,7 +329,7 @@ class HolidaysList extends MixinBase
          *
          * @return array
          */
-        return function (&$holiday, &$name = null, &$observed = null) {
+        return static function (&$holiday, &$name = null, &$observed = null) {
             if (!isset($holiday['date'])) {
                 throw new InvalidArgumentException(
                     'Holiday array definition should at least contains a "date" entry.'
@@ -368,7 +369,7 @@ class HolidaysList extends MixinBase
          *
          * @return array
          */
-        return function (&$holiday, $holidayId, &$name = null, &$observed = null) use ($mixin) {
+        return static function (&$holiday, $holidayId, &$name = null, &$observed = null) use ($mixin) {
             $unpack = $mixin->unpackHoliday();
 
             if (is_array($holiday)) {
@@ -400,7 +401,7 @@ class HolidaysList extends MixinBase
          * @param string $region
          * @param array  $holidays
          */
-        return function ($region, $holidays) use ($mixin) {
+        return static function ($region, $holidays) use ($mixin) {
             $region = call_user_func($mixin->standardizeHolidaysRegion(), $region);
             $mixin->initializeHolidaysRegion($region);
             $add = $mixin->addHoliday();

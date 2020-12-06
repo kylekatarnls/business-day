@@ -3,7 +3,6 @@
 namespace Cmixin\BusinessDay;
 
 use Cmixin\BusinessDay\Calculator\MixinConfigPropagator;
-use Exception;
 use SplObjectStorage;
 
 class BusinessCalendar extends HolidayObserver
@@ -31,14 +30,13 @@ class BusinessCalendar extends HolidayObserver
          * Checks the date to see if it is a business day (neither a weekend day nor a holiday).
          *
          * @param callable|null $checkCallback
-         * @param object|null   $self
          *
          * @return $this|null
          */
-        return function (?callable $checkCallback = null, $self = null) use ($mixin) {
+        return static function (?callable $checkCallback = null) use ($mixin) {
             return MixinConfigPropagator::setBusinessDayChecker(
                 $mixin,
-                isset($this) && $this !== $mixin ? $this : $self,
+                end(static::$macroContextStack) ?: null,
                 $checkCallback
             );
         };
@@ -58,14 +56,10 @@ class BusinessCalendar extends HolidayObserver
          *
          * @return bool
          */
-        return function ($self = null) use ($mixin) {
-            $carbonClass = @get_class() ?: Emulator::getClass(new Exception());
-
-            $date = isset($this) && $this !== $mixin ? $this : null;
-
+        return static function () use ($mixin) {
             /** @var \Carbon\Carbon|\Cmixin\BusinessDay $self */
-            $self = $carbonClass::getThisOrToday($self, $date);
-            $businessDayChecker = MixinConfigPropagator::getBusinessDayChecker($mixin, $date ?? $self);
+            $self = static::this();
+            $businessDayChecker = MixinConfigPropagator::getBusinessDayChecker($mixin, $self);
 
             if ($businessDayChecker) {
                 return $businessDayChecker($self);
@@ -91,11 +85,9 @@ class BusinessCalendar extends HolidayObserver
          *
          * @return \Carbon\CarbonInterface|\Carbon\Carbon|\Carbon\CarbonImmutable
          */
-        return function ($self = null) use ($mixin, $method) {
-            $carbonClass = @get_class() ?: Emulator::getClass(new Exception());
-
+        return static function () use ($mixin, $method) {
             /** @var static $self */
-            $self = $carbonClass::getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
+            $self = static::this();
 
             do {
                 $self = MixinConfigPropagator::apply($mixin, $self, $method);
@@ -114,17 +106,13 @@ class BusinessCalendar extends HolidayObserver
      */
     public function currentOrNextBusinessDay($method = 'nextBusinessDay')
     {
-        $mixin = $this;
-
         /**
          * Sets the date to the current or next business day (neither a weekend day nor a holiday).
          *
          * @return \Carbon\CarbonInterface|\Carbon\Carbon|\Carbon\CarbonImmutable
          */
-        return function ($self = null) use ($mixin, $method) {
-            $carbonClass = @get_class() ?: Emulator::getClass(new Exception());
-
-            $self = $carbonClass::getThisOrToday($self, isset($this) && $this !== $mixin ? $this : null);
+        return static function () use ($method) {
+            $self = static::this();
 
             return $self->isBusinessDay() ? $self : $self->$method();
         };

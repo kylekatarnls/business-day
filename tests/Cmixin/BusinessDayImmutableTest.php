@@ -2,6 +2,9 @@
 
 namespace Tests\Cmixin;
 
+/**
+ * @group immutable
+ */
 class BusinessDayImmutableTest extends BusinessDayTest
 {
     const CARBON_CLASS = 'Carbon\CarbonImmutable';
