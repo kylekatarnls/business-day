@@ -3,7 +3,7 @@
 [Carbon](https://carbon.nesbot.com/) mixin to handle business days
 
 [![Latest Stable Version](https://poser.pugx.org/cmixin/business-day/v/stable.png)](https://packagist.org/packages/cmixin/business-day)
-[![Build Status](https://travis-ci.org/kylekatarnls/business-day.svg?branch=master)](https://travis-ci.org/kylekatarnls/business-day)
+[![GitHub Actions](https://github.com/kylekatarnls/business-day/workflows/Tests/badge.svg)](https://github.com/kylekatarnls/business-day/actions)
 [![Code Climate](https://codeclimate.com/github/kylekatarnls/business-day/badges/gpa.svg)](https://codeclimate.com/github/kylekatarnls/business-day)
 [![Test Coverage](https://codeclimate.com/github/kylekatarnls/business-day/badges/coverage.svg)](https://codeclimate.com/github/kylekatarnls/business-day/coverage)
 [![StyleCI](https://styleci.io/repos/129502391/shield?branch=master&style=flat)](https://styleci.io/repos/129502391)
