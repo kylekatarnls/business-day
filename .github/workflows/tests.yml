@@ -39,7 +39,7 @@ jobs:
 
     - name: Install dependencies
       if: steps.composer-cache.outputs.cache-hit != 'true'
-      run: composer update --prefer-dist ${{ matrix.setup != 'next' && format('--prefer-{0}', matrix.setup) || '' }} --no-progress --no-suggest ${{ matrix.php >= 8 && '--ignore-platform-req=php' || '' }}
+      run: composer update --prefer-dist ${{ matrix.setup != 'next' && format('--prefer-{0}', matrix.setup) || '' }} --no-progress --no-suggest ${{ matrix.php >= 8.1 && '--ignore-platform-req=php' || '' }}
 
     - name: Code Climate Test Reporter Preparation
       if: matrix.php == '7.4' && matrix.setup == 'stable'
@@ -51,6 +51,7 @@ jobs:
         CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
 
     - name: Run test suite
+      continue-on-error: ${{ matrix.php >= 8.1 }}
       run: |
         if [[ ${MATRIX_CONFIG} == "7.4-stable" ]]; then
           vendor/bin/phpunit --coverage-text --coverage-clover=clover.xml;
