@@ -2,6 +2,7 @@
 
 namespace Cmixin\BusinessDay;
 
+use Cmixin\BusinessDay\Util\DefinitionParser;
 use DateTime;
 use DateTimeInterface;
 
@@ -22,15 +23,8 @@ abstract class MixinBase
         foreach ($carbonClasses as $carbonClass) {
             $mixin = new static();
             $carbonClass::mixin($mixin);
-            $arguments = func_get_args();
-
-            if (isset($arguments[1]) && is_string($region = $arguments[1])) {
-                $carbonClass::setHolidaysRegion($region);
-
-                if (isset($arguments[2])) {
-                    $carbonClass::addHolidays($carbonClass::getHolidaysRegion(), $arguments[2]);
-                }
-            }
+            $parser = new DefinitionParser(func_get_args());
+            $parser->applyTo($carbonClass);
         }
 
         return $isArray ? $mixins : $mixin;

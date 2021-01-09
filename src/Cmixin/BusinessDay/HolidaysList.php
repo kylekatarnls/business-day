@@ -398,16 +398,26 @@ class HolidaysList extends MixinBase
         /**
          * Add a holiday to the holidays list of a region and optionally init their IDs, names and observed states (if provided as array-definitions).
          *
-         * @param string $region
-         * @param array  $holidays
+         * @param string     $region
+         * @param array|null $holidays
+         * @param array|null $workingDays
          */
-        return static function ($region, $holidays) use ($mixin) {
+        return static function (string $region, ?array $holidays = null, ?array $workingDays = null) use ($mixin) {
             $region = call_user_func($mixin->standardizeHolidaysRegion(), $region);
             $mixin->initializeHolidaysRegion($region);
             $add = $mixin->addHoliday();
             $check = $mixin->checkHoliday();
 
-            foreach ($holidays as $holidayId => $holiday) {
+            foreach (($holidays ?: []) as $holidayId => $holiday) {
+                var_dump($holidayId, $holiday);
+                exit;
+                $name = null;
+                $observed = null;
+                $check($holiday, $holidayId, $name, $observed);
+                $add($region, $holiday, $holidayId, $name, $observed);
+            }
+
+            foreach (($workingDays ?: []) as $holidayId => $holiday) {
                 $name = null;
                 $observed = null;
                 $check($holiday, $holidayId, $name, $observed);

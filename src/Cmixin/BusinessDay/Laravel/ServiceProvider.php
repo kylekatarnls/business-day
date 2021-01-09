@@ -33,7 +33,7 @@ class ServiceProvider extends ServiceProviderBase
             }
             // @codeCoverageIgnoreEnd
 
-            BusinessDay::enable($classes, $config['region'], isset($config['with']) ? $config['with'] : null);
+            BusinessDay::enable($classes, $config);
         }
     }
 
