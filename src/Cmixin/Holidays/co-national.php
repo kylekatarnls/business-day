@@ -7,7 +7,7 @@ return [
     'easter-7'               => '= easter -7',
     'easter-3'               => '= easter -3',
     'easter-2'               => '= easter -2',
-    'easter'                 => '= easter',
+    // 'easter'                 => '= easter',
     '05-01'                  => '05-01',
     'easter-43'              => '= easter 43',
     'easter-64'              => '= easter 64',
