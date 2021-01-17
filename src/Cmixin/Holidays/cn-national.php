@@ -1,14 +1,16 @@
 <?php
 
 return [
+    '__without'                   => [
+        'compensate-2021-02-11'      => '2021-02-07',
+        'compensate-2021-02-20'      => '2021-02-17',
+        'compensate-2021-09-20'      => '2021-09-18',
+        'compensate-2021-10-06'      => '2021-09-26',
+        'compensate-2021-10-07'      => '2021-10-09',
+    ],
     'new-year'                   => '01-01',
     'new-year-second-day'        => '= 01-02 if year == 2021',
     'new-year-third-day'         => '= 01-03 if year == 2021',
-    'compensate-2021-02-11'      => '! 2021-02-07',
-    'compensate-2021-02-20'      => '! 2021-02-17',
-    'compensate-2021-09-20'      => '! 2021-09-18',
-    'compensate-2021-10-06'      => '! 2021-09-26',
-    'compensate-2021-10-07'      => '! 2021-10-09',
     'national-day'               => '10-01',
     'ching-ming'                 => '04-05',
     'labour-day'                 => '05-01',

@@ -31,7 +31,9 @@ class DefinitionParser
         $without = $this->arguments[3] ?? null;
 
         if (is_array($region)) {
-            ['region' => $region, 'with' => $with, 'without' => $without] = $region;
+            $with = $region['with'] ?? null;
+            $without = $region['without'] ?? null;
+            $region = $region['region'] ?? null;
         }
 
         if (!is_string($region)) {

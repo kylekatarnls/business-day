@@ -2,6 +2,7 @@
 
 namespace Tests\Carbon\Laravel;
 
+use BadMethodCallException;
 use Carbon\Carbon;
 use Cmixin\BusinessDay\Laravel\ServiceProvider;
 use PHPUnit\Framework\TestCase;
@@ -18,7 +19,7 @@ class ServiceProviderTest extends TestCase
 
         try {
             Carbon::parse('2019-04-08')->isHoliday();
-        } catch (\BadMethodCallException $e) {
+        } catch (BadMethodCallException $e) {
             $message = $e->getMessage();
         }
 
