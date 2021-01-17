@@ -409,8 +409,6 @@ class HolidaysList extends MixinBase
             $check = $mixin->checkHoliday();
 
             foreach (($holidays ?: []) as $holidayId => $holiday) {
-                var_dump($holidayId, $holiday);
-                exit;
                 $name = null;
                 $observed = null;
                 $check($holiday, $holidayId, $name, $observed);

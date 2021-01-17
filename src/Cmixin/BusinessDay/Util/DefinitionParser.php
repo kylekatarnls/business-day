@@ -8,7 +8,7 @@ use Carbon\CarbonInterface;
 
 class DefinitionParser
 {
-    /** @var array  */
+    /** @var array */
     private $arguments;
 
     public function __construct(array $arguments)
@@ -36,8 +36,8 @@ class DefinitionParser
 
         if (!is_string($region)) {
             throw new InvalidArgumentException(
-                'Region must be a string, ' .
-                (is_object($region) ? get_class($region) : gettype($region)) . ' provided.'
+                'Region must be a string, '.
+                (is_object($region) ? get_class($region) : gettype($region)).' provided.'
             );
         }
 
