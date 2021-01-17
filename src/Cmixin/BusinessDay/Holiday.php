@@ -29,6 +29,16 @@ class Holiday extends YearCrawler
     public $holidayGetters = null;
 
     /**
+     * @var callable|null
+     */
+    public $workdayGetter = null;
+
+    /**
+     * @var SplObjectStorage<object,callable>|null
+     */
+    public $workdayGetters = null;
+
+    /**
      * Set the strategy to get the holiday ID from a date object.
      *
      * @return \Closure
@@ -49,6 +59,31 @@ class Holiday extends YearCrawler
                 $mixin,
                 end(static::$macroContextStack) ?: null,
                 $holidayGetter
+            );
+        };
+    }
+
+    /**
+     * Set the strategy to get the extra workday ID from a date object.
+     *
+     * @return \Closure
+     */
+    public function setExtraWorkdayGetter()
+    {
+        $mixin = $this;
+
+        /**
+         * Set the strategy to get the extra workday ID from a date object.
+         *
+         * @param callable|null $workdayGetter
+         *
+         * @return $this|null
+         */
+        return static function (?callable $workdayGetter) use ($mixin) {
+            return MixinConfigPropagator::setExtraWorkdayGetter(
+                $mixin,
+                end(static::$macroContextStack) ?: null,
+                $workdayGetter
             );
         };
     }
@@ -143,16 +178,26 @@ class Holiday extends YearCrawler
      */
     public function getExtraWorkdayId()
     {
+        $mixin = $this;
+
         /**
          * Get the identifier of the current special workday or false if it's not a special workday.
          *
          * @return string|false
          */
-        return static function () {
+        return static function () use ($mixin) {
             /** @var Carbon|BusinessDay $self */
             $self = static::this();
 
-            return $self->getDBDayId('getExtraWorkdays');
+            $fallback = function () use ($self) {
+                return $self->getDBDayId('getExtraWorkdays');
+            };
+
+            $workdayGetter = MixinConfigPropagator::getExtraWorkdayGetter($mixin, $self);
+
+            return $workdayGetter
+                ? $workdayGetter($mixin->holidaysRegion, $self, $fallback)
+                : $fallback();
         };
     }
 

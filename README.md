@@ -48,12 +48,13 @@ $additionalHolidays = [
     },
 ];
 
-// You can specify
+// You can optionally specify some days that are worked even if on weekend
 $extraWorkDays = [
+    'moving-office'  => '2021-01-17', // year specific
+    'yearly-meeting' => '01-25',      // or any year rather it's weekend or not
+];
 
-]
-
-BusinessDay::enable('Carbon\Carbon', $baseList, $additionalHolidays);
+BusinessDay::enable('Carbon\Carbon', $baseList, $additionalHolidays, $extraWorkDays);
 // Or if you use Laravel:
 // BusinessDay::enable('Illuminate\Support\Carbon', $baseList, $additionalHolidays);
 
@@ -586,6 +587,45 @@ print_r(Carbon::getMonthBusinessDays('2019-06')); // Open days in June 2019
 print_r(Carbon::parse('2019-06-10')->getMonthBusinessDays()); // Can be called from an instance
 ```
 
+#### isExtraWorkday
+
+Extra work days are days that are worked even if it's during the week-end (so `isBusinessDay()` returns `true`
+for those days). They allow to handle compensation days used in some countries and some business exceptions.
+
+`isExtraWorkday` returns `true` if the current day is one for them, `false` else.
+
+```php
+Carbon::setHolidaysRegion('cn-national');
+
+Carbon::parse('2021-02-07')->isExtraWorkday(); // true
+```
+
+`isExtraWorkday` is equivalent to `isHoliday` but for the extra working days list (the `without` config entry).
+
+#### getExtraWorkdayId
+
+Get the ID of the current extra work day, or `false` if it's not an extra workday.
+
+`getExtraWorkdayId` is equivalent to `getHolidayId` but for the extra working days list.
+
+#### getExtraWorkdays
+
+Get the list of the extra workdays of a given region (current region if not specified).
+
+`getExtraWorkdays` is equivalent to `getHolidays` but for the extra working days list.
+
+#### setExtraWorkdays
+
+Set the list of the extra workdays of a given region.
+
+`setExtraWorkdays` is equivalent to `setHolidays` but for the extra working days list.
+
+#### addExtraWorkday
+
+Add an extra workday to the list of a given region.
+
+`addExtraWorkday` is equivalent to `addHoliday` but for the extra working days list.
+
 #### setBusinessDayChecker
 
 Customize the way to determine if a date is a business day or not.
@@ -593,11 +633,13 @@ Customize the way to determine if a date is a business day or not.
 ```php
 // Global way
 Carbon::setBusinessDayChecker(function (CarbonInterface $date) {
-    return $date->isWeekday()
-        && !$date->isHoliday()
-        || in_array($date->format('Y-m-d'), [
-            '2020-12-06', // Exceptional Sunday open day
-        ]);
+    // As an example, you can customize it so
+    // every first Wednesday of month is always worked even if it's an holiday:
+    if ($date->isWednesday() && $date->copy()->subWeek()->month !== $date->month) {
+        return true;
+    }
+
+    return $date->isExtraWorkday() || ($date->isWeekday() && !$date->isHoliday());
 });
 
 // Single object config (prior to global)
@@ -607,7 +649,7 @@ $date->setBusinessDayChecker($someFunction);
 
 If not set or set to `null`, the default calculation is:
 ```php
-$date->isWeekday() && !$date->isHoliday()
+$date->isExtraWorkday() or ($date->isWeekday() and !$date->isHoliday())
 ```
 
 #### setHolidayGetter
@@ -636,6 +678,12 @@ Carbon::setHolidayGetter(function (string $region, CarbonInterface $self, callab
 $date = Carbon::parse('2020-12-03');
 $date->setHolidayGetter($someFunction);
 ```
+
+#### setExtraWorkdayGetter
+
+Customize the way to determine if a date is an extra work day and which one it is.
+
+It's equivalent to `setHolidayGetter` but for extra work days.
 
 #### setHolidayDataById
 
@@ -685,6 +733,10 @@ To enable business-day globally in Laravel, set default holidays settings in the
     'with' => [
       'boss-birthday' => '09-26',
       'last-monday'   => '= last Monday of October',
+    ],
+    // extra work days (even if in the weekend)
+    'without' => [
+      'exceptional-work-day' => '2021-01-03',
     ],
   ],
 ];

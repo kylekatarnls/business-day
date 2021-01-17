@@ -10,7 +10,11 @@ final class MixinConfigPropagator
 {
     public static function propagate(BusinessCalendar $mixin, $from, $to): void
     {
-        foreach ([$mixin->businessDayCheckers, $mixin->holidayGetters] as $config) {
+        foreach ([
+            $mixin->businessDayCheckers,
+            $mixin->holidayGetters,
+            $mixin->workdayGetters,
+        ] as $config) {
             if ($config && isset($config[$from])) {
                 $config[$to] = $config[$from];
             }
@@ -46,6 +50,16 @@ final class MixinConfigPropagator
     public static function getHolidayGetter(BusinessCalendar $mixin, $date): ?callable
     {
         return self::getStrategy('holidayGetter', $mixin, $date);
+    }
+
+    public static function setExtraWorkdayGetter(BusinessCalendar $mixin, $date, ?callable $holidayGetter)
+    {
+        return self::setStrategy('workdayGetter', $mixin, $date, $holidayGetter);
+    }
+
+    public static function getExtraWorkdayGetter(BusinessCalendar $mixin, $date): ?callable
+    {
+        return self::getStrategy('workdayGetter', $mixin, $date);
     }
 
     private static function setStrategy(string $strategy, BusinessCalendar $mixin, $date, ?callable $callback)

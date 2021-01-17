@@ -443,7 +443,7 @@ class HolidaysList extends MixinBase
      *
      * @return \Closure
      */
-    public function addWorkday()
+    public function addExtraWorkday()
     {
         $mixin = $this;
         $dictionary = $this->setHolidayName();
@@ -563,7 +563,7 @@ class HolidaysList extends MixinBase
             $region = call_user_func($mixin->standardizeHolidaysRegion(), $region);
             $mixin->initializeHolidaysRegion($region);
             $addHoliday = $mixin->addHoliday();
-            $addWorkday = $mixin->addWorkday();
+            $addWorkday = $mixin->addExtraWorkday();
             $check = $mixin->checkHoliday();
 
             foreach (($holidays ?: []) as $holidayId => $holiday) {

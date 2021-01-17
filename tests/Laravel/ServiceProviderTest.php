@@ -33,7 +33,9 @@ class ServiceProviderTest extends TestCase
 
         $this->assertSame('foo', Carbon::parse('2019-09-07')->getHolidayId());
         $this->assertSame('us-national', Carbon::getHolidaysRegion());
+        $this->assertFalse(Carbon::parse('2021-01-21')->isExtraWorkday());
         $this->assertSame($jan24Worked, Carbon::parse('2021-01-24')->isBusinessDay());
+        $this->assertSame($jan24Worked, Carbon::parse('2021-01-24')->isExtraWorkday());
 
         $this->assertNull($service->register());
     }
