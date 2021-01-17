@@ -3,6 +3,7 @@
 namespace Cmixin\BusinessDay;
 
 use Cmixin\BusinessDay\Util\Context;
+use Cmixin\BusinessDay\Util\FileConfig;
 use InvalidArgumentException;
 
 class HolidaysList extends MixinBase
@@ -11,6 +12,11 @@ class HolidaysList extends MixinBase
      * @var array
      */
     public $holidays = [];
+
+    /**
+     * @var array
+     */
+    public $workdays = [];
 
     /**
      * @var string|null
@@ -66,14 +72,14 @@ class HolidaysList extends MixinBase
                             return;
                         }
 
-                        $mixin->holidays[$nation] = include $file;
+                        FileConfig::use($file, $mixin, $nation);
                     }
 
                     if (isset($mixin->holidays[$nation]['regions'], $mixin->holidays[$nation]['regions'][$subRegion])) {
                         $newRegion = $mixin->holidays[$nation]['regions'][$subRegion];
                         $region = "$country-$newRegion";
                         $mixin->holidaysRegion = $region;
-                        $mixin->holidays[$region] = include __DIR__."/../Holidays/$region.php";
+                        FileConfig::use(__DIR__."/../Holidays/$region.php", $mixin, $region);
 
                         return;
                     }
@@ -82,7 +88,7 @@ class HolidaysList extends MixinBase
                     $file = __DIR__."/../Holidays/$nation.php";
                 }
 
-                $mixin->holidays[$region] = include $file;
+                FileConfig::use($file, $mixin, $region);
             }
         };
     }
@@ -111,6 +117,39 @@ class HolidaysList extends MixinBase
      *
      * @return \Closure
      */
+    public function getBDDaysList()
+    {
+        $mixin = $this;
+
+        /**
+         * Get the holidays for the current region selected.
+         *
+         * @param string $region
+         *
+         * @return array
+         */
+        return static function (string $list, $region = null) use ($mixin) {
+            if (!in_array($list, ['holidays', 'workdays'])) {
+                // Thrown exception?
+            }
+
+            $region = is_string($region)
+                ? call_user_func($mixin->standardizeHolidaysRegion(), $region)
+                : $mixin->holidaysRegion;
+
+            if (!$region || !isset($mixin->$list[$region])) {
+                return [];
+            }
+
+            return $mixin->$list[$region];
+        };
+    }
+
+    /**
+     * Get the holidays for the current region selected.
+     *
+     * @return \Closure
+     */
     public function getHolidays()
     {
         $mixin = $this;
@@ -123,15 +162,7 @@ class HolidaysList extends MixinBase
          * @return array
          */
         return static function ($region = null) use ($mixin) {
-            $region = is_string($region)
-                ? call_user_func($mixin->standardizeHolidaysRegion(), $region)
-                : $mixin->holidaysRegion;
-
-            if (!$region || !isset($mixin->holidays[$region])) {
-                return [];
-            }
-
-            return $mixin->holidays[$region];
+            return $mixin->getBDDaysList()('holidays', $region);
         };
     }
 
@@ -159,6 +190,50 @@ class HolidaysList extends MixinBase
     }
 
     /**
+     * Get the holidays for the current region selected.
+     *
+     * @return \Closure
+     */
+    public function getExtraWorkdays()
+    {
+        $mixin = $this;
+
+        /**
+         * Get the holidays for the current region selected.
+         *
+         * @param string $region
+         *
+         * @return array
+         */
+        return static function ($region = null) use ($mixin) {
+            return $mixin->getBDDaysList()('workdays', $region);
+        };
+    }
+
+    /**
+     * Set the holidays list.
+     *
+     * @return \Closure
+     */
+    public function setExtraWorkdays()
+    {
+        $mixin = $this;
+
+        /**
+         * Set the holidays list.
+         *
+         * @param string $region
+         * @param array  $holidays
+         */
+        return static function ($region, $holidays) use ($mixin) {
+            $region = call_user_func($mixin->standardizeHolidaysRegion(), $region);
+            $addHolidays = $mixin->addHolidays();
+            $mixin->workdays[$region] = [];
+            $addHolidays($region, null, $holidays);
+        };
+    }
+
+    /**
      * Reset the holidays list.
      *
      * @return \Closure
@@ -173,6 +248,7 @@ class HolidaysList extends MixinBase
         return static function () use ($mixin) {
             $mixin->holidaysRegion = null;
             $mixin->holidays = [];
+            $mixin->workdays = [];
         };
     }
 
@@ -188,8 +264,10 @@ class HolidaysList extends MixinBase
         if ($region) {
             $region = call_user_func($this->standardizeHolidaysRegion(), $region);
 
-            if (!isset($this->holidays[$region])) {
-                $this->holidays[$region] = [];
+            foreach (['holidays', 'workdays'] as $list) {
+                if (!isset($this->$list[$region])) {
+                    $this->$list[$region] = [];
+                }
             }
 
             return $this;
@@ -197,6 +275,37 @@ class HolidaysList extends MixinBase
 
         return static function () {
             return true;
+        };
+    }
+
+    /**
+     * Push a day into a given list list of a region.
+     *
+     * @return \Closure
+     */
+    public function pushToBDList()
+    {
+        $mixin = $this;
+
+        /**
+         * Push a day into a given list list of a region.
+         *
+         * @param string          $list   List ID
+         * @param string          $region region where the holiday is observed
+         * @param string|\Closure $day    date or closure that get the year as parameter and returns the date
+         * @param string          $dayId  optional day ID
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|null
+         */
+        return static function (string $list, $region, $day, $dayId = null) use ($mixin) {
+            $region = call_user_func($mixin->standardizeHolidaysRegion(), $region);
+            $mixin->initializeHolidaysRegion($region);
+
+            is_string($dayId)
+                ? ($mixin->$list[$region][$dayId] = $day)
+                : ($mixin->$list[$region][] = $day);
+
+            return isset($this) && Context::isNotMixin($this, $mixin) ? $this : null;
         };
     }
 
@@ -219,16 +328,32 @@ class HolidaysList extends MixinBase
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|null
          */
         return static function ($region, $holiday, $holidayId = null) use ($mixin) {
-            $region = call_user_func($mixin->standardizeHolidaysRegion(), $region);
-            $mixin->initializeHolidaysRegion($region);
+            $mixin->pushToBDList()('holidays', $region, $holiday, $holidayId);
 
-            if (is_string($holidayId)) {
-                $mixin->holidays[$region][$holidayId] = $holiday;
+            return isset($this) && Context::isNotMixin($this, $mixin) ? $this : null;
+        };
+    }
 
-                return isset($this) && Context::isNotMixin($this, $mixin) ? $this : null;
-            }
+    /**
+     * Push a workday to the workdays list of a region.
+     *
+     * @return \Closure
+     */
+    public function pushWorkday()
+    {
+        $mixin = $this;
 
-            $mixin->holidays[$region][] = $holiday;
+        /**
+         * Push a workday to the workdays list of a region.
+         *
+         * @param string          $region    region where the holiday is observed.
+         * @param string|\Closure $workday   date or closure that get the year as parameter and returns the date
+         * @param string          $workdayId optional workday ID
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|null
+         */
+        return static function ($region, $workday, $workdayId = null) use ($mixin) {
+            $mixin->pushToBDList()('workdays', $region, $workday, $workdayId);
 
             return isset($this) && Context::isNotMixin($this, $mixin) ? $this : null;
         };
@@ -308,6 +433,38 @@ class HolidaysList extends MixinBase
 
                 $observer($holidayId, $observed);
             }
+
+            return isset($this) && Context::isNotMixin($this, $mixin) ? $this : null;
+        };
+    }
+
+    /**
+     * Add a workday to the workdays list of a region and optionally init its ID and name.
+     *
+     * @return \Closure
+     */
+    public function addExtraWorkday()
+    {
+        $mixin = $this;
+        $dictionary = $this->setHolidayName();
+
+        /**
+         * Add a workday to the workdays list of a region and optionally init its ID and name.
+         *
+         * @param string          $region    region where the holiday is observed.
+         * @param string|\Closure $workday   date or closure that get the year as parameter and returns the date
+         * @param string          $workdayId optional holiday ID
+         * @param string          $name      optional name
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|null
+         */
+        return static function ($region, $workday, $workdayId = null, $name = null) use ($mixin, $dictionary) {
+            $region = call_user_func($mixin->standardizeHolidaysRegion(), $region);
+            $mixin->initializeHolidaysRegion($region);
+            $push = $mixin->pushWorkday();
+            $push($region, $workday, $workdayId);
+
+            $dictionary($workdayId, $name);
 
             return isset($this) && Context::isNotMixin($this, $mixin) ? $this : null;
         };
@@ -398,20 +555,29 @@ class HolidaysList extends MixinBase
         /**
          * Add a holiday to the holidays list of a region and optionally init their IDs, names and observed states (if provided as array-definitions).
          *
-         * @param string $region
-         * @param array  $holidays
+         * @param string        $region
+         * @param iterable|null $holidays
+         * @param iterable|null $workingDays
          */
-        return static function ($region, $holidays) use ($mixin) {
+        return static function (string $region, ?iterable $holidays = null, ?iterable $workingDays = null) use ($mixin) {
             $region = call_user_func($mixin->standardizeHolidaysRegion(), $region);
             $mixin->initializeHolidaysRegion($region);
-            $add = $mixin->addHoliday();
+            $addHoliday = $mixin->addHoliday();
+            $addWorkday = $mixin->addExtraWorkday();
             $check = $mixin->checkHoliday();
 
-            foreach ($holidays as $holidayId => $holiday) {
+            foreach (($holidays ?: []) as $holidayId => $holiday) {
                 $name = null;
                 $observed = null;
                 $check($holiday, $holidayId, $name, $observed);
-                $add($region, $holiday, $holidayId, $name, $observed);
+                $addHoliday($region, $holiday, $holidayId, $name, $observed);
+            }
+
+            foreach (($workingDays ?: []) as $holidayId => $holiday) {
+                $name = null;
+                $observed = null;
+                $check($holiday, $holidayId, $name, $observed);
+                $addWorkday($region, $holiday, $holidayId, $name, $observed);
             }
         };
     }

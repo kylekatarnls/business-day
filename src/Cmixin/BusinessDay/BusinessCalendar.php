@@ -43,7 +43,7 @@ class BusinessCalendar extends HolidayObserver
     }
 
     /**
-     * Checks the date to see if it is a business day (neither a weekend day nor a holiday).
+     * Checks the date to see if it is a business day (extra workday or neither a weekend day nor a holiday).
      *
      * @return \Closure
      */
@@ -52,7 +52,7 @@ class BusinessCalendar extends HolidayObserver
         $mixin = $this;
 
         /**
-         * Checks the date to see if it is a business day (neither a weekend day nor a holiday).
+         * Checks the date to see if it is a business day (extra workday or neither a weekend day nor a holiday).
          *
          * @return bool
          */
@@ -65,7 +65,7 @@ class BusinessCalendar extends HolidayObserver
                 return $businessDayChecker($self);
             }
 
-            return $self->isWeekday() && !$self->isHoliday();
+            return $self->isExtraWorkday() || ($self->isWeekday() && !$self->isHoliday());
         };
     }
 

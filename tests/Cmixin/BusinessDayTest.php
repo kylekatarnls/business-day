@@ -2,6 +2,7 @@
 
 namespace Tests\Cmixin;
 
+use Carbon\CarbonInterface;
 use Cmixin\BusinessDay;
 use Cmixin\BusinessDay\Calculator\HolidayCalculator;
 use DateTime;
@@ -662,5 +663,49 @@ class BusinessDayTest extends TestCase
         self::assertSame([
             'info' => 'It may be cold in USA',
         ], $carbon::parse('2020-12-25')->locale('fr')->getHolidayData());
+    }
+
+    public function testExtraWorkDays()
+    {
+        $carbon = static::CARBON_CLASS;
+        BusinessDay::enable($carbon, 'fr-national', null, [
+            'working-sunday' => '03/01/2021',
+        ]);
+
+        self::assertTrue($carbon::parse('2021-01-03')->isBusinessDay());
+        self::assertFalse($carbon::parse('2027-01-03')->isBusinessDay());
+        self::assertFalse($carbon::parse('2021-07-14')->isBusinessDay());
+
+        $carbon::setExtraWorkdays('fr-national', [
+            'working-sunday' => '03/01/2027',
+        ]);
+
+        self::assertFalse($carbon::parse('2021-01-03')->isBusinessDay());
+        self::assertTrue($carbon::parse('2027-01-03')->isBusinessDay());
+        self::assertFalse($carbon::parse('2021-07-14')->isBusinessDay());
+    }
+
+    public function testSetExtraWorkdayGetter()
+    {
+        $carbon = static::CARBON_CLASS;
+        BusinessDay::enable($carbon, 'fr-national');
+
+        $carbon::setExtraWorkdayGetter(function (string $region, CarbonInterface $self, callable $fallback) {
+            // No change on odd years
+            if ($self->year % 2) {
+                return $fallback();
+            }
+
+            if ($self->format('m-d') === '02-02') {
+                return 'Too even day';
+            }
+
+            return false;
+        });
+
+        self::assertFalse($carbon::parse('2021-02-02')->isExtraWorkday());
+        self::assertFalse($carbon::parse('2021-02-02')->getExtraWorkdayId());
+        self::assertTrue($carbon::parse('2022-02-02')->isExtraWorkday());
+        self::assertSame('Too even day', $carbon::parse('2022-02-02')->getExtraWorkdayId());
     }
 }

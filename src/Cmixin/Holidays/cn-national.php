@@ -1,6 +1,20 @@
 <?php
 
 return [
+    '__without'                   => [
+        'compensate-2020-01-29'      => '2020-01-19',
+        'compensate-2020-05-04'      => '2020-04-26',
+        'compensate-2020-05-05'      => '2020-05-09',
+        'compensate-2020-06-26'      => '2020-06-28',
+        'compensate-2020-10-07'      => '2020-09-27',
+        'compensate-2020-10-08'      => '2020-10-10',
+
+        'compensate-2021-02-11'      => '2021-02-07',
+        'compensate-2021-02-20'      => '2021-02-17',
+        'compensate-2021-09-20'      => '2021-09-18',
+        'compensate-2021-10-06'      => '2021-09-26',
+        'compensate-2021-10-07'      => '2021-10-09',
+    ],
     'new-year'                   => '01-01',
     'new-year-second-day'        => '= 01-02 if year == 2021',
     'new-year-third-day'         => '= 01-03 if year == 2021',
