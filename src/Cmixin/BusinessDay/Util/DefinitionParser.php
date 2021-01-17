@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Cmixin\BusinessDay\Util;
 
 use Carbon\CarbonInterface;
+use InvalidArgumentException;
 
 class DefinitionParser
 {

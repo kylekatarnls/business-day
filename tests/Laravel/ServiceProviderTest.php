@@ -5,6 +5,7 @@ namespace Tests\Carbon\Laravel;
 use BadMethodCallException;
 use Carbon\Carbon;
 use Cmixin\BusinessDay\Laravel\ServiceProvider;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 class ServiceProviderTest extends TestCase
@@ -41,5 +42,16 @@ class ServiceProviderTest extends TestCase
     {
         yield [[], false];
         yield [['without' => ['01-24']], true];
+    }
+
+    public function testExceptionOnNonStringRegion()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Region must be a string, integer provided.');
+
+        include_once __DIR__.'/ServiceProvider.php';
+        $service = new ServiceProvider();
+        $service->app->region = 4;
+        $service->boot();
     }
 }
