@@ -58,6 +58,39 @@ class Holiday extends YearCrawler
      *
      * @return \Closure
      */
+    public function getDBDayId()
+    {
+        /**
+         * Get the identifier of the current holiday or false if it's not a holiday.
+         *
+         * @return string|false
+         */
+        return static function (string $getDays = 'getHolidays') {
+            /** @var Carbon|BusinessDay $self */
+            $self = static::this();
+
+            $date = $self->format('d/m');
+            $year = $self->year;
+
+            $next = $self->getYearHolidaysNextFunction($year, 'string', $getDays);
+
+            while ($data = $next()) {
+                [$holidayId, $holiday] = $data;
+
+                if ($holiday && $date.(strlen($holiday) > 5 ? "/$year" : '') === $holiday) {
+                    return $holidayId;
+                }
+            }
+
+            return false;
+        };
+    }
+
+    /**
+     * Get the identifier of the current holiday or false if it's not a holiday.
+     *
+     * @return \Closure
+     */
     public function getHolidayId()
     {
         $mixin = $this;
@@ -72,20 +105,7 @@ class Holiday extends YearCrawler
             $self = static::this();
 
             $fallback = function () use ($self) {
-                $date = $self->format('d/m');
-                $year = $self->year;
-
-                $next = $self->getYearHolidaysNextFunction($year, 'string', $self);
-
-                while ($data = $next()) {
-                    [$holidayId, $holiday] = $data;
-
-                    if ($holiday && $date.(strlen($holiday) > 5 ? "/$year" : '') === $holiday) {
-                        return $holidayId;
-                    }
-                }
-
-                return false;
+                return $self->getDBDayId();
             };
 
             $holidayGetter = MixinConfigPropagator::getHolidayGetter($mixin, $self);
@@ -103,8 +123,6 @@ class Holiday extends YearCrawler
      */
     public function isHoliday()
     {
-        $mixin = $this;
-
         /**
          * Checks the date to see if it is a holiday.
          *
@@ -115,6 +133,46 @@ class Holiday extends YearCrawler
             $self = static::this();
 
             return $self->getHolidayId() !== false;
+        };
+    }
+
+    /**
+     * Get the identifier of the current special workday or false if it's not a special workday.
+     *
+     * @return \Closure
+     */
+    public function getExtraWorkdayId()
+    {
+        /**
+         * Get the identifier of the current special workday or false if it's not a special workday.
+         *
+         * @return string|false
+         */
+        return static function () {
+            /** @var Carbon|BusinessDay $self */
+            $self = static::this();
+
+            return $self->getDBDayId('getExtraWorkdays');
+        };
+    }
+
+    /**
+     * Checks the date to see if it is a holiday.
+     *
+     * @return \Closure
+     */
+    public function isExtraWorkday()
+    {
+        /**
+         * Checks the date to see if it is a holiday.
+         *
+         * @return bool
+         */
+        return static function () {
+            /** @var Carbon|BusinessDay $self */
+            $self = static::this();
+
+            return $self->getExtraWorkdayId() !== false;
         };
     }
 

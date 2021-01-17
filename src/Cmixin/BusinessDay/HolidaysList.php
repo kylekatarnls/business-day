@@ -194,7 +194,7 @@ class HolidaysList extends MixinBase
      *
      * @return \Closure
      */
-    public function getWorkdays()
+    public function getExtraWorkdays()
     {
         $mixin = $this;
 
@@ -215,7 +215,7 @@ class HolidaysList extends MixinBase
      *
      * @return \Closure
      */
-    public function setWorkdays()
+    public function setExtraWorkdays()
     {
         $mixin = $this;
 

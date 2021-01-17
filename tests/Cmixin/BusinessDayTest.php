@@ -663,4 +663,24 @@ class BusinessDayTest extends TestCase
             'info' => 'It may be cold in USA',
         ], $carbon::parse('2020-12-25')->locale('fr')->getHolidayData());
     }
+
+    public function testExtraWorkDays()
+    {
+        $carbon = static::CARBON_CLASS;
+        BusinessDay::enable($carbon, 'fr-national', null, [
+            'working-sunday' => '03/01/2021',
+        ]);
+
+        self::assertTrue($carbon::parse('2021-01-03')->isBusinessDay());
+        self::assertFalse($carbon::parse('2027-01-03')->isBusinessDay());
+        self::assertFalse($carbon::parse('2021-07-14')->isBusinessDay());
+
+        $carbon::setExtraWorkdays('fr-national', [
+            'working-sunday' => '03/01/2027',
+        ]);
+
+        self::assertFalse($carbon::parse('2021-01-03')->isBusinessDay());
+        self::assertTrue($carbon::parse('2027-01-03')->isBusinessDay());
+        self::assertFalse($carbon::parse('2021-07-14')->isBusinessDay());
+    }
 }

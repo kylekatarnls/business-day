@@ -48,6 +48,11 @@ $additionalHolidays = [
     },
 ];
 
+// You can specify
+$extraWorkDays = [
+
+]
+
 BusinessDay::enable('Carbon\Carbon', $baseList, $additionalHolidays);
 // Or if you use Laravel:
 // BusinessDay::enable('Illuminate\Support\Carbon', $baseList, $additionalHolidays);

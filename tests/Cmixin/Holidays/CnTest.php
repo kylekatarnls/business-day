@@ -16,7 +16,7 @@ class CnTest extends TestCase
         $carbon::resetHolidays();
     }
 
-    public function testHolidays()
+    public function testHolidays(): void
     {
         $carbon = static::CARBON_CLASS;
         $carbon::resetHolidays();
@@ -75,5 +75,14 @@ class CnTest extends TestCase
         self::assertTrue($carbon::parse('2021-10-05')->isHoliday());
         self::assertTrue($carbon::parse('2021-10-06')->isHoliday());
         self::assertTrue($carbon::parse('2021-10-07')->isHoliday());
+    }
+
+    public function testExtraWorkDays(): void
+    {
+        $carbon = static::CARBON_CLASS;
+        $carbon::resetHolidays();
+        $carbon::setHolidaysRegion('cn-national');
+
+        self::assertTrue($carbon::parse('2021-02-07')->isBusinessDay());
     }
 }
