@@ -117,4 +117,39 @@ class ListsTest extends TestCase
             'Christmas: Friday, December 25, 2020',
         ], $days);
     }
+
+    public function testGoldenWeek()
+    {
+        Carbon::setHolidaysRegion('cn');
+
+        self::assertTrue(Carbon::parse('2021-10-07')->isHoliday());
+        self::assertTrue(Carbon::parse('2000-10-07')->isHoliday());
+        self::assertFalse(Carbon::parse('1999-10-07')->isHoliday());
+
+        Carbon::addHolidays('cn-national', [
+            '= 06-06 if year > 2022',
+            '= 06-07 if year = 2022',
+            '= 06-08 if year < 2022',
+            '= 06-09 if year <= 2022',
+            '= 06-10 if year <> 2022',
+        ]);
+
+        $holidays = [
+            2021 => [8, 9, 10],
+            2022 => [7, 9],
+            2023 => [6, 10],
+        ];
+
+        foreach ($holidays as $year => $days) {
+            for ($day = 6; $day <= 10; $day++) {
+                $holiday = in_array($day, $days, true);
+
+                self::assertSame(
+                    $holiday,
+                    Carbon::parse("$year-6-$day")->isHoliday(),
+                    "June ${day}th $year should be a ".($holiday ? 'holiday' : 'business day')
+                );
+            }
+        }
+    }
 }

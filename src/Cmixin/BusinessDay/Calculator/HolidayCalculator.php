@@ -5,6 +5,7 @@ namespace Cmixin\BusinessDay\Calculator;
 use Cmixin\BusinessDay\Calendar\AlternativeCalendar;
 use Cmixin\BusinessDay\Calendar\HijriCalendar;
 use Cmixin\BusinessDay\Calendar\JewishCalendar;
+use Cmixin\BusinessDay\Util\YearCondition;
 use DateTime;
 
 /**
@@ -12,6 +13,8 @@ use DateTime;
  */
 class HolidayCalculator extends CalculatorBase
 {
+    use YearCondition;
+
     /**
      * @var string
      */
@@ -36,7 +39,7 @@ class HolidayCalculator extends CalculatorBase
     {
         parent::__construct($year, $type, $holidays);
 
-        $this->calendars = [
+        $this->calendars = [ // @codeCoverageIgnore
             HijriCalendar::get(),
             JewishCalendar::get(),
         ];
@@ -191,7 +194,7 @@ class HolidayCalculator extends CalculatorBase
         return $holiday;
     }
 
-    protected function filterConditions(array $onConditions)
+    protected function filterConditions(array $onConditions): iterable
     {
         $checks = [
             'on'    => false,
@@ -259,14 +262,28 @@ class HolidayCalculator extends CalculatorBase
             }
         }
 
-        $holidayDefinition = $this->parseHolidaysString($holiday);
+        return $this->formatHolidayDefinition(
+            $dateTime,
+            $this->parseHolidaysString($holiday),
+            $substitute,
+            $after,
+            $before
+        );
+    }
 
+    protected function formatHolidayDefinition(&$dateTime, ?array $holidayDefinition, ...$modifiers): ?string
+    {
         if ($holidayDefinition === null) {
             return null;
         }
 
         [$dateTime, $condition] = $holidayDefinition;
-        $dateTime = $this->handleModifiers($dateTime, $condition, $substitute, $after, $before);
+
+        if (!$this->matchYearCondition($dateTime, $condition)) {
+            return null;
+        }
+
+        $dateTime = $this->handleModifiers($dateTime, $condition, ...$modifiers);
 
         return $dateTime->format('d/m');
     }
@@ -304,6 +321,7 @@ class HolidayCalculator extends CalculatorBase
         next($this->holidays);
 
         if (is_callable($holiday)) {
+            /** @var string|null $holiday */
             $holiday = call_user_func($holiday, $year);
         }
 
@@ -312,17 +330,9 @@ class HolidayCalculator extends CalculatorBase
         }
 
         return $holiday
-            ? [$key, $holiday
-                ? (
-                    $this->type === 'string'
-                    ? $holiday
-                    : (
-                        isset($dateTime) // @codeCoverageIgnore
-                        ? $dateTime
-                        : $outputClass::createFromFormat('!d/m/Y', "$holiday/$year")
-                    )
-                )
-                : $holiday,
+            ? [$key, $this->type === 'string'
+                ? $holiday
+                : ($dateTime ?? $outputClass::createFromFormat('!d/m/Y', "$holiday/$year")),
             ]
             : false;
     }
