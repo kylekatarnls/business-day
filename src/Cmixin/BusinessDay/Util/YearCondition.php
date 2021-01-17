@@ -17,7 +17,7 @@ trait YearCondition
     protected function matchYearCondition($dateTime, ?string &$condition): bool
     {
         if (!$condition || !preg_match(
-            '/^\s*year\s*(?<operator>>=?|<=?|={1,3}|!={1,2}|<>)\s*(?<year>\d+)/',
+            '/^\s*year(?:\s*%\s*(?<modulo>\d+))?\s*(?<operator>>=?|<=?|={1,3}|!={1,2}|<>)\s*(?<expected>\d+)/',
             $condition,
             $match
         )) {
@@ -25,27 +25,33 @@ trait YearCondition
         }
 
         $condition = null;
+        $value = (int) $dateTime->format('Y');
+        $expected = (int) $match['expected'];
+
+        if (!empty($match['modulo'])) {
+            $value %= $match['modulo'];
+        }
 
         switch ($match['operator']) {
             case '>':
-                return $dateTime->format('Y') > $match['year'];
+                return $value > $expected;
 
             case '>=':
-                return $dateTime->format('Y') >= $match['year'];
+                return $value >= $expected;
 
             case '<':
-                return $dateTime->format('Y') < $match['year'];
+                return $value < $expected;
 
             case '<=':
-                return $dateTime->format('Y') <= $match['year'];
+                return $value <= $expected;
 
             case '!=':
             case '!==':
             case '<>':
-                return $dateTime->format('Y') !== $match['year'];
+                return $value !== $expected;
 
             default:
-                return $dateTime->format('Y') === $match['year'];
+                return $value === $expected;
         }
     }
 }
