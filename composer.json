@@ -8,7 +8,7 @@
         "ext-calendar": "*"
     },
     "require-dev": {
-        "phpunit/phpunit": "^7 || ^8"
+        "phpunit/phpunit": "^7.5.20 || ^8.5.14"
     },
     "autoload": {
         "psr-4": {
