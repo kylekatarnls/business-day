@@ -89,7 +89,7 @@ class CalculatorBase
     {
         foreach ($conditions as $condition) {
             $expected = true;
-            $condition = trim($condition);
+            $condition = preg_replace('/^\s*if\s+/', '', trim($condition));
 
             if (substr($condition, 0, 4) === 'not ') {
                 $expected = false;
