@@ -185,6 +185,33 @@ class BusinessDayTest extends TestCase
         self::assertFalse($carbon::parse('2020-03-03 03:30:40')->isHoliday());
     }
 
+    public function testMultipleIfRule()
+    {
+        $carbon = static::CARBON_CLASS;
+        $guemesHolidays = [
+            'guemes-day' => '= 06-17 if Tuesday,Wednesday then previous Monday and if Thursday,Friday then next Monday',
+        ];
+        $carbon::resetHolidays();
+        $carbon::setHolidays('guemes', $guemesHolidays);
+        $carbon::setHolidaysRegion('guemes');
+
+        self::assertFalse($carbon::parse('2021-06-17')->isHoliday());
+        self::assertFalse($carbon::parse('2021-06-14')->isHoliday());
+        self::assertTrue($carbon::parse('2021-06-21')->isHoliday());
+
+        self::assertFalse($carbon::parse('2022-06-17')->isHoliday());
+        self::assertFalse($carbon::parse('2022-06-13')->isHoliday());
+        self::assertTrue($carbon::parse('2022-06-20')->isHoliday());
+
+        self::assertTrue($carbon::parse('2023-06-17')->isHoliday());
+        self::assertFalse($carbon::parse('2023-06-12')->isHoliday());
+        self::assertFalse($carbon::parse('2023-06-19')->isHoliday());
+
+        self::assertFalse($carbon::parse('2025-06-17')->isHoliday());
+        self::assertTrue($carbon::parse('2025-06-16')->isHoliday());
+        self::assertFalse($carbon::parse('2025-06-23')->isHoliday());
+    }
+
     public function testCaseInsensitivity()
     {
         $carbon = static::CARBON_CLASS;
