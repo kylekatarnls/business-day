@@ -311,7 +311,6 @@ class HolidayCalculator extends CalculatorBase
 
     protected function getHolidayDate($key, $holiday)
     {
-        $outputClass = $this->outputClass;
         $year = $this->year;
 
         if ($key === null) {
@@ -330,10 +329,33 @@ class HolidayCalculator extends CalculatorBase
         }
 
         return $holiday
-            ? [$key, $this->type === 'string'
-                ? $holiday
-                : ($dateTime ?? $outputClass::createFromFormat('!d/m/Y', "$holiday/$year")),
-            ]
+            ? $this->normalizeHolidayDate($key, $holiday, $dateTime ?? null, $year)
             : false;
+    }
+
+    protected function normalizeHolidayDate($key, $holiday, $dateTime, $year)
+    {
+        if ($this->type !== 'string') {
+            $holiday = $dateTime ?? $this->concatWithYear($holiday, $year);
+
+            if (!$holiday) {
+                return false;
+            }
+        }
+
+        return [$key, $holiday];
+    }
+
+    protected function concatWithYear($holiday, $year)
+    {
+        $outputClass = $this->outputClass;
+
+        [$day, $month, $holidayYear] = explode('/', "$holiday/$year");
+
+        if ((int) $holidayYear !== (int) $year) {
+            return null;
+        }
+
+        return $outputClass::createFromFormat('!Y-m-d', "$year-$month-$day");
     }
 }

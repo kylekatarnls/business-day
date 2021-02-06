@@ -23,7 +23,7 @@ return [
     'substitutes-day-of-respect-for-cultural-diversity'  => '2021-10-08',    //especial day for 2021
     'day-of-national-sovereignty'                        => '11-20',
     'substitutes-soberany-day'                           => '= 11-20 if Tuesday,Wednesday then previous Monday and if Thursday,Friday then next Monday',
-    'substitutes-soberany-day'                           => '2021-11-22',    //especial day for 2021
+    'substitutes-soberany-day-2021'                      => '2021-11-22',    //especial day for 2021
     '12-08'                                              => '12-08',
     'substitutes-12-08'                                  => '= 12-08 if Tuesday then previous Monday and if Thursday then next Friday',
     'substitutes-12-24'                                  => '= 12-24 if Tuesday then previous Monday',
