@@ -18,7 +18,7 @@ return [
     '06-20'                                              => '06-20',
     'substitutes-06-20'                                  => '= 06-20 if Tuesday then previous Monday and if Thursday then next Friday',
     '07-09'                                              => '07-09',
-    'Jose-de-San-Martin'                                 => '= 08-17 if Tuesday,Wednesday then previous Monday and if Thursday,Friday then next Monday',             
+    'jose-de-san-martin'                                 => '= 08-17 if Tuesday,Wednesday then previous Monday and if Thursday,Friday then next Monday',
     'day-of-respect-for-cultural-diversity'              => '= 10-12 if Tuesday,Wednesday then previous Monday and if Thursday,Friday then next Monday',
     'substitutes-day-of-respect-for-cultural-diversity'  => '2021-10-08',    //especial day for 2021
     'day-of-national-sovereignty'                        => '11-20',
