@@ -63,7 +63,7 @@ jobs:
         MATRIX_CONFIG: ${{ matrix.php }}-${{ matrix.setup }}
 
     - name: Code Climate Test Reporter
-      if: matrix.php == '7.4' && matrix.setup == 'stable' && secrets.CC_TEST_REPORTER_ID != ''
+      if: matrix.php == '7.4' && matrix.setup == 'stable' && ${{ env.CC_TEST_REPORTER_ID != 0 }}
       run: ./cc-test-reporter after-build --exit-code 0
       env:
         CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
