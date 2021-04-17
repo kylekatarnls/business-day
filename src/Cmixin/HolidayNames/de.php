@@ -60,6 +60,7 @@ return [
     'easter-2'                                        => 'Karfreitag',
     'easter-1'                                        => 'Karsamstag',
     'easter'                                          => 'Ostersonntag',
+    'easter-p1'                                       => 'Ostermontag',
     'easter-49'                                       => 'Pfingstsonntag',
     'easter-50'                                       => 'Pfingstmontag',
     'easter-60'                                       => 'Fronleichnam',
