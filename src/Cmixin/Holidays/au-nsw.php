@@ -2,6 +2,6 @@
 
 return array_replace(require __DIR__.'/au-national.php', [
     'easter'                => '= easter',
-    '2nd-monday-of-june' => '= second Monday of June',
+    '2nd-monday-of-june'    => '= second Monday of June',
     '1st-monday-of-october' => '= first Monday of October',
 ]);
