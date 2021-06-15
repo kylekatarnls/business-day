@@ -32,5 +32,6 @@ class AuWaTest extends TestCase
         self::assertTrue($carbon::parse('2019-09-30')->isHoliday());
         self::assertTrue($carbon::parse('2019-12-25')->isHoliday());
         self::assertTrue($carbon::parse('2019-12-26')->isHoliday());
+        self::assertFalse($carbon::parse('2021-06-14')->isHoliday());
     }
 }
