@@ -52,7 +52,7 @@ class HolidaysList extends MixinBase
     /**
      * Get an array of available holidays regions.
      *
-     * @return array
+     * @return \Closure
      */
     public function getHolidaysAvailableRegions()
     {
@@ -61,7 +61,7 @@ class HolidaysList extends MixinBase
         /**
          * Get the current holidays region.
          *
-         * @return null|string
+         * @return array
          */
         return static function () use ($mixin) {
             if (is_null($mixin->availableRegions)) {
