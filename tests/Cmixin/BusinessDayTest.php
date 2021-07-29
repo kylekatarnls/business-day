@@ -148,12 +148,10 @@ class BusinessDayTest extends TestCase
             self::assertTrue($carbon::parse("$year-12-25 03:30:40")->isHoliday());
             self::assertFalse($carbon::parse("$year-12-26 03:30:40")->isHoliday());
             self::assertFalse($carbon::parse("$year-12-27 03:30:40")->isHoliday());
-            $carbon::addHolidays(
-                'fr-national', [
+            $carbon::addHolidays('fr-national', [
                 '15/11',
                 '27/12',
-                ]
-            );
+            ]);
             self::assertTrue($carbon::parse("$year-12-25 03:30:40")->isHoliday());
             self::assertFalse($carbon::parse("$year-12-26 03:30:40")->isHoliday());
             self::assertTrue($carbon::parse("$year-12-27 03:30:40")->isHoliday());
@@ -245,24 +243,20 @@ class BusinessDayTest extends TestCase
         self::expectExceptionMessage('Holiday array definition should at least contains a "date" entry.');
 
         $carbon = static::CARBON_CLASS;
-        $carbon::addHolidays(
-            'fr-national', [
+        $carbon::addHolidays('fr-national', [
             'foo-bar' => [
                 'observe' => true,
             ],
-            ]
-        );
+        ]);
     }
 
     public function testAddHolidaysInEnable()
     {
         $carbon = static::CARBON_CLASS;
-        BusinessDay::enable(
-            $carbon, 'fr-national', [
+        BusinessDay::enable($carbon, 'fr-national', [
             'custom-holiday' => '05/12',
             'christmas'      => null,
-            ]
-        );
+        ]);
         self::assertTrue($carbon::parse('2010-01-01')->isHoliday());
         self::assertTrue($carbon::parse('2010-12-05')->isHoliday());
         self::assertFalse($carbon::parse('2010-12-25')->isHoliday());
@@ -274,21 +268,18 @@ class BusinessDayTest extends TestCase
         self::expectExceptionMessage('Holiday array definition need a string identifier as main array key.');
 
         $carbon = static::CARBON_CLASS;
-        $carbon::addHolidays(
-            'fr-national', [
+        $carbon::addHolidays('fr-national', [
             [
                 'date'    => '15/11',
                 'observe' => true,
             ],
-            ]
-        );
+        ]);
     }
 
     public function testAddHolidaysArray()
     {
         $carbon = static::CARBON_CLASS;
-        $carbon::addHolidays(
-            'fr-national', [
+        $carbon::addHolidays('fr-national', [
             'foo-bar' => [
                 'date'     => '15/11',
                 'observed' => true,
@@ -297,8 +288,7 @@ class BusinessDayTest extends TestCase
                     'fr' => 'Machin chose',
                 ],
             ],
-            ]
-        );
+        ]);
         self::assertFalse($carbon::parse('2010-11-15 03:30:40')->isHoliday());
         self::assertFalse($carbon::parse('2010-11-15 03:30:40')->isObservedHoliday());
         self::assertFalse($carbon::parse('2010-11-15 03:30:40')->getHolidayName());
@@ -362,12 +352,10 @@ class BusinessDayTest extends TestCase
             self::assertFalse($carbon::isHoliday());
             $carbon::setTestNow($carbon::parse("$year-12-27 03:30:40"));
             self::assertFalse($carbon::isHoliday());
-            $carbon::addHolidays(
-                'fr-national', [
+            $carbon::addHolidays('fr-national', [
                 '15/11',
                 '27/12',
-                ]
-            );
+            ]);
             $carbon::setTestNow($carbon::parse("$year-12-25 03:30:40"));
             self::assertTrue($carbon::isHoliday());
             $carbon::setTestNow($carbon::parse("$year-12-26 03:30:40"));
@@ -558,8 +546,7 @@ class BusinessDayTest extends TestCase
         $carbon::setHolidaysRegion('fr-national');
         $carbon::setTestNow('2020-01-16');
 
-        self::assertCarbonList(
-            [
+        self::assertCarbonList([
             '2020-01-02',
             '2020-01-03',
             '2020-01-06',
@@ -582,10 +569,8 @@ class BusinessDayTest extends TestCase
             '2020-01-29',
             '2020-01-30',
             '2020-01-31',
-            ], $carbon::getMonthBusinessDays()
-        );
-        self::assertCarbonList(
-            [
+        ], $carbon::getMonthBusinessDays());
+        self::assertCarbonList([
             '2019-05-02',
             '2019-05-03',
             '2019-05-06',
@@ -606,10 +591,8 @@ class BusinessDayTest extends TestCase
             '2019-05-28',
             '2019-05-29',
             '2019-05-31',
-            ], $carbon::getMonthBusinessDays('2019-05')
-        );
-        self::assertCarbonList(
-            [
+        ], $carbon::getMonthBusinessDays('2019-05'));
+        self::assertCarbonList([
             '2019-05-02',
             '2019-05-03',
             '2019-05-06',
@@ -630,10 +613,8 @@ class BusinessDayTest extends TestCase
             '2019-05-28',
             '2019-05-29',
             '2019-05-31',
-            ], $carbon::getMonthBusinessDays(new DateTime('2019-05-31 23:59:59.999999'))
-        );
-        self::assertCarbonList(
-            [
+        ], $carbon::getMonthBusinessDays(new DateTime('2019-05-31 23:59:59.999999')));
+        self::assertCarbonList([
             '2019-03-01',
             '2019-03-04',
             '2019-03-05',
@@ -655,8 +636,7 @@ class BusinessDayTest extends TestCase
             '2019-03-27',
             '2019-03-28',
             '2019-03-29',
-            ], $carbon::parse('2019-03-01', 'Europe/Paris')->getMonthBusinessDays()
-        );
+        ], $carbon::parse('2019-03-01', 'Europe/Paris')->getMonthBusinessDays());
     }
 
     public function testHolidayCalculatorInterpolation()
@@ -671,11 +651,9 @@ class BusinessDayTest extends TestCase
     public function testFallbackRegionWithCustomHolidays()
     {
         $carbon = static::CARBON_CLASS;
-        BusinessDay::enable(
-            $carbon, 'us-US', [
+        BusinessDay::enable($carbon, 'us-US', [
             'custom' => '2020-09-16',
-            ]
-        );
+        ]);
 
         self::assertTrue($carbon::parse('2020-9-16')->isHoliday());
     }
@@ -683,69 +661,51 @@ class BusinessDayTest extends TestCase
     public function testDataStorage()
     {
         $carbon = static::CARBON_CLASS;
-        BusinessDay::enable(
-            $carbon, 'us-US', [
+        BusinessDay::enable($carbon, 'us-US', [
             'custom' => '2020-09-16',
-            ]
-        );
-        $carbon::parse('2020-09-16')->setHolidayData(
-            [
+        ]);
+        $carbon::parse('2020-09-16')->setHolidayData([
             'info' => 'You may need to know...',
-            ]
-        );
-        $carbon::parse('2020-10-13')->setHolidayData(
-            [
+        ]);
+        $carbon::parse('2020-10-13')->setHolidayData([
             'info' => 'Lost if not an holiday.',
-            ]
-        );
-        $carbon::setHolidayDataById(
-            'christmas', [
+        ]);
+        $carbon::setHolidayDataById('christmas', [
             'info' => 'It may be cold in USA',
-            ]
-        );
+        ]);
 
         // Empty array if not filled
         self::assertSame([], $carbon::parse('2020-10-12')->getHolidayData());
         // null if not holiday
         self::assertNull($carbon::parse('2020-10-13')->getHolidayData());
-        self::assertSame(
-            [
+        self::assertSame([
             'info' => 'You may need to know...',
-            ], $carbon::getHolidayDataById('custom')
-        );
+        ], $carbon::getHolidayDataById('custom'));
         // Note that locale does not matter
-        self::assertSame(
-            [
+        self::assertSame([
             'info' => 'It may be cold in USA',
-            ], $carbon::parse('2020-12-25')->locale('fr')->getHolidayData()
-        );
+        ], $carbon::parse('2020-12-25')->locale('fr')->getHolidayData());
         // Neither region if the same ID is used:
         $carbon::setHolidaysRegion('fr-national');
-        self::assertSame(
-            [
+        self::assertSame([
             'info' => 'It may be cold in USA',
-            ], $carbon::parse('2020-12-25')->locale('fr')->getHolidayData()
-        );
+        ], $carbon::parse('2020-12-25')->locale('fr')->getHolidayData());
     }
 
     public function testExtraWorkDays()
     {
         $carbon = static::CARBON_CLASS;
-        BusinessDay::enable(
-            $carbon, 'fr-national', null, [
+        BusinessDay::enable($carbon, 'fr-national', null, [
             'working-sunday' => '03/01/2021',
-            ]
-        );
+        ]);
 
         self::assertTrue($carbon::parse('2021-01-03')->isBusinessDay());
         self::assertFalse($carbon::parse('2027-01-03')->isBusinessDay());
         self::assertFalse($carbon::parse('2021-07-14')->isBusinessDay());
 
-        $carbon::setExtraWorkdays(
-            'fr-national', [
+        $carbon::setExtraWorkdays('fr-national', [
             'working-sunday' => '03/01/2027',
-            ]
-        );
+        ]);
 
         self::assertFalse($carbon::parse('2021-01-03')->isBusinessDay());
         self::assertTrue($carbon::parse('2027-01-03')->isBusinessDay());
@@ -757,20 +717,18 @@ class BusinessDayTest extends TestCase
         $carbon = static::CARBON_CLASS;
         BusinessDay::enable($carbon, 'fr-national');
 
-        $carbon::setExtraWorkdayGetter(
-            function (string $region, CarbonInterface $self, callable $fallback) {
-                // No change on odd years
-                if ($self->year % 2) {
-                    return $fallback();
-                }
-
-                if ($self->format('m-d') === '02-02') {
-                    return 'Too even day';
-                }
-
-                return false;
+        $carbon::setExtraWorkdayGetter(function (string $region, CarbonInterface $self, callable $fallback) {
+            // No change on odd years
+            if ($self->year % 2) {
+                return $fallback();
             }
-        );
+
+            if ($self->format('m-d') === '02-02') {
+                return 'Too even day';
+            }
+
+            return false;
+        });
 
         self::assertFalse($carbon::parse('2021-02-02')->isExtraWorkday());
         self::assertFalse($carbon::parse('2021-02-02')->getExtraWorkdayId());
