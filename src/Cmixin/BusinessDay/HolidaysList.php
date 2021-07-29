@@ -69,7 +69,7 @@ class HolidaysList extends MixinBase
                     function ($file) {
                         return pathinfo($file, PATHINFO_FILENAME);
                     },
-                    glob(__DIR__."/../Holidays/*.php")
+                    glob(__DIR__.'/../Holidays/*.php')
                 );
             }
             return $mixin->availableRegions;
