@@ -72,6 +72,7 @@ class HolidaysList extends MixinBase
                     glob(__DIR__.'/../Holidays/*.php')
                 );
             }
+
             return $mixin->availableRegions;
         };
     }
