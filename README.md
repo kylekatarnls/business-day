@@ -629,7 +629,7 @@ Add an extra workday to the list of a given region.
 #### setBusinessDayChecker
 
 Customize the way to determine if a date is a business day or not.
- 
+
 ```php
 // Global way
 Carbon::setBusinessDayChecker(function (CarbonInterface $date) {
@@ -655,7 +655,7 @@ $date->isExtraWorkday() or ($date->isWeekday() and !$date->isHoliday())
 #### setHolidayGetter
 
 Customize the way to determine if a date is a holiday and which one it is.
- 
+
 ```php
 // Global way
 Carbon::setHolidayGetter(function (string $region, CarbonInterface $self, callable $fallback) {
@@ -719,6 +719,14 @@ Get stored array of data for current holiday (`null` if the current day is not a
 
 ```php
 Carbon::parse('2020-12-25')->getHolidayData()
+```
+
+#### getHolidaysAvailableRegions
+
+Get an array of available regions that can be selected.
+
+```php
+Carbon::getHolidaysAvailableRegions()
 ```
 
 ### Laravel
