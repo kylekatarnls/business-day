@@ -24,6 +24,11 @@ class HolidaysList extends MixinBase
     public $holidaysRegion = null;
 
     /**
+     * @var array|null
+     */
+    public $availableRegions = null;
+
+    /**
      * Return a standardized region name.
      *
      * @return \Closure
@@ -41,6 +46,34 @@ class HolidaysList extends MixinBase
             $region = preg_replace('/[^a-z0-9_-]/', '', str_replace('_', '-', strtolower($region)));
 
             return strpos($region, '-') === false ? "$region-national" : $region;
+        };
+    }
+
+    /**
+     * Get an array of available holidays regions.
+     *
+     * @return \Closure
+     */
+    public function getHolidaysAvailableRegions()
+    {
+        $mixin = $this;
+
+        /**
+         * Get the current holidays region.
+         *
+         * @return array
+         */
+        return static function () use ($mixin) {
+            if (is_null($mixin->availableRegions)) {
+                $mixin->availableRegions = array_map(
+                    static function ($file) {
+                        return pathinfo($file, PATHINFO_FILENAME);
+                    },
+                    glob(__DIR__.'/../Holidays/*.php')
+                );
+            }
+
+            return $mixin->availableRegions;
         };
     }
 

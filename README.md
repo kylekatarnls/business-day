@@ -71,6 +71,7 @@ Business days methods are now available on any Carbon instance
 used anywhere later.
 
 You can also just enable methods on Carbon then set region/holidays later:
+
 ```php
 <?php
 
@@ -123,6 +124,7 @@ And we add a lot of syntaxical sugar:
 #### setHolidaysRegion / getHolidaysRegion
 
 To select the set of holidays of a region, use:
+
 ```php
 Carbon::parse('2000-12-25 00:00:00')->isHoliday(); // false
 Carbon::setHolidaysRegion('us');
@@ -348,6 +350,7 @@ Carbon::isBusinessDay() // true if today is a business day
 
 Add days to the date (Carbon instance) to jump to the next business day (skipping
 holidays and week-ends).
+
 ```php
 Carbon::setHolidaysRegion('us-national');
 echo Carbon::parse('2018-01-12')->nextBusinessDay()->format('Y-m-d'); // 2018-01-16
@@ -363,6 +366,7 @@ echo Carbon::nextBusinessDay()->format('Y-m-d'); // returns the next business da
 
 Sub days to the date (Carbon instance) to jump to the previous business day (skipping
 holidays and week-ends).
+
 ```php
 Carbon::setHolidaysRegion('us-national');
 echo Carbon::parse('2018-01-12')->previousBusinessDay()->format('Y-m-d'); // 2018-01-11
@@ -379,6 +383,7 @@ echo Carbon::previousBusinessDay()->format('Y-m-d'); // returns the previous bus
 Returns the current date (Carbon instance) if it's a business day, else
 add days to jump to the next business day (skipping
 holidays and week-ends).
+
 ```php
 Carbon::setHolidaysRegion('us-national');
 echo Carbon::parse('2018-01-12')->currentOrNextBusinessDay()->format('Y-m-d'); // 2018-01-12
@@ -395,6 +400,7 @@ echo Carbon::currentOrNextBusinessDay() // equivalent to Carbon::today()->curren
 Returns the current date (Carbon instance) if it's a business day, else
 sub days to jump to the previous business day (skipping
 holidays and week-ends).
+
 ```php
 Carbon::setHolidaysRegion('us-national');
 echo Carbon::parse('2018-01-12')->currentOrPreviousBusinessDay()->format('Y-m-d'); // 2018-01-12
@@ -409,6 +415,7 @@ echo Carbon::currentOrPreviousBusinessDay() // equivalent to Carbon::today()->cu
 #### addBusinessDays
 
 Add days to the date (Carbon instance) skipping holidays and week-ends.
+
 ```php
 Carbon::setHolidaysRegion('us-national');
 echo Carbon::parse('2018-01-10')->addBusinessDays(4)->format('Y-m-d'); // 2018-01-17
@@ -423,6 +430,7 @@ Alias addBusinessDays.
 #### subBusinessDays or subtractBusinessDays
 
 Sub days to the date (Carbon instance) skipping holidays and week-ends.
+
 ```php
 Carbon::setHolidaysRegion('us-national');
 echo Carbon::parse('2018-01-17')->subBusinessDays(4)->format('Y-m-d'); // 2018-01-12
@@ -629,7 +637,7 @@ Add an extra workday to the list of a given region.
 #### setBusinessDayChecker
 
 Customize the way to determine if a date is a business day or not.
- 
+
 ```php
 // Global way
 Carbon::setBusinessDayChecker(function (CarbonInterface $date) {
@@ -648,6 +656,7 @@ $date->setBusinessDayChecker($someFunction);
 ```
 
 If not set or set to `null`, the default calculation is:
+
 ```php
 $date->isExtraWorkday() or ($date->isWeekday() and !$date->isHoliday())
 ```
@@ -655,7 +664,7 @@ $date->isExtraWorkday() or ($date->isWeekday() and !$date->isHoliday())
 #### setHolidayGetter
 
 Customize the way to determine if a date is a holiday and which one it is.
- 
+
 ```php
 // Global way
 Carbon::setHolidayGetter(function (string $region, CarbonInterface $self, callable $fallback) {
@@ -719,6 +728,14 @@ Get stored array of data for current holiday (`null` if the current day is not a
 
 ```php
 Carbon::parse('2020-12-25')->getHolidayData()
+```
+
+#### getHolidaysAvailableRegions
+
+Get an array of available regions that can be selected.
+
+```php
+Carbon::getHolidaysAvailableRegions()
 ```
 
 ### Laravel

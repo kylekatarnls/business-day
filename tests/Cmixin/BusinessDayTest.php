@@ -735,4 +735,15 @@ class BusinessDayTest extends TestCase
         self::assertTrue($carbon::parse('2022-02-02')->isExtraWorkday());
         self::assertSame('Too even day', $carbon::parse('2022-02-02')->getExtraWorkdayId());
     }
+
+    public function testGetHolidaysAvailableRegions()
+    {
+        $carbon = static::CARBON_CLASS;
+        BusinessDay::enable($carbon, 'fr-national');
+
+        $actual = $carbon::getHolidaysAvailableRegions();
+
+        self::assertIsArray($actual);
+        self::assertContains('fr-national', $actual);
+    }
 }
