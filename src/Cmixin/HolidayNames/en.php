@@ -1117,4 +1117,5 @@ return [
     '1st-monday-in-july'                                                                                  => 'Heroes\' Day',
     'tuesday-after-1st-monday-in-july'                                                                    => 'Unity Day',
     '2nd-tuesday-in-august'                                                                               => 'Defence Forces Day',
+    'juneteenth'                                                                                          => 'Juneteenth National Independence Day',
 ];

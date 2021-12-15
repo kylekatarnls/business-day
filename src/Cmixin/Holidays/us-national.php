@@ -7,6 +7,7 @@ return [
     '3rd-monday-in-february' => '= third Monday of February',
     // Memorial Day
     'memorial-day'           => '= last Monday of may',
+    'juneteenth'             => '= 06-19 if year > 2021 substitute',
     'independence-day'       => '= 07-04 substitute', // Independence Day
     // Labor Day
     'labor-day'              => '= first Monday of september',
