@@ -301,10 +301,10 @@ class HolidayCalculator extends CalculatorBase
             }
 
             $this->holidaysList[$holiday] = true;
-        }
 
-        $holiday = preg_replace('/^(\d)\//', '0$1/', $holiday);
-        $holiday = preg_replace('/\/(\d(\/\d+)?)$/', '/0$1', $holiday);
+            $holiday = preg_replace('/^(\d)\//', '0$1/', $holiday);
+            $holiday = preg_replace('/\/(\d(\/\d+)?)$/', '/0$1', $holiday);
+        }
 
         return $holiday;
     }
