@@ -30,7 +30,9 @@ jobs:
 
     - name: Disable calendar
       if: matrix.setup == 'no-calendar'
-      run: sudo phpdismod calendar
+      run: |
+        sudo phpdismod calendar
+        composer require --no-update roukmoute/polyfill-calendar --no-interaction
 
     - name: Cache Composer packages
       id: composer-cache
