@@ -26,6 +26,7 @@ class HijriCalendar extends AlternativeCalendar
 
     public function getDate($year, $month, $day)
     {
+        (new CalendarExtensionChecker())->requireFunction('jdtogregorian');
         $date = array_map('intval', explode('/', jdtogregorian(
             floor((11 * $year + 3) / 30) + 354 * $year +
             30 * $month - floor(($month - 1) / 2) + $day + 1948440 - 385

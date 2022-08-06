@@ -27,6 +27,7 @@ class JewishCalendar extends AlternativeCalendar
 
     public function getDate($year, $month, $day)
     {
+        (new CalendarExtensionChecker())->requireFunctions(['jewishtojd', 'jdtogregorian']);
         $date = array_map('intval', explode('/', jdtogregorian(jewishtojd($month, $day, $year))));
 
         return [$date[2], $date[0], $date[1]];

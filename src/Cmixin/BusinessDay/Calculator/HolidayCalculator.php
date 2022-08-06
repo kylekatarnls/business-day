@@ -3,10 +3,12 @@
 namespace Cmixin\BusinessDay\Calculator;
 
 use Cmixin\BusinessDay\Calendar\AlternativeCalendar;
+use Cmixin\BusinessDay\Calendar\CalendarExtensionChecker;
 use Cmixin\BusinessDay\Calendar\HijriCalendar;
 use Cmixin\BusinessDay\Calendar\JewishCalendar;
 use Cmixin\BusinessDay\Util\YearCondition;
 use DateTime;
+use RuntimeException;
 
 /**
  * @internal
@@ -93,6 +95,7 @@ class HolidayCalculator extends CalculatorBase
                 static $easterDays = [];
 
                 if (!isset($easterDays[$year])) {
+                    (new CalendarExtensionChecker())->requireFunction('easter_days');
                     $easterDays[$year] = easter_days($year);
                 }
 
