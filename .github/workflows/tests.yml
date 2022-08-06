@@ -32,8 +32,7 @@ jobs:
       if: matrix.setup == 'no-calendar'
       run: |
         sudo phpdismod calendar
-        composer config repositories.secret '{"type": "vcs","url": "git@github.com:kylekatarnls/polyfill-calendar.git"}'
-        composer require --no-update roukmoute/polyfill-calendar:dev-php-8 --no-interaction
+        composer require --no-update roukmoute/polyfill-calendar --no-interaction
 
     - name: Cache Composer packages
       id: composer-cache
