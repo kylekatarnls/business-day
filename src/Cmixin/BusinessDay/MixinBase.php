@@ -8,6 +8,8 @@ use DateTimeInterface;
 
 abstract class MixinBase
 {
+    private static $missingCalendarExtensionExceptionSkipped = false;
+
     public static function enable($carbonClass = null)
     {
         if ($carbonClass === null) {
@@ -73,5 +75,18 @@ abstract class MixinBase
 
             return [$target, $date];
         };
+    }
+
+    /**
+     * @codeCoverageIgnore
+     */
+    public static function skipMissingCalendarExtensionException(bool $skipped = true): void
+    {
+        self::$missingCalendarExtensionExceptionSkipped = $skipped;
+    }
+
+    public static function shouldRaiseMissingCalendarExtensionException(): bool
+    {
+        return !self::$missingCalendarExtensionExceptionSkipped;
     }
 }
