@@ -16,6 +16,9 @@ class MkTest extends TestCase
         $carbon::resetHolidays();
     }
 
+    /**
+     * @group calendar
+     */
     public function testHolidays()
     {
         $carbon = static::CARBON_CLASS;

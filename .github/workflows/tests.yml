@@ -13,8 +13,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: ['7.1', '7.2', '7.3', '7.4', '8.0', '8.1']
-        setup: ['lowest', 'stable', 'next']
+        php: ['7.1', '7.2', '7.3', '7.4', '8.0', '8.1', '8.2']
+        setup: ['lowest', 'stable', 'next', 'no-calendar']
 
     name: PHP ${{ matrix.php }} - ${{ matrix.setup }}
 
@@ -25,23 +25,30 @@ jobs:
       uses: shivammathur/setup-php@v2
       with:
         php-version: ${{ matrix.php }}
-        extensions: calendar
+        extensions: ${{ matrix.setup == 'no-calendar' && '' || 'calendar' }}
         tools: composer:v2
+
+    - name: Disable calendar
+      if: matrix.setup == 'no-calendar'
+      run: |
+        sudo phpdismod calendar
+        composer config repositories.secret '{"type": "vcs","url": "git@github.com:kylekatarnls/polyfill-calendar.git"}'
+        composer require --no-update roukmoute/polyfill-calendar:dev-php-8 --no-interaction
 
     - name: Cache Composer packages
       id: composer-cache
       uses: actions/cache@v2
       with:
         path: vendor
-        key: ${{ runner.os }}-${{ matrix.setup }}-v2-php-${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
+        key: ${{ runner.os }}-${{ matrix.setup }}-v3-php-${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
         restore-keys: |
-          ${{ runner.os }}-${{ matrix.setup }}-v2-php-${{ matrix.php }}-
+          ${{ runner.os }}-${{ matrix.setup }}-v3-php-${{ matrix.php }}-
 
     - name: Install dependencies
       if: steps.composer-cache.outputs.cache-hit != 'true'
       run: |
         ${{ matrix.php >= 8.1 && 'composer require --no-update phpunit/phpunit:^8.5.14 --no-interaction' || '' }}
-        composer update --prefer-dist ${{ matrix.setup != 'next' && format('--prefer-{0}', matrix.setup) || '' }} --no-progress --no-suggest ${{ matrix.php >= 8.1 && '--ignore-platform-req=php' || '' }}
+        composer update --prefer-dist ${{ matrix.setup != 'next' && matrix.setup != 'no-calendar' && format('--prefer-{0}', matrix.setup) || '' }} --no-progress --no-suggest ${{ matrix.php >= 8.1 && '--ignore-platform-req=php' || '' }}
 
     - name: Code Climate Test Reporter Preparation
       if: matrix.php == '7.4' && matrix.setup == 'stable'
@@ -57,7 +64,7 @@ jobs:
         if [[ ${MATRIX_CONFIG} == "7.4-stable" ]]; then
           vendor/bin/phpunit --coverage-text --coverage-clover=clover.xml;
         else
-          vendor/bin/phpunit --no-coverage;
+          vendor/bin/phpunit --no-coverage${{ matrix.setup == 'no-calendar' && ' --exclude-group calendar' || '' }};
         fi;
       env:
         MATRIX_CONFIG: ${{ matrix.php }}-${{ matrix.setup }}

@@ -2,9 +2,12 @@
 
 namespace Cmixin\BusinessDay\Calculator;
 
+use Cmixin\BusinessDay;
 use Cmixin\BusinessDay\Calendar\AlternativeCalendar;
+use Cmixin\BusinessDay\Calendar\CalendarExtensionChecker;
 use Cmixin\BusinessDay\Calendar\HijriCalendar;
 use Cmixin\BusinessDay\Calendar\JewishCalendar;
+use Cmixin\BusinessDay\Calendar\MissingCalendarExtensionException;
 use Cmixin\BusinessDay\Util\YearCondition;
 use DateTime;
 
@@ -93,6 +96,7 @@ class HolidayCalculator extends CalculatorBase
                 static $easterDays = [];
 
                 if (!isset($easterDays[$year])) {
+                    (new CalendarExtensionChecker())->requireFunction('easter_days');
                     $easterDays[$year] = easter_days($year);
                 }
 
@@ -325,7 +329,17 @@ class HolidayCalculator extends CalculatorBase
         }
 
         if (is_string($holiday)) {
-            $holiday = $this->parseHoliday($holiday, $dateTime, $key);
+            // @codeCoverageIgnoreStart
+            try {
+                $holiday = $this->parseHoliday($holiday, $dateTime, $key);
+            } catch (MissingCalendarExtensionException $exception) {
+                if (BusinessDay::shouldRaiseMissingCalendarExtensionException()) {
+                    throw $exception;
+                }
+
+                return false;
+            }
+            // @codeCoverageIgnoreEnd
         }
 
         return $holiday

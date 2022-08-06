@@ -2,6 +2,7 @@
 
 namespace Cmixin\BusinessDay\Calculator;
 
+use Cmixin\BusinessDay\Calendar\CalendarExtensionChecker;
 use Cmixin\BusinessDay\Calendar\LunarCalendar;
 use DateTime;
 
@@ -65,6 +66,8 @@ class CalculatorBase
 
     protected function getJulianTimestamp($year, $month, $day)
     {
+        (new CalendarExtensionChecker())->requireFunctions(['juliantojd', 'jdtogregorian']);
+
         return strtotime(jdtogregorian(juliantojd($month, $day, $year)));
     }
 
