@@ -8,7 +8,6 @@ use Cmixin\BusinessDay\Calendar\HijriCalendar;
 use Cmixin\BusinessDay\Calendar\JewishCalendar;
 use Cmixin\BusinessDay\Util\YearCondition;
 use DateTime;
-use RuntimeException;
 
 /**
  * @internal

@@ -10,8 +10,12 @@ final class MissingCalendarExtensionException extends BadFunctionCallException
     {
         return new self(
             $function.' function is not available on your system, '.
-            "you need either to install PHP calendar extension or a polyfill such as:\n".
-            'composer require roukmoute/polyfill-calendar'
+            'you need either to install PHP calendar extension or a polyfill'.
+            (
+                in_array($function, ['easter_date', 'easter_days'], true)
+                    ? " such as:\ncomposer require roukmoute/polyfill-calendar"
+                    : '.'
+            )
         );
     }
 }

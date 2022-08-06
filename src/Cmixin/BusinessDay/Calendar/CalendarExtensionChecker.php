@@ -2,8 +2,6 @@
 
 namespace Cmixin\BusinessDay\Calendar;
 
-use BadFunctionCallException;
-
 final class CalendarExtensionChecker
 {
     public function requireFunction(string $function): void
