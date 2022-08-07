@@ -32,7 +32,8 @@ jobs:
       if: matrix.setup == 'no-calendar'
       run: |
         sudo phpdismod calendar
-        composer require --no-update roukmoute/polyfill-calendar --no-interaction
+        composer config repositories.secret '{"type": "vcs","url": "git@github.com:kylekatarnls/polyfill-calendar.git"}'
+        composer require --no-update roukmoute/polyfill-calendar:dev-feature/add-some-julian-functions --no-interaction
 
     - name: Cache Composer packages
       id: composer-cache
@@ -63,7 +64,7 @@ jobs:
         if [[ ${MATRIX_CONFIG} == "7.4-stable" ]]; then
           vendor/bin/phpunit --coverage-text --coverage-clover=clover.xml;
         else
-          vendor/bin/phpunit --no-coverage${{ matrix.setup == 'no-calendar' && ' --exclude-group calendar' || '' }};
+          vendor/bin/phpunit --no-coverage;
         fi;
       env:
         MATRIX_CONFIG: ${{ matrix.php }}-${{ matrix.setup }}
