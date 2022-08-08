@@ -4,9 +4,6 @@ namespace Tests\Cmixin\Traits;
 
 trait Observable
 {
-    /**
-     * @group i
-     */
     public function testObservedHolidaysZone()
     {
         $carbon = static::CARBON_CLASS;
