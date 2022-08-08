@@ -7,9 +7,6 @@ use Cmixin\BusinessDay\Calendar\LunarCalendar;
 
 trait AlternativeCalendars
 {
-    /**
-     * @group calendar
-     */
     public function testWhenHijriHolidayHappensTwiceAGregorianYear()
     {
         $carbon = static::CARBON_CLASS;
@@ -21,9 +18,6 @@ trait AlternativeCalendars
         self::assertTrue($carbon::parse('2019-12-25')->isHoliday());
     }
 
-    /**
-     * @group calendar
-     */
     public function testWhenJewishHolidayMissInAGregorianYear()
     {
         $carbon = static::CARBON_CLASS;

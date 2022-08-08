@@ -21,9 +21,6 @@ class NlTest extends TestCase
         $carbon::resetHolidays();
     }
 
-    /**
-     * @group calendar
-     */
     public function testHolidaysSpecificDates()
     {
         $carbon = static::CARBON_CLASS;
