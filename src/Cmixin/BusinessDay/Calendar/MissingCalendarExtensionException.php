@@ -11,12 +11,9 @@ final class MissingCalendarExtensionException extends BadFunctionCallException
     {
         return new self(
             $function.' function is not available on your system, '.
-            'you need either to install PHP calendar extension or a polyfill'.
-            (
-                in_array($function, ['easter_date', 'easter_days'], true)
-                    ? " such as:\ncomposer require roukmoute/polyfill-calendar"
-                    : '.'
-            )."\n\nOr alternatively, skip all holidays using such functions by ".
+            'you need either to install PHP calendar extension or a polyfill '.
+            "such as:\ncomposer require roukmoute/polyfill-calendar\n\n".
+            'Or alternatively, skip all holidays using such functions by '.
             'calling explicitly '.BusinessDay::class.'::skipMissingCalendarExtensionException()'
         );
     }

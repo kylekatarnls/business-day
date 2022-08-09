@@ -435,9 +435,6 @@ class BusinessDayTest extends TestCase
         self::assertFalse($carbon::parse('2018-11-11 12:00:00')->isBusinessDay());
     }
 
-    /**
-     * @group i
-     */
     public function testIsBusinessDayStatic()
     {
         $carbon = static::CARBON_CLASS;
@@ -537,9 +534,6 @@ class BusinessDayTest extends TestCase
         self::assertSame(23, $carbon::parse('2019-07')->getBusinessDaysInMonth());
     }
 
-    /**
-     * @group i
-     */
     public function testGetMonthBusinessDays()
     {
         $carbon = static::CARBON_CLASS;

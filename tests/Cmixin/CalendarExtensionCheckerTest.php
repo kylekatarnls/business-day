@@ -13,7 +13,8 @@ final class CalendarExtensionCheckerTest extends TestCase
     {
         self::assertSame(
             'jewishtojd function is not available on your system, '.
-            'you need either to install PHP calendar extension or a polyfill.'.
+            'you need either to install PHP calendar extension or a polyfill such as:'.
+            "\ncomposer require roukmoute/polyfill-calendar".
             "\n\nOr alternatively, skip all holidays using such functions by ".
             'calling explicitly '.BusinessDay::class.'::skipMissingCalendarExtensionException()',
             MissingCalendarExtensionException::forFunction('jewishtojd')->getMessage()
