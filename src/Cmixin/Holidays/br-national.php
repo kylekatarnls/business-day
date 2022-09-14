@@ -7,7 +7,6 @@ return [
     'easter'                                => '= easter',
     '05-01'                                 => '05-01',
     '2nd-sunday-of-may'                     => '= second Sunday of May',
-    '06-12'                                 => '06-12',
     '2nd-sunday-of-august'                  => '= second Sunday of August',
     '09-07'                                 => '09-07',
     '10-12'                                 => '10-12',
