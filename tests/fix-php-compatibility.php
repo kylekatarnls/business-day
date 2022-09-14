@@ -1,7 +1,7 @@
 <?php
 
 $replacements = [
-    __DIR__ . '/../vendor/nesbot/carbon/src/Carbon/Traits/Creator.php' => [
+    __DIR__.'/../vendor/nesbot/carbon/src/Carbon/Traits/Creator.php' => [
         'private static function setLastErrors(array $' => 'private static function setLastErrors($',
     ],
 ];
