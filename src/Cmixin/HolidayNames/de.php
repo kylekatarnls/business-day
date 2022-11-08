@@ -86,4 +86,6 @@ return [
     'labor-day'                                       => 'Tag der Arbeit',
     'epiphany'                                        => 'Heilige Drei Könige',
     'children-s-day'                                  => 'Weltkindertag',
+    'german-unity-day'                                => 'Tag der Deutschen Einheit',
+    '08-15'                                           => 'Mariä Himmelfahrt',
 ];
