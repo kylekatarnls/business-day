@@ -131,19 +131,19 @@ namespace Carbon
          */
         public static function setBusinessDayChecker(callable $checkCallback = null)
         {
-            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:37
+            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:36
         }
 
         /**
          * @see \Cmixin\BusinessDay\BusinessCalendar::isBusinessDay
          *
-         * Checks the date to see if it is a business day (neither a weekend day nor a holiday).
+         * Checks the date to see if it is a business day (extra workday or neither a weekend day nor a holiday).
          *
          * @return bool
          */
         public static function isBusinessDay()
         {
-            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:60
+            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:59
         }
 
         /**
@@ -155,7 +155,7 @@ namespace Carbon
          */
         public static function nextBusinessDay()
         {
-            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:91
+            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:88
         }
 
         /**
@@ -167,7 +167,7 @@ namespace Carbon
          */
         public static function currentOrNextBusinessDay()
         {
-            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:117
+            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:114
         }
 
         /**
@@ -179,7 +179,7 @@ namespace Carbon
          */
         public static function previousBusinessDay()
         {
-            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:91
+            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:88
         }
 
         /**
@@ -191,7 +191,7 @@ namespace Carbon
          */
         public static function currentOrPreviousBusinessDay()
         {
-            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:117
+            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:114
         }
 
         /**
@@ -206,7 +206,7 @@ namespace Carbon
          */
         public static function setObservedHolidaysZone($zone, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:43
+            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:40
         }
 
         /**
@@ -218,7 +218,7 @@ namespace Carbon
          */
         public static function getObservedHolidaysZone()
         {
-            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:64
+            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:61
         }
 
         /**
@@ -233,7 +233,7 @@ namespace Carbon
          */
         public static function setHolidayObserveStatus($holidayId, $observed, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:87
+            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:84
         }
 
         /**
@@ -248,7 +248,7 @@ namespace Carbon
          */
         public static function getObserveHolidayMethod($holidayId = null, $observed = null, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:122
+            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:119
         }
 
         /**
@@ -262,7 +262,7 @@ namespace Carbon
          */
         public static function observeHoliday($holidayId = null, $observed = null, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:122
+            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:119
         }
 
         /**
@@ -276,7 +276,7 @@ namespace Carbon
          */
         public static function unobserveHoliday($holidayId = null, $observed = null, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:122
+            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:119
         }
 
         /**
@@ -290,7 +290,7 @@ namespace Carbon
          */
         public static function observeHolidays($holidayId = null, $observed = null, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:122
+            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:119
         }
 
         /**
@@ -304,7 +304,7 @@ namespace Carbon
          */
         public static function unobserveHolidays($holidayId = null, $observed = null, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:122
+            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:119
         }
 
         /**
@@ -316,7 +316,7 @@ namespace Carbon
          */
         public static function observeAllHolidays($holidayId = null, $observed = null, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:122
+            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:119
         }
 
         /**
@@ -328,7 +328,7 @@ namespace Carbon
          */
         public static function unobserveAllHolidays($holidayId = null, $observed = null, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:122
+            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:119
         }
 
         /**
@@ -342,7 +342,7 @@ namespace Carbon
          */
         public static function checkObservedHoliday($holidayId = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:257
+            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:254
         }
 
         /**
@@ -356,7 +356,7 @@ namespace Carbon
          */
         public static function isObservedHoliday($holidayId = null, $date = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:289
+            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:286
         }
 
         /**
@@ -370,7 +370,33 @@ namespace Carbon
          */
         public static function setHolidayGetter(callable $holidayGetter)
         {
-            // Content, see src/Cmixin/BusinessDay/Holiday.php:50
+            // Content, see src/Cmixin/BusinessDay/Holiday.php:57
+        }
+
+        /**
+         * @see \Cmixin\BusinessDay\Holiday::setExtraWorkdayGetter
+         *
+         * Set the strategy to get the extra workday ID from a date object.
+         *
+         * @param callable|null $workdayGetter
+         *
+         * @return $this|null
+         */
+        public static function setExtraWorkdayGetter(callable $workdayGetter)
+        {
+            // Content, see src/Cmixin/BusinessDay/Holiday.php:82
+        }
+
+        /**
+         * @see \Cmixin\BusinessDay\Holiday::getDBDayId
+         *
+         * Get the identifier of the current holiday or false if it's not a holiday.
+         *
+         * @return string|false
+         */
+        public static function getDBDayId(string $getDays = 'getHolidays')
+        {
+            // Content, see src/Cmixin/BusinessDay/Holiday.php:103
         }
 
         /**
@@ -382,7 +408,7 @@ namespace Carbon
          */
         public static function getHolidayId()
         {
-            // Content, see src/Cmixin/BusinessDay/Holiday.php:73
+            // Content, see src/Cmixin/BusinessDay/Holiday.php:138
         }
 
         /**
@@ -394,7 +420,31 @@ namespace Carbon
          */
         public static function isHoliday()
         {
-            // Content, see src/Cmixin/BusinessDay/Holiday.php:118
+            // Content, see src/Cmixin/BusinessDay/Holiday.php:166
+        }
+
+        /**
+         * @see \Cmixin\BusinessDay\Holiday::getExtraWorkdayId
+         *
+         * Get the identifier of the current special workday or false if it's not a special workday.
+         *
+         * @return string|false
+         */
+        public static function getExtraWorkdayId()
+        {
+            // Content, see src/Cmixin/BusinessDay/Holiday.php:188
+        }
+
+        /**
+         * @see \Cmixin\BusinessDay\Holiday::isExtraWorkday
+         *
+         * Checks the date to see if it is a holiday.
+         *
+         * @return bool
+         */
+        public static function isExtraWorkday()
+        {
+            // Content, see src/Cmixin/BusinessDay/Holiday.php:216
         }
 
         /**
@@ -408,7 +458,7 @@ namespace Carbon
          */
         public static function getHolidayNamesDictionary($locale)
         {
-            // Content, see src/Cmixin/BusinessDay/Holiday.php:143
+            // Content, see src/Cmixin/BusinessDay/Holiday.php:241
         }
 
         /**
@@ -423,7 +473,7 @@ namespace Carbon
          */
         public static function getHolidayName($date = null, $locale = null)
         {
-            // Content, see src/Cmixin/BusinessDay/Holiday.php:182
+            // Content, see src/Cmixin/BusinessDay/Holiday.php:280
         }
 
         /**
@@ -431,14 +481,15 @@ namespace Carbon
          *
          * Get the holidays dates for a given year (current year if no parameter given).
          *
-         * @param int    $year input year, year of the current instance or context used if omitted, current year used if omitted and called statically
-         * @param string $type can be 'string' (to return dates as string) or a class name to returns instances of this class
+         * @param int    $year    input year, year of the current instance or context used if omitted, current year used if omitted and called statically
+         * @param string $type    can be 'string' (to return dates as string) or a class name to returns instances of this class
+         * @param string $getDays macro method to retrieve the days list
          *
          * @return array
          */
-        public static function getYearHolidays($year = null, $type = null, $self = null)
+        public static function getYearHolidays($year = null, $type = null, string $getDays = 'getHolidays')
         {
-            // Content, see src/Cmixin/BusinessDay/YearCrawler.php:24
+            // Content, see src/Cmixin/BusinessDay/YearCrawler.php:25
         }
 
         /**
@@ -446,14 +497,15 @@ namespace Carbon
          *
          * Get a next() callback to call to iterate over holidays of a year.
          *
-         * @param int    $year input year, year of the current instance or context used if omitted, current year used if omitted and called statically
-         * @param string $type can be 'string' (to return dates as string) or a class name to returns instances of this class
+         * @param int    $year    input year, year of the current instance or context used if omitted, current year used if omitted and called statically
+         * @param string $type    can be 'string' (to return dates as string) or a class name to returns instances of this class
+         * @param string $getDays macro method to retrieve the days list
          *
          * @return callable
          */
-        public static function getYearHolidaysNextFunction($year = null, $type = null)
+        public static function getYearHolidaysNextFunction($year = null, $type = null, string $getDays = 'getHolidays')
         {
-            // Content, see src/Cmixin/BusinessDay/YearCrawler.php:54
+            // Content, see src/Cmixin/BusinessDay/YearCrawler.php:56
         }
 
         /**
@@ -467,7 +519,19 @@ namespace Carbon
          */
         public static function standardizeHolidaysRegion($region)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:34
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:45
+        }
+
+        /**
+         * @see \Cmixin\BusinessDay\HolidaysList::getHolidaysAvailableRegions
+         *
+         * Get the current holidays region.
+         *
+         * @return array
+         */
+        public static function getHolidaysAvailableRegions()
+        {
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:66
         }
 
         /**
@@ -479,7 +543,7 @@ namespace Carbon
          */
         public static function setHolidaysRegion($region)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:55
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:94
         }
 
         /**
@@ -491,7 +555,21 @@ namespace Carbon
          */
         public static function getHolidaysRegion()
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:104
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:143
+        }
+
+        /**
+         * @see \Cmixin\BusinessDay\HolidaysList::getBDDaysList
+         *
+         * Get the holidays for the current region selected.
+         *
+         * @param string $region
+         *
+         * @return array
+         */
+        public static function getBDDaysList(string $list, $region = null)
+        {
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:164
         }
 
         /**
@@ -505,7 +583,7 @@ namespace Carbon
          */
         public static function getHolidays($region = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:125
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:197
         }
 
         /**
@@ -518,7 +596,34 @@ namespace Carbon
          */
         public static function setHolidays($region, $holidays)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:153
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:217
+        }
+
+        /**
+         * @see \Cmixin\BusinessDay\HolidaysList::getExtraWorkdays
+         *
+         * Get the holidays for the current region selected.
+         *
+         * @param string $region
+         *
+         * @return array
+         */
+        public static function getExtraWorkdays($region = null)
+        {
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:241
+        }
+
+        /**
+         * @see \Cmixin\BusinessDay\HolidaysList::setExtraWorkdays
+         *
+         * Set the holidays list.
+         *
+         * @param string $region
+         * @param array  $holidays
+         */
+        public static function setExtraWorkdays($region, $holidays)
+        {
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:261
         }
 
         /**
@@ -528,12 +633,29 @@ namespace Carbon
          */
         public static function resetHolidays()
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:173
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:281
         }
 
         public static function initializeHolidaysRegion()
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:198
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:309
+        }
+
+        /**
+         * @see \Cmixin\BusinessDay\HolidaysList::pushToBDList
+         *
+         * Push a day into a given list list of a region.
+         *
+         * @param string          $list   List ID
+         * @param string          $region region where the holiday is observed
+         * @param string|\Closure $day    date or closure that get the year as parameter and returns the date
+         * @param string          $dayId  optional day ID
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|null
+         */
+        public static function pushToBDList(string $list, $region, $day, $dayId = null)
+        {
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:333
         }
 
         /**
@@ -549,7 +671,23 @@ namespace Carbon
          */
         public static function pushHoliday($region, $holiday, $holidayId = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:221
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:363
+        }
+
+        /**
+         * @see \Cmixin\BusinessDay\HolidaysList::pushWorkday
+         *
+         * Push a workday to the workdays list of a region.
+         *
+         * @param string          $region    region where the holiday is observed.
+         * @param string|\Closure $workday   date or closure that get the year as parameter and returns the date
+         * @param string          $workdayId optional workday ID
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|null
+         */
+        public static function pushWorkday($region, $workday, $workdayId = null)
+        {
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:388
         }
 
         /**
@@ -565,7 +703,7 @@ namespace Carbon
          */
         public static function setHolidayName($holidayKey = null, $language = null, $name = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:255
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:413
         }
 
         /**
@@ -583,7 +721,24 @@ namespace Carbon
          */
         public static function addHoliday($region, $holiday, $holidayId = null, $name = null, $observed = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:294
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:452
+        }
+
+        /**
+         * @see \Cmixin\BusinessDay\HolidaysList::addExtraWorkday
+         *
+         * Add a workday to the workdays list of a region and optionally init its ID and name.
+         *
+         * @param string          $region    region where the holiday is observed.
+         * @param string|\Closure $workday   date or closure that get the year as parameter and returns the date
+         * @param string          $workdayId optional holiday ID
+         * @param string          $name      optional name
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|null
+         */
+        public static function addExtraWorkday($region, $workday, $workdayId = null, $name = null)
+        {
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:494
         }
 
         /**
@@ -599,7 +754,7 @@ namespace Carbon
          */
         public static function unpackHoliday($holiday, $name = null, $observed = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:332
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:522
         }
 
         /**
@@ -616,7 +771,7 @@ namespace Carbon
          */
         public static function checkHoliday($holiday, $holidayId, $name = null, $observed = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:372
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:562
         }
 
         /**
@@ -624,17 +779,18 @@ namespace Carbon
          *
          * Add a holiday to the holidays list of a region and optionally init their IDs, names and observed states (if provided as array-definitions).
          *
-         * @param string $region
-         * @param array  $holidays
+         * @param string        $region
+         * @param iterable|null $holidays
+         * @param iterable|null $workingDays
          */
-        public static function addHolidays($region, $holidays)
+        public static function addHolidays(string $region, iterable $holidays = null, iterable $workingDays = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:404
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:595
         }
 
         public static function enable()
         {
-            // Content, see src/Cmixin/BusinessDay/MixinBase.php:15
+            // Content, see src/Cmixin/BusinessDay/MixinBase.php:16
         }
 
         /**
@@ -648,7 +804,7 @@ namespace Carbon
          */
         public static function isDateTimeInstance($value)
         {
-            // Content, see src/Cmixin/BusinessDay/MixinBase.php:55
+            // Content, see src/Cmixin/BusinessDay/MixinBase.php:49
         }
 
         /**
@@ -664,7 +820,7 @@ namespace Carbon
          */
         public static function swapDateTimeParam($target, $date, $defaultValue)
         {
-            // Content, see src/Cmixin/BusinessDay/MixinBase.php:76
+            // Content, see src/Cmixin/BusinessDay/MixinBase.php:70
         }
 
         /**
@@ -848,19 +1004,19 @@ namespace Carbon
          */
         public static function setBusinessDayChecker(callable $checkCallback = null)
         {
-            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:37
+            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:36
         }
 
         /**
          * @see \Cmixin\BusinessDay\BusinessCalendar::isBusinessDay
          *
-         * Checks the date to see if it is a business day (neither a weekend day nor a holiday).
+         * Checks the date to see if it is a business day (extra workday or neither a weekend day nor a holiday).
          *
          * @return bool
          */
         public static function isBusinessDay()
         {
-            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:60
+            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:59
         }
 
         /**
@@ -872,7 +1028,7 @@ namespace Carbon
          */
         public static function nextBusinessDay()
         {
-            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:91
+            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:88
         }
 
         /**
@@ -884,7 +1040,7 @@ namespace Carbon
          */
         public static function currentOrNextBusinessDay()
         {
-            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:117
+            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:114
         }
 
         /**
@@ -896,7 +1052,7 @@ namespace Carbon
          */
         public static function previousBusinessDay()
         {
-            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:91
+            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:88
         }
 
         /**
@@ -908,7 +1064,7 @@ namespace Carbon
          */
         public static function currentOrPreviousBusinessDay()
         {
-            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:117
+            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:114
         }
 
         /**
@@ -923,7 +1079,7 @@ namespace Carbon
          */
         public static function setObservedHolidaysZone($zone, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:43
+            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:40
         }
 
         /**
@@ -935,7 +1091,7 @@ namespace Carbon
          */
         public static function getObservedHolidaysZone()
         {
-            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:64
+            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:61
         }
 
         /**
@@ -950,7 +1106,7 @@ namespace Carbon
          */
         public static function setHolidayObserveStatus($holidayId, $observed, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:87
+            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:84
         }
 
         /**
@@ -965,7 +1121,7 @@ namespace Carbon
          */
         public static function getObserveHolidayMethod($holidayId = null, $observed = null, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:122
+            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:119
         }
 
         /**
@@ -979,7 +1135,7 @@ namespace Carbon
          */
         public static function observeHoliday($holidayId = null, $observed = null, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:122
+            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:119
         }
 
         /**
@@ -993,7 +1149,7 @@ namespace Carbon
          */
         public static function unobserveHoliday($holidayId = null, $observed = null, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:122
+            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:119
         }
 
         /**
@@ -1007,7 +1163,7 @@ namespace Carbon
          */
         public static function observeHolidays($holidayId = null, $observed = null, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:122
+            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:119
         }
 
         /**
@@ -1021,7 +1177,7 @@ namespace Carbon
          */
         public static function unobserveHolidays($holidayId = null, $observed = null, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:122
+            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:119
         }
 
         /**
@@ -1033,7 +1189,7 @@ namespace Carbon
          */
         public static function observeAllHolidays($holidayId = null, $observed = null, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:122
+            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:119
         }
 
         /**
@@ -1045,7 +1201,7 @@ namespace Carbon
          */
         public static function unobserveAllHolidays($holidayId = null, $observed = null, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:122
+            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:119
         }
 
         /**
@@ -1059,7 +1215,7 @@ namespace Carbon
          */
         public static function checkObservedHoliday($holidayId = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:257
+            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:254
         }
 
         /**
@@ -1073,7 +1229,7 @@ namespace Carbon
          */
         public static function isObservedHoliday($holidayId = null, $date = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:289
+            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:286
         }
 
         /**
@@ -1087,7 +1243,33 @@ namespace Carbon
          */
         public static function setHolidayGetter(callable $holidayGetter)
         {
-            // Content, see src/Cmixin/BusinessDay/Holiday.php:50
+            // Content, see src/Cmixin/BusinessDay/Holiday.php:57
+        }
+
+        /**
+         * @see \Cmixin\BusinessDay\Holiday::setExtraWorkdayGetter
+         *
+         * Set the strategy to get the extra workday ID from a date object.
+         *
+         * @param callable|null $workdayGetter
+         *
+         * @return $this|null
+         */
+        public static function setExtraWorkdayGetter(callable $workdayGetter)
+        {
+            // Content, see src/Cmixin/BusinessDay/Holiday.php:82
+        }
+
+        /**
+         * @see \Cmixin\BusinessDay\Holiday::getDBDayId
+         *
+         * Get the identifier of the current holiday or false if it's not a holiday.
+         *
+         * @return string|false
+         */
+        public static function getDBDayId(string $getDays = 'getHolidays')
+        {
+            // Content, see src/Cmixin/BusinessDay/Holiday.php:103
         }
 
         /**
@@ -1099,7 +1281,7 @@ namespace Carbon
          */
         public static function getHolidayId()
         {
-            // Content, see src/Cmixin/BusinessDay/Holiday.php:73
+            // Content, see src/Cmixin/BusinessDay/Holiday.php:138
         }
 
         /**
@@ -1111,7 +1293,31 @@ namespace Carbon
          */
         public static function isHoliday()
         {
-            // Content, see src/Cmixin/BusinessDay/Holiday.php:118
+            // Content, see src/Cmixin/BusinessDay/Holiday.php:166
+        }
+
+        /**
+         * @see \Cmixin\BusinessDay\Holiday::getExtraWorkdayId
+         *
+         * Get the identifier of the current special workday or false if it's not a special workday.
+         *
+         * @return string|false
+         */
+        public static function getExtraWorkdayId()
+        {
+            // Content, see src/Cmixin/BusinessDay/Holiday.php:188
+        }
+
+        /**
+         * @see \Cmixin\BusinessDay\Holiday::isExtraWorkday
+         *
+         * Checks the date to see if it is a holiday.
+         *
+         * @return bool
+         */
+        public static function isExtraWorkday()
+        {
+            // Content, see src/Cmixin/BusinessDay/Holiday.php:216
         }
 
         /**
@@ -1125,7 +1331,7 @@ namespace Carbon
          */
         public static function getHolidayNamesDictionary($locale)
         {
-            // Content, see src/Cmixin/BusinessDay/Holiday.php:143
+            // Content, see src/Cmixin/BusinessDay/Holiday.php:241
         }
 
         /**
@@ -1140,7 +1346,7 @@ namespace Carbon
          */
         public static function getHolidayName($date = null, $locale = null)
         {
-            // Content, see src/Cmixin/BusinessDay/Holiday.php:182
+            // Content, see src/Cmixin/BusinessDay/Holiday.php:280
         }
 
         /**
@@ -1148,14 +1354,15 @@ namespace Carbon
          *
          * Get the holidays dates for a given year (current year if no parameter given).
          *
-         * @param int    $year input year, year of the current instance or context used if omitted, current year used if omitted and called statically
-         * @param string $type can be 'string' (to return dates as string) or a class name to returns instances of this class
+         * @param int    $year    input year, year of the current instance or context used if omitted, current year used if omitted and called statically
+         * @param string $type    can be 'string' (to return dates as string) or a class name to returns instances of this class
+         * @param string $getDays macro method to retrieve the days list
          *
          * @return array
          */
-        public static function getYearHolidays($year = null, $type = null, $self = null)
+        public static function getYearHolidays($year = null, $type = null, string $getDays = 'getHolidays')
         {
-            // Content, see src/Cmixin/BusinessDay/YearCrawler.php:24
+            // Content, see src/Cmixin/BusinessDay/YearCrawler.php:25
         }
 
         /**
@@ -1163,14 +1370,15 @@ namespace Carbon
          *
          * Get a next() callback to call to iterate over holidays of a year.
          *
-         * @param int    $year input year, year of the current instance or context used if omitted, current year used if omitted and called statically
-         * @param string $type can be 'string' (to return dates as string) or a class name to returns instances of this class
+         * @param int    $year    input year, year of the current instance or context used if omitted, current year used if omitted and called statically
+         * @param string $type    can be 'string' (to return dates as string) or a class name to returns instances of this class
+         * @param string $getDays macro method to retrieve the days list
          *
          * @return callable
          */
-        public static function getYearHolidaysNextFunction($year = null, $type = null)
+        public static function getYearHolidaysNextFunction($year = null, $type = null, string $getDays = 'getHolidays')
         {
-            // Content, see src/Cmixin/BusinessDay/YearCrawler.php:54
+            // Content, see src/Cmixin/BusinessDay/YearCrawler.php:56
         }
 
         /**
@@ -1184,7 +1392,19 @@ namespace Carbon
          */
         public static function standardizeHolidaysRegion($region)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:34
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:45
+        }
+
+        /**
+         * @see \Cmixin\BusinessDay\HolidaysList::getHolidaysAvailableRegions
+         *
+         * Get the current holidays region.
+         *
+         * @return array
+         */
+        public static function getHolidaysAvailableRegions()
+        {
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:66
         }
 
         /**
@@ -1196,7 +1416,7 @@ namespace Carbon
          */
         public static function setHolidaysRegion($region)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:55
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:94
         }
 
         /**
@@ -1208,7 +1428,21 @@ namespace Carbon
          */
         public static function getHolidaysRegion()
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:104
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:143
+        }
+
+        /**
+         * @see \Cmixin\BusinessDay\HolidaysList::getBDDaysList
+         *
+         * Get the holidays for the current region selected.
+         *
+         * @param string $region
+         *
+         * @return array
+         */
+        public static function getBDDaysList(string $list, $region = null)
+        {
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:164
         }
 
         /**
@@ -1222,7 +1456,7 @@ namespace Carbon
          */
         public static function getHolidays($region = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:125
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:197
         }
 
         /**
@@ -1235,7 +1469,34 @@ namespace Carbon
          */
         public static function setHolidays($region, $holidays)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:153
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:217
+        }
+
+        /**
+         * @see \Cmixin\BusinessDay\HolidaysList::getExtraWorkdays
+         *
+         * Get the holidays for the current region selected.
+         *
+         * @param string $region
+         *
+         * @return array
+         */
+        public static function getExtraWorkdays($region = null)
+        {
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:241
+        }
+
+        /**
+         * @see \Cmixin\BusinessDay\HolidaysList::setExtraWorkdays
+         *
+         * Set the holidays list.
+         *
+         * @param string $region
+         * @param array  $holidays
+         */
+        public static function setExtraWorkdays($region, $holidays)
+        {
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:261
         }
 
         /**
@@ -1245,12 +1506,29 @@ namespace Carbon
          */
         public static function resetHolidays()
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:173
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:281
         }
 
         public static function initializeHolidaysRegion()
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:198
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:309
+        }
+
+        /**
+         * @see \Cmixin\BusinessDay\HolidaysList::pushToBDList
+         *
+         * Push a day into a given list list of a region.
+         *
+         * @param string          $list   List ID
+         * @param string          $region region where the holiday is observed
+         * @param string|\Closure $day    date or closure that get the year as parameter and returns the date
+         * @param string          $dayId  optional day ID
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|null
+         */
+        public static function pushToBDList(string $list, $region, $day, $dayId = null)
+        {
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:333
         }
 
         /**
@@ -1266,7 +1544,23 @@ namespace Carbon
          */
         public static function pushHoliday($region, $holiday, $holidayId = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:221
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:363
+        }
+
+        /**
+         * @see \Cmixin\BusinessDay\HolidaysList::pushWorkday
+         *
+         * Push a workday to the workdays list of a region.
+         *
+         * @param string          $region    region where the holiday is observed.
+         * @param string|\Closure $workday   date or closure that get the year as parameter and returns the date
+         * @param string          $workdayId optional workday ID
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|null
+         */
+        public static function pushWorkday($region, $workday, $workdayId = null)
+        {
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:388
         }
 
         /**
@@ -1282,7 +1576,7 @@ namespace Carbon
          */
         public static function setHolidayName($holidayKey = null, $language = null, $name = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:255
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:413
         }
 
         /**
@@ -1300,7 +1594,24 @@ namespace Carbon
          */
         public static function addHoliday($region, $holiday, $holidayId = null, $name = null, $observed = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:294
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:452
+        }
+
+        /**
+         * @see \Cmixin\BusinessDay\HolidaysList::addExtraWorkday
+         *
+         * Add a workday to the workdays list of a region and optionally init its ID and name.
+         *
+         * @param string          $region    region where the holiday is observed.
+         * @param string|\Closure $workday   date or closure that get the year as parameter and returns the date
+         * @param string          $workdayId optional holiday ID
+         * @param string          $name      optional name
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|null
+         */
+        public static function addExtraWorkday($region, $workday, $workdayId = null, $name = null)
+        {
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:494
         }
 
         /**
@@ -1316,7 +1627,7 @@ namespace Carbon
          */
         public static function unpackHoliday($holiday, $name = null, $observed = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:332
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:522
         }
 
         /**
@@ -1333,7 +1644,7 @@ namespace Carbon
          */
         public static function checkHoliday($holiday, $holidayId, $name = null, $observed = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:372
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:562
         }
 
         /**
@@ -1341,17 +1652,18 @@ namespace Carbon
          *
          * Add a holiday to the holidays list of a region and optionally init their IDs, names and observed states (if provided as array-definitions).
          *
-         * @param string $region
-         * @param array  $holidays
+         * @param string        $region
+         * @param iterable|null $holidays
+         * @param iterable|null $workingDays
          */
-        public static function addHolidays($region, $holidays)
+        public static function addHolidays(string $region, iterable $holidays = null, iterable $workingDays = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:404
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:595
         }
 
         public static function enable()
         {
-            // Content, see src/Cmixin/BusinessDay/MixinBase.php:15
+            // Content, see src/Cmixin/BusinessDay/MixinBase.php:16
         }
 
         /**
@@ -1365,7 +1677,7 @@ namespace Carbon
          */
         public static function isDateTimeInstance($value)
         {
-            // Content, see src/Cmixin/BusinessDay/MixinBase.php:55
+            // Content, see src/Cmixin/BusinessDay/MixinBase.php:49
         }
 
         /**
@@ -1381,7 +1693,7 @@ namespace Carbon
          */
         public static function swapDateTimeParam($target, $date, $defaultValue)
         {
-            // Content, see src/Cmixin/BusinessDay/MixinBase.php:76
+            // Content, see src/Cmixin/BusinessDay/MixinBase.php:70
         }
 
         /**
@@ -1565,19 +1877,19 @@ namespace Illuminate\Support
          */
         public static function setBusinessDayChecker(callable $checkCallback = null)
         {
-            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:37
+            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:36
         }
 
         /**
          * @see \Cmixin\BusinessDay\BusinessCalendar::isBusinessDay
          *
-         * Checks the date to see if it is a business day (neither a weekend day nor a holiday).
+         * Checks the date to see if it is a business day (extra workday or neither a weekend day nor a holiday).
          *
          * @return bool
          */
         public static function isBusinessDay()
         {
-            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:60
+            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:59
         }
 
         /**
@@ -1589,7 +1901,7 @@ namespace Illuminate\Support
          */
         public static function nextBusinessDay()
         {
-            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:91
+            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:88
         }
 
         /**
@@ -1601,7 +1913,7 @@ namespace Illuminate\Support
          */
         public static function currentOrNextBusinessDay()
         {
-            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:117
+            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:114
         }
 
         /**
@@ -1613,7 +1925,7 @@ namespace Illuminate\Support
          */
         public static function previousBusinessDay()
         {
-            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:91
+            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:88
         }
 
         /**
@@ -1625,7 +1937,7 @@ namespace Illuminate\Support
          */
         public static function currentOrPreviousBusinessDay()
         {
-            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:117
+            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:114
         }
 
         /**
@@ -1640,7 +1952,7 @@ namespace Illuminate\Support
          */
         public static function setObservedHolidaysZone($zone, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:43
+            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:40
         }
 
         /**
@@ -1652,7 +1964,7 @@ namespace Illuminate\Support
          */
         public static function getObservedHolidaysZone()
         {
-            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:64
+            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:61
         }
 
         /**
@@ -1667,7 +1979,7 @@ namespace Illuminate\Support
          */
         public static function setHolidayObserveStatus($holidayId, $observed, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:87
+            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:84
         }
 
         /**
@@ -1682,7 +1994,7 @@ namespace Illuminate\Support
          */
         public static function getObserveHolidayMethod($holidayId = null, $observed = null, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:122
+            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:119
         }
 
         /**
@@ -1696,7 +2008,7 @@ namespace Illuminate\Support
          */
         public static function observeHoliday($holidayId = null, $observed = null, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:122
+            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:119
         }
 
         /**
@@ -1710,7 +2022,7 @@ namespace Illuminate\Support
          */
         public static function unobserveHoliday($holidayId = null, $observed = null, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:122
+            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:119
         }
 
         /**
@@ -1724,7 +2036,7 @@ namespace Illuminate\Support
          */
         public static function observeHolidays($holidayId = null, $observed = null, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:122
+            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:119
         }
 
         /**
@@ -1738,7 +2050,7 @@ namespace Illuminate\Support
          */
         public static function unobserveHolidays($holidayId = null, $observed = null, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:122
+            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:119
         }
 
         /**
@@ -1750,7 +2062,7 @@ namespace Illuminate\Support
          */
         public static function observeAllHolidays($holidayId = null, $observed = null, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:122
+            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:119
         }
 
         /**
@@ -1762,7 +2074,7 @@ namespace Illuminate\Support
          */
         public static function unobserveAllHolidays($holidayId = null, $observed = null, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:122
+            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:119
         }
 
         /**
@@ -1776,7 +2088,7 @@ namespace Illuminate\Support
          */
         public static function checkObservedHoliday($holidayId = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:257
+            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:254
         }
 
         /**
@@ -1790,7 +2102,7 @@ namespace Illuminate\Support
          */
         public static function isObservedHoliday($holidayId = null, $date = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:289
+            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:286
         }
 
         /**
@@ -1804,7 +2116,33 @@ namespace Illuminate\Support
          */
         public static function setHolidayGetter(callable $holidayGetter)
         {
-            // Content, see src/Cmixin/BusinessDay/Holiday.php:50
+            // Content, see src/Cmixin/BusinessDay/Holiday.php:57
+        }
+
+        /**
+         * @see \Cmixin\BusinessDay\Holiday::setExtraWorkdayGetter
+         *
+         * Set the strategy to get the extra workday ID from a date object.
+         *
+         * @param callable|null $workdayGetter
+         *
+         * @return $this|null
+         */
+        public static function setExtraWorkdayGetter(callable $workdayGetter)
+        {
+            // Content, see src/Cmixin/BusinessDay/Holiday.php:82
+        }
+
+        /**
+         * @see \Cmixin\BusinessDay\Holiday::getDBDayId
+         *
+         * Get the identifier of the current holiday or false if it's not a holiday.
+         *
+         * @return string|false
+         */
+        public static function getDBDayId(string $getDays = 'getHolidays')
+        {
+            // Content, see src/Cmixin/BusinessDay/Holiday.php:103
         }
 
         /**
@@ -1816,7 +2154,7 @@ namespace Illuminate\Support
          */
         public static function getHolidayId()
         {
-            // Content, see src/Cmixin/BusinessDay/Holiday.php:73
+            // Content, see src/Cmixin/BusinessDay/Holiday.php:138
         }
 
         /**
@@ -1828,7 +2166,31 @@ namespace Illuminate\Support
          */
         public static function isHoliday()
         {
-            // Content, see src/Cmixin/BusinessDay/Holiday.php:118
+            // Content, see src/Cmixin/BusinessDay/Holiday.php:166
+        }
+
+        /**
+         * @see \Cmixin\BusinessDay\Holiday::getExtraWorkdayId
+         *
+         * Get the identifier of the current special workday or false if it's not a special workday.
+         *
+         * @return string|false
+         */
+        public static function getExtraWorkdayId()
+        {
+            // Content, see src/Cmixin/BusinessDay/Holiday.php:188
+        }
+
+        /**
+         * @see \Cmixin\BusinessDay\Holiday::isExtraWorkday
+         *
+         * Checks the date to see if it is a holiday.
+         *
+         * @return bool
+         */
+        public static function isExtraWorkday()
+        {
+            // Content, see src/Cmixin/BusinessDay/Holiday.php:216
         }
 
         /**
@@ -1842,7 +2204,7 @@ namespace Illuminate\Support
          */
         public static function getHolidayNamesDictionary($locale)
         {
-            // Content, see src/Cmixin/BusinessDay/Holiday.php:143
+            // Content, see src/Cmixin/BusinessDay/Holiday.php:241
         }
 
         /**
@@ -1857,7 +2219,7 @@ namespace Illuminate\Support
          */
         public static function getHolidayName($date = null, $locale = null)
         {
-            // Content, see src/Cmixin/BusinessDay/Holiday.php:182
+            // Content, see src/Cmixin/BusinessDay/Holiday.php:280
         }
 
         /**
@@ -1865,14 +2227,15 @@ namespace Illuminate\Support
          *
          * Get the holidays dates for a given year (current year if no parameter given).
          *
-         * @param int    $year input year, year of the current instance or context used if omitted, current year used if omitted and called statically
-         * @param string $type can be 'string' (to return dates as string) or a class name to returns instances of this class
+         * @param int    $year    input year, year of the current instance or context used if omitted, current year used if omitted and called statically
+         * @param string $type    can be 'string' (to return dates as string) or a class name to returns instances of this class
+         * @param string $getDays macro method to retrieve the days list
          *
          * @return array
          */
-        public static function getYearHolidays($year = null, $type = null, $self = null)
+        public static function getYearHolidays($year = null, $type = null, string $getDays = 'getHolidays')
         {
-            // Content, see src/Cmixin/BusinessDay/YearCrawler.php:24
+            // Content, see src/Cmixin/BusinessDay/YearCrawler.php:25
         }
 
         /**
@@ -1880,14 +2243,15 @@ namespace Illuminate\Support
          *
          * Get a next() callback to call to iterate over holidays of a year.
          *
-         * @param int    $year input year, year of the current instance or context used if omitted, current year used if omitted and called statically
-         * @param string $type can be 'string' (to return dates as string) or a class name to returns instances of this class
+         * @param int    $year    input year, year of the current instance or context used if omitted, current year used if omitted and called statically
+         * @param string $type    can be 'string' (to return dates as string) or a class name to returns instances of this class
+         * @param string $getDays macro method to retrieve the days list
          *
          * @return callable
          */
-        public static function getYearHolidaysNextFunction($year = null, $type = null)
+        public static function getYearHolidaysNextFunction($year = null, $type = null, string $getDays = 'getHolidays')
         {
-            // Content, see src/Cmixin/BusinessDay/YearCrawler.php:54
+            // Content, see src/Cmixin/BusinessDay/YearCrawler.php:56
         }
 
         /**
@@ -1901,7 +2265,19 @@ namespace Illuminate\Support
          */
         public static function standardizeHolidaysRegion($region)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:34
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:45
+        }
+
+        /**
+         * @see \Cmixin\BusinessDay\HolidaysList::getHolidaysAvailableRegions
+         *
+         * Get the current holidays region.
+         *
+         * @return array
+         */
+        public static function getHolidaysAvailableRegions()
+        {
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:66
         }
 
         /**
@@ -1913,7 +2289,7 @@ namespace Illuminate\Support
          */
         public static function setHolidaysRegion($region)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:55
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:94
         }
 
         /**
@@ -1925,7 +2301,21 @@ namespace Illuminate\Support
          */
         public static function getHolidaysRegion()
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:104
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:143
+        }
+
+        /**
+         * @see \Cmixin\BusinessDay\HolidaysList::getBDDaysList
+         *
+         * Get the holidays for the current region selected.
+         *
+         * @param string $region
+         *
+         * @return array
+         */
+        public static function getBDDaysList(string $list, $region = null)
+        {
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:164
         }
 
         /**
@@ -1939,7 +2329,7 @@ namespace Illuminate\Support
          */
         public static function getHolidays($region = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:125
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:197
         }
 
         /**
@@ -1952,7 +2342,34 @@ namespace Illuminate\Support
          */
         public static function setHolidays($region, $holidays)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:153
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:217
+        }
+
+        /**
+         * @see \Cmixin\BusinessDay\HolidaysList::getExtraWorkdays
+         *
+         * Get the holidays for the current region selected.
+         *
+         * @param string $region
+         *
+         * @return array
+         */
+        public static function getExtraWorkdays($region = null)
+        {
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:241
+        }
+
+        /**
+         * @see \Cmixin\BusinessDay\HolidaysList::setExtraWorkdays
+         *
+         * Set the holidays list.
+         *
+         * @param string $region
+         * @param array  $holidays
+         */
+        public static function setExtraWorkdays($region, $holidays)
+        {
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:261
         }
 
         /**
@@ -1962,12 +2379,29 @@ namespace Illuminate\Support
          */
         public static function resetHolidays()
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:173
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:281
         }
 
         public static function initializeHolidaysRegion()
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:198
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:309
+        }
+
+        /**
+         * @see \Cmixin\BusinessDay\HolidaysList::pushToBDList
+         *
+         * Push a day into a given list list of a region.
+         *
+         * @param string          $list   List ID
+         * @param string          $region region where the holiday is observed
+         * @param string|\Closure $day    date or closure that get the year as parameter and returns the date
+         * @param string          $dayId  optional day ID
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|null
+         */
+        public static function pushToBDList(string $list, $region, $day, $dayId = null)
+        {
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:333
         }
 
         /**
@@ -1983,7 +2417,23 @@ namespace Illuminate\Support
          */
         public static function pushHoliday($region, $holiday, $holidayId = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:221
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:363
+        }
+
+        /**
+         * @see \Cmixin\BusinessDay\HolidaysList::pushWorkday
+         *
+         * Push a workday to the workdays list of a region.
+         *
+         * @param string          $region    region where the holiday is observed.
+         * @param string|\Closure $workday   date or closure that get the year as parameter and returns the date
+         * @param string          $workdayId optional workday ID
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|null
+         */
+        public static function pushWorkday($region, $workday, $workdayId = null)
+        {
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:388
         }
 
         /**
@@ -1999,7 +2449,7 @@ namespace Illuminate\Support
          */
         public static function setHolidayName($holidayKey = null, $language = null, $name = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:255
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:413
         }
 
         /**
@@ -2017,7 +2467,24 @@ namespace Illuminate\Support
          */
         public static function addHoliday($region, $holiday, $holidayId = null, $name = null, $observed = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:294
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:452
+        }
+
+        /**
+         * @see \Cmixin\BusinessDay\HolidaysList::addExtraWorkday
+         *
+         * Add a workday to the workdays list of a region and optionally init its ID and name.
+         *
+         * @param string          $region    region where the holiday is observed.
+         * @param string|\Closure $workday   date or closure that get the year as parameter and returns the date
+         * @param string          $workdayId optional holiday ID
+         * @param string          $name      optional name
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|null
+         */
+        public static function addExtraWorkday($region, $workday, $workdayId = null, $name = null)
+        {
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:494
         }
 
         /**
@@ -2033,7 +2500,7 @@ namespace Illuminate\Support
          */
         public static function unpackHoliday($holiday, $name = null, $observed = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:332
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:522
         }
 
         /**
@@ -2050,7 +2517,7 @@ namespace Illuminate\Support
          */
         public static function checkHoliday($holiday, $holidayId, $name = null, $observed = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:372
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:562
         }
 
         /**
@@ -2058,17 +2525,18 @@ namespace Illuminate\Support
          *
          * Add a holiday to the holidays list of a region and optionally init their IDs, names and observed states (if provided as array-definitions).
          *
-         * @param string $region
-         * @param array  $holidays
+         * @param string        $region
+         * @param iterable|null $holidays
+         * @param iterable|null $workingDays
          */
-        public static function addHolidays($region, $holidays)
+        public static function addHolidays(string $region, iterable $holidays = null, iterable $workingDays = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:404
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:595
         }
 
         public static function enable()
         {
-            // Content, see src/Cmixin/BusinessDay/MixinBase.php:15
+            // Content, see src/Cmixin/BusinessDay/MixinBase.php:16
         }
 
         /**
@@ -2082,7 +2550,7 @@ namespace Illuminate\Support
          */
         public static function isDateTimeInstance($value)
         {
-            // Content, see src/Cmixin/BusinessDay/MixinBase.php:55
+            // Content, see src/Cmixin/BusinessDay/MixinBase.php:49
         }
 
         /**
@@ -2098,7 +2566,7 @@ namespace Illuminate\Support
          */
         public static function swapDateTimeParam($target, $date, $defaultValue)
         {
-            // Content, see src/Cmixin/BusinessDay/MixinBase.php:76
+            // Content, see src/Cmixin/BusinessDay/MixinBase.php:70
         }
 
         /**
@@ -2282,19 +2750,19 @@ namespace Illuminate\Support\Facades
          */
         public static function setBusinessDayChecker(callable $checkCallback = null)
         {
-            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:37
+            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:36
         }
 
         /**
          * @see \Cmixin\BusinessDay\BusinessCalendar::isBusinessDay
          *
-         * Checks the date to see if it is a business day (neither a weekend day nor a holiday).
+         * Checks the date to see if it is a business day (extra workday or neither a weekend day nor a holiday).
          *
          * @return bool
          */
         public static function isBusinessDay()
         {
-            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:60
+            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:59
         }
 
         /**
@@ -2306,7 +2774,7 @@ namespace Illuminate\Support\Facades
          */
         public static function nextBusinessDay()
         {
-            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:91
+            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:88
         }
 
         /**
@@ -2318,7 +2786,7 @@ namespace Illuminate\Support\Facades
          */
         public static function currentOrNextBusinessDay()
         {
-            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:117
+            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:114
         }
 
         /**
@@ -2330,7 +2798,7 @@ namespace Illuminate\Support\Facades
          */
         public static function previousBusinessDay()
         {
-            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:91
+            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:88
         }
 
         /**
@@ -2342,7 +2810,7 @@ namespace Illuminate\Support\Facades
          */
         public static function currentOrPreviousBusinessDay()
         {
-            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:117
+            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:114
         }
 
         /**
@@ -2357,7 +2825,7 @@ namespace Illuminate\Support\Facades
          */
         public static function setObservedHolidaysZone($zone, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:43
+            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:40
         }
 
         /**
@@ -2369,7 +2837,7 @@ namespace Illuminate\Support\Facades
          */
         public static function getObservedHolidaysZone()
         {
-            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:64
+            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:61
         }
 
         /**
@@ -2384,7 +2852,7 @@ namespace Illuminate\Support\Facades
          */
         public static function setHolidayObserveStatus($holidayId, $observed, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:87
+            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:84
         }
 
         /**
@@ -2399,7 +2867,7 @@ namespace Illuminate\Support\Facades
          */
         public static function getObserveHolidayMethod($holidayId = null, $observed = null, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:122
+            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:119
         }
 
         /**
@@ -2413,7 +2881,7 @@ namespace Illuminate\Support\Facades
          */
         public static function observeHoliday($holidayId = null, $observed = null, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:122
+            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:119
         }
 
         /**
@@ -2427,7 +2895,7 @@ namespace Illuminate\Support\Facades
          */
         public static function unobserveHoliday($holidayId = null, $observed = null, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:122
+            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:119
         }
 
         /**
@@ -2441,7 +2909,7 @@ namespace Illuminate\Support\Facades
          */
         public static function observeHolidays($holidayId = null, $observed = null, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:122
+            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:119
         }
 
         /**
@@ -2455,7 +2923,7 @@ namespace Illuminate\Support\Facades
          */
         public static function unobserveHolidays($holidayId = null, $observed = null, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:122
+            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:119
         }
 
         /**
@@ -2467,7 +2935,7 @@ namespace Illuminate\Support\Facades
          */
         public static function observeAllHolidays($holidayId = null, $observed = null, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:122
+            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:119
         }
 
         /**
@@ -2479,7 +2947,7 @@ namespace Illuminate\Support\Facades
          */
         public static function unobserveAllHolidays($holidayId = null, $observed = null, $self = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:122
+            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:119
         }
 
         /**
@@ -2493,7 +2961,7 @@ namespace Illuminate\Support\Facades
          */
         public static function checkObservedHoliday($holidayId = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:257
+            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:254
         }
 
         /**
@@ -2507,7 +2975,7 @@ namespace Illuminate\Support\Facades
          */
         public static function isObservedHoliday($holidayId = null, $date = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:289
+            // Content, see src/Cmixin/BusinessDay/HolidayObserver.php:286
         }
 
         /**
@@ -2521,7 +2989,33 @@ namespace Illuminate\Support\Facades
          */
         public static function setHolidayGetter(callable $holidayGetter)
         {
-            // Content, see src/Cmixin/BusinessDay/Holiday.php:50
+            // Content, see src/Cmixin/BusinessDay/Holiday.php:57
+        }
+
+        /**
+         * @see \Cmixin\BusinessDay\Holiday::setExtraWorkdayGetter
+         *
+         * Set the strategy to get the extra workday ID from a date object.
+         *
+         * @param callable|null $workdayGetter
+         *
+         * @return $this|null
+         */
+        public static function setExtraWorkdayGetter(callable $workdayGetter)
+        {
+            // Content, see src/Cmixin/BusinessDay/Holiday.php:82
+        }
+
+        /**
+         * @see \Cmixin\BusinessDay\Holiday::getDBDayId
+         *
+         * Get the identifier of the current holiday or false if it's not a holiday.
+         *
+         * @return string|false
+         */
+        public static function getDBDayId(string $getDays = 'getHolidays')
+        {
+            // Content, see src/Cmixin/BusinessDay/Holiday.php:103
         }
 
         /**
@@ -2533,7 +3027,7 @@ namespace Illuminate\Support\Facades
          */
         public static function getHolidayId()
         {
-            // Content, see src/Cmixin/BusinessDay/Holiday.php:73
+            // Content, see src/Cmixin/BusinessDay/Holiday.php:138
         }
 
         /**
@@ -2545,7 +3039,31 @@ namespace Illuminate\Support\Facades
          */
         public static function isHoliday()
         {
-            // Content, see src/Cmixin/BusinessDay/Holiday.php:118
+            // Content, see src/Cmixin/BusinessDay/Holiday.php:166
+        }
+
+        /**
+         * @see \Cmixin\BusinessDay\Holiday::getExtraWorkdayId
+         *
+         * Get the identifier of the current special workday or false if it's not a special workday.
+         *
+         * @return string|false
+         */
+        public static function getExtraWorkdayId()
+        {
+            // Content, see src/Cmixin/BusinessDay/Holiday.php:188
+        }
+
+        /**
+         * @see \Cmixin\BusinessDay\Holiday::isExtraWorkday
+         *
+         * Checks the date to see if it is a holiday.
+         *
+         * @return bool
+         */
+        public static function isExtraWorkday()
+        {
+            // Content, see src/Cmixin/BusinessDay/Holiday.php:216
         }
 
         /**
@@ -2559,7 +3077,7 @@ namespace Illuminate\Support\Facades
          */
         public static function getHolidayNamesDictionary($locale)
         {
-            // Content, see src/Cmixin/BusinessDay/Holiday.php:143
+            // Content, see src/Cmixin/BusinessDay/Holiday.php:241
         }
 
         /**
@@ -2574,7 +3092,7 @@ namespace Illuminate\Support\Facades
          */
         public static function getHolidayName($date = null, $locale = null)
         {
-            // Content, see src/Cmixin/BusinessDay/Holiday.php:182
+            // Content, see src/Cmixin/BusinessDay/Holiday.php:280
         }
 
         /**
@@ -2582,14 +3100,15 @@ namespace Illuminate\Support\Facades
          *
          * Get the holidays dates for a given year (current year if no parameter given).
          *
-         * @param int    $year input year, year of the current instance or context used if omitted, current year used if omitted and called statically
-         * @param string $type can be 'string' (to return dates as string) or a class name to returns instances of this class
+         * @param int    $year    input year, year of the current instance or context used if omitted, current year used if omitted and called statically
+         * @param string $type    can be 'string' (to return dates as string) or a class name to returns instances of this class
+         * @param string $getDays macro method to retrieve the days list
          *
          * @return array
          */
-        public static function getYearHolidays($year = null, $type = null, $self = null)
+        public static function getYearHolidays($year = null, $type = null, string $getDays = 'getHolidays')
         {
-            // Content, see src/Cmixin/BusinessDay/YearCrawler.php:24
+            // Content, see src/Cmixin/BusinessDay/YearCrawler.php:25
         }
 
         /**
@@ -2597,14 +3116,15 @@ namespace Illuminate\Support\Facades
          *
          * Get a next() callback to call to iterate over holidays of a year.
          *
-         * @param int    $year input year, year of the current instance or context used if omitted, current year used if omitted and called statically
-         * @param string $type can be 'string' (to return dates as string) or a class name to returns instances of this class
+         * @param int    $year    input year, year of the current instance or context used if omitted, current year used if omitted and called statically
+         * @param string $type    can be 'string' (to return dates as string) or a class name to returns instances of this class
+         * @param string $getDays macro method to retrieve the days list
          *
          * @return callable
          */
-        public static function getYearHolidaysNextFunction($year = null, $type = null)
+        public static function getYearHolidaysNextFunction($year = null, $type = null, string $getDays = 'getHolidays')
         {
-            // Content, see src/Cmixin/BusinessDay/YearCrawler.php:54
+            // Content, see src/Cmixin/BusinessDay/YearCrawler.php:56
         }
 
         /**
@@ -2618,7 +3138,19 @@ namespace Illuminate\Support\Facades
          */
         public static function standardizeHolidaysRegion($region)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:34
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:45
+        }
+
+        /**
+         * @see \Cmixin\BusinessDay\HolidaysList::getHolidaysAvailableRegions
+         *
+         * Get the current holidays region.
+         *
+         * @return array
+         */
+        public static function getHolidaysAvailableRegions()
+        {
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:66
         }
 
         /**
@@ -2630,7 +3162,7 @@ namespace Illuminate\Support\Facades
          */
         public static function setHolidaysRegion($region)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:55
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:94
         }
 
         /**
@@ -2642,7 +3174,21 @@ namespace Illuminate\Support\Facades
          */
         public static function getHolidaysRegion()
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:104
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:143
+        }
+
+        /**
+         * @see \Cmixin\BusinessDay\HolidaysList::getBDDaysList
+         *
+         * Get the holidays for the current region selected.
+         *
+         * @param string $region
+         *
+         * @return array
+         */
+        public static function getBDDaysList(string $list, $region = null)
+        {
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:164
         }
 
         /**
@@ -2656,7 +3202,7 @@ namespace Illuminate\Support\Facades
          */
         public static function getHolidays($region = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:125
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:197
         }
 
         /**
@@ -2669,7 +3215,34 @@ namespace Illuminate\Support\Facades
          */
         public static function setHolidays($region, $holidays)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:153
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:217
+        }
+
+        /**
+         * @see \Cmixin\BusinessDay\HolidaysList::getExtraWorkdays
+         *
+         * Get the holidays for the current region selected.
+         *
+         * @param string $region
+         *
+         * @return array
+         */
+        public static function getExtraWorkdays($region = null)
+        {
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:241
+        }
+
+        /**
+         * @see \Cmixin\BusinessDay\HolidaysList::setExtraWorkdays
+         *
+         * Set the holidays list.
+         *
+         * @param string $region
+         * @param array  $holidays
+         */
+        public static function setExtraWorkdays($region, $holidays)
+        {
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:261
         }
 
         /**
@@ -2679,12 +3252,29 @@ namespace Illuminate\Support\Facades
          */
         public static function resetHolidays()
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:173
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:281
         }
 
         public static function initializeHolidaysRegion()
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:198
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:309
+        }
+
+        /**
+         * @see \Cmixin\BusinessDay\HolidaysList::pushToBDList
+         *
+         * Push a day into a given list list of a region.
+         *
+         * @param string          $list   List ID
+         * @param string          $region region where the holiday is observed
+         * @param string|\Closure $day    date or closure that get the year as parameter and returns the date
+         * @param string          $dayId  optional day ID
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|null
+         */
+        public static function pushToBDList(string $list, $region, $day, $dayId = null)
+        {
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:333
         }
 
         /**
@@ -2700,7 +3290,23 @@ namespace Illuminate\Support\Facades
          */
         public static function pushHoliday($region, $holiday, $holidayId = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:221
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:363
+        }
+
+        /**
+         * @see \Cmixin\BusinessDay\HolidaysList::pushWorkday
+         *
+         * Push a workday to the workdays list of a region.
+         *
+         * @param string          $region    region where the holiday is observed.
+         * @param string|\Closure $workday   date or closure that get the year as parameter and returns the date
+         * @param string          $workdayId optional workday ID
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|null
+         */
+        public static function pushWorkday($region, $workday, $workdayId = null)
+        {
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:388
         }
 
         /**
@@ -2716,7 +3322,7 @@ namespace Illuminate\Support\Facades
          */
         public static function setHolidayName($holidayKey = null, $language = null, $name = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:255
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:413
         }
 
         /**
@@ -2734,7 +3340,24 @@ namespace Illuminate\Support\Facades
          */
         public static function addHoliday($region, $holiday, $holidayId = null, $name = null, $observed = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:294
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:452
+        }
+
+        /**
+         * @see \Cmixin\BusinessDay\HolidaysList::addExtraWorkday
+         *
+         * Add a workday to the workdays list of a region and optionally init its ID and name.
+         *
+         * @param string          $region    region where the holiday is observed.
+         * @param string|\Closure $workday   date or closure that get the year as parameter and returns the date
+         * @param string          $workdayId optional holiday ID
+         * @param string          $name      optional name
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|null
+         */
+        public static function addExtraWorkday($region, $workday, $workdayId = null, $name = null)
+        {
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:494
         }
 
         /**
@@ -2750,7 +3373,7 @@ namespace Illuminate\Support\Facades
          */
         public static function unpackHoliday($holiday, $name = null, $observed = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:332
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:522
         }
 
         /**
@@ -2767,7 +3390,7 @@ namespace Illuminate\Support\Facades
          */
         public static function checkHoliday($holiday, $holidayId, $name = null, $observed = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:372
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:562
         }
 
         /**
@@ -2775,17 +3398,18 @@ namespace Illuminate\Support\Facades
          *
          * Add a holiday to the holidays list of a region and optionally init their IDs, names and observed states (if provided as array-definitions).
          *
-         * @param string $region
-         * @param array  $holidays
+         * @param string        $region
+         * @param iterable|null $holidays
+         * @param iterable|null $workingDays
          */
-        public static function addHolidays($region, $holidays)
+        public static function addHolidays(string $region, iterable $holidays = null, iterable $workingDays = null)
         {
-            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:404
+            // Content, see src/Cmixin/BusinessDay/HolidaysList.php:595
         }
 
         public static function enable()
         {
-            // Content, see src/Cmixin/BusinessDay/MixinBase.php:15
+            // Content, see src/Cmixin/BusinessDay/MixinBase.php:16
         }
 
         /**
@@ -2799,7 +3423,7 @@ namespace Illuminate\Support\Facades
          */
         public static function isDateTimeInstance($value)
         {
-            // Content, see src/Cmixin/BusinessDay/MixinBase.php:55
+            // Content, see src/Cmixin/BusinessDay/MixinBase.php:49
         }
 
         /**
@@ -2815,7 +3439,7 @@ namespace Illuminate\Support\Facades
          */
         public static function swapDateTimeParam($target, $date, $defaultValue)
         {
-            // Content, see src/Cmixin/BusinessDay/MixinBase.php:76
+            // Content, see src/Cmixin/BusinessDay/MixinBase.php:70
         }
 
         /**

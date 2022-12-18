@@ -49,6 +49,10 @@ class Generator
         $files = [];
 
         foreach ($this->getMethods($boot) as $name => $closure) {
+            if (!$closure) {
+                continue;
+            }
+
             try {
                 $function = new ReflectionFunction($closure);
             } catch (ReflectionException $e) {
