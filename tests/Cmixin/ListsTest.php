@@ -147,7 +147,7 @@ class ListsTest extends TestCase
                 self::assertSame(
                     $holiday,
                     Carbon::parse("$year-6-$day")->isHoliday(),
-                    "June ${day}th $year should be a ".($holiday ? 'holiday' : 'business day')
+                    "June {$day}th $year should be a ".($holiday ? 'holiday' : 'business day')
                 );
             }
         }

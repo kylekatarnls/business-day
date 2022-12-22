@@ -2,12 +2,15 @@
 
 namespace Cmixin\BusinessDay\Calculator;
 
+use Carbon\CarbonInterface;
 use Cmixin\BusinessDay\BusinessCalendar;
 use DateTime;
 use SplObjectStorage;
 
 final class MixinConfigPropagator
 {
+    private static $storage = [];
+
     public static function propagate(BusinessCalendar $mixin, $from, $to): void
     {
         foreach ([
@@ -64,40 +67,35 @@ final class MixinConfigPropagator
 
     private static function setStrategy(string $strategy, BusinessCalendar $mixin, $date, ?callable $callback)
     {
-        $storage = $date ?? $mixin;
-
-        if (!$date) {
-            $storage->$strategy = $callback;
-
-            return null;
+        if ($date instanceof CarbonInterface) {
+            return $date->settings(['macros' => [
+                '__bd_strategy_' . $strategy => $callback,
+            ]]);
         }
 
-        // If mutable
-        if ($date instanceof DateTime) {
-            $date->$strategy = $callback;
-
-            return $date;
+        if (!isset(static::$storage[$strategy])) {
+            static::$storage[$strategy] = new SplObjectStorage();
         }
 
-        $plural = $strategy.'s';
-
-        if (!$mixin->$plural) {
-            $mixin->$plural = new SplObjectStorage();
-        }
-
-        $mixin->$plural[$date] = $callback;
+        static::$storage[$strategy]->offsetSet($date ?? $mixin, $callback);
 
         return $date;
     }
 
     private static function getStrategy(string $strategy, BusinessCalendar $mixin, $date): ?callable
     {
-        if ($date && isset($date->$strategy)) {
-            return $date->$strategy;
+        if ($date instanceof CarbonInterface && $date->hasLocalMacro('__bd_strategy_' . $strategy)) {
+            return $date->getLocalMacro('__bd_strategy_' . $strategy);
         }
 
-        $plural = $strategy.'s';
+        $storage = static::$storage[$strategy] ?? null;
 
-        return $mixin->$plural[$date] ?? $mixin->$strategy;
+        if (!$storage) {
+            return null;
+        }
+
+        return ($date ? $storage[$date] ?? null : null)
+            ?? $storage[$mixin]
+            ?? null;
     }
 }

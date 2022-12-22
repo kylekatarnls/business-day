@@ -57,7 +57,7 @@ class YearCrawler extends HolidaysList
             $self = static::this();
             $carbonClass = get_class($self);
             $year = $year ?: $self->year;
-            $holidays = $carbonClass::$getDays();
+            $holidays = $self->$getDays();
             $outputClass = $type ? (is_string($type) && $type !== 'string' ? $type : 'DateTime') : $carbonClass;
             $holidaysList = [];
             $calculator = new HolidayCalculator((int) $year, $type, $holidays);
