@@ -2,7 +2,6 @@
 
 namespace Cmixin\BusinessDay\Calculator;
 
-use BadMethodCallException;
 use Carbon\CarbonInterface;
 use Cmixin\BusinessDay\BusinessCalendar;
 use DateTime;
@@ -85,7 +84,7 @@ final class MixinConfigPropagator
 
     private static function getStrategy(string $strategy, BusinessCalendar $mixin, $date): ?callable
     {
-        if ($date instanceof CarbonInterface && ($callback = $date->getLocalMacro('__bd_strategy_' . $strategy))) {
+        if ($date instanceof CarbonInterface && ($callback = $date->getLocalMacro('__bd_strategy_'.$strategy))) {
             return $callback;
         }
 
