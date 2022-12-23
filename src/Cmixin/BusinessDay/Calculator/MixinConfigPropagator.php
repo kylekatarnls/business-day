@@ -2,6 +2,7 @@
 
 namespace Cmixin\BusinessDay\Calculator;
 
+use BadMethodCallException;
 use Carbon\CarbonInterface;
 use Cmixin\BusinessDay\BusinessCalendar;
 use DateTime;
@@ -68,9 +69,15 @@ final class MixinConfigPropagator
     private static function setStrategy(string $strategy, BusinessCalendar $mixin, $date, ?callable $callback)
     {
         if ($date instanceof CarbonInterface) {
-            return $date->settings(['macros' => [
-                '__bd_strategy_' . $strategy => $callback,
-            ]]);
+            try {
+                return $date->settings(['macros' => [
+                    '__bd_strategy_' . $strategy => $callback,
+                ]]);
+            } catch (BadMethodCallException $exception) {
+                $date->$strategy = $callback;
+
+                return $date;
+            }
         }
 
         if (!isset(static::$storage[$strategy])) {
@@ -84,8 +91,16 @@ final class MixinConfigPropagator
 
     private static function getStrategy(string $strategy, BusinessCalendar $mixin, $date): ?callable
     {
-        if ($date instanceof CarbonInterface && $date->hasLocalMacro('__bd_strategy_' . $strategy)) {
-            return $date->getLocalMacro('__bd_strategy_' . $strategy);
+        if ($date instanceof CarbonInterface) {
+            try {
+                $callback = $date->getLocalMacro('__bd_strategy_' . $strategy);
+            } catch (BadMethodCallException $exception) {
+                $callback = $date->$strategy ?? null;
+            }
+
+            if ($callback) {
+                return $callback;
+            }
         }
 
         $storage = static::$storage[$strategy] ?? null;
