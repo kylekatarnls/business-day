@@ -69,15 +69,9 @@ final class MixinConfigPropagator
     private static function setStrategy(string $strategy, BusinessCalendar $mixin, $date, ?callable $callback)
     {
         if ($date instanceof CarbonInterface) {
-            try {
-                return $date->settings(['macros' => [
-                    '__bd_strategy_' . $strategy => $callback,
-                ]]);
-            } catch (BadMethodCallException $exception) {
-                $date->$strategy = $callback;
-
-                return $date;
-            }
+            return $date->settings(['macros' => [
+                '__bd_strategy_'.$strategy => $callback,
+            ]]);
         }
 
         if (!isset(static::$storage[$strategy])) {
@@ -91,16 +85,8 @@ final class MixinConfigPropagator
 
     private static function getStrategy(string $strategy, BusinessCalendar $mixin, $date): ?callable
     {
-        if ($date instanceof CarbonInterface) {
-            try {
-                $callback = $date->getLocalMacro('__bd_strategy_' . $strategy);
-            } catch (BadMethodCallException $exception) {
-                $callback = $date->$strategy ?? null;
-            }
-
-            if ($callback) {
-                return $callback;
-            }
+        if ($date instanceof CarbonInterface && ($callback = $date->getLocalMacro('__bd_strategy_' . $strategy))) {
+            return $callback;
         }
 
         $storage = static::$storage[$strategy] ?? null;
