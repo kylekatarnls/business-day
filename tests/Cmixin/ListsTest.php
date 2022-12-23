@@ -100,7 +100,7 @@ class ListsTest extends TestCase
 
         $days = [];
 
-        foreach (Carbon::getYearHolidays(2020) as $id => $holiday) {
+        foreach (Carbon::getYearHolidays(2020) as $holiday) {
             $days[] = $holiday->getHolidayName().': '.$holiday->format('l, F j, Y');
         }
 

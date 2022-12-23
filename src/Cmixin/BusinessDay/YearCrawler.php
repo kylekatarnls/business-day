@@ -2,6 +2,7 @@
 
 namespace Cmixin\BusinessDay;
 
+use BadMethodCallException;
 use Cmixin\BusinessDay\Calculator\HolidayCalculator;
 
 class YearCrawler extends HolidaysList
@@ -57,7 +58,13 @@ class YearCrawler extends HolidaysList
             $self = static::this();
             $carbonClass = get_class($self);
             $year = $year ?: $self->year;
-            $holidays = $self->$getDays();
+
+            try {
+                $holidays = $self->$getDays();
+            } catch (BadMethodCallException $exception) {
+                $holidays = $carbonClass::$getDays();
+            }
+
             $outputClass = $type ? (is_string($type) && $type !== 'string' ? $type : 'DateTime') : $carbonClass;
             $holidaysList = [];
             $calculator = new HolidayCalculator((int) $year, $type, $holidays);
