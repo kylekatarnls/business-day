@@ -36,10 +36,10 @@ jobs:
 
     - name: Cache Composer packages
       id: composer-cache
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: vendor
-        key: ${{ runner.os }}-${{ matrix.setup }}-v4-php-${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
+        key: ${{ runner.os }}-${{ matrix.setup }}-v4-php-${{ matrix.php }}-${{ hashFiles('**/composer.json') }}
         restore-keys: |
           ${{ runner.os }}-${{ matrix.setup }}-v4-php-${{ matrix.php }}-
 
