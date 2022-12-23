@@ -2,6 +2,7 @@
 
 namespace Tests\Cmixin;
 
+use BadMethodCallException;
 use Carbon\CarbonInterface;
 use Cmixin\BusinessDay;
 use Cmixin\BusinessDay\Calculator\HolidayCalculator;
@@ -739,5 +740,20 @@ class BusinessDayTest extends TestCase
 
         self::assertIsArray($actual);
         self::assertContains('fr-national', $actual);
+    }
+
+    /** @group i */
+    public function testGetHolidaysFallback()
+    {
+        $carbon = static::CARBON_CLASS;
+
+        $date = $carbon::parse('2018-04-16 12:00:00')->settings([
+            'macros' => [
+                'getHolidays' => static function () {
+                    throw new BadMethodCallException('Not locally defined');
+                },
+            ],
+        ]);
+        self::assertSame($date, $date->currentOrNextBusinessDay());
     }
 }
