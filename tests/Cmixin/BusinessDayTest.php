@@ -663,7 +663,7 @@ class BusinessDayTest extends TestCase
             'info' => 'You may need to know...',
         ]);
         $carbon::parse('2020-10-13')->setHolidayData([
-            'info' => 'Lost if not an holiday.',
+            'info' => 'Lost if not a holiday.',
         ]);
         $carbon::setHolidayDataById('christmas', [
             'info' => 'It may be cold in USA',
