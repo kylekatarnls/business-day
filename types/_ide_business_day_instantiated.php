@@ -489,7 +489,7 @@ namespace Carbon
          */
         public function getYearHolidays($year = null, $type = null, string $getDays = 'getHolidays')
         {
-            // Content, see src/Cmixin/BusinessDay/YearCrawler.php:25
+            // Content, see src/Cmixin/BusinessDay/YearCrawler.php:26
         }
 
         /**
@@ -505,7 +505,7 @@ namespace Carbon
          */
         public function getYearHolidaysNextFunction($year = null, $type = null, string $getDays = 'getHolidays')
         {
-            // Content, see src/Cmixin/BusinessDay/YearCrawler.php:56
+            // Content, see src/Cmixin/BusinessDay/YearCrawler.php:57
         }
 
         /**
@@ -1362,7 +1362,7 @@ namespace Carbon
          */
         public function getYearHolidays($year = null, $type = null, string $getDays = 'getHolidays')
         {
-            // Content, see src/Cmixin/BusinessDay/YearCrawler.php:25
+            // Content, see src/Cmixin/BusinessDay/YearCrawler.php:26
         }
 
         /**
@@ -1378,7 +1378,7 @@ namespace Carbon
          */
         public function getYearHolidaysNextFunction($year = null, $type = null, string $getDays = 'getHolidays')
         {
-            // Content, see src/Cmixin/BusinessDay/YearCrawler.php:56
+            // Content, see src/Cmixin/BusinessDay/YearCrawler.php:57
         }
 
         /**
@@ -2235,7 +2235,7 @@ namespace Illuminate\Support
          */
         public function getYearHolidays($year = null, $type = null, string $getDays = 'getHolidays')
         {
-            // Content, see src/Cmixin/BusinessDay/YearCrawler.php:25
+            // Content, see src/Cmixin/BusinessDay/YearCrawler.php:26
         }
 
         /**
@@ -2251,7 +2251,7 @@ namespace Illuminate\Support
          */
         public function getYearHolidaysNextFunction($year = null, $type = null, string $getDays = 'getHolidays')
         {
-            // Content, see src/Cmixin/BusinessDay/YearCrawler.php:56
+            // Content, see src/Cmixin/BusinessDay/YearCrawler.php:57
         }
 
         /**
@@ -3108,7 +3108,7 @@ namespace Illuminate\Support\Facades
          */
         public function getYearHolidays($year = null, $type = null, string $getDays = 'getHolidays')
         {
-            // Content, see src/Cmixin/BusinessDay/YearCrawler.php:25
+            // Content, see src/Cmixin/BusinessDay/YearCrawler.php:26
         }
 
         /**
@@ -3124,7 +3124,7 @@ namespace Illuminate\Support\Facades
          */
         public function getYearHolidaysNextFunction($year = null, $type = null, string $getDays = 'getHolidays')
         {
-            // Content, see src/Cmixin/BusinessDay/YearCrawler.php:56
+            // Content, see src/Cmixin/BusinessDay/YearCrawler.php:57
         }
 
         /**
