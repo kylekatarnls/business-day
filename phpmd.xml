@@ -14,4 +14,14 @@
             <property name="exceptions" value="Cmixin\Util\Context,Cmixin\Calculator\MixinConfigPropagator,Cmixin\BusinessDay\Calendar\HijriCalendar,Cmixin\BusinessDay\Calendar\JewishCalendar,Cmixin\BusinessDay\Calculator\MixinConfigPropagator" />
         </properties>
     </rule>
+
+    <rule ref="rulesets/naming.xml">
+        <exclude name="ShortVariable"/>
+    </rule>
+
+    <rule ref="rulesets/naming.xml/ShortVariable">
+        <properties>
+            <property name="exceptions" value="to" />
+        </properties>
+    </rule>
 </ruleset>

@@ -92,9 +92,11 @@ final class MixinConfigPropagator
 
     private static function getStrategy(string $strategy, BusinessCalendar $mixin, $date): ?callable
     {
-        if ($date instanceof CarbonInterface &&
-            ($callback = $date->getLocalMacro(self::STRATEGY_MACRO_PREFIX.$strategy))
-        ) {
+        $callback = ($date instanceof CarbonInterface)
+            ? $date->getLocalMacro(self::STRATEGY_MACRO_PREFIX.$strategy)
+            : null;
+
+        if ($callback) {
             return $callback;
         }
 
