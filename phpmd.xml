@@ -11,7 +11,7 @@
 
     <rule ref="rulesets/cleancode.xml/StaticAccess">
         <properties>
-            <property name="exceptions" value="Cmixin\Util\Context,Cmixin\Calculator\MixinConfigPropagator,Cmixin\BusinessDay\Calendar\HijriCalendar,Cmixin\BusinessDay\Calendar\JewishCalendar" />
+            <property name="exceptions" value="Cmixin\Util\Context,Cmixin\Calculator\MixinConfigPropagator,Cmixin\BusinessDay\Calendar\HijriCalendar,Cmixin\BusinessDay\Calendar\JewishCalendar,Cmixin\BusinessDay\Calculator\MixinConfigPropagator" />
         </properties>
     </rule>
 </ruleset>
