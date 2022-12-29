@@ -3,10 +3,13 @@
 namespace Tests\Cmixin;
 
 use BadMethodCallException;
+use Carbon\CarbonImmutable;
 use Carbon\CarbonInterface;
 use Cmixin\BusinessDay;
 use Cmixin\BusinessDay\Calculator\HolidayCalculator;
+use Cmixin\BusinessDay\Calculator\MixinConfigPropagator;
 use DateTime;
+use DateTimeImmutable;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Tests\Cmixin\Traits\AddAndSubDays;
@@ -742,7 +745,6 @@ class BusinessDayTest extends TestCase
         self::assertContains('fr-national', $actual);
     }
 
-    /** @group i */
     public function testGetHolidaysFallback()
     {
         $carbon = static::CARBON_CLASS;
@@ -755,5 +757,21 @@ class BusinessDayTest extends TestCase
             ],
         ]);
         self::assertSame($date, $date->currentOrNextBusinessDay());
+
+        $mixin = BusinessDay::enable($carbon, 'fr-national');
+        $dateClass = $carbon === CarbonImmutable::class ? DateTimeImmutable::class : DateTime::class;
+        $date = new $dateClass('2022-12-24 12:00:00');
+        $strategy = static function (CarbonInterface $date) {
+            return !$date->is('2022-12-25');
+        };
+        $next = clone $date->modify('+1 day');
+
+        MixinConfigPropagator::setBusinessDayChecker($mixin, $date, $strategy);
+
+        self::assertNull(MixinConfigPropagator::getBusinessDayChecker($mixin, $next));
+
+        MixinConfigPropagator::propagate($date, $next);
+
+        self::assertSame($strategy, MixinConfigPropagator::getBusinessDayChecker($mixin, $next));
     }
 }

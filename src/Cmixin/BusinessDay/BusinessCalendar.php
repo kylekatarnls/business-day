@@ -78,19 +78,17 @@ class BusinessCalendar extends HolidayObserver
      */
     public function nextBusinessDay($method = 'addDay')
     {
-        $mixin = $this;
-
         /**
          * Sets the date to the next business day (neither a weekend day nor a holiday).
          *
          * @return \Carbon\CarbonInterface|\Carbon\Carbon|\Carbon\CarbonImmutable
          */
-        return static function () use ($mixin, $method) {
+        return static function () use ($method) {
             /** @var static $self */
             $self = static::this();
 
             do {
-                $self = MixinConfigPropagator::apply($mixin, $self, $method);
+                $self = MixinConfigPropagator::apply($self, $method);
             } while (!$self->isBusinessDay());
 
             return $self;

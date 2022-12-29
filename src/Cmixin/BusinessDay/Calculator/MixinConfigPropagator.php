@@ -11,25 +11,25 @@ final class MixinConfigPropagator
 {
     private static $storage = [];
 
-    public static function propagate(BusinessCalendar $mixin, $from, $to): void
+    public static function propagate($from, $to): void
     {
         foreach ([
-            $mixin->businessDayCheckers,
-            $mixin->holidayGetters,
-            $mixin->workdayGetters,
+            'businessDayChecker',
+            'holidayGetter',
+            'workdayGetter',
         ] as $config) {
-            if ($config && isset($config[$from])) {
-                $config[$to] = $config[$from];
+            if (isset(self::$storage[$config][$from])) {
+                self::$storage[$config][$to] = self::$storage[$config][$from];
             }
         }
     }
 
-    public static function apply(BusinessCalendar $mixin, $date, $method)
+    public static function apply($date, $method)
     {
         $result = $date->$method();
 
         if (!($date instanceof DateTime)) {
-            self::propagate($mixin, $date, $result);
+            self::propagate($date, $result);
         }
 
         return $result;
@@ -73,11 +73,11 @@ final class MixinConfigPropagator
             ]]);
         }
 
-        if (!isset(static::$storage[$strategy])) {
-            static::$storage[$strategy] = new SplObjectStorage();
+        if (!isset(self::$storage[$strategy])) {
+            self::$storage[$strategy] = new SplObjectStorage();
         }
 
-        static::$storage[$strategy]->offsetSet($date ?? $mixin, $callback);
+        self::$storage[$strategy]->offsetSet($date ?? $mixin, $callback);
 
         return $date;
     }
@@ -88,7 +88,7 @@ final class MixinConfigPropagator
             return $callback;
         }
 
-        $storage = static::$storage[$strategy] ?? null;
+        $storage = self::$storage[$strategy] ?? null;
 
         if (!$storage) {
             return null;
