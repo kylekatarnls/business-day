@@ -9,6 +9,7 @@ use ReflectionException;
 use ReflectionFunction;
 use ReflectionMethod;
 use ReflectionParameter;
+use RuntimeException;
 
 class Generator
 {
@@ -78,6 +79,7 @@ class Generator
             $length = $function->getStartLine() - 1;
             $code = array_slice($lines, 0, $length);
             $className = '\\'.str_replace('/', '\\', substr($file, 0, -4));
+            $innerPhpDocFound = false;
 
             for ($i = $length - 1; $i >= 0; $i--) {
                 if (preg_match('/^\s*(public|protected)\s+function\s+(\S+)\(.*\)(\s*\{)?$/', $code[$i], $match)) {
@@ -122,6 +124,7 @@ class Generator
                         $code = implode('', array_slice($code, $i));
 
                         if (preg_match('/(\/\*\*[\s\S]+\*\/)\s+return\s/U', $code, $match)) {
+                            $innerPhpDocFound = true;
                             $methodDocBlock = $match[1];
                         }
                     }
@@ -130,6 +133,15 @@ class Generator
                 }
             }
 
+            if (!$innerPhpDocFound &&
+                $function instanceof ReflectionMethod &&
+                !$function->hasReturnType() &&
+                !preg_match('/@return\s+(?:.+\|)?\\\\?Closure<.*>/U', $methodDocBlock)
+            ) {
+                throw new RuntimeException('No Closure return found for '.$name);
+            }
+
+            $methodDocBlock = preg_replace('/(@return\s+)(?:.+\|)?\\\\?Closure(<((?>[^<>]+|(?2))*)>)\S*/', '$1$3', $methodDocBlock);
             $methodDocBlock = preg_replace('/^ +\*/m', '         *', $methodDocBlock);
             $file .= ':'.$function->getStartLine();
 

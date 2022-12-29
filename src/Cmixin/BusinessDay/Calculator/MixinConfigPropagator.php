@@ -9,27 +9,35 @@ use SplObjectStorage;
 
 final class MixinConfigPropagator
 {
+    private const BUSINESS_DAY_CHECKER = 'businessDayChecker';
+
+    private const HOLIDAY_GETTER = 'holidayGetter';
+
+    private const WORKDAY_GETTER = 'workdayGetter';
+
+    private const STRATEGY_MACRO_PREFIX = '__bd_strategy_';
+
     private static $storage = [];
 
-    public static function propagate(BusinessCalendar $mixin, $from, $to): void
+    public static function propagate($from, $to): void
     {
         foreach ([
-            $mixin->businessDayCheckers,
-            $mixin->holidayGetters,
-            $mixin->workdayGetters,
+            self::BUSINESS_DAY_CHECKER,
+            self::HOLIDAY_GETTER,
+            self::WORKDAY_GETTER,
         ] as $config) {
-            if ($config && isset($config[$from])) {
-                $config[$to] = $config[$from];
+            if (isset(self::$storage[$config][$from])) {
+                self::$storage[$config][$to] = self::$storage[$config][$from];
             }
         }
     }
 
-    public static function apply(BusinessCalendar $mixin, $date, $method)
+    public static function apply($date, $method)
     {
         $result = $date->$method();
 
         if (!($date instanceof DateTime)) {
-            self::propagate($mixin, $date, $result);
+            self::propagate($date, $result);
         }
 
         return $result;
@@ -37,58 +45,62 @@ final class MixinConfigPropagator
 
     public static function setBusinessDayChecker(BusinessCalendar $mixin, $date, ?callable $checkCallback)
     {
-        return self::setStrategy('businessDayChecker', $mixin, $date, $checkCallback);
+        return self::setStrategy(self::BUSINESS_DAY_CHECKER, $mixin, $date, $checkCallback);
     }
 
     public static function getBusinessDayChecker(BusinessCalendar $mixin, $date): ?callable
     {
-        return self::getStrategy('businessDayChecker', $mixin, $date);
+        return self::getStrategy(self::BUSINESS_DAY_CHECKER, $mixin, $date);
     }
 
     public static function setHolidayGetter(BusinessCalendar $mixin, $date, ?callable $holidayGetter)
     {
-        return self::setStrategy('holidayGetter', $mixin, $date, $holidayGetter);
+        return self::setStrategy(self::HOLIDAY_GETTER, $mixin, $date, $holidayGetter);
     }
 
     public static function getHolidayGetter(BusinessCalendar $mixin, $date): ?callable
     {
-        return self::getStrategy('holidayGetter', $mixin, $date);
+        return self::getStrategy(self::HOLIDAY_GETTER, $mixin, $date);
     }
 
     public static function setExtraWorkdayGetter(BusinessCalendar $mixin, $date, ?callable $holidayGetter)
     {
-        return self::setStrategy('workdayGetter', $mixin, $date, $holidayGetter);
+        return self::setStrategy(self::WORKDAY_GETTER, $mixin, $date, $holidayGetter);
     }
 
     public static function getExtraWorkdayGetter(BusinessCalendar $mixin, $date): ?callable
     {
-        return self::getStrategy('workdayGetter', $mixin, $date);
+        return self::getStrategy(self::WORKDAY_GETTER, $mixin, $date);
     }
 
     private static function setStrategy(string $strategy, BusinessCalendar $mixin, $date, ?callable $callback)
     {
         if ($date instanceof CarbonInterface) {
             return $date->settings(['macros' => [
-                '__bd_strategy_'.$strategy => $callback,
+                self::STRATEGY_MACRO_PREFIX.$strategy => $callback,
             ]]);
         }
 
-        if (!isset(static::$storage[$strategy])) {
-            static::$storage[$strategy] = new SplObjectStorage();
+        if (!isset(self::$storage[$strategy])) {
+            self::$storage[$strategy] = new SplObjectStorage();
         }
 
-        static::$storage[$strategy]->offsetSet($date ?? $mixin, $callback);
+        self::$storage[$strategy]->offsetSet($date ?? $mixin, $callback);
 
         return $date;
     }
 
     private static function getStrategy(string $strategy, BusinessCalendar $mixin, $date): ?callable
     {
-        if ($date instanceof CarbonInterface && ($callback = $date->getLocalMacro('__bd_strategy_'.$strategy))) {
+        $callback = ($date instanceof CarbonInterface)
+            ? $date->getLocalMacro(self::STRATEGY_MACRO_PREFIX.$strategy)
+            : null;
+
+        if ($callback) {
             return $callback;
         }
 
-        $storage = static::$storage[$strategy] ?? null;
+        $storage = self::$storage[$strategy] ?? null;
 
         if (!$storage) {
             return null;
