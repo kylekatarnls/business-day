@@ -167,7 +167,7 @@ Thanksgiving: Thursday, November 26, 2020
 Christmas: Friday, December 25, 2020
 ```
 
-[Try in the live editor](https://try-carbon.herokuapp.com/?input=BusinessDay%3A%3Aenable(%27Carbon%5CCarbon%27)%3B%0A%0ACarbon%3A%3AsetHolidaysRegion(%27us%27)%3B%0A%0Aforeach%20(Carbon%3A%3AgetYearHolidays(2020)%20as%20%24id%20%3D>%20%24holiday)%20%7B%0A%20%20%20%20echo%20%24holiday->getHolidayName().%27%3A%20%27.%24holiday->format(%27l%2C%20F%20j%2C%20Y%27)."%5Cn"%3B%0A%7D)
+[Try in the live editor](https://play.phpsandbox.io/embed/nesbot/carbon?input=BusinessDay%3A%3Aenable(%27Carbon%5CCarbon%27)%3B%0A%0ACarbon%3A%3AsetHolidaysRegion(%27us%27)%3B%0A%0Aforeach%20(Carbon%3A%3AgetYearHolidays(2020)%20as%20%24id%20%3D>%20%24holiday)%20%7B%0A%20%20%20%20echo%20%24holiday->getHolidayName().%27%3A%20%27.%24holiday->format(%27l%2C%20F%20j%2C%20Y%27)."%5Cn"%3B%0A%7D)
 
 #### getHolidays
 
