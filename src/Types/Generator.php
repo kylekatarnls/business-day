@@ -116,7 +116,7 @@ class Generator
                         $code = array_slice($lines, 0, $length);
 
                         for ($i = $length - 1; $i >= 0; $i--) {
-                            if (preg_match('/^\s*(public|protected)\s+function\s+(\S+)\(.*\)(\s*\{)?$/', $code[$i], $match)) {
+                            if (preg_match('/^(public|protected)\s+function\s+(\S+)\(.*\)(\s*\{)?$/', trim($code[$i]), $match)) {
                                 break;
                             }
                         }
