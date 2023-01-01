@@ -155,7 +155,7 @@ namespace Carbon
          */
         public static function nextBusinessDay()
         {
-            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:88
+            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:86
         }
 
         /**
@@ -167,7 +167,7 @@ namespace Carbon
          */
         public static function currentOrNextBusinessDay()
         {
-            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:114
+            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:112
         }
 
         /**
@@ -179,7 +179,7 @@ namespace Carbon
          */
         public static function previousBusinessDay()
         {
-            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:88
+            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:86
         }
 
         /**
@@ -191,7 +191,7 @@ namespace Carbon
          */
         public static function currentOrPreviousBusinessDay()
         {
-            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:114
+            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:112
         }
 
         /**
@@ -1028,7 +1028,7 @@ namespace Carbon
          */
         public static function nextBusinessDay()
         {
-            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:88
+            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:86
         }
 
         /**
@@ -1040,7 +1040,7 @@ namespace Carbon
          */
         public static function currentOrNextBusinessDay()
         {
-            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:114
+            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:112
         }
 
         /**
@@ -1052,7 +1052,7 @@ namespace Carbon
          */
         public static function previousBusinessDay()
         {
-            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:88
+            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:86
         }
 
         /**
@@ -1064,7 +1064,7 @@ namespace Carbon
          */
         public static function currentOrPreviousBusinessDay()
         {
-            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:114
+            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:112
         }
 
         /**
@@ -1901,7 +1901,7 @@ namespace Illuminate\Support
          */
         public static function nextBusinessDay()
         {
-            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:88
+            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:86
         }
 
         /**
@@ -1913,7 +1913,7 @@ namespace Illuminate\Support
          */
         public static function currentOrNextBusinessDay()
         {
-            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:114
+            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:112
         }
 
         /**
@@ -1925,7 +1925,7 @@ namespace Illuminate\Support
          */
         public static function previousBusinessDay()
         {
-            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:88
+            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:86
         }
 
         /**
@@ -1937,7 +1937,7 @@ namespace Illuminate\Support
          */
         public static function currentOrPreviousBusinessDay()
         {
-            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:114
+            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:112
         }
 
         /**
@@ -2774,7 +2774,7 @@ namespace Illuminate\Support\Facades
          */
         public static function nextBusinessDay()
         {
-            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:88
+            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:86
         }
 
         /**
@@ -2786,7 +2786,7 @@ namespace Illuminate\Support\Facades
          */
         public static function currentOrNextBusinessDay()
         {
-            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:114
+            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:112
         }
 
         /**
@@ -2798,7 +2798,7 @@ namespace Illuminate\Support\Facades
          */
         public static function previousBusinessDay()
         {
-            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:88
+            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:86
         }
 
         /**
@@ -2810,7 +2810,7 @@ namespace Illuminate\Support\Facades
          */
         public static function currentOrPreviousBusinessDay()
         {
-            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:114
+            // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:112
         }
 
         /**
