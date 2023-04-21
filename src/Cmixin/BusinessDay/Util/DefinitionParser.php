@@ -19,6 +19,7 @@ class DefinitionParser
 
     /**
      * @param string $carbonClass
+     *
      * @psalm-param class-string<CarbonInterface> $carbonClass
      */
     public function applyTo(string $carbonClass): void
