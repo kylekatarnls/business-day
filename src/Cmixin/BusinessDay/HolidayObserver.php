@@ -283,10 +283,10 @@ class HolidayObserver extends Holiday
          *
          * @return bool
          */
-        return function ($holidayId = null, $date = null) {
+        return static function ($holidayId = null, $date = null) {
             $self = static::this();
 
-            [$holidayId, $date] = static::swapDateTimeParam($holidayId, $date, null);
+            [$holidayId, $date] = $self->swapDateTimeParam($holidayId, $date, null);
             $holidayId = $holidayId ?? (is_object($holidayId) ? null : $holidayId);
             $date = is_object($date) ? $self->resolveCarbon($date) : $self;
 
