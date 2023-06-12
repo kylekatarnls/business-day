@@ -68,7 +68,7 @@ abstract class MixinBase
          * @return array the new pair of variables
          */
         return function ($target, $date, $defaultValue) {
-            if (static::isDateTimeInstance($target)) {
+            if ($this->isDateTimeInstance($target)) {
                 $date = static::instance($target);
                 $target = $defaultValue;
             }
