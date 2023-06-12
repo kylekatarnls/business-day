@@ -6,7 +6,6 @@ return [
     'midsummer-eve'                  => 'Midsommarafton',
     'midsummer-day'                  => 'Midsommardagen',
     'national-day'                   => 'Sveriges nationaldag',
-    'saturday-after-06-20'           => 'Midsommar',
     'saturday-after-10-31'           => 'Alla Helgons dag',
     '01-13'                          => 'Knut',
     'sunday-of-march'                => 'Vasaloppet',

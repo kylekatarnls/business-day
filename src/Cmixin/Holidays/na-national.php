@@ -17,7 +17,7 @@ return [
     'substitutes-05-25'  => '= 05-25 if Sunday then next Monday',
     '08-26'              => '08-26',
     'substitutes-08-26'  => '= 08-26 if Sunday then next Monday',
-    '12-10'              => '12-10',
+    'human-rights-day'   => '12-10',
     'substitutes-12-10'  => '= 12-10 if Sunday then next Monday',
     'christmas'          => '12-25',
     'christmas-next-day' => '12-26',
