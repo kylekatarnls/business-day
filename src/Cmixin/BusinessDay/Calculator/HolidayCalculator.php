@@ -143,10 +143,10 @@ class HolidayCalculator extends CalculatorBase
 
     protected function interpolateEquinox($match)
     {
-        return date('m-d', static::getEquinoxTimestamp($match));
+        return date('m-d', $this->getEquinoxTimestamp($match));
     }
 
-    protected function getEquinoxTimestamp($match): float
+    protected function getEquinoxTimestamp($match): int
     {
         $month = strtolower($match[1]);
         $deltas = [
@@ -159,12 +159,12 @@ class HolidayCalculator extends CalculatorBase
             'december'  => 23868894,
             'winter'    => 23868894,
         ];
-        $delta = isset($deltas[$month]) ? $deltas[$month] : 0;
+        $delta = $deltas[$month] ?? 0;
         $sign = isset($match[2]) && $match[2] === '-' ? -1 : 1;
         $hours = isset($match[3]) ? $match[3] * 1 : 0;
         $minutes = isset($match[4]) ? $match[4] * 1 : 0;
 
-        return round(
+        return (int) round(
             gmmktime(0, 0, 0, 1, 1, 2000) +
             (79.3125 + ($this->year - 2000) * 365.2425) * 86400 + $delta +
             ($hours * 60 + $minutes) * 60 * $sign

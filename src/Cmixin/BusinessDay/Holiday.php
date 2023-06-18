@@ -281,7 +281,7 @@ class Holiday extends YearCrawler
             /** @var Carbon|BusinessDay $self */
             $self = static::this();
             /** @var Carbon|BusinessDay $date */
-            [$locale, $date] = static::swapDateTimeParam($locale, $date, null);
+            [$locale, $date] = $self->swapDateTimeParam($locale, $date, null);
             $locale = $locale ?? (is_string($date) ? $date : null);
             $date = is_object($date) ? $self->resolveCarbon($date) : $self;
             $holidayId = $date->getHolidayId();

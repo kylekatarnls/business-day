@@ -33,7 +33,7 @@ return [
     '07-28'                                               => 'Anniversario della caduta del Fascismo e Festa della Libertà',
     '09-03'                                               => 'Festa di San Marino e di Fondazione della Repubblica',
     '11-02'                                               => 'Commemorazione dei defunti',
-    'new-year'                                            => 'Maria Santissima Madre di Dio',
+    'new-year'                                            => 'Capodanno',
     '02-11'                                               => 'Anniversario della istituzione dello Stato della Città del Vaticano',
     '09-08'                                               => 'Festa della natività della madonna',
     '10-16'                                               => 'Anniversario dell\'Elezione del Santo Padre',

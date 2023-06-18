@@ -73,7 +73,7 @@ trait HolidayData
                 return null;
             }
 
-            return static::getHolidayDataById($holidayId);
+            return $self->getHolidayDataById($holidayId);
         };
     }
 
