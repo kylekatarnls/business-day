@@ -759,6 +759,18 @@ To enable business-day globally in Laravel, set default holidays settings in the
 ];
 ```
 
+If you use Laravel but don't plan to use this global config to enable business-day, you may remove it from
+auto-discovery using:
+```json
+"extra": {
+    "laravel": {
+        "dont-discover": [
+            "cmixin/business-day"
+        ]
+    }
+},
+```
+
 ### Note about timezones
 
 When you set an holidays region, it does not change the timezone, so if January 1st is an holiday,
