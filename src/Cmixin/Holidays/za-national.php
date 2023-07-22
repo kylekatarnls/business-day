@@ -16,7 +16,6 @@ return [
     'substitutes-06-16'  => '= 06-16 if Sunday then next Monday',
     '08-09'              => '08-09',
     'substitutes-08-09'  => '= 08-09 if Sunday then next Monday',
-    '07-18'              => '07-18',
     '09-24'              => '09-24',
     'substitutes-09-24'  => '= 09-24 if Sunday then next Monday',
     '09-25'              => '09-25',
