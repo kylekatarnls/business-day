@@ -88,4 +88,5 @@ return [
     'children-s-day'                                  => 'Weltkindertag',
     'german-unity-day'                                => 'Tag der Deutschen Einheit',
     '08-15'                                           => 'Mariä Himmelfahrt',
+    'wednesday-before-11-23'                          => 'Buß- und Bettag',
 ];
