@@ -72,6 +72,7 @@ return [
     'constitution-day'                                => 'Tag des Grundgesetzes',
     'independence-day'                                => 'Unabhängigkeitstag',
     'mothers-day'                                     => 'Muttertag',
+    '2nd-sunday-in-may'                               => 'Muttertag',
     'national-holiday'                                => 'Nationalfeiertag',
     'reformation-day'                                 => 'Reformationstag',
     'substitutes'                                     => 'Ersatztag',
