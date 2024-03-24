@@ -3,6 +3,7 @@
 namespace Types;
 
 use Carbon\Carbon;
+use Carbon\FactoryImmutable;
 use Cmixin\BusinessDay;
 use ReflectionClass;
 use ReflectionException;
@@ -26,11 +27,15 @@ class Generator
             BusinessDay::enable('\Carbon\Carbon');
         });
 
-        $c = new ReflectionClass(Carbon::now());
-        $macros = $c->getProperty('globalMacros');
-        $macros->setAccessible(true);
+        try {
+            $c = new ReflectionClass(Carbon::now());
+            $macros = $c->getProperty('globalMacros');
+            $macros->setAccessible(true);
 
-        return $macros->getValue();
+            return $macros->getValue();
+        } catch (ReflectionException $exception) {
+            return FactoryImmutable::getInstance()->getSettings()['macros'] ?? [];
+        }
     }
 
     /**
