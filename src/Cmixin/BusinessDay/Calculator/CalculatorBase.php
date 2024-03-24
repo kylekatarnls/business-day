@@ -147,7 +147,8 @@ class CalculatorBase
 
     protected function isIgnoredYear(&$holiday)
     {
-        $since = 0;
+        $mode = 'since';
+        $cap = 0;
         $every = 0;
 
         if ($this->consumeHolidayString('/ of (even|odd|leap|non-leap) years?$/i', $holiday, $match)) {
@@ -155,15 +156,16 @@ class CalculatorBase
                 return (!($this->year % 4) && ($this->year % 100 || !($this->year % 400))) !== ($match[1] === 'leap');
             }
 
-            $since = $match[1] === 'even' ? 0 : 1;
+            $cap = $match[1] === 'even' ? 0 : 1;
             $every = 2;
         }
 
-        if ($this->consumeHolidayString('/ every (\d+) years since (\d{4})$/', $holiday, $match)) {
-            $since = $match[2];
+        if ($this->consumeHolidayString('/ every (\d+) years (since|until) (\d{4})$/', $holiday, $match)) {
+            $mode = $match[2];
+            $cap = $match[3];
             $every = $match[1];
         }
 
-        return $every && ($delta = $this->year - $since) >= 0 && $delta % $every;
+        return $every && ($delta = ($mode === 'since' ? 1 : -1) * ($this->year - $cap)) >= 0 && $delta % $every;
     }
 }

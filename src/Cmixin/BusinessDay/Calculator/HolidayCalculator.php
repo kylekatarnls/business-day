@@ -183,8 +183,10 @@ class HolidayCalculator extends CalculatorBase
             $equinox                                       => [$this, 'interpolateEquinox'],
             '/(easter|orthodox)/i'                         => [$this, 'interpolateFixedDate'],
             '/\D-\d+\s*$/'                                 => '$0 days',
+            '/(\D-\d+)\s+if/'                              => '$1 days if',
             '/^(\d{1,2})-(\d{1,2})((\s[\s\S]*)?)$/'        => [$this, 'padDate'],
             '/(\s\d+)\s*$/'                                => '$1 days',
+            '/(\s\d+)\s+if/'                               => '$1 days if',
         ];
     }
 
