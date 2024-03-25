@@ -216,6 +216,22 @@ class BusinessDayTest extends TestCase
         self::assertFalse($carbon::parse('2025-06-23')->isHoliday());
     }
 
+    public function testIfRuleWithHijriCalendar()
+    {
+        $carbon = static::CARBON_CLASS;
+        $carbon::resetHolidays();
+        $carbon::setHolidays('custom', [
+            'hari-raya-puasa' => '= 1 Shawwal if sunday then next monday',
+        ]);
+        $carbon::setHolidaysRegion('custom');
+        $year = static function (int $year) use ($carbon) {
+            return array_map('strval', $carbon::getYearHolidays($year));
+        };
+
+        self::assertSame(['hari-raya-puasa' => '2020-05-25 00:00:00'], $year(2020));
+        self::assertSame(['hari-raya-puasa' => '2021-05-13 00:00:00'], $year(2021));
+    }
+
     public function testCaseInsensitivity()
     {
         $carbon = static::CARBON_CLASS;
