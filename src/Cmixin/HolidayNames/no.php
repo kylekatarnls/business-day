@@ -1,6 +1,9 @@
 <?php
 
 return [
+    '2nd-sunday-of-february'     => 'Morsdag',
+    '2nd-sunday-of-november'     => 'Farsdag',
+    '05-08'                      => 'Frigjøringsdagen 1945',
     'carnival'                   => 'Fastelavn',
     'constitution-day'           => '17. mai',
     'midsummar-eve'              => 'Sankthansaften',
@@ -8,7 +11,7 @@ return [
     'second-sunday-of-advent'    => 'Andre søndag i advent',
     'third-sunday-of-advent'     => 'Tredje søndag i advent',
     'fourth-sunday-of-advent'    => 'Fjerde søndag i advent',
-    'easter-49'                  => 'Fastelavn',
+    'easter-49'                  => 'Første pinsedag',
     '05-17'                      => '17. mai',
     '06-23'                      => 'Sankthansaften',
     'fourth-sunday-before-12-24' => 'Første søndag i advent',
@@ -26,6 +29,7 @@ return [
     'easter-2'                   => 'Langfredag',
     'easter-1'                   => 'Påskeaften',
     'easter'                     => 'Første påskedag',
+    'easter-p1'                  => 'Andre påskedag',
     'easter-39'                  => 'Kristi himmelfartsdag',
     'easter-50'                  => 'Andre pinsedag',
     'fathers-day'                => 'Farsdag',
