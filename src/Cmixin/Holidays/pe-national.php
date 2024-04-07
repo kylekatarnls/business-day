@@ -1,6 +1,5 @@
 <?php
-// https://www.gob.pe/feriados 
-
+// https://www.gob.pe/feriados
 
 return [
     'new-year'  => '01-01',
