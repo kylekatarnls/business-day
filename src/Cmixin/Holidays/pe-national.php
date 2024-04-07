@@ -1,4 +1,6 @@
 <?php
+// https://www.gob.pe/feriados 
+
 
 return [
     'new-year'  => '01-01',
@@ -6,6 +8,7 @@ return [
     'easter-2'  => '= easter -2',
     'easter'    => '= easter',
     '05-01'     => '05-01',
+    '06-07'     => '06-07', // Batalla de Arica y Día de la Bandera
     '06-29'     => '06-29',
     '07-23'     => '07-23', // Día de la Fuerza Aérea del Perú
     '07-28'     => '07-28',
