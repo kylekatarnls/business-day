@@ -15,5 +15,5 @@ return [
     'easter-50'           => '= easter 50',
     'christmas-eve'       => '12-24',
     'christmas'           => '12-25',
-    '12-26' => '12-26',
+    'christmas-next-day'  => '12-26',
 ];
