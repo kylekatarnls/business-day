@@ -6,4 +6,4 @@ return [
     'pancasila-day'                                => '06-01',
     'independence-day'                             => '08-17',
     'christmas'                                    => '12-25',
-  ];
+];
