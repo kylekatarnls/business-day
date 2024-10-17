@@ -16,16 +16,17 @@ trait YearCondition
      */
     protected function matchYearCondition($dateTime, ?string &$condition): bool
     {
+        $value = (int) $dateTime->format('Y');
+
         if (!$condition || !preg_match(
             '/^\s*year(?:\s*%\s*(?<modulo>\d+))?\s*(?<operator>>=?|<=?|={1,3}|!={1,2}|<>)\s*(?<expected>\d+)/',
             $condition,
             $match
         )) {
-            return true;
+            return $this->year === $value;
         }
 
         $condition = null;
-        $value = (int) $dateTime->format('Y');
         $expected = (int) $match['expected'];
 
         if (!empty($match['modulo'])) {
