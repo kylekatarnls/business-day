@@ -229,7 +229,11 @@ class HolidayCalculator extends CalculatorBase
         [$holiday, $onConditions['on']] = array_pad(explode(' on ', $holiday, 2), 2, null);
         [$holiday, $condition] = array_pad(explode(' if ', $holiday, 2), 2, null);
 
-        if (strpos($holiday, "$year") === false) {
+        if (
+            !preg_match('/\d{4}-/', $holiday)
+            && !preg_match('/\/\d{4}/', $holiday)
+            && strpos($holiday, "$year") === false
+        ) {
             $holiday .= " $year";
         }
 
