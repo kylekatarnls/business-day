@@ -262,13 +262,23 @@ class HolidayCalculator extends CalculatorBase
 
         [$before, $after, $holiday] = $this->extractModifiers($holiday);
 
+        ['start' => $start, 'end' => $end] = preg_match('/^(?<start>.*?)(?<end> (?:if|on|not on).*)$/', $holiday, $match)
+            ? $match
+            : ['start' => $holiday, 'end' => null];
+
         foreach ($this->calendars as $calendar) {
-            if (preg_match('/^\s*(\d+)\s+('.$calendar->getRegex().')\s*$/i', $holiday, $match)) {
+            if (preg_match('/^\s*(\d+)\s+('.$calendar->getRegex().')\s*$/i', $start, $match)) {
                 [$result, $nextHolidays] = $calendar->getHolidays($this->year, $match[1], $match[2], $key);
 
                 $this->nextHolidays = $nextHolidays;
 
-                return $result;
+                if (!$end) {
+                    return $result;
+                }
+
+                $holiday = $result.$end;
+
+                break;
             }
         }
 
