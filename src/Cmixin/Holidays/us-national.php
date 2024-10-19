@@ -1,7 +1,9 @@
 <?php
 
 return [
-    'new-year'               => '= 01-01 substitute', // New Year's Day
+    'new-year'               => '= 01-01 on Monday,Tuesday,Wednesday,Thursday,Friday', // New Year's Day
+    'new-year-next-day'      => '= 01-02 on Monday', // New Year's Day (observance)
+    'new-year-previous-day'  => '= 12-31 on Friday', // New Year's Day (observance)
     // Martin Luther King Jr. Day
     'mlk-day'                => '= third Monday of january',
     '3rd-monday-in-february' => '= third Monday of February',
