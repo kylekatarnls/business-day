@@ -20,6 +20,7 @@ return [
     'mlk-day'                                                                                             => 'Martin Luther King Jr. Day',
     'national-day'                                                                                        => 'National Day',
     'new-year'                                                                                            => 'New Year',
+    'new-year-previous-day'                                                                               => 'New Year previous day',
     'new-year-next-day'                                                                                   => 'New Year next day',
     'pentecost'                                                                                           => 'Pentecost',
     'pentecost-monday'                                                                                    => 'Pentecost Monday',
