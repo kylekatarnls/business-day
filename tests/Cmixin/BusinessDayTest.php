@@ -230,6 +230,33 @@ class BusinessDayTest extends TestCase
 
         self::assertSame(['hari-raya-puasa' => '2020-05-25 00:00:00'], $year(2020));
         self::assertSame(['hari-raya-puasa' => '2021-05-13 00:00:00'], $year(2021));
+
+        $carbon::resetHolidays();
+        $carbon::setHolidays('custom', [
+            'hari-raya-haji' => '= 10 dhu al-hijjah if sunday then next monday',
+        ]);
+        $carbon::setHolidaysRegion('custom');
+        $year = static function (int $year) use ($carbon) {
+            return array_map('strval', $carbon::getYearHolidays($year));
+        };
+
+        self::assertSame(['hari-raya-haji' => '2000-03-16 00:00:00'], $year(2000));
+        self::assertSame(['hari-raya-haji' => '2001-03-06 00:00:00'], $year(2001));
+        self::assertSame(['hari-raya-haji' => '2002-02-23 00:00:00'], $year(2002));
+        self::assertSame(['hari-raya-haji' => '2003-02-12 00:00:00'], $year(2003));
+        self::assertSame(['hari-raya-haji' => '2004-02-02 00:00:00'], $year(2004));
+        self::assertSame(['hari-raya-haji' => '2005-01-21 00:00:00'], $year(2005));
+        self::assertSame([
+            'hari-raya-haji'      => '2006-01-10 00:00:00',
+            'hari-raya-haji-oc-2' => '2006-12-31 00:00:00',
+        ], $year(2006));
+        self::assertSame(['hari-raya-haji' => '2009-11-28 00:00:00'], $year(2009));
+        self::assertSame(['hari-raya-haji' => '2010-11-17 00:00:00'], $year(2010));
+        self::assertSame(['hari-raya-haji' => '2011-11-07 00:00:00'], $year(2011));
+        self::assertSame(['hari-raya-haji' => '2021-07-20 00:00:00'], $year(2021));
+        self::assertSame(['hari-raya-haji' => '2022-07-11 00:00:00'], $year(2022));
+        self::assertSame(['hari-raya-haji' => '2023-06-29 00:00:00'], $year(2023));
+        self::assertSame(['hari-raya-haji' => '2024-06-17 00:00:00'], $year(2024));
     }
 
     public function testCaseInsensitivity()
