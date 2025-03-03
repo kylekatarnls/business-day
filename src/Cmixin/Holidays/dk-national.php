@@ -2,7 +2,6 @@
 
 return [
     'new-year'            => '01-01',
-    'easter-48'           => '= easter -48',
     'easter-3'            => '= easter -3',
     'easter-2'            => '= easter -2',
     'easter'              => '= easter',
