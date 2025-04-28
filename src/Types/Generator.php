@@ -177,7 +177,7 @@ class Generator
      *
      * @throws ReflectionException
      */
-    public function writeHelpers($defaultClass, $source, $destination, $name = '_ide_business_day', callable $boot = null, array $classes = null)
+    public function writeHelpers($defaultClass, $source, $destination, $name = '_ide_business_day', ?callable $boot = null, ?array $classes = null)
     {
         $methods = $this->getMethodsDefinitions($boot, $source, $defaultClass);
 
