@@ -129,7 +129,7 @@ namespace Carbon
          *
          * @return $this|null
          */
-        public function setBusinessDayChecker(callable $checkCallback = null)
+        public function setBusinessDayChecker(?callable $checkCallback = null)
         {
             // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:36
         }
@@ -783,7 +783,7 @@ namespace Carbon
          * @param iterable|null $holidays
          * @param iterable|null $workingDays
          */
-        public function addHolidays(string $region, iterable $holidays = null, iterable $workingDays = null)
+        public function addHolidays(string $region, ?iterable $holidays = null, ?iterable $workingDays = null)
         {
             // Content, see src/Cmixin/BusinessDay/HolidaysList.php:595
         }
@@ -1002,7 +1002,7 @@ namespace Carbon
          *
          * @return $this|null
          */
-        public function setBusinessDayChecker(callable $checkCallback = null)
+        public function setBusinessDayChecker(?callable $checkCallback = null)
         {
             // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:36
         }
@@ -1656,7 +1656,7 @@ namespace Carbon
          * @param iterable|null $holidays
          * @param iterable|null $workingDays
          */
-        public function addHolidays(string $region, iterable $holidays = null, iterable $workingDays = null)
+        public function addHolidays(string $region, ?iterable $holidays = null, ?iterable $workingDays = null)
         {
             // Content, see src/Cmixin/BusinessDay/HolidaysList.php:595
         }
@@ -1875,7 +1875,7 @@ namespace Illuminate\Support
          *
          * @return $this|null
          */
-        public function setBusinessDayChecker(callable $checkCallback = null)
+        public function setBusinessDayChecker(?callable $checkCallback = null)
         {
             // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:36
         }
@@ -2529,7 +2529,7 @@ namespace Illuminate\Support
          * @param iterable|null $holidays
          * @param iterable|null $workingDays
          */
-        public function addHolidays(string $region, iterable $holidays = null, iterable $workingDays = null)
+        public function addHolidays(string $region, ?iterable $holidays = null, ?iterable $workingDays = null)
         {
             // Content, see src/Cmixin/BusinessDay/HolidaysList.php:595
         }
@@ -2748,7 +2748,7 @@ namespace Illuminate\Support\Facades
          *
          * @return $this|null
          */
-        public function setBusinessDayChecker(callable $checkCallback = null)
+        public function setBusinessDayChecker(?callable $checkCallback = null)
         {
             // Content, see src/Cmixin/BusinessDay/BusinessCalendar.php:36
         }
@@ -3402,7 +3402,7 @@ namespace Illuminate\Support\Facades
          * @param iterable|null $holidays
          * @param iterable|null $workingDays
          */
-        public function addHolidays(string $region, iterable $holidays = null, iterable $workingDays = null)
+        public function addHolidays(string $region, ?iterable $holidays = null, ?iterable $workingDays = null)
         {
             // Content, see src/Cmixin/BusinessDay/HolidaysList.php:595
         }
