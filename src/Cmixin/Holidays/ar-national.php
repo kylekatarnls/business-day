@@ -18,7 +18,12 @@ return [
     'day-of-national-sovereignty'                        => '= 11-20 if Tuesday,Wednesday then previous Monday and if Thursday,Friday then next Monday',
     'feast-of-the-immaculate-conception'                 => '12-08',
     'christmas'                                          => '12-25',
+    'bridge-holiday-2020-07-10'                          => '2020-07-10',    // special day for 2020
+    'bridge-holiday-2021-10-08'                          => '2021-10-08',    // special day for 2021
     'substitutes-soberany-day-2021'                      => '2021-11-22',    // special day for 2021
+    'bridge-holiday-2022-11-21'                          => '2022-11-21',    // special day for 2022
+    'bridge-holiday-2023-06-19'                          => '2023-06-19',    // special day for 2023
+    'bridge-holiday-2024-06-21'                          => '2024-06-21',    // special day for 2024
     'bridge-holiday-2025-05-02'                          => '2025-05-02',    // special day for 2025
     'bridge-holiday-2025-08-15'                          => '2025-08-15',    // special day for 2025
     'bridge-holiday-2025-11-21'                          => '2025-11-21',    // special day for 2025
