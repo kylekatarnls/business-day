@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'day-of-remembrance-for-truth-and-justice'                                                             => 'Día de la Memoria por la Verdad y la Justicia',
+    'day-of-remembrance-for-truth-and-justice'                                                            => 'Día de la Memoria por la Verdad y la Justicia',
     'day-of-the-veterans-and-the-fallen-of-malvinas-war'                                                  => 'Día del Veterano y de los Caídos en la Guerra de Malvinas',
     'national-flag-day'                                                                                   => 'Día de la Bandera',
     'day-of-respect-for-cultural-diversity'                                                               => 'Día del Respeto a la Diversidad Cultural',

@@ -112,7 +112,7 @@ class ListsTest extends TestCase
             'Independence Day: Monday, July 6, 2020',
             'Labor Day: Monday, September 7, 2020',
             'Columbus Day: Monday, October 12, 2020',
-            'Day of the veterans: Wednesday, November 11, 2020',
+            'Day of the Veterans: Wednesday, November 11, 2020',
             'Thanksgiving: Thursday, November 26, 2020',
             'Christmas: Friday, December 25, 2020',
         ], $days);
