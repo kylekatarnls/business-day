@@ -30,7 +30,7 @@ class PHPStanExtensionIntegrationTest extends TestCase
     public function testExtensionHasRequiredMethods(): void
     {
         $reflection = new \ReflectionClass(BusinessDayMethodsClassReflectionExtension::class);
-        
+
         $this->assertTrue($reflection->hasMethod('hasMethod'));
         $this->assertTrue($reflection->hasMethod('getMethod'));
     }
@@ -42,41 +42,55 @@ class PHPStanExtensionIntegrationTest extends TestCase
     {
         $reflection = new \ReflectionClass(BusinessDayMethodsClassReflectionExtension::class);
         $methodReturnTypes = $reflection->getConstant('METHOD_RETURN_TYPES');
-        
-        $this->assertArrayHasKey($methodName, $methodReturnTypes,
-            "Method '$methodName' should be defined in METHOD_RETURN_TYPES");
-            
-        $this->assertEquals($expectedReturnType, $methodReturnTypes[$methodName],
-            "Method '$methodName' should have return type '$expectedReturnType'");
+
+        $this->assertArrayHasKey(
+            $methodName,
+            $methodReturnTypes,
+            "Method '$methodName' should be defined in METHOD_RETURN_TYPES"
+        );
+
+        $this->assertEquals(
+            $expectedReturnType,
+            $methodReturnTypes[$methodName],
+            "Method '$methodName' should have return type '$expectedReturnType'"
+        );
     }
 
     public function testExtensionFilesExist(): void
     {
-        $extensionNeonPath = __DIR__ . '/../../extension.neon';
+        $extensionNeonPath = __DIR__.'/../../extension.neon';
         $this->assertFileExists($extensionNeonPath, 'PHPStan extension.neon file should exist');
 
         $extensionContent = file_get_contents($extensionNeonPath);
-        $this->assertNotFalse(strpos($extensionContent, 'BusinessDayMethodsClassReflectionExtension'),
-            'extension.neon should reference BusinessDayMethodsClassReflectionExtension');
+        $this->assertNotFalse(
+            strpos($extensionContent, 'BusinessDayMethodsClassReflectionExtension'),
+            'extension.neon should reference BusinessDayMethodsClassReflectionExtension'
+        );
     }
 
     public function testAllBusinessDayMethodsHaveValidReturnTypes(): void
     {
         $reflection = new \ReflectionClass(BusinessDayMethodsClassReflectionExtension::class);
         $methodReturnTypes = $reflection->getConstant('METHOD_RETURN_TYPES');
-        
+
         $validReturnTypes = ['fluent', 'bool', 'int', 'array', 'string|null', 'string|false', 'callable'];
-        
+
         foreach ($methodReturnTypes as $method => $returnType) {
-            $this->assertContains($returnType, $validReturnTypes,
-                "Method '$method' has invalid return type '$returnType'");
+            $this->assertContains(
+                $returnType,
+                $validReturnTypes,
+                "Method '$method' has invalid return type '$returnType'"
+            );
         }
-        
+
         // Test that we have methods of each type
         $returnTypeValues = array_values($methodReturnTypes);
         foreach ($validReturnTypes as $validType) {
-            $this->assertContains($validType, $returnTypeValues,
-                "Should have at least one method with return type '$validType'");
+            $this->assertContains(
+                $validType,
+                $returnTypeValues,
+                "Should have at least one method with return type '$validType'"
+            );
         }
     }
 
@@ -84,11 +98,14 @@ class PHPStanExtensionIntegrationTest extends TestCase
     {
         $reflection = new \ReflectionClass(BusinessDayMethodsClassReflectionExtension::class);
         $methodReturnTypes = $reflection->getConstant('METHOD_RETURN_TYPES');
-        
+
         // Check that we have a good coverage of business day methods
-        $this->assertGreaterThan(60, count($methodReturnTypes),
-            'Extension should support more than 60 business day methods');
-            
+        $this->assertGreaterThan(
+            60,
+            count($methodReturnTypes),
+            'Extension should support more than 60 business day methods'
+        );
+
         // Check for key methods that should definitely be present
         $essentialMethods = [
             'isBusinessDay',
@@ -98,12 +115,15 @@ class PHPStanExtensionIntegrationTest extends TestCase
             'diffInBusinessDays',
             'getBusinessDaysInMonth',
             'setHolidaysRegion',
-            'getHolidays'
+            'getHolidays',
         ];
-        
+
         foreach ($essentialMethods as $method) {
-            $this->assertArrayHasKey($method, $methodReturnTypes,
-                "Essential method '$method' should be supported by the extension");
+            $this->assertArrayHasKey(
+                $method,
+                $methodReturnTypes,
+                "Essential method '$method' should be supported by the extension"
+            );
         }
     }
 
@@ -118,29 +138,29 @@ class PHPStanExtensionIntegrationTest extends TestCase
             ['nextBusinessDay', 'fluent'],
             ['setHolidaysRegion', 'fluent'],
             ['observeHoliday', 'fluent'],
-            
+
             // Boolean methods
             ['isBusinessDay', 'bool'],
             ['isHoliday', 'bool'],
             ['isExtraWorkday', 'bool'],
-            
+
             // Integer methods
             ['diffInBusinessDays', 'int'],
             ['getBusinessDaysInMonth', 'int'],
-            
+
             // Array methods
             ['getMonthBusinessDays', 'array'],
             ['getHolidays', 'array'],
             ['getYearHolidays', 'array'],
-            
+
             // String|null methods
             ['getObservedHolidaysZone', 'string|null'],
             ['getHolidaysRegion', 'string|null'],
-            
+
             // String|false methods
             ['getHolidayId', 'string|false'],
             ['getHolidayName', 'string|false'],
-            
+
             // Callable methods
             ['getYearHolidaysNextFunction', 'callable'],
         ];

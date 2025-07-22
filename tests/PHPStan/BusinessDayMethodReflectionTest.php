@@ -29,7 +29,7 @@ class BusinessDayMethodReflectionTest extends TestCase
     public function testBusinessDayMethodReflectionHasRequiredMethods(): void
     {
         $reflection = new \ReflectionClass(BusinessDayMethodReflection::class);
-        
+
         $requiredMethods = [
             'getDeclaringClass',
             'isStatic',
@@ -44,40 +44,48 @@ class BusinessDayMethodReflectionTest extends TestCase
             'isFinal',
             'isInternal',
             'getThrowType',
-            'hasSideEffects'
+            'hasSideEffects',
         ];
 
         foreach ($requiredMethods as $methodName) {
-            $this->assertTrue($reflection->hasMethod($methodName),
-                "BusinessDayMethodReflection should have method '$methodName'");
+            $this->assertTrue(
+                $reflection->hasMethod($methodName),
+                "BusinessDayMethodReflection should have method '$methodName'"
+            );
         }
     }
 
     public function testBusinessDayMethodReflectionHasParameterHandling(): void
     {
         $reflection = new \ReflectionClass(BusinessDayMethodReflection::class);
-        
+
         // Check that it has private methods for parameter handling
-        $this->assertTrue($reflection->hasMethod('getParameters'),
-            'BusinessDayMethodReflection should have getParameters method');
-            
-        $this->assertTrue($reflection->hasMethod('createParameter'),
-            'BusinessDayMethodReflection should have createParameter method');
-            
-        $this->assertTrue($reflection->hasMethod('isVariadic'),
-            'BusinessDayMethodReflection should have isVariadic method');
+        $this->assertTrue(
+            $reflection->hasMethod('getParameters'),
+            'BusinessDayMethodReflection should have getParameters method'
+        );
+
+        $this->assertTrue(
+            $reflection->hasMethod('createParameter'),
+            'BusinessDayMethodReflection should have createParameter method'
+        );
+
+        $this->assertTrue(
+            $reflection->hasMethod('isVariadic'),
+            'BusinessDayMethodReflection should have isVariadic method'
+        );
     }
 
     public function testBusinessDayMethodReflectionConstructorSignature(): void
     {
         $reflection = new \ReflectionClass(BusinessDayMethodReflection::class);
         $constructor = $reflection->getConstructor();
-        
+
         $this->assertNotNull($constructor);
-        
+
         $parameters = $constructor->getParameters();
         $this->assertCount(3, $parameters);
-        
+
         $this->assertEquals('classReflection', $parameters[0]->getName());
         $this->assertEquals('methodName', $parameters[1]->getName());
         $this->assertEquals('returnType', $parameters[2]->getName());
@@ -86,8 +94,8 @@ class BusinessDayMethodReflectionTest extends TestCase
     public function testBusinessDayMethodReflectionUsesCorrectPHPStanTypes(): void
     {
         // Verify that the class imports the correct PHPStan types
-        $fileContent = file_get_contents(__DIR__ . '/../../src/Cmixin/BusinessDay/PHPStan/BusinessDayMethodReflection.php');
-        
+        $fileContent = file_get_contents(__DIR__.'/../../src/Cmixin/BusinessDay/PHPStan/BusinessDayMethodReflection.php');
+
         $this->assertNotFalse(strpos($fileContent, 'use PHPStan\Reflection\ClassReflection;'));
         $this->assertNotFalse(strpos($fileContent, 'use PHPStan\Reflection\MethodReflection;'));
         $this->assertNotFalse(strpos($fileContent, 'use PHPStan\Type\Type;'));

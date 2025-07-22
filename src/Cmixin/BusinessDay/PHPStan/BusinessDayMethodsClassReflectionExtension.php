@@ -20,7 +20,7 @@ use PHPStan\Type\Type;
 use PHPStan\Type\UnionType;
 
 /**
- * PHPStan extension for cmixin/business-day methods
+ * PHPStan extension for cmixin/business-day methods.
  */
 final class BusinessDayMethodsClassReflectionExtension implements MethodsClassReflectionExtension
 {
@@ -29,81 +29,81 @@ final class BusinessDayMethodsClassReflectionExtension implements MethodsClassRe
      */
     private const METHOD_RETURN_TYPES = [
         // Fluent methods (return the same instance type)
-        'addBusinessDays' => 'fluent',
-        'addBusinessDay' => 'fluent',
-        'subBusinessDays' => 'fluent',
-        'subtractBusinessDays' => 'fluent',
-        'subBusinessDay' => 'fluent',
-        'subtractBusinessDay' => 'fluent',
-        'nextBusinessDay' => 'fluent',
-        'currentOrNextBusinessDay' => 'fluent',
-        'previousBusinessDay' => 'fluent',
+        'addBusinessDays'              => 'fluent',
+        'addBusinessDay'               => 'fluent',
+        'subBusinessDays'              => 'fluent',
+        'subtractBusinessDays'         => 'fluent',
+        'subBusinessDay'               => 'fluent',
+        'subtractBusinessDay'          => 'fluent',
+        'nextBusinessDay'              => 'fluent',
+        'currentOrNextBusinessDay'     => 'fluent',
+        'previousBusinessDay'          => 'fluent',
         'currentOrPreviousBusinessDay' => 'fluent',
-        'setBusinessDayChecker' => 'fluent',
-        'setObservedHolidaysZone' => 'fluent',
-        'setHolidayObserveStatus' => 'fluent',
-        'getObserveHolidayMethod' => 'fluent',
-        'observeHoliday' => 'fluent',
-        'unobserveHoliday' => 'fluent',
-        'observeHolidays' => 'fluent',
-        'unobserveHolidays' => 'fluent',
-        'observeAllHolidays' => 'fluent',
-        'unobserveAllHolidays' => 'fluent',
-        'setHolidayGetter' => 'fluent',
-        'setExtraWorkdayGetter' => 'fluent',
-        'setHolidaysRegion' => 'fluent',
-        'setHolidays' => 'fluent',
-        'setExtraWorkdays' => 'fluent',
-        'resetHolidays' => 'fluent',
-        'initializeHolidaysRegion' => 'fluent',
-        'pushToBDList' => 'fluent',
-        'pushHoliday' => 'fluent',
-        'pushWorkday' => 'fluent',
-        'setHolidayName' => 'fluent',
-        'addHoliday' => 'fluent',
-        'addExtraWorkday' => 'fluent',
-        'addHolidays' => 'fluent',
-        'enable' => 'fluent',
-        'setHolidayDataById' => 'fluent',
-        'setHolidayData' => 'fluent',
-        
+        'setBusinessDayChecker'        => 'fluent',
+        'setObservedHolidaysZone'      => 'fluent',
+        'setHolidayObserveStatus'      => 'fluent',
+        'getObserveHolidayMethod'      => 'fluent',
+        'observeHoliday'               => 'fluent',
+        'unobserveHoliday'             => 'fluent',
+        'observeHolidays'              => 'fluent',
+        'unobserveHolidays'            => 'fluent',
+        'observeAllHolidays'           => 'fluent',
+        'unobserveAllHolidays'         => 'fluent',
+        'setHolidayGetter'             => 'fluent',
+        'setExtraWorkdayGetter'        => 'fluent',
+        'setHolidaysRegion'            => 'fluent',
+        'setHolidays'                  => 'fluent',
+        'setExtraWorkdays'             => 'fluent',
+        'resetHolidays'                => 'fluent',
+        'initializeHolidaysRegion'     => 'fluent',
+        'pushToBDList'                 => 'fluent',
+        'pushHoliday'                  => 'fluent',
+        'pushWorkday'                  => 'fluent',
+        'setHolidayName'               => 'fluent',
+        'addHoliday'                   => 'fluent',
+        'addExtraWorkday'              => 'fluent',
+        'addHolidays'                  => 'fluent',
+        'enable'                       => 'fluent',
+        'setHolidayDataById'           => 'fluent',
+        'setHolidayData'               => 'fluent',
+
         // Boolean methods
-        'isBusinessDay' => 'bool',
-        'isHoliday' => 'bool',
-        'isExtraWorkday' => 'bool',
+        'isBusinessDay'        => 'bool',
+        'isHoliday'            => 'bool',
+        'isExtraWorkday'       => 'bool',
         'checkObservedHoliday' => 'bool',
-        'isObservedHoliday' => 'bool',
-        'isDateTimeInstance' => 'bool',
-        
+        'isObservedHoliday'    => 'bool',
+        'isDateTimeInstance'   => 'bool',
+
         // Integer methods
-        'diffInBusinessDays' => 'int',
+        'diffInBusinessDays'     => 'int',
         'getBusinessDaysInMonth' => 'int',
-        
+
         // Array methods
-        'getMonthBusinessDays' => 'array',
+        'getMonthBusinessDays'        => 'array',
         'getHolidaysAvailableRegions' => 'array',
-        'getBDDaysList' => 'array',
-        'getHolidays' => 'array',
-        'getExtraWorkdays' => 'array',
-        'getHolidayNamesDictionary' => 'array',
-        'getYearHolidays' => 'array',
-        'unpackHoliday' => 'array',
-        'checkHoliday' => 'array',
-        'swapDateTimeParam' => 'array',
-        'getHolidayDataById' => 'array',
-        'getHolidayData' => 'array',
-        
+        'getBDDaysList'               => 'array',
+        'getHolidays'                 => 'array',
+        'getExtraWorkdays'            => 'array',
+        'getHolidayNamesDictionary'   => 'array',
+        'getYearHolidays'             => 'array',
+        'unpackHoliday'               => 'array',
+        'checkHoliday'                => 'array',
+        'swapDateTimeParam'           => 'array',
+        'getHolidayDataById'          => 'array',
+        'getHolidayData'              => 'array',
+
         // Nullable string methods
         'getObservedHolidaysZone' => 'string|null',
-        'getHolidaysRegion' => 'string|null',
-        
+        'getHolidaysRegion'       => 'string|null',
+
         // String or false methods
-        'getDBDayId' => 'string|false',
-        'getHolidayId' => 'string|false',
-        'getExtraWorkdayId' => 'string|false',
-        'getHolidayName' => 'string|false',
+        'getDBDayId'                => 'string|false',
+        'getHolidayId'              => 'string|false',
+        'getExtraWorkdayId'         => 'string|false',
+        'getHolidayName'            => 'string|false',
         'standardizeHolidaysRegion' => 'string|false',
-        
+
         // Callable
         'getYearHolidaysNextFunction' => 'callable',
     ];
@@ -132,29 +132,29 @@ final class BusinessDayMethodsClassReflectionExtension implements MethodsClassRe
     private function getReturnType(ClassReflection $classReflection, string $methodName): Type
     {
         $returnTypeString = self::METHOD_RETURN_TYPES[$methodName] ?? 'mixed';
-        
+
         switch ($returnTypeString) {
             case 'fluent':
                 return new ObjectType($classReflection->getName());
-                
+
             case 'bool':
                 return new BooleanType();
-                
+
             case 'int':
                 return new IntegerType();
-                
+
             case 'array':
                 return new ArrayType(new MixedType(), new MixedType());
-                
+
             case 'string|null':
                 return new UnionType([new StringType(), new NullType()]);
-                
+
             case 'string|false':
                 return new UnionType([new StringType(), new BooleanType()]);
-                
+
             case 'callable':
                 return new CallableType();
-                
+
             default:
                 return new MixedType();
         }

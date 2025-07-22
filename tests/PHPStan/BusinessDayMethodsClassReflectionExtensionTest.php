@@ -3,9 +3,7 @@
 namespace Tests\PHPStan;
 
 use Cmixin\BusinessDay\PHPStan\BusinessDayMethodsClassReflectionExtension;
-use Carbon\CarbonInterface;
 use PHPStan\Reflection\ClassReflection;
-use PHPStan\Type\ObjectType;
 use PHPUnit\Framework\TestCase;
 
 class BusinessDayMethodsClassReflectionExtensionTest extends TestCase
@@ -33,7 +31,7 @@ class BusinessDayMethodsClassReflectionExtensionTest extends TestCase
     {
         $reflection = new \ReflectionClass(BusinessDayMethodsClassReflectionExtension::class);
         $methodReturnTypes = $reflection->getConstant('METHOD_RETURN_TYPES');
-        
+
         $this->assertIsArray($methodReturnTypes);
         $this->assertArrayHasKey('addBusinessDays', $methodReturnTypes);
         $this->assertArrayHasKey('isBusinessDay', $methodReturnTypes);
@@ -53,32 +51,41 @@ class BusinessDayMethodsClassReflectionExtensionTest extends TestCase
     {
         $reflection = new \ReflectionClass(BusinessDayMethodsClassReflectionExtension::class);
         $methodReturnTypes = $reflection->getConstant('METHOD_RETURN_TYPES');
-        
+
         $this->assertIsArray($methodReturnTypes);
-        $this->assertArrayHasKey($methodName, $methodReturnTypes, 
-            "Method '$methodName' should be recognized as a business day method");
+        $this->assertArrayHasKey(
+            $methodName,
+            $methodReturnTypes,
+            "Method '$methodName' should be recognized as a business day method"
+        );
     }
 
     public function testExtensionHasAllExpectedMethods(): void
     {
         $reflection = new \ReflectionClass(BusinessDayMethodsClassReflectionExtension::class);
         $methodReturnTypes = $reflection->getConstant('METHOD_RETURN_TYPES');
-        
+
         $this->assertIsArray($methodReturnTypes);
-        $this->assertGreaterThan(60, count($methodReturnTypes), 
-            'Extension should recognize more than 60 business day methods');
+        $this->assertGreaterThan(
+            60,
+            count($methodReturnTypes),
+            'Extension should recognize more than 60 business day methods'
+        );
     }
 
     public function testExtensionReturnTypesAreValid(): void
     {
         $reflection = new \ReflectionClass(BusinessDayMethodsClassReflectionExtension::class);
         $methodReturnTypes = $reflection->getConstant('METHOD_RETURN_TYPES');
-        
+
         $validReturnTypes = ['fluent', 'bool', 'int', 'array', 'string|null', 'string|false', 'callable'];
-        
+
         foreach ($methodReturnTypes as $method => $returnType) {
-            $this->assertContains($returnType, $validReturnTypes,
-                "Method '$method' has invalid return type '$returnType'");
+            $this->assertContains(
+                $returnType,
+                $validReturnTypes,
+                "Method '$method' has invalid return type '$returnType'"
+            );
         }
     }
 
@@ -126,7 +133,7 @@ class BusinessDayMethodsClassReflectionExtensionTest extends TestCase
             ['enable'],
             ['setHolidayDataById'],
             ['setHolidayData'],
-            
+
             // Boolean methods
             ['isBusinessDay'],
             ['isHoliday'],
@@ -134,11 +141,11 @@ class BusinessDayMethodsClassReflectionExtensionTest extends TestCase
             ['checkObservedHoliday'],
             ['isObservedHoliday'],
             ['isDateTimeInstance'],
-            
+
             // Integer methods
             ['diffInBusinessDays'],
             ['getBusinessDaysInMonth'],
-            
+
             // Array methods
             ['getMonthBusinessDays'],
             ['getHolidaysAvailableRegions'],
@@ -151,19 +158,19 @@ class BusinessDayMethodsClassReflectionExtensionTest extends TestCase
             ['checkHoliday'],
             ['swapDateTimeParam'],
             ['getHolidayDataById'],
-            ['getHolidayData'],
-            
+            ['getHolidays'],
+
             // Nullable string methods
             ['getObservedHolidaysZone'],
             ['getHolidaysRegion'],
-            
+
             // String or false methods
             ['getDBDayId'],
             ['getHolidayId'],
             ['getExtraWorkdayId'],
             ['getHolidayName'],
             ['standardizeHolidaysRegion'],
-            
+
             // Callable
             ['getYearHolidaysNextFunction'],
         ];

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cmixin\BusinessDay\PHPStan;
 
+use Carbon\CarbonInterface;
 use PHPStan\Reflection\ClassMemberReflection;
 use PHPStan\Reflection\ClassReflection;
 use PHPStan\Reflection\FunctionVariant;
@@ -11,21 +12,20 @@ use PHPStan\Reflection\MethodReflection;
 use PHPStan\Reflection\ParameterReflection;
 use PHPStan\Reflection\PassedByReference;
 use PHPStan\TrinaryLogic;
-use PHPStan\Type\Generic\TemplateTypeMap;
-use PHPStan\Type\Type;
-use PHPStan\Type\IntegerType;
-use PHPStan\Type\StringType;
-use PHPStan\Type\BooleanType;
 use PHPStan\Type\ArrayType;
+use PHPStan\Type\BooleanType;
+use PHPStan\Type\CallableType;
+use PHPStan\Type\Generic\TemplateTypeMap;
+use PHPStan\Type\IntegerType;
 use PHPStan\Type\MixedType;
 use PHPStan\Type\NullType;
 use PHPStan\Type\ObjectType;
+use PHPStan\Type\StringType;
+use PHPStan\Type\Type;
 use PHPStan\Type\UnionType;
-use PHPStan\Type\CallableType;
-use Carbon\CarbonInterface;
 
 /**
- * PHPStan method reflection for cmixin/business-day methods
+ * PHPStan method reflection for cmixin/business-day methods.
  */
 final class BusinessDayMethodReflection implements MethodReflection
 {
@@ -138,7 +138,7 @@ final class BusinessDayMethodReflection implements MethodReflection
     private function getParameters(): array
     {
         $parameters = [];
-        
+
         switch ($this->methodName) {
             // Methods with $days parameter
             case 'addBusinessDays':
@@ -151,8 +151,8 @@ final class BusinessDayMethodReflection implements MethodReflection
                     new NullType(),
                 ]), false, true, null);
                 break;
-                
-            // Methods with $other date parameter
+
+                // Methods with $other date parameter
             case 'diffInBusinessDays':
                 $parameters[] = $this->createParameter('other', new UnionType([
                     new ObjectType(CarbonInterface::class),
@@ -160,8 +160,8 @@ final class BusinessDayMethodReflection implements MethodReflection
                     new NullType(),
                 ]), false, true, null);
                 break;
-                
-            // Methods with optional $date parameter
+
+                // Methods with optional $date parameter
             case 'getBusinessDaysInMonth':
             case 'getMonthBusinessDays':
                 $parameters[] = $this->createParameter('date', new UnionType([
@@ -170,8 +170,8 @@ final class BusinessDayMethodReflection implements MethodReflection
                     new NullType(),
                 ]), false, true, null);
                 break;
-                
-            // Holiday name method with date/locale parameters
+
+                // Holiday name method with date/locale parameters
             case 'getHolidayName':
                 $parameters[] = $this->createParameter('date', new UnionType([
                     new ObjectType(CarbonInterface::class),
@@ -184,21 +184,21 @@ final class BusinessDayMethodReflection implements MethodReflection
                     new NullType(),
                 ]), false, true, null);
                 break;
-                
-            // Region setter
+
+                // Region setter
             case 'setHolidaysRegion':
             case 'initializeHolidaysRegion':
                 $parameters[] = $this->createParameter('region', new StringType(), false, false);
                 break;
-                
-            // Set holidays method
+
+                // Set holidays method
             case 'setHolidays':
             case 'setExtraWorkdays':
                 $parameters[] = $this->createParameter('region', new StringType(), false, false);
                 $parameters[] = $this->createParameter('holidays', new ArrayType(new MixedType(), new MixedType()), false, false);
                 break;
-                
-            // Add holiday method
+
+                // Add holiday method
             case 'addHoliday':
             case 'addExtraWorkday':
                 $parameters[] = $this->createParameter('region', new StringType(), false, false);
@@ -221,20 +221,20 @@ final class BusinessDayMethodReflection implements MethodReflection
                     ]), false, true, null);
                 }
                 break;
-                
-            // Holiday observer methods
+
+                // Holiday observer methods
             case 'observeHoliday':
             case 'unobserveHoliday':
                 $parameters[] = $this->createParameter('holidayId', new StringType(), false, false);
                 break;
-                
-            // Multiple holiday observer methods
+
+                // Multiple holiday observer methods
             case 'observeHolidays':
             case 'unobserveHolidays':
                 $parameters[] = $this->createParameter('holidayIds', new ArrayType(new IntegerType(), new StringType()), false, false);
                 break;
-                
-            // isObservedHoliday method
+
+                // isObservedHoliday method
             case 'isObservedHoliday':
                 $parameters[] = $this->createParameter('holidayId', new UnionType([
                     new StringType(),
@@ -246,15 +246,15 @@ final class BusinessDayMethodReflection implements MethodReflection
                     new NullType(),
                 ]), false, true, null);
                 break;
-                
-            // Custom setter methods
+
+                // Custom setter methods
             case 'setBusinessDayChecker':
                 $parameters[] = $this->createParameter('checkCallback', new UnionType([
                     new CallableType(),
                     new NullType(),
                 ]), false, true, null);
                 break;
-                
+
             case 'setHolidayGetter':
             case 'setExtraWorkdayGetter':
                 $parameters[] = $this->createParameter('holidayGetter', new UnionType([
@@ -262,19 +262,19 @@ final class BusinessDayMethodReflection implements MethodReflection
                     new NullType(),
                 ]), false, false);
                 break;
-                
+
             case 'setObservedHolidaysZone':
                 $parameters[] = $this->createParameter('zone', new UnionType([
                     new StringType(),
                     new NullType(),
                 ]), false, false);
                 break;
-                
+
             case 'setHolidayObserveStatus':
                 $parameters[] = $this->createParameter('holidayId', new StringType(), false, false);
                 $parameters[] = $this->createParameter('observed', new BooleanType(), false, false);
                 break;
-                
+
             case 'setHolidayName':
                 $parameters[] = $this->createParameter('holidayId', new StringType(), false, false);
                 $parameters[] = $this->createParameter('name', new StringType(), false, false);
@@ -283,13 +283,13 @@ final class BusinessDayMethodReflection implements MethodReflection
                     new NullType(),
                 ]), false, true, null);
                 break;
-                
+
             case 'addHolidays':
                 $parameters[] = $this->createParameter('region', new StringType(), false, false);
                 $parameters[] = $this->createParameter('holidays', new ArrayType(new MixedType(), new MixedType()), false, false);
                 break;
-                
-            // Methods with no parameters
+
+                // Methods with no parameters
             case 'addBusinessDay':
             case 'subBusinessDay':
             case 'subtractBusinessDay':
@@ -316,18 +316,18 @@ final class BusinessDayMethodReflection implements MethodReflection
             case 'isDateTimeInstance':
                 // No parameters
                 break;
-                
-            // These methods have complex internal usage, providing basic signatures
+
+                // These methods have complex internal usage, providing basic signatures
             default:
                 // For any methods not explicitly handled, return empty parameters
                 break;
         }
-        
+
         return $parameters;
     }
-    
+
     /**
-     * Create a parameter reflection
+     * Create a parameter reflection.
      */
     private function createParameter(
         string $name,
@@ -341,27 +341,27 @@ final class BusinessDayMethodReflection implements MethodReflection
              * @var string
              */
             private $name;
-            
+
             /**
              * @var Type
              */
             private $type;
-            
+
             /**
              * @var bool
              */
             private $passedByReference;
-            
+
             /**
              * @var bool
              */
             private $optional;
-            
+
             /**
              * @var mixed
              */
             private $defaultValue;
-            
+
             public function __construct(string $name, Type $type, bool $passedByReference, bool $optional, $defaultValue)
             {
                 $this->name = $name;
@@ -370,50 +370,50 @@ final class BusinessDayMethodReflection implements MethodReflection
                 $this->optional = $optional;
                 $this->defaultValue = $defaultValue;
             }
-            
+
             public function getName(): string
             {
                 return $this->name;
             }
-            
+
             public function isOptional(): bool
             {
                 return $this->optional;
             }
-            
+
             public function getType(): Type
             {
                 return $this->type;
             }
-            
+
             public function passedByReference(): PassedByReference
             {
                 return $this->passedByReference ? PassedByReference::createCreatesNewVariable() : PassedByReference::createNo();
             }
-            
+
             public function isVariadic(): bool
             {
                 return false;
             }
-            
+
             public function getDefaultValue(): ?Type
             {
                 if (!$this->optional || $this->defaultValue === null) {
                     return null;
                 }
-                
+
                 if (is_int($this->defaultValue)) {
                     return new IntegerType();
                 }
-                
+
                 if (is_string($this->defaultValue)) {
                     return new StringType();
                 }
-                
+
                 if (is_bool($this->defaultValue)) {
                     return new BooleanType();
                 }
-                
+
                 return new NullType();
             }
         };
