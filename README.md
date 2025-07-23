@@ -771,6 +771,72 @@ auto-discovery using:
 },
 ```
 
+### PHPStan
+
+This library includes a PHPStan extension to provide static analysis support for business day methods when using PHPStan.
+
+The extension automatically provides type information for all business day methods added to Carbon instances, enabling:
+- **Proper type checking** for method parameters and return types
+- **IDE autocompletion** for business day methods  
+- **Static analysis** of business day method usage
+
+#### Enabling the PHPStan Extension
+
+The PHPStan extension is automatically installed when you use PHPStan with this library. If you're using PHPStan Extension Installer (recommended), no manual configuration is needed.
+
+**Automatic Installation (Recommended):**
+The extension will be automatically loaded if you have `phpstan/extension-installer` in your project:
+
+```bash
+composer require --dev phpstan/phpstan phpstan/extension-installer
+```
+
+**Manual Installation:**
+If you prefer manual configuration, add the extension to your PHPStan configuration file (`phpstan.neon` or `phpstan.neon.dist`):
+
+```yaml
+includes:
+    - vendor/cmixin/business-day/extension.neon
+```
+
+#### What the Extension Provides
+
+The extension provides complete type information for all business day methods:
+
+```php
+<?php
+use Carbon\Carbon;
+
+$date = Carbon::now();
+
+// PHPStan knows these return Carbon instances (fluent interface)
+$date->addBusinessDays(5);        // Carbon
+$date->nextBusinessDay();         // Carbon
+$date->setHolidaysRegion('us');   // Carbon
+
+// PHPStan knows these return booleans
+$date->isBusinessDay();           // bool
+$date->isHoliday();              // bool
+
+// PHPStan knows these return integers  
+$date->diffInBusinessDays($other); // int
+$date->getBusinessDaysInMonth();   // int
+
+// PHPStan knows these return arrays
+$date->getMonthBusinessDays();     // array
+$date->getHolidays();             // array
+
+// And handles nullable/union types correctly
+$date->getHolidayName();          // string|false
+$date->getHolidaysRegion();       // string|null
+```
+
+#### Requirements
+
+- PHPStan 1.0.0 or higher
+- The extension is automatically available when you install this package with `composer require-dev phpstan/phpstan`
+- No additional dependencies required
+
 ### Note about timezones
 
 When you set an holidays region, it does not change the timezone, so if January 1st is an holiday,

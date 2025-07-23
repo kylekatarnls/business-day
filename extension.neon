@@ -1,0 +1,5 @@
+services:
+    -
+        class: Cmixin\BusinessDay\PHPStan\BusinessDayMethodsClassReflectionExtension
+        tags:
+            - phpstan.broker.methodsClassReflectionExtension
