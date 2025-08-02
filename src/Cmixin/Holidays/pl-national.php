@@ -13,6 +13,7 @@ return [
     '08-15'              => '08-15',
     '11-01'              => '11-01',
     'independence-day'   => '11-11',
+    'christmas-eve'      => '= 12-24 if year >= 2025',
     'christmas'          => '12-25',
     'christmas-next-day' => '12-26',
 ];
