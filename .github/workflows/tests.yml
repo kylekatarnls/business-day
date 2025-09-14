@@ -19,7 +19,7 @@ jobs:
     name: PHP ${{ matrix.php }} - ${{ matrix.setup }}
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
 
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
@@ -49,15 +49,6 @@ jobs:
         ${{ matrix.php >= 8.1 && 'composer require --no-update phpunit/phpunit:^8.5.14 --no-interaction' || '' }}
         composer update --prefer-dist ${{ matrix.setup != 'next' && matrix.setup != 'no-calendar' && format('--prefer-{0}', matrix.setup) || '' }} --no-progress --no-suggest ${{ matrix.php >= 8.1 && '--ignore-platform-req=php' || '' }}
 
-    - name: Code Climate Test Reporter Preparation
-      if: matrix.php == '7.4' && matrix.setup == 'stable'
-      run: |
-        curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter;
-        chmod +x ./cc-test-reporter;
-        ./cc-test-reporter before-build;
-      env:
-        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-
     - name: Fix PHP compatibility
       if: matrix.php >= '8.1'
       run: php tests/fix-php-compatibility.php
@@ -73,14 +64,20 @@ jobs:
         MATRIX_CONFIG: ${{ matrix.php }}-${{ matrix.setup }}
 
     - name: Code Climate Test Reporter
-      if: ${{ matrix.php == '7.4' && matrix.setup == 'stable' && env.CC_TEST_REPORTER_ID != '' }}
-      run: ./cc-test-reporter after-build --exit-code 0
-      env:
-        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-
-    - name: Coverage
       if: matrix.php == '7.4' && matrix.setup == 'stable'
-      run: bash <(curl -s https://codecov.io/bash)
+      uses: aktions/codeclimate-test-reporter@v1
+      with:
+        codeclimate-test-reporter-id: ${{ secrets.CC_TEST_REPORTER_ID }}
+        command: after-build -t clover
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+      continue-on-error: true
+
+    - name: Upload coverage reports to Codecov
+      if: matrix.php == '7.4' && matrix.setup == 'stable'
+      uses: codecov/codecov-action@v5.5.1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
 
   multitest:
     runs-on: ubuntu-latest
