@@ -3,7 +3,6 @@
 namespace Tests\PHPStan;
 
 use Cmixin\BusinessDay\PHPStan\BusinessDayMethodsClassReflectionExtension;
-use PHPStan\Reflection\ClassReflection;
 use PHPUnit\Framework\TestCase;
 
 class PHPStanExtensionIntegrationTest extends TestCase
@@ -15,10 +14,6 @@ class PHPStanExtensionIntegrationTest extends TestCase
 
     protected function setUp(): void
     {
-        if (!class_exists(ClassReflection::class)) {
-            $this->markTestSkipped('PHPStan is not available');
-        }
-
         $this->extension = new BusinessDayMethodsClassReflectionExtension();
     }
 
@@ -130,7 +125,7 @@ class PHPStanExtensionIntegrationTest extends TestCase
     /**
      * @return array<array{string, string}>
      */
-    public function methodReturnTypeProvider(): array
+    public static function methodReturnTypeProvider(): array
     {
         return [
             // Fluent methods (should return the same class)

@@ -40,7 +40,7 @@ class ServiceProviderTest extends TestCase
         $this->assertNull($service->register());
     }
 
-    public function getBootCases(): iterable
+    public static function getBootCases(): iterable
     {
         yield [[], false];
         yield [['without' => ['01-24']], true];

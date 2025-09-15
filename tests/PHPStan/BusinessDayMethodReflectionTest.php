@@ -3,18 +3,10 @@
 namespace Tests\PHPStan;
 
 use Cmixin\BusinessDay\PHPStan\BusinessDayMethodReflection;
-use PHPStan\Reflection\ClassReflection;
 use PHPUnit\Framework\TestCase;
 
 class BusinessDayMethodReflectionTest extends TestCase
 {
-    protected function setUp(): void
-    {
-        if (!class_exists(ClassReflection::class)) {
-            $this->markTestSkipped('PHPStan is not available');
-        }
-    }
-
     public function testBusinessDayMethodReflectionClassExists(): void
     {
         $this->assertTrue(class_exists(BusinessDayMethodReflection::class));

@@ -753,6 +753,21 @@ class BusinessDayTest extends TestCase
         self::assertFalse($carbon::parse('2021-07-14')->isBusinessDay());
     }
 
+    public function testMixedConditionsNotYetSupported()
+    {
+        self::expectExceptionObject(
+            new InvalidArgumentException(
+                'Mixed conditions are not supported for now, they must all target the same unit (for example: year)'
+            )
+        );
+        $carbon = static::CARBON_CLASS;
+        BusinessDay::enable($carbon, 'fr-national', null, [
+            'mixed' => '= 09-01 if year > 1991 and day = Monday',
+        ]);
+
+        $carbon::parse('2024-09-01')->isBusinessDay();
+    }
+
     public function testSetExtraWorkdayGetter()
     {
         $carbon = static::CARBON_CLASS;
