@@ -46,8 +46,7 @@ jobs:
     - name: Install dependencies
       if: steps.composer-cache.outputs.cache-hit != 'true'
       run: |
-        ${{ matrix.php >= 8.1 && 'composer require --no-update phpunit/phpunit:^8.5.14 --no-interaction' || '' }}
-        composer update --prefer-dist ${{ matrix.setup != 'next' && matrix.setup != 'no-calendar' && format('--prefer-{0}', matrix.setup) || '' }} --no-progress --no-suggest ${{ matrix.php >= 8.1 && '--ignore-platform-req=php' || '' }}
+        composer update --prefer-dist ${{ matrix.setup != 'next' && matrix.setup != 'no-calendar' && format('--prefer-{0}', matrix.setup) || '' }} --no-progress --no-suggest
 
     - name: Fix PHP compatibility
       if: matrix.php >= '8.1'
