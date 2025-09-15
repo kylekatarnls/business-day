@@ -87,7 +87,7 @@ class BusinessDayMethodsClassReflectionExtensionTest extends TestCase
     /**
      * @return array<array{string}>
      */
-    public function businessDayMethodsProvider(): array
+    public static function businessDayMethodsProvider(): array
     {
         return [
             // Fluent methods

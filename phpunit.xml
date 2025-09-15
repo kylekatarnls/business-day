@@ -20,11 +20,4 @@
             <directory>src/Cmixin</directory>
         </include>
     </source>
-
-    <!-- Backward compatibility -->
-    <filter>
-        <whitelist>
-            <directory>src/Cmixin</directory>
-        </whitelist>
-    </filter>
 </phpunit>

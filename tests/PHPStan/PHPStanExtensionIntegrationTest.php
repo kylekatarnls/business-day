@@ -125,7 +125,7 @@ class PHPStanExtensionIntegrationTest extends TestCase
     /**
      * @return array<array{string, string}>
      */
-    public function methodReturnTypeProvider(): array
+    public static function methodReturnTypeProvider(): array
     {
         return [
             // Fluent methods (should return the same class)

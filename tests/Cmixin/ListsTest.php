@@ -72,7 +72,7 @@ class ListsTest extends TestCase
         self::assertTrue($allStrings, $name.' names translations should returns only string entries');
     }
 
-    public function getHolidaysNames()
+    public static function getHolidaysNames()
     {
         $names = [];
 
