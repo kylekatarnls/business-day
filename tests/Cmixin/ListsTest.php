@@ -39,7 +39,7 @@ class ListsTest extends TestCase
         self::assertTrue($allCarbon, $list.': getYearHolidays should returns only Carbon objects');
     }
 
-    public function getHolidaysLists()
+    public static function getHolidaysLists(): array
     {
         $lists = [];
 

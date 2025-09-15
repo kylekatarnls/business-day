@@ -26,6 +26,8 @@ use PHPStan\Type\UnionType;
 
 /**
  * PHPStan method reflection for cmixin/business-day methods.
+ *
+ * @codeCoverageIgnore
  */
 final class BusinessDayMethodReflection implements MethodReflection
 {
