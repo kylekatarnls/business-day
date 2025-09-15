@@ -55,8 +55,9 @@ jobs:
 
     - name: Run test suite
       run: |
-        if [[ ${MATRIX_CONFIG} == "7.4-stable" ]]; then
+        if [[ ${MATRIX_CONFIG} == "8.4-stable" ]]; then
           vendor/bin/phpunit --coverage-text --coverage-clover=clover.xml;
+          cp clover.xml coverage.xml
         else
           vendor/bin/phpunit --no-coverage;
         fi;
@@ -64,7 +65,7 @@ jobs:
         MATRIX_CONFIG: ${{ matrix.php }}-${{ matrix.setup }}
 
     - name: Code Climate Test Reporter
-      if: matrix.php == '7.4' && matrix.setup == 'stable'
+      if: matrix.php == '8.4' && matrix.setup == 'stable'
       uses: aktions/codeclimate-test-reporter@v1
       with:
         codeclimate-test-reporter-id: ${{ secrets.CC_TEST_REPORTER_ID }}
@@ -74,7 +75,7 @@ jobs:
       continue-on-error: true
 
     - name: Upload coverage reports to Codecov
-      if: matrix.php == '7.4' && matrix.setup == 'stable'
+      if: matrix.php == '8.4' && matrix.setup == 'stable'
       uses: codecov/codecov-action@v5.5.1
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
@@ -84,7 +85,7 @@ jobs:
 
     strategy:
       matrix:
-        php: ['7.4']
+        php: ['8.4']
         setup: ['stable']
 
     name: Multitest
