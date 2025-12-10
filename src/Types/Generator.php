@@ -31,7 +31,7 @@ class Generator
             $c = new ReflectionClass(Carbon::now());
             $macros = $c->getProperty('globalMacros');
 
-            if (PHP_VERSION_ID < 80500) {
+            if (PHP_VERSION_ID < 80100) {
                 $macros->setAccessible(true);
             }
 
