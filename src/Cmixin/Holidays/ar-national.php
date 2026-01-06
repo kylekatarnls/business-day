@@ -27,4 +27,7 @@ return [
     'bridge-holiday-2025-05-02'                          => '2025-05-02',    // special day for 2025
     'bridge-holiday-2025-08-15'                          => '2025-08-15',    // special day for 2025
     'bridge-holiday-2025-11-21'                          => '2025-11-21',    // special day for 2025
+    'bridge-holiday-2026-03-23'                          => '2026-03-23',    // special day for 2026
+    'bridge-holiday-2026-07-10'                          => '2026-07-10',    // special day for 2026
+    'bridge-holiday-2026-12-07'                          => '2026-12-07',    // special day for 2026
 ];

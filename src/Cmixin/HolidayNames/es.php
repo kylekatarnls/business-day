@@ -185,4 +185,7 @@ return [
     'bridge-holiday-2025-05-02'                                                                           => 'Día no laborable con fines turísticos',
     'bridge-holiday-2025-08-15'                                                                           => 'Día no laborable con fines turísticos',
     'bridge-holiday-2025-11-21'                                                                           => 'Día no laborable con fines turísticos',
+    'bridge-holiday-2026-03-23'                                                                           => 'Día no laborable con fines turísticos',
+    'bridge-holiday-2026-07-10'                                                                           => 'Día no laborable con fines turísticos',
+    'bridge-holiday-2026-12-07'                                                                           => 'Día no laborable con fines turísticos',
 ];
