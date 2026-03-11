@@ -832,4 +832,13 @@ class BusinessDayTest extends TestCase
 
         self::assertSame($strategy, MixinConfigPropagator::getBusinessDayChecker($mixin, $next));
     }
+
+    public function testDefaultMissingCalendarBehavior(): void
+    {
+        self::assertTrue(BusinessDay::shouldRaiseMissingCalendarExtensionException());
+
+        BusinessDay::enable(static::CARBON_CLASS, 'fr-national');
+
+        self::assertTrue(BusinessDay::shouldRaiseMissingCalendarExtensionException());
+    }
 }
