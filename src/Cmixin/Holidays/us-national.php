@@ -8,7 +8,7 @@ return [
     'washingtons-birthday'    => '= third Monday of February', // Washington's Birthday (Presidents' Day)
     'memorial-day'            => '= last Monday of May', // Memorial Day
     'juneteenth'              => '= 06-19 if year > 2021 on Monday,Tuesday,Wednesday,Thursday,Friday', // Juneteenth National Independence Day
-    'juneteenth-first'        => '= 06-19 if year = 2021', // Juneteenth (first occurrance)
+    'juneteenth-first'        => '= 06-19 if year = 2021', // Juneteenth (first occurence)
     'juneteenth-next-day'     => '= 06-20 if year > 2021 on Monday', // Juneteenth (observance)
     'juneteenth-previous-day' => '= 06-18 if year > 2021 on Friday', // Juneteenth (observance)
     'independence-day'        => '= 07-04 if Saturday then previous Friday and if Sunday then substitute', // Independence Day
