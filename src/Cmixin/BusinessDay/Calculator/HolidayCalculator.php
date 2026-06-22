@@ -10,6 +10,7 @@ use Cmixin\BusinessDay\Calendar\JewishCalendar;
 use Cmixin\BusinessDay\Calendar\MissingCalendarExtensionException;
 use Cmixin\BusinessDay\Util\YearCondition;
 use DateTime;
+use DateTimeInterface;
 
 /**
  * @internal
@@ -38,10 +39,16 @@ class HolidayCalculator extends CalculatorBase
      */
     protected $calendars;
 
-    public function __construct($year, $type, &$holidays)
+    /**
+     * @var ?string
+     */
+    private $region;
+
+    public function __construct($year, $type, $region, &$holidays)
     {
         parent::__construct($year, $type, $holidays);
 
+        $this->region = $region;
         $this->calendars = [ // @codeCoverageIgnore
             HijriCalendar::get(),
             JewishCalendar::get(),
@@ -134,11 +141,9 @@ class HolidayCalculator extends CalculatorBase
             $dateTime = $dateTime->modify("previous $before");
         }
 
-        while ($substitute && ($dateTime->format('N') > 5 || isset($this->holidaysList[$dateTime->format('d/m')]))) {
-            $dateTime = $dateTime->modify('+1 day');
-        }
-
-        return $dateTime;
+        return $substitute
+            ? $this->handleSubstitute($dateTime)
+            : $dateTime;
     }
 
     protected function interpolateEquinox($match)
@@ -345,7 +350,6 @@ class HolidayCalculator extends CalculatorBase
         }
 
         if (is_string($holiday)) {
-            // @codeCoverageIgnoreStart
             try {
                 $holiday = $this->parseHoliday($holiday, $dateTime, $key);
             } catch (MissingCalendarExtensionException $exception) {
@@ -355,7 +359,6 @@ class HolidayCalculator extends CalculatorBase
 
                 return false;
             }
-            // @codeCoverageIgnoreEnd
         }
 
         return $holiday
@@ -387,5 +390,36 @@ class HolidayCalculator extends CalculatorBase
         }
 
         return $outputClass::createFromFormat('!Y-m-d', "$year-$month-$day");
+    }
+
+    private function handleSubstitute(DateTimeInterface $dateTime): DateTimeInterface
+    {
+        switch ($dateTime->format('N')) {
+            case 7:
+                $dateTime = $dateTime->modify('+1 day');
+
+                while (isset($this->holidaysList[$dateTime->format('d/m')])) {
+                    $dateTime = $dateTime->modify('+1 day');
+                }
+
+                break;
+
+            case 6:
+                $direction = substr($this->region, 0, 3) === 'us-' ? '-1 day' : '+1 day';
+                $dateTime = $dateTime->modify($direction);
+
+                while ($dateTime->format('N') === '7' || isset($this->holidaysList[$dateTime->format('d/m')])) {
+                    $dateTime = $dateTime->modify($direction);
+                }
+
+                break;
+
+            default:
+                while (isset($this->holidaysList[$dateTime->format('d/m')]) || in_array($dateTime->format('N'), ['6', '7'])) {
+                    $dateTime = $dateTime->modify('+1 day');
+                }
+        }
+
+        return $dateTime;
     }
 }

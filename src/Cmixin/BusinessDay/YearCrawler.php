@@ -8,7 +8,7 @@ use Cmixin\BusinessDay\Calculator\HolidayCalculator;
 class YearCrawler extends HolidaysList
 {
     /**
-     * Get the holidays dates for a the given year (current year if no parameter given).
+     * Get the holidays dates for a given year (current year if no parameter given).
      *
      * @return \Closure
      */
@@ -45,6 +45,8 @@ class YearCrawler extends HolidaysList
      */
     public function getYearHolidaysNextFunction()
     {
+        $mixin = $this;
+
         /**
          * Get a next() callback to call to iterate over holidays of a year.
          *
@@ -54,7 +56,7 @@ class YearCrawler extends HolidaysList
          *
          * @return callable
          */
-        return static function ($year = null, $type = null, string $getDays = 'getHolidays'): callable {
+        return static function ($year = null, $type = null, string $getDays = 'getHolidays') use ($mixin): callable {
             $self = static::this();
             $carbonClass = get_class($self);
             $year = $year ?: $self->year;
@@ -67,7 +69,7 @@ class YearCrawler extends HolidaysList
 
             $outputClass = $type ? (is_string($type) && $type !== 'string' ? $type : 'DateTime') : $carbonClass;
             $holidaysList = [];
-            $calculator = new HolidayCalculator((int) $year, $type, $holidays);
+            $calculator = new HolidayCalculator((int) $year, $type, $mixin->holidaysRegion, $holidays);
             $calculator->setOutputClass($outputClass);
             $calculator->setHolidaysList($holidaysList);
 
