@@ -77,9 +77,6 @@ abstract class MixinBase
         };
     }
 
-    /**
-     * @codeCoverageIgnore
-     */
     public static function skipMissingCalendarExtensionException(bool $skipped = true): void
     {
         self::$missingCalendarExtensionExceptionSkipped = $skipped;

@@ -350,7 +350,6 @@ class HolidayCalculator extends CalculatorBase
         }
 
         if (is_string($holiday)) {
-            // @codeCoverageIgnoreStart
             try {
                 $holiday = $this->parseHoliday($holiday, $dateTime, $key);
             } catch (MissingCalendarExtensionException $exception) {
@@ -360,7 +359,6 @@ class HolidayCalculator extends CalculatorBase
 
                 return false;
             }
-            // @codeCoverageIgnoreEnd
         }
 
         return $holiday

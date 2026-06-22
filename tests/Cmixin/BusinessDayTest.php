@@ -8,6 +8,7 @@ use Carbon\CarbonInterface;
 use Cmixin\BusinessDay;
 use Cmixin\BusinessDay\Calculator\HolidayCalculator;
 use Cmixin\BusinessDay\Calculator\MixinConfigPropagator;
+use Cmixin\BusinessDay\MixinBase;
 use DateTime;
 use DateTimeImmutable;
 use Generator;
@@ -18,6 +19,7 @@ use Tests\Cmixin\Traits\AlternativeCalendars;
 use Tests\Cmixin\Traits\ConfigSetters;
 use Tests\Cmixin\Traits\Observable;
 use Tests\Cmixin\Traits\PreviousAndNext;
+use Tests\Fixture\CalculatorTester;
 
 /**
  * @group mutable
@@ -840,6 +842,25 @@ class BusinessDayTest extends TestCase
         MixinConfigPropagator::propagate($date, $next);
 
         self::assertSame($strategy, MixinConfigPropagator::getBusinessDayChecker($mixin, $next));
+    }
+
+    public static function testSkipMissingCalendarExtensionException()
+    {
+        $raised = MixinBase::shouldRaiseMissingCalendarExtensionException();
+
+        try {
+            MixinBase::skipMissingCalendarExtensionException();
+            self::assertFalse(MixinBase::shouldRaiseMissingCalendarExtensionException());
+            self::assertFalse(CalculatorTester::check());
+            MixinBase::skipMissingCalendarExtensionException(false);
+            self::assertTrue(MixinBase::shouldRaiseMissingCalendarExtensionException());
+            self::assertTrue(CalculatorTester::check());
+            MixinBase::skipMissingCalendarExtensionException(true);
+            self::assertFalse(MixinBase::shouldRaiseMissingCalendarExtensionException());
+            self::assertFalse(CalculatorTester::check());
+        } finally {
+            MixinBase::skipMissingCalendarExtensionException(!$raised);
+        }
     }
 
     private function substitutes(CarbonInterface $date): CarbonInterface
