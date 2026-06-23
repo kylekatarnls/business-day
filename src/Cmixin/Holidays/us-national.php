@@ -7,16 +7,13 @@ return [
     'mlk-day'                 => '= third Monday of January', // Birthday of Martin Luther King, Jr.
     'washingtons-birthday'    => '= third Monday of February', // Washington's Birthday (Presidents' Day)
     'memorial-day'            => '= last Monday of May', // Memorial Day
-    'juneteenth'              => '= 06-19 if year > 2021 on Monday,Tuesday,Wednesday,Thursday,Friday', // Juneteenth National Independence Day
-    'juneteenth-first'        => '= 06-19 if year = 2021', // Juneteenth (first occurrence)
-    'juneteenth-next-day'     => '= 06-20 if year > 2021 on Monday', // Juneteenth (observance)
-    'juneteenth-previous-day' => '= 06-18 if year > 2021 on Friday', // Juneteenth (observance)
-    'independence-day'        => '= 07-04 if Saturday then previous Friday and if Sunday then substitute', // Independence Day
+    'juneteenth'              => '= 06-19 if year >= 2021 substitute', // Juneteenth National Independence Day
+    'independence-day'        => '= 07-04 substitute', // Independence Day
     'labor-day'               => '= first Monday of September', // Labor Day
     'columbus-day'            => '= second Monday of October', // Columbus Day
     'veterans-day'            => '11-11', // Veterans Day
     'thanksgiving'            => '= fourth Thursday of November', // Thanksgiving Day
-    'christmas'               => '= 12-25 if Saturday then previous Friday and if Sunday then substitute', // Christmas Day
+    'christmas'               => '= 12-25 substitute', // Christmas Day
     //    '02-14'                                                                 => '02-14',
     //    '04-15' => '= 04-15 if Friday then next Monday and if Saturday,sunday then next Tuesday',
     //    'wednesday-before-04-28'                                                => '= Wednesday before 04-28',
