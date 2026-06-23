@@ -25,6 +25,7 @@ class DeTest extends TestCase
         self::assertFalse($carbon::parse('2024-03-31')->getHolidayName());
         self::assertFalse($carbon::parse('2024-10-31')->getHolidayName());
         self::assertSame('Reformation Day', $carbon::parse('2017-10-31')->getHolidayName());
+        self::assertSame('Reformationstag', $carbon::parse('2017-10-31')->getHolidayName('de'));
 
         $carbon::resetHolidays();
         $carbon::setHolidaysRegion('de-bb');
