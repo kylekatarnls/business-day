@@ -1,23 +1,19 @@
 <?php
 
 return [
-    'new-year'               => '= 01-01 on Monday,Tuesday,Wednesday,Thursday,Friday', // New Year's Day
-    'new-year-next-day'      => '= 01-02 on Monday', // New Year's Day (observance)
-    'new-year-previous-day'  => '= 12-31 on Friday', // New Year's Day (observance)
-    // Martin Luther King Jr. Day
-    'mlk-day'                => '= third Monday of january',
-    '3rd-monday-in-february' => '= third Monday of February',
-    // Memorial Day
-    'memorial-day'           => '= last Monday of may',
-    'juneteenth'             => '= 06-19 if year > 2021 substitute',
-    'independence-day'       => '= 07-04 substitute', // Independence Day
-    // Labor Day
-    'labor-day'              => '= first Monday of september',
-    'columbus-day'           => '= second Monday of October',
-    'veterans-day'           => '11-11',
-    // Thanksgiving
-    'thanksgiving'           => '= fourth Thursday of november',
-    'christmas'              => '= 12-25 substitute', // Christmas Day
+    'new-year'                => '= 01-01 on Monday,Tuesday,Wednesday,Thursday,Friday', // New Year's Day
+    'new-year-next-day'       => '= 01-02 on Monday', // New Year's Day (observance)
+    'new-year-previous-day'   => '= 12-31 on Friday', // New Year's Day (observance)
+    'mlk-day'                 => '= third Monday of January', // Birthday of Martin Luther King, Jr.
+    'washingtons-birthday'    => '= third Monday of February', // Washington's Birthday (Presidents' Day)
+    'memorial-day'            => '= last Monday of May', // Memorial Day
+    'juneteenth'              => '= 06-19 if year >= 2021 substitute', // Juneteenth National Independence Day
+    'independence-day'        => '= 07-04 substitute', // Independence Day
+    'labor-day'               => '= first Monday of September', // Labor Day
+    'columbus-day'            => '= second Monday of October', // Columbus Day
+    'veterans-day'            => '11-11', // Veterans Day
+    'thanksgiving'            => '= fourth Thursday of November', // Thanksgiving Day
+    'christmas'               => '= 12-25 substitute', // Christmas Day
     //    '02-14'                                                                 => '02-14',
     //    '04-15' => '= 04-15 if Friday then next Monday and if Saturday,sunday then next Tuesday',
     //    'wednesday-before-04-28'                                                => '= Wednesday before 04-28',
