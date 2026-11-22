@@ -182,7 +182,8 @@ class HolidayCalculator extends CalculatorBase
 
         return [
             '/julian\s+(\d+)-(\d+)/i'                      => [$this, 'convertJulianDate'],
-            // Algorithm for Vietnamese and Korean not found, but Chinese calendar is the same 97% of the time.
+            // Korean dates use KoreanLunarCalendar.
+            // Algorithm for Vietnamese not found, but Chinese calendar is the same 97% of the time.
             // If you can implement it, feel free to open a pull-request
             '/(chinese|vietnamese|korean)\s+(\d+-L?\d+)/i' => [$this, 'convertChineseDate'],
             $equinox                                       => [$this, 'interpolateEquinox'],

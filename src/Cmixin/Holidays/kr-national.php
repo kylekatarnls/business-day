@@ -1,6 +1,6 @@
 <?php
 
-use Cmixin\BusinessDay\Calendar\LunarCalendar;
+use Cmixin\BusinessDay\Calendar\KoreanLunarCalendar;
 
 /*
  * Substitute holidays (대체공휴일, Public Holidays Act article 3): the first day after the holiday that is
@@ -16,7 +16,7 @@ $substitutes = static function (int $year): array {
     }
 
     $lunar = static function (string $monthDay) use ($year): DateTimeImmutable {
-        [$gregorianYear, $month, $day] = (new LunarCalendar("$year-$monthDay"))->toGregorian();
+        [$gregorianYear, $month, $day] = (new KoreanLunarCalendar("$year-$monthDay"))->toGregorian();
 
         return new DateTimeImmutable(sprintf('%04d-%02d-%02d', $gregorianYear, $month, $day));
     };

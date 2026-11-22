@@ -79,6 +79,32 @@ class KrTest extends TestCase
         ];
     }
 
+    /**
+     * @dataProvider getLunarHolidays
+     */
+    public function testLunarHolidaysFollowTheKoreanCalendar(string $date, string $holidayId, string $chineseDate)
+    {
+        $carbon = static::CARBON_CLASS;
+        $carbon::setHolidaysRegion('kr-national');
+
+        self::assertSame($holidayId, $carbon::parse($date)->getHolidayId());
+        self::assertFalse($carbon::parse($chineseDate)->isHoliday());
+    }
+
+    public static function getLunarHolidays(): array
+    {
+        // Last column: a holiday when these lunar dates were read in the Chinese calendar, not one in Korea.
+        return [
+            'Buddha\'s Birthday 2012, leap 3rd month in Korea' => ['2012-05-28', 'korean-4-0-8', '2012-04-28'],
+            'Buddha\'s Birthday 2023'                          => ['2023-05-27', 'korean-4-0-8', '2023-05-26'],
+            'Substitute for Buddha\'s Birthday 2023'           => ['2023-05-29', 'substitutes-buddha-s-birthday', '2023-05-26'],
+            'Korean New Year 2027'                             => ['2027-02-07', 'korean-01-0-01', '2027-02-05'],
+            'Substitute for the Korean New Year 2027'          => ['2027-02-09', 'substitutes-korean-new-year', '2027-02-05'],
+            'Day after the Korean New Year 2028'               => ['2028-01-28', 'korean-01-0-01-p1', '2028-01-25'],
+            'Day after Korean Thanksgiving 2040'               => ['2040-09-22', 'korean-8-0-15-p1', '2040-09-19'],
+        ];
+    }
+
     public function testNoSubstituteBeforeTheRuleCoveredTheHoliday()
     {
         $carbon = static::CARBON_CLASS;
