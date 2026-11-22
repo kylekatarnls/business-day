@@ -3,6 +3,7 @@
 namespace Cmixin\BusinessDay\Calculator;
 
 use Cmixin\BusinessDay\Calendar\CalendarExtensionChecker;
+use Cmixin\BusinessDay\Calendar\KoreanLunarCalendar;
 use Cmixin\BusinessDay\Calendar\LunarCalendar;
 use DateTime;
 
@@ -53,7 +54,8 @@ class CalculatorBase
 
     public function convertChineseDate($match)
     {
-        $date = new LunarCalendar($this->year.'-'.$match[2]);
+        $calendar = strtolower($match[1]) === 'korean' ? KoreanLunarCalendar::class : LunarCalendar::class;
+        $date = new $calendar($this->year.'-'.$match[2]);
         $date = $date->toGregorian();
 
         return $this->twoDigits($date[1]).'-'.$this->twoDigits($date[2]);

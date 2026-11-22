@@ -119,7 +119,7 @@ class LunarCalendar
         $leapMonth = substr($lunarMonth, 0, 1) === 'L';
         $lunarMonth = (int) ltrim(substr($lunarMonth, $leapMonth ? 1 : 0), '0');
 
-        $days = self::$lunarMonthDays[$lunarYear - self::$lunarMonthDays[0]];
+        [$days, $gregorian11] = static::getYearData($lunarYear);
         $leap = self::getBitInteger($days, 4, 13);
         $offset = 0;
         $loopEnd = $leapMonth ? $leap : $lunarMonth - ($lunarMonth <= $leap || !$leap ? 1 : 0);
@@ -129,13 +129,28 @@ class LunarCalendar
         }
 
         $offset += $lunarDay;
-        $gregorian11 = self::$gregorianMatrix[$lunarYear - self::$gregorianMatrix[0]];
 
         $y = self::getBitInteger($gregorian11, 12, 9);
         $m = self::getBitInteger($gregorian11, 4, 5);
         $d = self::getBitInteger($gregorian11, 5, 0);
 
         return self::convertIntegerToGregorian(self::convertGregorianToInteger($y, $m, $d) + $offset - 1);
+    }
+
+    /**
+     * Month lengths (with the leap month) of a lunar year, and the Gregorian date of its first day,
+     * both encoded as in $lunarMonthDays and $gregorianMatrix.
+     *
+     * @param int $lunarYear
+     *
+     * @return int[]
+     */
+    protected static function getYearData($lunarYear)
+    {
+        return [
+            self::$lunarMonthDays[$lunarYear - self::$lunarMonthDays[0]],
+            self::$gregorianMatrix[$lunarYear - self::$gregorianMatrix[0]],
+        ];
     }
 
     public function __construct($lunarDate)
@@ -145,6 +160,6 @@ class LunarCalendar
 
     public function toGregorian()
     {
-        return self::convertLunarToGregorian($this->lunarDate);
+        return static::convertLunarToGregorian($this->lunarDate);
     }
 }
