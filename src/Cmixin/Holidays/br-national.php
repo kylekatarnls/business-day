@@ -14,5 +14,6 @@ return [
     '1st-sunday-before-11-01-of-even-years' => '= Sunday before 11-01 of even years',
     '11-02'                                 => '11-02',
     '11-15'                                 => '11-15',
+    '11-20'                                 => '= 11-20 if year >= 2024',
     'christmas'                             => '12-25',
 ];
